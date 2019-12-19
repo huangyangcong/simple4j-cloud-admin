@@ -1,0 +1,15 @@
+#### 使用框架
+- apollo
+- dubbo
+- fastdfs
+- fastjson
+- flowable
+- redis
+- rocketmq
+- seata
+- sentinel
+- xxl-job
+- etcd(zookeeper)
+- sharding-jdbc
+- SkyWorking
+- kong
