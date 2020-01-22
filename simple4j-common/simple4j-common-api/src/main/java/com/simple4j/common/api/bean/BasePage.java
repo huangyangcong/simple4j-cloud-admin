@@ -13,6 +13,11 @@ public class BasePage implements Serializable {
 
 	private int pageSize = 10;
 
+	public BasePage(int pageNo, int pageSize) {
+		this.pageNo = pageNo;
+		this.pageSize = pageSize;
+	}
+
 	public int getPageNo() {
 		return pageNo;
 	}

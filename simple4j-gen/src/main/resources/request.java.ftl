@@ -1,4 +1,4 @@
-package ${package}.${module}.request;
+package ${package}.request;
 
 import java.io.Serializable;
 

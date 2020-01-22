@@ -4,6 +4,7 @@ import com.google.common.base.CaseFormat;
 import com.google.common.collect.Maps;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.*;
@@ -14,91 +15,67 @@ import java.util.Map;
 
 public class Generator {
 	public static void main(String[] args) {
-		String packageName = "com.simple4j";
-		String module = "msg";
-		String apiComment = "消息接口";
+		//包路径
+		String packageName = "com.simple4j.user";
+		String interfaceName = "LoginService";
+		String apiComment = "登录接口";
 		String author = "hyc";
 		Map<String, String> methods = Maps.newHashMap();
-		methods.put("sendMailMsg", "发送邮件消息");
-		methods.put("sendSmsMsg", "发送短信消息");
-		methods.put("sendWechatMsg", "发送公众号消息");
-		methods.put("sendDingdingMsg", "发送钉钉消息");
-		methods.put("sendJpushMsg", "发送极光推送消息");
+		methods.put("generateVerificationCode", "生成验证码");
 
 
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		dataMap.put("package", packageName);
-		dataMap.put("module", module);
+		dataMap.put("interface_name", interfaceName);
 		dataMap.put("api_comment", apiComment);
 		dataMap.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		dataMap.put("author", author);
 		dataMap.put("methods", methods);
 
-		File serviceFilePath = new File((packageName + "." + module + ".service").replaceAll("\\.", File.separator));
-		if (!serviceFilePath.exists()) {
-			serviceFilePath.mkdirs();
-		}
-		File requestFilePath = new File((packageName + "." + module + ".request").replaceAll("\\.", File.separator));
-		if (!requestFilePath.exists()) {
-			requestFilePath.mkdirs();
-		}
-		File responseFilePath = new File((packageName + "." + module + ".response").replaceAll("\\.", File.separator));
-		if (!responseFilePath.exists()) {
-			responseFilePath.mkdirs();
-		}
-		File enumsFilePath = new File((packageName + "." + module + ".enums").replaceAll("\\.", File.separator));
-		if (!enumsFilePath.exists()) {
-			enumsFilePath.mkdirs();
-		}
+
+		String enumsFilePath = generatePackagePath(packageName + ".enums");
 		// step1 创建freeMarker配置实例
 		Configuration configuration = new Configuration();
-		Writer out = null;
 		try {
 			// step2 获取模版路径
 			ClassPathResource classPathResource = new ClassPathResource("");
 			configuration.setDirectoryForTemplateLoading(classPathResource.getFile());
+			generateFile("api.java.ftl", packageName + ".service", interfaceName + "Service.java", dataMap, configuration);
 
-			// step4 加载模版文件
-			Template apiTemplate = configuration.getTemplate("api.java.ftl");
-			// step5 生成数据
-			File docFile = new File(serviceFilePath.getPath() + File.separator + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, module) + "Service.java");
-			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)));
-			// step6 输出文件
-			apiTemplate.process(dataMap, out);
-
-			Template requestTemplate = configuration.getTemplate("request.java.ftl");
-			Template responseTemplate = configuration.getTemplate("response.java.ftl");
 			for (Map.Entry<String, String> method : methods.entrySet()) {
 				String methodName = method.getKey();
 				String methodComment = method.getValue();
 				dataMap.put("methodName", methodName);
 				dataMap.put("request_comment", methodComment + "请求体");
 				dataMap.put("response_comment", methodComment + "响应体");
-				// step5 生成数据
-				docFile = new File(requestFilePath.getPath() + File.separator + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, methodName) + "Request.java");
-				out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)));
-				// step6 输出文件
-				requestTemplate.process(dataMap, out);
 
-
-				docFile = new File(responseFilePath.getPath() + File.separator + CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, methodName) + "Response.java");
-				out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)));
-				// step6 输出文件
-				responseTemplate.process(dataMap, out);
+				generateFile("request.java.ftl", packageName + ".request", CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, methodName) + "Request.java", dataMap, configuration);
+				generateFile("response.java.ftl", packageName + ".response", CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, methodName) + "Response.java", dataMap, configuration);
 			}
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (null != out) {
-					out.flush();
-				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
 		}
+	}
+
+	private static void generateFile(String templateName, String packagePath, String javaName, Map<String, Object> dataMap, Configuration configuration) throws IOException, TemplateException {
+		// step4 加载模版文件
+		Template apiTemplate = configuration.getTemplate(templateName);
+		// step5 生成数据
+		File docFile = new File(packagePath.replaceAll("\\.", File.separator) + File.separator + javaName);
+		File parentFile = docFile.getParentFile();
+		if (null != parentFile) {
+			parentFile.mkdirs(); // 创建文件夹
+		}
+		try (Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)))) {
+			// step6 输出文件
+			apiTemplate.process(dataMap, out);
+		}
+	}
+
+	private static String generatePackagePath(String packageName) {
+		File serviceFilePath = new File((packageName).replaceAll("\\.", File.separator));
+		serviceFilePath.mkdirs();
+		return serviceFilePath.getPath();
 	}
 
 }

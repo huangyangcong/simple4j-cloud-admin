@@ -1,4 +1,4 @@
-package ${package}.${module}.response;
+package ${package}.response;
 
 import java.io.Serializable;
 
