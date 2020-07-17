@@ -4,11 +4,11 @@
 		 xmlns="http://maven.apache.org/POM/4.0.0">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.simple4j.cloud</groupId>
-		<artifactId>simple4j-cloud-starter-parent</artifactId>
+		<groupId>com.simple4j.admin</groupId>
+		<artifactId>simple4j-springboot-starter-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>com.simple4j.cloud</groupId>
+	<groupId>com.simple4j.admin</groupId>
 	<artifactId>simple4j-admin</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>

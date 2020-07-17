@@ -4,7 +4,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<artifactId>simple4j-admin</artifactId>
-		<groupId>com.simple4j.cloud</groupId>
+		<groupId>com.simple4j.admin</groupId>
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
@@ -15,5 +15,6 @@
 	<modules>
 		<module>simple4j-user-api</module>
 		<module>simple4j-user-service</module>
-	</modules>
+    <module>simple4j-user-dao</module>
+  </modules>
 </project>

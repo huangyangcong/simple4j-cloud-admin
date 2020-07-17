@@ -2,12 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xmlns="http://maven.apache.org/POM/4.0.0"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<groupId>com.simple4j.cloud</groupId>
-		<artifactId>simple4j-cloud-starter-parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	<groupId>com.simple4j.cloud</groupId>
+	<groupId>com.simple4j.admin</groupId>
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>simple4j-admin</artifactId>
 	<packaging>pom</packaging>
@@ -25,6 +20,13 @@
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.simple4j.boot</groupId>
+				<artifactId>simple4j-dependencies</artifactId>
+				<version>0.0.1.BUILD-SNAPSHOT</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
 			<dependency>
 				<groupId>com.github.binarywang</groupId>
 				<artifactId>weixin-java-pay</artifactId>

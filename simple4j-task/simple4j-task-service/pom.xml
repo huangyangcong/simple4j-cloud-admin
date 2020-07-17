@@ -4,7 +4,7 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<artifactId>simple4j-task</artifactId>
-		<groupId>com.simple4j.cloud</groupId>
+		<groupId>com.simple4j.admin</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -12,22 +12,22 @@
 	<artifactId>simple4j-task-service</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>com.simple4j.cloud</groupId>
+			<groupId>com.simple4j.admin</groupId>
 			<artifactId>simple4j-task-api</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.simple4j.cloud</groupId>
+			<groupId>com.simple4j.admin</groupId>
 			<artifactId>simple4j-common-orm</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.simple4j.cloud</groupId>
-			<artifactId>simple4j-cloud-starter-orm</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+			<artifactId>simple4j-springboot-starter-orm</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.simple4j.cloud</groupId>
-			<artifactId>simple4j-cloud-starter-dubbo</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+			<artifactId>simple4j-springboot-starter-dubbo</artifactId>
 		</dependency>
 
 		<dependency>
@@ -87,7 +87,7 @@
 					<layout>ZIP</layout>
 					<includeGroupIds>
 						<!-- 留存于fat jar中的jar包的groupId属性值（多个,分隔）-->
-						com.simple4j.cloud,
+						com.simple4j.admin,
 					</includeGroupIds>
 				</configuration>
 			</plugin>
@@ -105,7 +105,7 @@
 							<outputDirectory>../../lib</outputDirectory>
 							<excludeGroupIds>
 								<!-- 留存于fat jar中的jar包的groupId属性值（多个,分隔）-->
-								com.simple4j.cloud,
+								com.simple4j.admin,
 							</excludeGroupIds>
 							<overWriteSnapshots>true</overWriteSnapshots>
 						</configuration>

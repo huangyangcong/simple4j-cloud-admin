@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
 		<artifactId>simple4j-user</artifactId>
-		<groupId>com.simple4j.cloud</groupId>
+		<groupId>com.simple4j.admin</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -13,38 +13,45 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.simple4j.cloud</groupId>
-			<artifactId>simple4j-user-api</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.simple4j.cloud</groupId>
-			<artifactId>simple4j-common-orm</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.simple4j.cloud</groupId>
-			<artifactId>simple4j-cloud-starter-orm</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.simple4j.cloud</groupId>
-			<artifactId>simple4j-cloud-starter-dubbo</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.simple4j.admin</groupId>
+			<artifactId>simple4j-user-api</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.simple4j.admin</groupId>
+			<artifactId>simple4j-user-dao</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.simple4j.boot</groupId>
+			<artifactId>simple4j-springboot-starter-dubbo</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>io.seata</groupId>
 			<artifactId>seata-spring-boot-starter</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>com.ctrip.framework.apollo</groupId>
 			<artifactId>apollo-client</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.apache.skywalking</groupId>
 			<artifactId>apm-toolkit-trace</artifactId>
@@ -83,6 +90,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-zookeeper</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.curator</groupId>
 			<artifactId>curator-client</artifactId>
 			<version>4.2.0</version>
@@ -107,7 +118,7 @@
 					<layout>ZIP</layout>
 					<includeGroupIds>
 						<!-- 留存于fat jar中的jar包的groupId属性值（多个,分隔）-->
-						com.simple4j.cloud,
+						com.simple4j.admin,
 					</includeGroupIds>
 				</configuration>
 			</plugin>
@@ -125,7 +136,7 @@
 							<outputDirectory>../../lib</outputDirectory>
 							<excludeGroupIds>
 								<!-- 留存于fat jar中的jar包的groupId属性值（多个,分隔）-->
-								com.simple4j.cloud,
+								com.simple4j.admin,
 							</excludeGroupIds>
 							<overWriteSnapshots>true</overWriteSnapshots>
 						</configuration>
