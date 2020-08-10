@@ -15,6 +15,6 @@
 	<modules>
 		<module>simple4j-user-api</module>
 		<module>simple4j-user-service</module>
-    <module>simple4j-user-dao</module>
+    	<module>simple4j-user-dao</module>
   </modules>
 </project>

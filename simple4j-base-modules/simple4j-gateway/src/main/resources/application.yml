@@ -1,0 +1,25 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: soul-gateway
+server:
+  port: 9999
+
+management:
+  health:
+    defaults:
+      enabled: false
+soul :
+  sync:
+    websocket :
+      urls: ws://localhost:9095/websocket
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8887/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+

@@ -1,0 +1,52 @@
+server:
+  tomcat:
+    connection-timeout: 10000
+    uri-encoding: UTF-8
+    threads:
+      max: 600
+      min-spare: 30
+  port: 9411
+
+logging:
+  level:
+    org.springframework.boot.env.PropertySourcesLoader: TRACE
+    org.springframework.web: INFO  
+management:
+  metrics:
+    web: 
+      server:
+        request:
+          autotime:
+            enabled: false
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+  endpoint:
+    health:
+      show-details: always
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8887/eureka/
+  instance:
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
+zipkin: 
+  collector: 
+    kafka: 
+      bo-servers: ${kafka.host}
+#    rabbitmq: 
+#      address: ${zipkin.collector.rabbitmq.address}
+#      username: ${zipkin.collector.rabbitmq.username}
+#      password: ${zipkin.collector.rabbitmq.password}
+  storage:
+    type: elasticsearch
+    elasticsearch:
+      cluster: ${elasticsearch.cluster}
+      hosts: ${elasticsearch.host}
+      index: ${elasticsearch.index}
+      index-shards: 5
+      index-replicas: 1
