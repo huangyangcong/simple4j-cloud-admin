@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.simple4j.common.orm.BaseBean;
+import com.simple4j.common.orm.BaseEntity;
 
 import java.util.Scanner;
 
@@ -94,7 +94,7 @@ public class MysqlGenerator {
 		strategy.setTablePrefix("bus_");
 		strategy.setNaming(NamingStrategy.underline_to_camel);
 		strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-		strategy.setSuperEntityClass(BaseBean.class);
+		strategy.setSuperEntityClass(BaseEntity.class);
 		strategy.setSuperEntityColumns("id", "created_on_utc", "is_delete", "creator", "updated_on_utc", "updator");
 		strategy.setSuperMapperClass("com.simple4j.autoconfigure.mybatis.BatchMapper");
 		strategy.setEntityTableFieldAnnotationEnable(true);

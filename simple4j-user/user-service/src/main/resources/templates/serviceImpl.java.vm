@@ -1,0 +1,106 @@
+package $!{package.ServiceImpl};
+
+#set($requestPackage=$package.Entity.replace("entity","request"))
+#set($responsePackage=$package.Entity.replace("entity","response"))
+#set($mapstructPackage=$package.Entity.replace("entity","mapstruct"))
+import $!{requestPackage}.$!{entity}AddRequest;
+import $!{requestPackage}.$!{entity}UpdateRequest;
+import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
+import $!{requestPackage}.$!{entity}DetailRequest;
+import $!{requestPackage}.$!{entity}ListRequest;
+import $!{requestPackage}.$!{entity}RemoveRequest;
+import $!{requestPackage}.$!{entity}PageRequest;
+import $!{responsePackage}.$!{entity}DetailResponse;
+import $!{mapstructPackage}.$!{entity}MapStruct;
+import $!{package.Entity}.$!{entity};
+import $!{package.Mapper}.$!{table.mapperName};
+import $!{package.Service}.$!{table.serviceName};
+import $!{superServiceImplClassPackage};
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+
+import java.util.List;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.transaction.annotation.Transactional;
+#if($!{cfg.tree})
+import com.newdex.dao.util.TreeUtil;
+
+import $!{requestPackage}.$!{entity}TreeRequest;
+#end
+
+
+	/**
+	 * $!{table.comment} 服务实现类
+	 *
+	 * @author $!{author}
+	 * @since $!{date}
+	 */
+@Service
+@RequiredArgsConstructor
+#if($!{kotlin})
+open class $!{table.serviceImplName} : $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}>(), $!{table.serviceName} {
+
+	}
+#else
+	public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}>implements $!{table.serviceName} {
+
+	private final $!{entity}MapStruct $!{table.entityPath}MapStruct;
+
+	@Override
+	public $!{entity}DetailResponse detail($!{entity}DetailRequest $!{table.entityPath}DetailRequest){
+	$!{entity} detail=getOne(
+	Wrappers.<$!{entity}>lambdaQuery().eq($!{entity}::getId, $!{table.entityPath}DetailRequest.getId()));
+	return $!{table.entityPath}MapStruct.toVo(detail);
+	}
+	@Override
+	public List<$!{entity}DetailResponse>list($!{entity}ListRequest $!{table.entityPath}ListRequest){
+	LambdaQueryWrapper<$!{entity}>queryWrapper=Wrappers.<$!{entity}>lambdaQuery();
+	List<$!{entity}>pages=list(queryWrapper);
+	return $!{table.entityPath}MapStruct.toVo(pages);
+	}
+
+	@Override
+	public Page<$!{entity}DetailResponse>page($!{entity}PageRequest $!{table.entityPath}PageRequest){
+	LambdaQueryWrapper<$!{entity}>queryWrapper=Wrappers.<$!{entity}>lambdaQuery();
+	Page<$!{entity}>pages=page(new Page<>($!{table.entityPath}PageRequest.getPageNo(), $!{table.entityPath}PageRequest.getPageSize()),queryWrapper);
+	return $!{table.entityPath}MapStruct.toVo(pages);
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public void add($!{entity}AddRequest $!{table.entityPath}AddRequest){
+	save($!{table.entityPath}MapStruct.toPo($!{table.entityPath}AddRequest));
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public void update($!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
+	updateById($!{table.entityPath}MapStruct.toPo($!{table.entityPath}UpdateRequest));
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public void addOrUpdate($!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
+	saveOrUpdate($!{table.entityPath}MapStruct.toPo($!{table.entityPath}AddOrUpdateRequest));
+	}
+	#if($!{cfg.tree})
+		List<$!{entity}DetailResponse>tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest){
+		LambdaQueryWrapper<$!{entity}>queryWrapper=Wrappers.<$!{entity}>lambdaQuery();
+		List<$!{entity}>pages=list(queryWrapper);
+		return TreeUtils.buildTree($!{table.entityPath}MapStruct.toVo(pages));
+		}
+	#end
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public void remove($!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
+	baseMapper.physicsDeleteBatchIds($!{table.entityPath}RemoveRequest.getIds());
+	}
+	}
+#end

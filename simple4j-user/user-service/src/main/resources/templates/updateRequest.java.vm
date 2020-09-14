@@ -1,0 +1,50 @@
+#set($dtoPackage=$package.Entity.replace("entity","dto"))
+package $!{dtoPackage};
+
+	#if($!{entityLombokModel})
+	import lombok.Data;
+	#end
+	#if($!{swagger2})
+	import io.swagger.annotations.ApiModel;
+	import io.swagger.annotations.ApiModelProperty;
+	#end
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * $!{table.comment}修改请求实体类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+	#if($!{entityLombokModel})
+	@Data
+	#end
+	#if($!{swagger2})
+	@ApiModel(value = "$!{table.comment}修改请求实体类", description = "$!{table.comment}修改请求实体类")
+	#end
+public class $!{entity}UpdateRequest extends $!{entity}AddRequest {
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * $!{table.comment}ID
+	 */
+		#if($!{swagger2})
+		@ApiModelProperty(value = "$!{table.comment}ID")
+		#end
+	@NotNull(message = "$!{table.comment}编号不能为空")
+	private Long id;
+
+	## ----------  END 字段循环遍历  ----------
+	#if(!$!{entityLombokModel})
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+	#end
+}

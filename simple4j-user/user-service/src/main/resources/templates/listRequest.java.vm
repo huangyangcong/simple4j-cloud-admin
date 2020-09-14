@@ -1,0 +1,30 @@
+#set($dtoPackage=$package.Entity.replace("entity","dto"))
+package $!{dtoPackage};
+
+	#if($!{entityLombokModel})
+	import lombok.Data;
+	#end
+import java.io.Serializable;
+	#if($!{swagger2})
+	import io.swagger.annotations.ApiModel;
+	import io.swagger.annotations.ApiModelProperty;
+	#end
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * $!{table.comment}列表请求实体类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+	#if($!{entityLombokModel})
+	@Data
+	#end
+	#if($!{swagger2})
+	@ApiModel(value = "$!{table.comment}列表请求实体类", description = "$!{table.comment}列表请求实体类")
+	#end
+public class $!{entity}ListRequest implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+}

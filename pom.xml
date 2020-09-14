@@ -27,11 +27,11 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
-			<dependency>
-				<groupId>com.github.binarywang</groupId>
-				<artifactId>weixin-java-pay</artifactId>
-				<version>${wx.version}</version>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>com.github.binarywang</groupId>-->
+<!--				<artifactId>weixin-java-pay</artifactId>-->
+<!--				<version>${wx.version}</version>-->
+<!--			</dependency>-->
 		</dependencies>
 	</dependencyManagement>
 	<modules>
@@ -48,10 +48,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</reporting>

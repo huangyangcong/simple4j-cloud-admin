@@ -13,8 +13,9 @@
 	<artifactId>simple4j-user</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>simple4j-user-api</module>
-		<module>simple4j-user-service</module>
-    	<module>simple4j-user-dao</module>
+		<module>user-api</module>
+		<module>user-service</module>
+    	<module>user-dao</module>
+    	<module>user-front</module>
   </modules>
 </project>
