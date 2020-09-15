@@ -1,7 +1,7 @@
 package com.simple4j.msg.service;
 
 
-import com.simple4j.common.api.expection.BusinessException;
+import com.api.exception.BusinessException;
 import com.simple4j.msg.request.*;
 import com.simple4j.msg.response.*;
 
@@ -22,7 +22,7 @@ public interface MsgService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	ApiResponse<SendMailMsgResponse> sendMailMsg(ApiRequest<SendMailMsgRequest> request) throws BusinessException;
+	SendMailMsgResponse sendMailMsg(SendMailMsgRequest request) throws BusinessException, BusinessException;
 
 	/**
 	 * 发送钉钉消息
@@ -31,7 +31,7 @@ public interface MsgService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	ApiResponse<SendDingdingMsgResponse> sendDingdingMsg(ApiRequest<SendDingdingMsgRequest> request) throws BusinessException;
+	SendDingdingMsgResponse sendDingdingMsg(SendDingdingMsgRequest request) throws BusinessException;
 
 	/**
 	 * 发送极光推送消息
@@ -40,7 +40,7 @@ public interface MsgService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	ApiResponse<SendJpushMsgResponse> sendJpushMsg(ApiRequest<SendJpushMsgRequest> request) throws BusinessException;
+	SendJpushMsgResponse sendJpushMsg(SendJpushMsgRequest request) throws BusinessException;
 
 	/**
 	 * 发送短信消息
@@ -49,7 +49,7 @@ public interface MsgService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	ApiResponse<SendSmsMsgResponse> sendSmsMsg(ApiRequest<SendSmsMsgRequest> request) throws BusinessException;
+	SendSmsMsgResponse sendSmsMsg(SendSmsMsgRequest request) throws BusinessException;
 
 	/**
 	 * 发送公众号消息
@@ -58,5 +58,5 @@ public interface MsgService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	ApiResponse<SendWechatMsgResponse> sendWechatMsg(ApiRequest<SendWechatMsgRequest> request) throws BusinessException;
+	SendWechatMsgResponse sendWechatMsg(SendWechatMsgRequest request) throws BusinessException;
 }

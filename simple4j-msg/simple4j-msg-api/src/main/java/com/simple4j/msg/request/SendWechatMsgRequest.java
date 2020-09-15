@@ -12,5 +12,4 @@ import java.io.Serializable;
  */
 public class SendWechatMsgRequest implements Serializable {
 	private String templateId;
-	private String
 }

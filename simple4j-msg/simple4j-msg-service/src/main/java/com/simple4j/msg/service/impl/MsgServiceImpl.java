@@ -10,7 +10,8 @@ import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
 import cn.jpush.api.push.model.notification.Notification;
-import com.simple4j.common.api.expection.BusinessException;
+import com.api.bean.ApiResponse;
+import com.api.exception.BusinessException;
 import com.simple4j.msg.request.*;
 import com.simple4j.msg.response.*;
 import com.simple4j.msg.service.MsgService;
@@ -33,56 +34,54 @@ public class MsgServiceImpl implements MsgService {
 	private ReactiveMongoTemplate mongoTemplate;
 
 	@Override
-	public ApiResponse<SendMailMsgResponse> sendMailMsg(ApiRequest<SendMailMsgRequest> request) throws BusinessException {
-		return mailSender;
-	}
-
-	@Override
-	public ApiResponse<SendDingdingMsgResponse> sendDingdingMsg(ApiRequest<SendDingdingMsgRequest> request) throws BusinessException {
+	public SendMailMsgResponse sendMailMsg(SendMailMsgRequest request) throws BusinessException {
 		return null;
 	}
 
 	@Override
-	public ApiResponse<SendJpushMsgResponse> sendJpushMsg(ApiRequest<SendJpushMsgRequest> request) throws BusinessException {
-		Platform platform = Platform.newBuilder()
-				.addDeviceType()
-				.build();
-		Message message = Message.newBuilder()
-				.setMsgContent()
-				.setTitle()
-				.setContentType()
-				.addExtra("extra", )
-				.build();
-		Notification notification = Notification.newBuilder()
-				.setAlert()
-				.build();
-		Options options = Options.newBuilder().build();
-
-		Audience audience = Audience.registrationId();
-		PushPayload pushPayload = PushPayload.newBuilder()
-				.setPlatform(platform)
-				.setAudience(audience)
-				.setMessage(message)
-				.setNotification(notification)
-				.setOptions(options)
-				.build();
-		try {
-			PushResult pushResult = jPushClient.sendPush(pushPayload);
-		} catch (APIConnectionException e) {
-			return ApiResponse.error(new SendJpushMsgResponse());
-		} catch (APIRequestException e) {
-			return ApiResponse.error(new SendJpushMsgResponse());
-		}
-		return ApiResponse.success(new SendJpushMsgResponse());
-	}
-
-	@Override
-	public ApiResponse<SendSmsMsgResponse> sendSmsMsg(ApiRequest<SendSmsMsgRequest> request) throws BusinessException {
+	public SendDingdingMsgResponse sendDingdingMsg(SendDingdingMsgRequest request) throws BusinessException {
 		return null;
 	}
 
 	@Override
-	public ApiResponse<SendWechatMsgResponse> sendWechatMsg(ApiRequest<SendWechatMsgRequest> request) throws BusinessException {
+	public SendJpushMsgResponse sendJpushMsg(SendJpushMsgRequest request) throws BusinessException {
+		//Platform platform = Platform.newBuilder()
+		//		.addDeviceType()
+		//		.build();
+		//Message message = Message.newBuilder()
+		//		.setMsgContent()
+		//		.setTitle()
+		//		.setContentType()
+		//		.addExtra("extra", )
+		//		.build();
+		//Notification notification = Notification.newBuilder()
+		//		.setAlert()
+		//		.build();
+		//Options options = Options.newBuilder().build();
+		//
+		//Audience audience = Audience.registrationId();
+		//PushPayload pushPayload = PushPayload.newBuilder()
+		//		.setPlatform(platform)
+		//		.setAudience(audience)
+		//		.setMessage(message)
+		//		.setNotification(notification)
+		//		.setOptions(options)
+		//		.build();
+		//try {
+		//	PushResult pushResult = jPushClient.sendPush(pushPayload);
+		//} catch (APIConnectionException | APIRequestException e) {
+		//	throw new BusinessException(e.getMessage());
+		//}
+		return new SendJpushMsgResponse();
+	}
+
+	@Override
+	public SendSmsMsgResponse sendSmsMsg(SendSmsMsgRequest request) throws BusinessException {
+		return null;
+	}
+
+	@Override
+	public SendWechatMsgResponse sendWechatMsg(SendWechatMsgRequest request) throws BusinessException {
 		return null;
 	}
 
