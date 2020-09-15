@@ -37,7 +37,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @Validated
 @AllArgsConstructor
-public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IRoleService {
+public class RoleServiceImpl implements IRoleService {
 
 	private final IRoleMenuService roleMenuService;
 	private final RoleMapStruct roleMapStruct;

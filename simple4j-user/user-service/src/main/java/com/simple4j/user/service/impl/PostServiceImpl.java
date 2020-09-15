@@ -36,8 +36,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements IPostService {
+public class PostServiceImpl implements IPostService {
 
+	private final PostMapper postMapper;
 	private final PostMapStruct postMapStruct;
 	private final IDictService dictService;
 	private final IUserPostService userPostService;

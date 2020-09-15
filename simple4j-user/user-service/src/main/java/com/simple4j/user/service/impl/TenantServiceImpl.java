@@ -40,7 +40,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> implements ITenantService {
+public class TenantServiceImpl implements ITenantService {
 
 	private final RoleMapper roleMapper;
 	private final DeptMapper deptMapper;

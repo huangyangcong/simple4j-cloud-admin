@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class AuthClientServiceImpl extends ServiceImpl<AuthClientMapper, AuthClient> implements IAuthClientService {
+public class AuthClientServiceImpl implements IAuthClientService {
 
 	private final ClientMapStruct clientMapStruct;
 

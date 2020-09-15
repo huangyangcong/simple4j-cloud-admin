@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @AllArgsConstructor
-public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
+public class MenuServiceImpl implements IMenuService {
 
 	IRoleMenuService roleMenuService;
 	IDictService dictService;

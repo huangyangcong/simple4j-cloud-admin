@@ -17,5 +17,7 @@
 		<module>user-service</module>
     	<module>user-dao</module>
     	<module>user-front</module>
-  </modules>
+        <module>user-manager</module>
+        <module>user-web</module>
+    </modules>
 </project>

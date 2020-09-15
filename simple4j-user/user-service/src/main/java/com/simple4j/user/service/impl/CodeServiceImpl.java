@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author Chill
  */
 @Service
-public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements ICodeService {
+public class CodeServiceImpl implements ICodeService {
 
 	@Override
 	public boolean submit(Code code) {

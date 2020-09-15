@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class ParamServiceImpl extends ServiceImpl<ParamMapper, Param> implements IParamService {
+public class ParamServiceImpl implements IParamService {
 
 	private final ParamMapStruct paramMapStruct;
 

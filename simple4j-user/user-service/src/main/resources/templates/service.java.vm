@@ -11,8 +11,7 @@ import $!{requestPackage}.$!{entity}RemoveRequest;
 import $!{requestPackage}.$!{entity}PageRequest;
 import $!{responsePackage}.$!{entity}DetailResponse;
 import $!{package.Entity}.$!{entity};
-import $!{superServiceClassPackage};
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+iimport com.simple4j.$!{module}.base.Page;
 
 import java.util.List;
 #if($!{cfg.tree})
@@ -27,9 +26,9 @@ import $!{requestPackage}.$!{entity}TreeRequest;
  * @since $!{date}
  */
 #if($!{kotlin})
-interface $!{table.serviceName} : $!{superServiceClass}<$!{entity}>
+interface $!{table.serviceName}
 #else
-public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}> {
+public interface $!{table.serviceName} {
 
 	/**
 	 * 详情

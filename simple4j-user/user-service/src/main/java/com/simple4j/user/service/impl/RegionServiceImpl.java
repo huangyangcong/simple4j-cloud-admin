@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> implements IRegionService {
+public class RegionServiceImpl implements IRegionService {
 
 	public static final int PROVINCE_LEVEL = 1;
 	public static final int CITY_LEVEL = 2;

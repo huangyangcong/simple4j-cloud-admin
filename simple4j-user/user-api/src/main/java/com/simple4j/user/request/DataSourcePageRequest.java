@@ -1,0 +1,34 @@
+package com.simple4j.user.request;
+
+	import lombok.Data;
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+/**
+ * 数据源配置表分页请求实体类
+ *
+ * @author Blade
+ * @since 2020-09-15
+ */
+	@Data
+	@ApiModel(value = "数据源配置表分页请求实体类", description = "数据源配置表分页请求实体类")
+public class DatasourcePageRequest implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 页码
+	 */
+	@ApiModelProperty(name = "page_no", value = "页码")
+	@JsonProperty("page_no")
+	private int pageNo;
+
+	/**
+	 * 分页数
+	 */
+	@ApiModelProperty(name = "pageSize", value = "分页数")
+	@JsonProperty("page_size")
+	private int pageSize;
+}

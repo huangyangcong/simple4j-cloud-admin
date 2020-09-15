@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Chill
  */
 @Service
-public class UserPostServiceImpl extends ServiceImpl<UserPostMapper, UserPost> implements
+public class UserPostServiceImpl implements
 		IUserPostService {
 
 	@Override

@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements IDeptService {
+public class DeptServiceImpl implements IDeptService {
 
 	private final DeptMapStruct deptMapStruct;
 	private final IUserDeptService userDeptService;

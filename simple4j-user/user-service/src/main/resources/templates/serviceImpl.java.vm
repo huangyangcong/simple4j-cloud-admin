@@ -18,7 +18,7 @@ import $!{package.Service}.$!{table.serviceName};
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+iimport com.simple4j.$!{module}.base.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 
@@ -47,7 +47,7 @@ open class $!{table.serviceImplName} : $!{superServiceImplClass}<$!{table.mapper
 
 	}
 #else
-	public class $!{table.serviceImplName} extends $!{superServiceImplClass}<$!{table.mapperName}, $!{entity}>implements $!{table.serviceName} {
+	public class $!{table.serviceImplName} implements $!{table.serviceName} {
 
 	private final $!{entity}MapStruct $!{table.entityPath}MapStruct;
 

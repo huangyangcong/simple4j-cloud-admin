@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Chill
  */
 @Service
-public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> implements
+public class UserRoleServiceImpl implements
 		IUserRoleService {
 
 

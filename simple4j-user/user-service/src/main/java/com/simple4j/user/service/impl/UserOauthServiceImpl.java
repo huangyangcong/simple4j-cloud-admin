@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class UserOauthServiceImpl extends ServiceImpl<UserOauthMapper, UserOauth> implements
+public class UserOauthServiceImpl implements
 		IUserOauthService {
 
 }

@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Chill
  */
 @Service
-public class UserDeptServiceImpl extends ServiceImpl<UserDeptMapper, UserDept> implements
+public class UserDeptServiceImpl implements
 		IUserDeptService {
 
 	@Override

@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class NavbarServiceImpl extends ServiceImpl<NavbarMapper, Navbar> implements INavbarService {
+public class NavbarServiceImpl implements INavbarService {
 
 	private final NavbarMapStruct navbarMapStruct;
 	private final INavbarMenuService navbarMenuService;

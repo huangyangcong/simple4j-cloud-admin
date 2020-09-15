@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Chill
  */
 @Service
-public class RoleMenuServiceImpl extends ServiceImpl<RoleMenuMapper, RoleMenu> implements
+public class RoleMenuServiceImpl implements
 		IRoleMenuService {
 
 	@Override
