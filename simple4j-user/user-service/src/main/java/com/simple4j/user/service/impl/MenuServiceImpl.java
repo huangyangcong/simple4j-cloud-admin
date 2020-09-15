@@ -9,17 +9,17 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.newdex.dao.util.TreeUtil;
+import com.simple4j.autoconfigure.util.TreeUtil;
+import com.simple4j.user.common.constant.CommonConstant;
+import com.simple4j.user.common.util.SecurityUtils;
 import com.simple4j.user.service.IDictService;
 import com.simple4j.user.service.IMenuService;
 import com.simple4j.user.service.IRoleMenuService;
 import lombok.AllArgsConstructor;
-import org.springblade.common.constant.CommonConstant;
-import org.springblade.common.util.SecurityUtils;
 import com.simple4j.user.dto.MenuDTO;
 import com.simple4j.user.entity.Menu;
 import com.simple4j.user.entity.RoleMenu;
-import com.simple4j.user.mapper.MenuMapper;
+import com.simple4j.user.dao.MenuMapper;
 import com.simple4j.user.mapstruct.MenuMapStruct;
 import com.simple4j.user.request.MenuDetailRequest;
 import com.simple4j.user.request.MenuListRequest;
@@ -28,14 +28,10 @@ import com.simple4j.user.request.RoleMenuKeyRequest;
 import com.simple4j.user.response.MenuDetailResponse;
 import com.simple4j.user.response.MenuRoutersResponse;
 import com.simple4j.user.response.RoleMenuKeyResponse;
-import com.simple4j.user.service.IDictService;
-import com.simple4j.user.service.IMenuService;
-import com.simple4j.user.service.IRoleMenuService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springblade.common.constant.CommonConstant.ADMIN_TENANT_ID;
 
 /**
  * 服务实现类
@@ -117,7 +113,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 	@Override
 	public List<MenuDetailResponse> grantTree() {
 		return TreeUtil
-			.buildTree(menuMapStruct.toVo(SecurityUtils.getTenantId().equals(ADMIN_TENANT_ID) ?
+			.buildTree(menuMapStruct.toVo(SecurityUtils.getTenantId().equals(CommonConstant.ADMIN_TENANT_ID) ?
 				baseMapper.grantTree()
 				: baseMapper.grantTreeByRole(SecurityUtils.getCurrentUserDataRoles())));
 	}
@@ -132,7 +128,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 			.list(Wrappers.<RoleMenu>query().lambda()
 				.in(RoleMenu::getRoleId, roleMenuKeyRequest.getRoles()));
 
-		roleMenuKeyResponse.setMenus(roleMenus.stream().map(roleMenu -> roleMenu.getMenuId())
+		roleMenuKeyResponse.setMenus(roleMenus.stream().map(RoleMenu::getMenuId)
 			.collect(Collectors.toList()));
 		return roleMenuKeyResponse;
 	}

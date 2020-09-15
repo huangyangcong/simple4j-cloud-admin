@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.simple4j.user.service.IRoleMenuService;
 import com.simple4j.user.entity.RoleMenu;
-import com.simple4j.user.mapper.RoleMenuMapper;
+import com.simple4j.user.dao.RoleMenuMapper;
 import com.simple4j.user.request.MenuGrantRequest;
 import com.simple4j.user.service.IRoleMenuService;
 

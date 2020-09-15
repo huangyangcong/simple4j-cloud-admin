@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.simple4j.user.service.IAuthClientService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.AuthClient;
-import com.simple4j.user.mapper.AuthClientMapper;
+import com.simple4j.user.dao.AuthClientMapper;
 import com.simple4j.user.mapstruct.ClientMapStruct;
 import com.simple4j.user.request.ClientAddOrUpdateRequest;
 import com.simple4j.user.request.ClientAddRequest;
@@ -31,8 +31,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class AuthClientServiceImpl extends ServiceImpl<AuthClientMapper, AuthClient> implements
-		IAuthClientService {
+public class AuthClientServiceImpl extends ServiceImpl<AuthClientMapper, AuthClient> implements IAuthClientService {
 
 	private final ClientMapStruct clientMapStruct;
 

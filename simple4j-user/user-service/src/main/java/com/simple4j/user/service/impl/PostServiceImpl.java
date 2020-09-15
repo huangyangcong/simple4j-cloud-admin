@@ -13,7 +13,7 @@ import com.simple4j.user.service.IPostService;
 import com.simple4j.user.service.IUserPostService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.Post;
-import com.simple4j.user.mapper.PostMapper;
+import com.simple4j.user.dao.PostMapper;
 import com.simple4j.user.mapstruct.PostMapStruct;
 import com.simple4j.user.request.PostAddRequest;
 import com.simple4j.user.request.PostDetailRequest;

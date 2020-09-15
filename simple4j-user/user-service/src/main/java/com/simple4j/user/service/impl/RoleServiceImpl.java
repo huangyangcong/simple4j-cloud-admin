@@ -8,14 +8,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.newdex.dao.util.TreeUtil;
+import com.simple4j.autoconfigure.util.TreeUtil;
+import com.simple4j.user.common.constant.CommonConstant;
+import com.simple4j.user.common.util.SecurityUtils;
 import com.simple4j.user.service.IRoleMenuService;
 import com.simple4j.user.service.IRoleService;
 import lombok.AllArgsConstructor;
-import org.springblade.common.constant.CommonConstant;
-import org.springblade.common.util.SecurityUtils;
 import com.simple4j.user.entity.Role;
-import com.simple4j.user.mapper.RoleMapper;
+import com.simple4j.user.dao.RoleMapper;
 import com.simple4j.user.mapstruct.RoleMapStruct;
 import com.simple4j.user.request.RoleDetailRequest;
 import com.simple4j.user.request.RoleListRequest;
@@ -28,8 +28,6 @@ import com.simple4j.user.service.IRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-
-import static org.springblade.common.constant.CommonConstant.ADMIN_TENANT_ID;
 
 /**
  * 服务实现类
@@ -80,7 +78,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 			.eq(StrUtil.isNotEmpty(roleListRequest.getRoleAlias()), Role::getRoleAlias,
 				roleListRequest.getRoleAlias());
 		List<Role> pages = list(
-			(!SecurityUtils.getTenantId().equals(ADMIN_TENANT_ID)) ? queryWrapper
+			(!SecurityUtils.getTenantId().equals(CommonConstant.ADMIN_TENANT_ID)) ? queryWrapper
 				.eq(Role::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
 		;
 		return roleMapStruct.toVo(pages);

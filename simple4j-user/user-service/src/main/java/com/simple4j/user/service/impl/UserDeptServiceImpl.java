@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.simple4j.user.service.IUserDeptService;
 import com.simple4j.user.entity.UserDept;
-import com.simple4j.user.mapper.UserDeptMapper;
+import com.simple4j.user.dao.UserDeptMapper;
 import com.simple4j.user.request.UserDeptGrantRequest;
 import com.simple4j.user.service.IUserDeptService;
 

@@ -1,8 +1,6 @@
 package com.simple4j.msg.service;
 
 
-import com.simple4j.common.api.bean.ApiRequest;
-import com.simple4j.common.api.bean.ApiResponse;
 import com.simple4j.common.api.expection.BusinessException;
 import com.simple4j.msg.request.*;
 import com.simple4j.msg.response.*;

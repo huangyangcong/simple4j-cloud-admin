@@ -9,9 +9,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.simple4j.user.service.IUserPostService;
 import com.simple4j.user.entity.UserPost;
-import com.simple4j.user.mapper.UserPostMapper;
+import com.simple4j.user.dao.UserPostMapper;
 import com.simple4j.user.request.UserPostGrantRequest;
-import com.simple4j.user.service.IUserPostService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

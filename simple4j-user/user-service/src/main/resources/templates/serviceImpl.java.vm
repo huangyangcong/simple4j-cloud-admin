@@ -15,7 +15,6 @@ import $!{mapstructPackage}.$!{entity}MapStruct;
 import $!{package.Entity}.$!{entity};
 import $!{package.Mapper}.$!{table.mapperName};
 import $!{package.Service}.$!{table.serviceName};
-import $!{superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -29,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.transaction.annotation.Transactional;
 #if($!{cfg.tree})
-import com.newdex.dao.util.TreeUtil;
+import com.simple4j.autoconfigure.util.TreeUtil;
 
 import $!{requestPackage}.$!{entity}TreeRequest;
 #end

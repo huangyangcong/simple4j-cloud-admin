@@ -6,7 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.newdex.dao.util.INode;
+import com.simple4j.autoconfigure.util.INode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +19,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "字典表详情响应实体类", description = "字典表详情响应实体类")
-public class DictDetailResponse implements INode<com.simple4j.user.response.DictDetailResponse, Long> {
+public class DictDetailResponse implements INode<DictDetailResponse, Long> {
 
 	private static final long serialVersionUID = 1L;
 

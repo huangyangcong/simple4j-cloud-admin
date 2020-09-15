@@ -8,14 +8,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.newdex.dao.util.TreeUtil;
+import com.simple4j.autoconfigure.util.TreeUtil;
+import com.simple4j.user.common.constant.CommonConstant;
+import com.simple4j.user.common.util.SecurityUtils;
 import com.simple4j.user.service.IDeptService;
 import com.simple4j.user.service.IUserDeptService;
 import lombok.RequiredArgsConstructor;
-import org.springblade.common.constant.CommonConstant;
-import org.springblade.common.util.SecurityUtils;
 import com.simple4j.user.entity.Dept;
-import com.simple4j.user.mapper.DeptMapper;
+import com.simple4j.user.dao.DeptMapper;
 import com.simple4j.user.mapstruct.DeptMapStruct;
 import com.simple4j.user.request.DeptAddRequest;
 import com.simple4j.user.request.DeptDetailRequest;
@@ -24,13 +24,10 @@ import com.simple4j.user.request.DeptPageRequest;
 import com.simple4j.user.request.DeptRemoveRequest;
 import com.simple4j.user.request.DeptUpdateRequest;
 import com.simple4j.user.response.DeptDetailResponse;
-import com.simple4j.user.service.IDeptService;
-import com.simple4j.user.service.IUserDeptService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springblade.common.constant.CommonConstant.ADMIN_TENANT_ID;
 
 /**
  * 服务实现类
@@ -98,7 +95,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
 				deptPageRequest.getFullName());
 		Page<Dept> list = page(
 			new Page<>(deptPageRequest.getPageNo(), deptPageRequest.getPageSize()),
-			!ADMIN_TENANT_ID.equals(
+			!CommonConstant.ADMIN_TENANT_ID.equals(
 				SecurityUtils.getTenantId()) ? queryWrapper
 				.eq(Dept::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
 		return deptMapStruct.toVo(list);

@@ -7,6 +7,7 @@ import java.util.Objects;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import com.api.exception.BusinessException;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,7 +16,8 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import com.newdex.common.exception.BusinessException;
+import com.simple4j.user.common.constant.CommonConstant;
+import com.simple4j.user.common.util.SecurityUtils;
 import com.simple4j.user.service.IDeptService;
 import com.simple4j.user.service.IDictService;
 import com.simple4j.user.service.IPostService;
@@ -28,14 +30,12 @@ import com.simple4j.user.service.IUserPostService;
 import com.simple4j.user.service.IUserRoleService;
 import com.simple4j.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
-import org.springblade.common.constant.CommonConstant;
-import org.springblade.common.util.SecurityUtils;
 import com.simple4j.user.entity.Tenant;
 import com.simple4j.user.entity.User;
 import com.simple4j.user.response.UserInfo;
 import com.simple4j.user.entity.UserOauth;
 import com.simple4j.user.excel.UserExcel;
-import com.simple4j.user.mapper.UserMapper;
+import com.simple4j.user.dao.UserMapper;
 import com.simple4j.user.mapstruct.UserMapStruct;
 import com.simple4j.user.request.UserAddRequest;
 import com.simple4j.user.request.UserDetailRequest;
@@ -48,8 +48,6 @@ import com.simple4j.user.response.UserDetailResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.springblade.common.constant.CommonConstant.ADMIN_TENANT_ID;
 
 /**
  * 服务实现类
@@ -84,7 +82,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 				userPageRequest.getRealName());
 		Page<User> users = this
 			.page(new Page<>(userPageRequest.getPageNo(), userPageRequest.getPageSize()),
-				(!SecurityUtils.getTenantId().equals(ADMIN_TENANT_ID)) ? queryWrapper
+				(!SecurityUtils.getTenantId().equals(CommonConstant.ADMIN_TENANT_ID)) ? queryWrapper
 					.eq(User::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
 		Page<UserDetailResponse> userDetailResponsePage = userMapStruct.toVo(users);
 		userDetailResponsePage.getRecords().forEach(this::convert);

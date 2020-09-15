@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.simple4j.user.service.INavbarMenuService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.NavbarMenu;
-import com.simple4j.user.mapper.NavbarMenuMapper;
+import com.simple4j.user.dao.NavbarMenuMapper;
 import com.simple4j.user.mapstruct.NavbarMenuMapStruct;
 import com.simple4j.user.request.NavbarGrantRequest;
 import com.simple4j.user.request.NavbarMenuAddOrUpdateRequest;

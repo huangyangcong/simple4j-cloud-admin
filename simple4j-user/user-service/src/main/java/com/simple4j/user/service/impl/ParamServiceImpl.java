@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.simple4j.user.service.IParamService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.Param;
-import com.simple4j.user.mapper.ParamMapper;
+import com.simple4j.user.dao.ParamMapper;
 import com.simple4j.user.mapstruct.ParamMapStruct;
 import com.simple4j.user.request.ParamAddOrUpdateRequest;
 import com.simple4j.user.request.ParamAddRequest;

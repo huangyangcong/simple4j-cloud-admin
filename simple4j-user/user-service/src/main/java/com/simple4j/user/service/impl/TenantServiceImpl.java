@@ -1,6 +1,7 @@
 package com.simple4j.user.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import cn.hutool.core.util.ObjectUtil;
@@ -10,6 +11,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.simple4j.user.common.constant.CommonConstant;
+import com.simple4j.user.common.util.SecurityUtils;
+import com.simple4j.user.dao.DeptMapper;
+import com.simple4j.user.dao.RoleMapper;
+import com.simple4j.user.dao.TenantMapper;
 import com.simple4j.user.service.ITenantService;
 import lombok.AllArgsConstructor;
 import com.simple4j.user.entity.Dept;
@@ -73,7 +79,7 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
 			.eq(StrUtil.isNotEmpty(tenantListRequest.getTenantName()), Tenant::getTenantName,
 				tenantListRequest.getTenantName());
 		List<Tenant> list = list(
-			(!SecurityUtils.getTenantId().equals(ADMIN_TENANT_ID)) ? queryWrapper
+			(!Objects.equals(SecurityUtils.getTenantId(), CommonConstant.ADMIN_TENANT_ID)) ? queryWrapper
 				.eq(Tenant::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
 		return tenantMapStruct.toVo(list);
 	}
@@ -89,7 +95,7 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
 				tenantPageRequest.getTenantName());
 		Page<Tenant> pages = page(
 			new Page<>(tenantPageRequest.getPageNo(), tenantPageRequest.getPageSize()),
-			(!SecurityUtils.getTenantId().equals(ADMIN_TENANT_ID)) ? queryWrapper
+			(!Objects.equals(SecurityUtils.getTenantId(), CommonConstant.ADMIN_TENANT_ID)) ? queryWrapper
 				.eq(Tenant::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
 		return tenantMapStruct.toVo(pages);
 	}
@@ -114,7 +120,7 @@ public class TenantServiceImpl extends ServiceImpl<TenantMapper, Tenant> impleme
 		Tenant tenant = tenantMapStruct.toPo(tenantAddOrUpdateRequest);
 		if (ObjectUtil.isEmpty(tenant.getId())) {
 			List<Tenant> tenants = baseMapper
-				.selectList(Wrappers.<Tenant>query().lambda().eq(Tenant::getIsDeleted,
+				.selectList(Wrappers.<Tenant>query().lambda().eq(Tenant::getIsDelete,
 					CommonConstant.DB_NOT_DELETED));
 			List<String> codes = tenants.stream().map(Tenant::getTenantId)
 				.collect(Collectors.toList());

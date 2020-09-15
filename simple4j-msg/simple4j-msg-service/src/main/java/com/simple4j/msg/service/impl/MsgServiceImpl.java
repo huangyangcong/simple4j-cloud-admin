@@ -10,8 +10,6 @@ import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
 import cn.jpush.api.push.model.notification.Notification;
-import com.simple4j.common.api.bean.ApiRequest;
-import com.simple4j.common.api.bean.ApiResponse;
 import com.simple4j.common.api.expection.BusinessException;
 import com.simple4j.msg.request.*;
 import com.simple4j.msg.response.*;

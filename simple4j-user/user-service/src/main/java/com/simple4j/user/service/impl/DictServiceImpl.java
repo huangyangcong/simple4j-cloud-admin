@@ -10,11 +10,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.newdex.dao.util.TreeUtil;
+import com.simple4j.autoconfigure.util.TreeUtil;
+import com.simple4j.user.common.constant.CacheNames;
 import com.simple4j.user.service.IDictService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.Dict;
-import com.simple4j.user.mapper.DictMapper;
+import com.simple4j.user.dao.DictMapper;
 import com.simple4j.user.mapstruct.DictMapStruct;
 import com.simple4j.user.request.DictAddOrUpdateRequest;
 import com.simple4j.user.request.DictDetailRequest;
@@ -22,14 +23,11 @@ import com.simple4j.user.request.DictListRequest;
 import com.simple4j.user.request.DictPageRequest;
 import com.simple4j.user.request.DictRemoveRequest;
 import com.simple4j.user.response.DictDetailResponse;
-import com.simple4j.user.service.IDictService;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import static org.springblade.common.constant.CacheNames.DICT_LIST;
-import static org.springblade.common.constant.CacheNames.DICT_VALUE;
 
 /**
  * 服务实现类
@@ -48,20 +46,20 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 	}
 
 	@Override
-	@Cacheable(cacheNames = DICT_VALUE, key = "#code+'_'+#dictKey")
+	@Cacheable(cacheNames = CacheNames.DICT_VALUE, key = "#code+'_'+#dictKey")
 	public String getValue(String code, Integer dictKey) {
 		return StrUtil.nullToDefault(baseMapper.getValue(code, dictKey), StrUtil.EMPTY);
 	}
 
 	@Override
-	@Cacheable(cacheNames = DICT_LIST, key = "#code")
+	@Cacheable(cacheNames = CacheNames.DICT_LIST, key = "#code")
 	public List<DictDetailResponse> getList(String code) {
 		List<Dict> list = baseMapper.getList(code);
 		return dictMapStruct.toVo(list);
 	}
 
 	@Override
-	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE}, allEntries = true)
+	@CacheEvict(cacheNames = {CacheNames.DICT_LIST, CacheNames.DICT_VALUE}, allEntries = true)
 	public boolean submit(DictAddOrUpdateRequest dictAddOrUpdateRequest) {
 		LambdaQueryWrapper<Dict> lqw = Wrappers.<Dict>query().lambda()
 			.eq(Dict::getCode, dictAddOrUpdateRequest.getCode())

@@ -1,19 +1,27 @@
 package com.simple4j.user.service.impl;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import cn.hutool.core.collection.CollUtil;
-import com.newdex.web.jwt.security.JwtProperties;
-import com.newdex.web.jwt.service.AbstractUserDetailsService;
+import cn.hutool.http.ContentType;
+import cn.hutool.json.JSONUtil;
+import com.api.bean.ApiMsg;
+import com.api.bean.ApiResponse;
+import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
+import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
 import com.simple4j.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.dto.JwtDto;
 import com.simple4j.user.response.UserInfo;
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -93,5 +101,23 @@ public class UserDetailServiceImpl extends AbstractUserDetailsService<JwtDto> {
 			throw new UsernameNotFoundException("");
 		}
 		return new JwtDto(userIofo);
+	}
+
+	@Override
+	public void accessDeniedExceptionHandler(javax.servlet.http.HttpServletRequest request,
+			javax.servlet.http.HttpServletResponse response,
+			AccessDeniedException accessDeniedException) throws IOException {
+			//当用户在没有授权的情况下访问受保护的REST资源时，将调用此方法发送403 Forbidden响应
+			response.setContentType(ContentType.JSON.toString(StandardCharsets.UTF_8));
+			JSONUtil.toJsonStr(ApiResponse.to(ApiMsg.FORBIDDEN_ERROR), response.getWriter());
+	}
+
+	@Override
+	public void authenticationExceptionHandler(javax.servlet.http.HttpServletRequest request,
+			javax.servlet.http.HttpServletResponse response,
+			AuthenticationException authenticationException) throws IOException {
+			response.setContentType(ContentType.JSON.toString(StandardCharsets.UTF_8));
+			// 当用户尝试访问安全的REST资源而不提供任何凭据时，将调用此方法发送401 响应
+			JSONUtil.toJsonStr(ApiResponse.to(ApiMsg.UNAUTHORIZED_ERROR), response.getWriter());
 	}
 }

@@ -10,7 +10,7 @@ import com.simple4j.user.service.INavbarMenuService;
 import com.simple4j.user.service.INavbarService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.Navbar;
-import com.simple4j.user.mapper.NavbarMapper;
+import com.simple4j.user.dao.NavbarMapper;
 import com.simple4j.user.mapstruct.NavbarMapStruct;
 import com.simple4j.user.request.NavbarAddOrUpdateRequest;
 import com.simple4j.user.request.NavbarAddRequest;

@@ -4,13 +4,13 @@ import java.util.List;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.api.exception.BusinessException;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.newdex.common.exception.BusinessException;
 import com.simple4j.user.service.IRegionService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.Region;
-import com.simple4j.user.mapper.RegionMapper;
+import com.simple4j.user.dao.RegionMapper;
 import com.simple4j.user.mapstruct.RegionMapStruct;
 import com.simple4j.user.request.RegionAddRequest;
 import com.simple4j.user.request.RegionDetailRequest;
@@ -18,7 +18,6 @@ import com.simple4j.user.request.RegionLazyListRequest;
 import com.simple4j.user.request.RegionRemoveRequest;
 import com.simple4j.user.request.RegionUpdateRequest;
 import com.simple4j.user.response.RegionDetailResponse;
-import com.simple4j.user.service.IRegionService;
 
 import org.springframework.stereotype.Service;
 

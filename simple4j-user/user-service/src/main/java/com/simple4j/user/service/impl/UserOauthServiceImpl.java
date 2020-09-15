@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.simple4j.user.service.IUserOauthService;
 import lombok.AllArgsConstructor;
 import com.simple4j.user.entity.UserOauth;
-import com.simple4j.user.mapper.UserOauthMapper;
+import com.simple4j.user.dao.UserOauthMapper;
 import com.simple4j.user.service.IUserOauthService;
 
 import org.springframework.stereotype.Service;

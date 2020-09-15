@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 #end
 #if($!{cfg.tree})
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.newdex.dao.util.INode;
+import com.simple4j.autoconfigure.util.INode;
 #end
 import java.io.Serializable;
 import java.util.Date;

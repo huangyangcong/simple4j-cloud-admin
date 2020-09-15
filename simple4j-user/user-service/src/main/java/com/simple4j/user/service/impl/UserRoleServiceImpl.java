@@ -7,9 +7,8 @@ import java.util.List;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.simple4j.user.service.IUserRoleService;
+import com.simple4j.user.dao.UserRoleMapper;
 import com.simple4j.user.entity.UserRole;
-import com.simple4j.user.mapper.UserRoleMapper;
 import com.simple4j.user.request.UserRoleGrantRequest;
 import com.simple4j.user.service.IUserRoleService;
 
