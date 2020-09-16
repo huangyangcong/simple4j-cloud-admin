@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.user.base.Page;
 import com.simple4j.user.common.constant.CommonConstant;
-import com.simple4j.user.common.util.SecurityUtils;
+import com.simple4j.user.util.SecurityUtils;
 import com.simple4j.user.mapper.RoleMapper;
 import com.simple4j.user.entity.Role;
 import com.simple4j.user.mapstruct.RoleMapStruct;

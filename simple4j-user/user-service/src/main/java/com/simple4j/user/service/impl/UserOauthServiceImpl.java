@@ -43,6 +43,7 @@ private final UserOauthMapper userOauthMapper;
 		Wrappers.<UserOauth>lambdaQuery().eq(UserOauth::getId, userOauthDetailRequest.getId()));
 		return userOauthMapStruct.toVo(detail);
 	}
+
 	@Override
 	public List<UserOauthDetailResponse>list(UserOauthListRequest userOauthListRequest){
 		LambdaQueryWrapper<UserOauth>queryWrapper = Wrappers.<UserOauth>lambdaQuery();

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.user.base.Page;
 import com.simple4j.user.common.constant.CommonConstant;
-import com.simple4j.user.common.util.SecurityUtils;
+import com.simple4j.user.util.SecurityUtils;
 import com.simple4j.user.service.IDeptService;
 import com.simple4j.user.service.IUserDeptService;
 import com.simple4j.user.util.TreeUtil;
@@ -82,7 +82,7 @@ public class DeptServiceImpl implements IDeptService {
 
 	@Override
 	public List<DeptDetailResponse> list(DeptListRequest deptListRequest) {
-		LambdaQueryWrapper<Dept> queryWrapper = Wrappers.<Dept>lambdaQuery();
+		LambdaQueryWrapper<Dept> queryWrapper = Wrappers.lambdaQuery();
 		List<Dept> pages = deptMapper.list(queryWrapper);
 		return deptMapStruct.toVo(pages);
 	}

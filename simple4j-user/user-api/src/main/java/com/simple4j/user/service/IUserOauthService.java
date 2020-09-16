@@ -10,6 +10,7 @@ import com.simple4j.user.request.UserOauthListRequest;
 import com.simple4j.user.request.UserOauthPageRequest;
 import com.simple4j.user.request.UserOauthRemoveRequest;
 import com.simple4j.user.request.UserOauthUpdateRequest;
+import com.simple4j.user.response.UserInfo;
 import com.simple4j.user.response.UserOauthDetailResponse;
 
 
@@ -56,4 +57,13 @@ public interface IUserOauthService {
 	 * 删除 用户第三方认证表
 	 */
 	boolean remove(UserOauthRemoveRequest userOauthRemoveRequest);
+
+
+	/**
+	 * 用户信息
+	 *
+	 * @param userOauth
+	 * @return
+	 */
+	UserInfo userInfo(UserOauth userOauth);
 }

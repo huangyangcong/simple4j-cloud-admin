@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
 import com.simple4j.user.base.Page;
 import com.simple4j.autoconfigure.jwt.annotation.AnonymousAccess;
+import com.simple4j.user.dto.JwtDto;
 import com.simple4j.user.request.*;
 import com.simple4j.user.response.UserDetailResponse;
 import com.simple4j.user.response.UserLoginResponse;
@@ -15,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -177,8 +179,7 @@ public class UserController {
 	 */
 	@PostMapping("/update-password")
 	@ApiOperation(value = "修改密码", notes = "传入密码")
-	public ApiResponse updatePassword(SecurityUtils user,
-							@ApiParam(value = "旧密码", required = true) @RequestParam String oldPassword,
+	public ApiResponse updatePassword(@ApiParam(value = "旧密码", required = true) @RequestParam String oldPassword,
 							@ApiParam(value = "新密码", required = true) @RequestParam String newPassword,
 							@ApiParam(value = "新密码", required = true) @RequestParam String newPassword1) {
 		boolean temp = userService
@@ -194,24 +195,14 @@ public class UserController {
 	@ApiOperation(value = "导入用户", notes = "传入excel")
 	public ApiResponse importUser(MultipartFile file, Integer isCovered) {
 		String filename = file.getOriginalFilename();
-		if (StringUtils.isEmpty(filename)) {
-			throw new RuntimeException("请上传文件!");
-		}
-		if ((!StringUtils.endsWithIgnoreCase(filename, ".xls") && !StringUtils
-			.endsWithIgnoreCase(filename, ".xlsx"))) {
-			throw new RuntimeException("请上传正确的excel文件!");
-		}
-		InputStream inputStream;
+		InputStream inputStream = null;
 		try {
-			UserImportListener importListener = new UserImportListener(userService);
 			inputStream = new BufferedInputStream(file.getInputStream());
-			ExcelReaderBuilder builder = EasyExcel
-				.read(inputStream, UserExcel.class, importListener);
-			builder.doReadAll();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return R.ok("操作成功");
+		userService.importUser(inputStream, filename);
+		return ApiResponse.ok("操作成功");
 	}
 
 	/**
@@ -222,21 +213,11 @@ public class UserController {
 	@ApiOperation(value = "导出用户", notes = "传入user")
 	public void exportUser(@ApiIgnore UserListRequest userListRequest,
 						   HttpServletResponse response) {
-		LambdaQueryWrapper<User> queryWrapper = Wrappers.<User>lambdaQuery()
-			.eq(StrUtil.isNotEmpty(userListRequest.getAccount()), User::getAccount,
-				userListRequest.getAccount())
-			.eq(StrUtil.isNotEmpty(userListRequest.getRealName()), User::getRealName,
-				userListRequest.getRealName());
-		if (!SecurityUtils.isAdministrator()) {
-			queryWrapper.eq(User::getTenantId, SecurityUtils.getTenantId());
-		}
-		queryWrapper.eq(User::getIsDeleted, CommonConstant.DB_NOT_DELETED);
-		List<UserExcel> list = userService.exportUser(queryWrapper);
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		String fileName = URLEncoder.encode("用户数据导出", StandardCharsets.UTF_8.name());
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
+		userService.exportUser(response.getOutputStream(), userListRequest);
 	}
 
 	/**
@@ -246,12 +227,12 @@ public class UserController {
 	@PostMapping("export-template")
 	@ApiOperation(value = "导出模板")
 	public void exportUser(HttpServletResponse response) {
-		List<UserExcel> list = new ArrayList<>();
+		List<UserExcelImportRequest> list = new ArrayList<>();
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		String fileName = URLEncoder.encode("用户数据模板", StandardCharsets.UTF_8.name());
 		response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-		EasyExcel.write(response.getOutputStream(), UserExcel.class).sheet("用户数据表").doWrite(list);
+		userService.exportUser(response.getOutputStream());
 	}
 
 	/**
@@ -259,7 +240,8 @@ public class UserController {
 	 */
 	@PostMapping("/register-guest")
 	@ApiOperation(value = "第三方注册用户", notes = "传入user")
-	public ApiResponse registerGuest(User user, Long oauthId) {
-		return R.status(userService.registerGuest(user, oauthId));
+	public ApiResponse registerGuest(@Valid @RequestBody UserRegisterGuestRequest userRegisterGuestRequest) {
+		userService.registerGuest(userRegisterGuestRequest);
+		return ApiResponse.ok();
 	}
 }

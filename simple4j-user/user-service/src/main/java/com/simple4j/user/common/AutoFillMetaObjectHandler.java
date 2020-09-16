@@ -3,7 +3,7 @@ package com.simple4j.user.common;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.simple4j.user.common.util.SecurityUtils;
+import com.simple4j.user.util.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 

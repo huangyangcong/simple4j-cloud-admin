@@ -9,7 +9,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.user.common.constant.CommonConstant;
-import com.simple4j.user.common.util.SecurityUtils;
+import com.simple4j.user.util.SecurityUtils;
 import com.simple4j.user.service.IDictService;
 import com.simple4j.user.service.IMenuService;
 import com.simple4j.user.service.IRoleMenuService;

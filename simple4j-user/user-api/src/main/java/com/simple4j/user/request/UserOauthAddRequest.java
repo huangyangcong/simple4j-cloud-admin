@@ -31,6 +31,14 @@ public class UserOauthAddRequest implements Serializable {
 	@ApiModelProperty(name = "user_id", value = "用户ID")
 	@JsonProperty("user_id")
 	private Long userId;
+
+	/**
+	 * 租户ID
+	 */
+	@ApiModelProperty(hidden = true, value = "租户ID")
+	@JsonProperty("tenant_id")
+	private String tenantId;
+
 	/**
 	 * 账号
 	 */

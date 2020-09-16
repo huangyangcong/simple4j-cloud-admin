@@ -1,4 +1,4 @@
-package com.simple4j.user.common.util;
+package com.simple4j.user.util;
 
 import java.util.List;
 

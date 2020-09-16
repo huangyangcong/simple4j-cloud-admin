@@ -14,7 +14,7 @@
  *  this software without specific prior written permission.
  *  Author: Chill 庄骞 (smallchill@163.com)
  */
-package com.simple4j.user.excel;
+package com.simple4j.user.request;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -36,7 +36,7 @@ import lombok.Data;
 @ColumnWidth(25)
 @HeadRowHeight(20)
 @ContentRowHeight(18)
-public class UserExcel implements Serializable {
+public class UserExcelImportRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

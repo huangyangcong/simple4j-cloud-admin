@@ -36,7 +36,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class DictServiceImpl  implements IDictService {
+public class DictServiceImpl implements IDictService {
 
 	private final DictMapper dictMapper;
 	private final DictMapStruct dictMapStruct;

@@ -19,5 +19,6 @@
     	<module>user-front</module>
         <module>user-manager</module>
         <module>user-web</module>
+        <module>start</module>
     </modules>
 </project>

@@ -1,26 +1,22 @@
 package com.simple4j.user.service;
 
 
-import java.util.List;
-
 import com.simple4j.user.base.Page;
-import com.simple4j.user.response.UserInfo;
 import com.simple4j.user.entity.UserOauth;
-import com.simple4j.user.excel.UserExcel;
-import com.simple4j.user.request.UserAddRequest;
-import com.simple4j.user.request.UserDetailRequest;
-import com.simple4j.user.request.UserPageRequest;
-import com.simple4j.user.request.UserRemoveRequest;
-import com.simple4j.user.request.UserResetPasswordRequest;
-import com.simple4j.user.request.UserUpdateRequest;
+import com.simple4j.user.request.*;
 import com.simple4j.user.response.UserDetailResponse;
+import com.simple4j.user.response.UserInfo;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  * 服务类
  *
  * @author Chill
  */
-public interface IUserService{
+public interface IUserService {
 
 	/**
 	 * 新增或修改用户
@@ -35,15 +31,6 @@ public interface IUserService{
 	 * @return
 	 */
 	boolean update(UserUpdateRequest userUpdateRequest);
-
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param user
-	 * @return
-	 */
-	Page<UserDetailResponse> selectUserPage(IPage<User> page, User user);
 
 	/**
 	 * 用户信息
@@ -69,7 +56,7 @@ public interface IUserService{
 	 * @param userOauth
 	 * @return
 	 */
-	UserInfo userInfo(UserOauth userOauth);
+	UserInfo userInfo(UserOauthAddOrUpdateRequest userOauth);
 
 	/**
 	 * 初始化密码
@@ -89,7 +76,7 @@ public interface IUserService{
 	 * @return
 	 */
 	boolean updatePassword(Long userId, String oldPassword, String newPassword,
-		String newPassword1);
+						   String newPassword1);
 
 	/**
 	 * 获取部门名
@@ -99,30 +86,15 @@ public interface IUserService{
 	 */
 	List<String> getDeptName(List<Long> deptIds);
 
-	/**
-	 * 导入用户数据
-	 *
-	 * @param data
-	 * @return
-	 */
-	void importUser(List<UserExcel> data);
-
-	/**
-	 * 获取导出用户数据
-	 *
-	 * @param queryWrapper
-	 * @return
-	 */
-	List<UserExcel> exportUser(Wrapper<User> queryWrapper);
 
 	/**
 	 * 注册用户
 	 *
-	 * @param user
-	 * @param oauthId
+	 * @param userRegisterGuestRequest
 	 * @return
 	 */
-	boolean registerGuest(User user, Long oauthId);
+	boolean registerGuest(UserRegisterGuestRequest userRegisterGuestRequest);
+
 
 	/**
 	 * 根据用户名查找用户信息
@@ -155,4 +127,29 @@ public interface IUserService{
 	 * @return
 	 */
 	boolean remove(UserRemoveRequest userRemoveRequest);
+
+
+	/**
+	 * 导入用户
+	 *
+	 * @param inputStream
+	 * @param filename
+	 */
+	void importUser(InputStream inputStream, String filename);
+
+	/**
+	 * 获取导出用户列表
+	 *
+	 * @param userListRequest
+	 * @return
+	 */
+	void exportUser(OutputStream outputStream, UserListRequest userListRequest);
+
+	/**
+	 * 导出模板
+	 *
+	 * @param outputStream
+	 */
+	void exportUser(OutputStream outputStream);
+
 }
