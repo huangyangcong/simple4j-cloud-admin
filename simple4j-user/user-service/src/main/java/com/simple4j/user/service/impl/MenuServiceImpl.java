@@ -9,6 +9,8 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.user.common.constant.CommonConstant;
+import com.simple4j.user.mapper.RoleMenuMapper;
+import com.simple4j.user.request.*;
 import com.simple4j.user.util.SecurityUtils;
 import com.simple4j.user.service.IDictService;
 import com.simple4j.user.service.IMenuService;
@@ -20,10 +22,6 @@ import com.simple4j.user.entity.Menu;
 import com.simple4j.user.entity.RoleMenu;
 import com.simple4j.user.mapper.MenuMapper;
 import com.simple4j.user.mapstruct.MenuMapStruct;
-import com.simple4j.user.request.MenuDetailRequest;
-import com.simple4j.user.request.MenuListRequest;
-import com.simple4j.user.request.MenuRemoveRequest;
-import com.simple4j.user.request.RoleMenuKeyRequest;
 import com.simple4j.user.response.MenuDetailResponse;
 import com.simple4j.user.response.MenuRoutersResponse;
 import com.simple4j.user.response.RoleMenuKeyResponse;
@@ -45,6 +43,7 @@ public class MenuServiceImpl implements IMenuService {
 	private final IDictService dictService;
 	private final MenuMapStruct menuMapStruct;
 	private final MenuMapper menuMapper;
+	private final RoleMenuMapper roleMenuMapper;
 
 	@Override
 	public MenuDetailResponse detail(MenuDetailRequest menuDetailRequest) {
@@ -67,7 +66,7 @@ public class MenuServiceImpl implements IMenuService {
 	}
 
 	@Override
-	public List<MenuDetailResponse> routes(Long navbarId, List<Long> roleIds) {
+	public List<MenuDetailResponse> routes(MenuRoutersRequest menuRoutersRequest) {
 		////所有菜单
 		//List<Menu> allMenus = baseMapper.allMenu();
 		////角色菜单
@@ -78,6 +77,9 @@ public class MenuServiceImpl implements IMenuService {
 		//List<Menu> menus = routes.stream()
 		//	.filter(x -> x.getCategory() == 1)
 		//	.collect(Collectors.toList());
+		Long navbarId = menuRoutersRequest.getNavbarId();
+		List<Long> roleIds = SecurityUtils.isTenantAdmin() ? null :
+				SecurityUtils.getCurrentUserDataRoles();
 		List<Menu> menus = menuMapper.routes(navbarId, roleIds);
 		return TreeUtil.buildTree(menuMapStruct.toVo(menus));
 	}
@@ -100,7 +102,8 @@ public class MenuServiceImpl implements IMenuService {
 	}
 
 	@Override
-	public List<MenuDetailResponse> buttons(List<Long> roleIds) {
+	public List<MenuDetailResponse> buttons() {
+		List<Long> roleIds = SecurityUtils.getCurrentUserDataRoles();
 		List<Menu> buttons = menuMapper.buttons(roleIds);
 		return TreeUtil.buildTree(menuMapStruct.toVo(buttons));
 	}
@@ -124,17 +127,21 @@ public class MenuServiceImpl implements IMenuService {
 		if (CollUtil.isEmpty(roleMenuKeyRequest.getRoles())) {
 			return roleMenuKeyResponse;
 		}
-		List<RoleMenu> roleMenus = roleMenuService
-			.getPermission(roleMenuKeyRequest.getRoles());
+		List<RoleMenu> roleMenus = roleMenuMapper
+				.list(Wrappers.<RoleMenu>query().lambda()
+						.in(RoleMenu::getRoleId, roleMenuKeyRequest.getRoles()));
 
-		roleMenuKeyResponse.setMenus(roleMenus.stream().map(RoleMenu::getMenuId)
-			.collect(Collectors.toList()));
+		roleMenuKeyResponse.setMenus(roleMenus.stream().map(roleMenu -> roleMenu.getMenuId())
+				.collect(Collectors.toList()));
 		return roleMenuKeyResponse;
 	}
 
 	@Override
 	public List<MenuRoutersResponse> authRoutes() {
-		List<MenuDTO> routes = baseMapper.authRoutes(SecurityUtils.getCurrentUserDataRoles());
+		if (SecurityUtils.getCurrentUserId() == null || SecurityUtils.getCurrentUserId() == 0L) {
+			return null;
+		}
+		List<MenuDTO> routes = menuMapper.authRoutes(SecurityUtils.getCurrentUserDataRoles());
 		return routes.stream().map(
 			route -> new MenuRoutersResponse(route.getPath(), StrUtil.split(route.getAlias(), ',')))
 			.collect(Collectors.toList());
@@ -158,5 +165,11 @@ public class MenuServiceImpl implements IMenuService {
 		menuMapper.physicsDeleteBatchByIds(menuIds);
 		roleMenuService.removeByMenuIds(menuIds);
 		return true;
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public boolean addOrUpdate(MenuAddOrUpdateRequest menuAddOrUpdateRequest){
+		return menuMapper.saveOrUpdate(menuMapStruct.toPo(menuAddOrUpdateRequest));
 	}
 }

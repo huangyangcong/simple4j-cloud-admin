@@ -3,17 +3,5 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.simple4j.user.mapper.NavbarMapper">
 
-	<!-- 通用查询映射结果 -->
-	<resultMap id="NavbarResultMap" type="com.simple4j.user.entity.Navbar">
-		<id column="id" property="id"/>
-		<result column="menu_id" property="menuId"/>
-		<result column="icon" property="icon"/>
-		<result column="top_menu_id" property="NavbarId"/>
-		<result column="create_user" property="createUser"/>
-		<result column="create_time" property="createTime"/>
-		<result column="update_user" property="updateUser"/>
-		<result column="update_time" property="updateTime"/>
-		<result column="is_deleted" property="isDeleted"/>
-	</resultMap>
 
 </mapper>

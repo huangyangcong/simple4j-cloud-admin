@@ -19,6 +19,7 @@ import com.simple4j.user.request.NavbarUpdateRequest;
 import com.simple4j.user.response.NavbarDetailResponse;
 import com.simple4j.user.service.INavbarMenuService;
 import com.simple4j.user.service.INavbarService;
+import com.simple4j.user.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class NavbarServiceImpl implements INavbarService {
 	public List<NavbarDetailResponse> list(NavbarListRequest navbarListRequest) {
 		LambdaQueryWrapper<Navbar> queryWrapper = Wrappers.<Navbar>lambdaQuery()
 				.eq(Navbar::getTenantId,
-						navbarListRequest.getTenantId());
+						SecurityUtils.getTenantId());
 		List<Navbar> pages = navbarMapper.list(queryWrapper);
 		return navbarMapStruct.toVo(pages);
 	}
@@ -69,17 +70,23 @@ public class NavbarServiceImpl implements INavbarService {
 
 	@Override
 	public boolean add(NavbarAddRequest navbarAddRequest) {
-		return navbarMapper.save(navbarMapStruct.toPo(navbarAddRequest));
+		Navbar navbar = navbarMapStruct.toPo(navbarAddRequest);
+		navbar.setTenantId(SecurityUtils.getTenantId());
+		return navbarMapper.save(navbar);
 	}
 
 	@Override
 	public boolean update(NavbarUpdateRequest navbarUpdateRequest) {
-		return navbarMapper.updateByIdBool(navbarMapStruct.toPo(navbarUpdateRequest));
+		Navbar navbar = navbarMapStruct.toPo(navbarUpdateRequest);
+		navbar.setTenantId(SecurityUtils.getTenantId());
+		return navbarMapper.updateByIdBool(navbar);
 	}
 
 	@Override
 	public boolean addOrUpdate(NavbarAddOrUpdateRequest navbarAddOrUpdateRequest) {
-		return navbarMapper.saveOrUpdate(navbarMapStruct.toPo(navbarAddOrUpdateRequest));
+		Navbar navbar = navbarMapStruct.toPo(navbarAddOrUpdateRequest);
+		navbar.setTenantId(SecurityUtils.getTenantId());
+		return navbarMapper.saveOrUpdate(navbar);
 	}
 
 	@Transactional(rollbackFor = Exception.class)

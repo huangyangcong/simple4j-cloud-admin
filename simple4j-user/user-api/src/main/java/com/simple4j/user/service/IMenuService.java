@@ -2,10 +2,7 @@ package com.simple4j.user.service;
 
 import java.util.List;
 
-import com.simple4j.user.request.MenuDetailRequest;
-import com.simple4j.user.request.MenuListRequest;
-import com.simple4j.user.request.MenuRemoveRequest;
-import com.simple4j.user.request.RoleMenuKeyRequest;
+import com.simple4j.user.request.*;
 import com.simple4j.user.response.MenuDetailResponse;
 import com.simple4j.user.response.MenuRoutersResponse;
 import com.simple4j.user.response.RoleMenuKeyResponse;
@@ -25,18 +22,17 @@ public interface IMenuService{
 	/**
 	 * 菜单树形结构
 	 *
-	 * @param roleIds
+	 * @param navbarId
 	 * @return
 	 */
-	List<MenuDetailResponse> routes(Long navbarId, List<Long> roleIds);
+	List<MenuDetailResponse> routes(MenuRoutersRequest menuRoutersRequest);
 
 	/**
 	 * 按钮树形结构
 	 *
-	 * @param roleIds
 	 * @return
 	 */
-	List<MenuDetailResponse> buttons(List<Long> roleIds);
+	List<MenuDetailResponse> buttons();
 
 	/**
 	 * 树形结构
@@ -80,4 +76,10 @@ public interface IMenuService{
 	 * @param menuRemoveRequest
 	 */
 	boolean remove(MenuRemoveRequest menuRemoveRequest);
+
+
+	/**
+	 * 新增或修改 菜单表
+	 */
+	boolean addOrUpdate(MenuAddOrUpdateRequest menuAddOrUpdateRequest);
 }

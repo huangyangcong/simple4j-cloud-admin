@@ -1,6 +1,9 @@
 package com.simple4j.user.controller;
 
+import com.simple4j.user.base.Page;
 import com.simple4j.user.request.*;
+import com.simple4j.user.response.RegionDetailResponse;
+import com.simple4j.user.service.IRegionService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +28,6 @@ import java.util.List;
 public class RegionController {
 
 	private final IRegionService regionService;
-	private final RegionMapStruct regionMapStruct;
 
 	/**
 	 * 详情
@@ -42,10 +44,8 @@ public class RegionController {
 	 */
 	@PostMapping("/list")
 	@ApiOperation(value = "分页", notes = "传入region")
-	public ApiResponse<Page<RegionDetailResponse>> list(@Valid @RequestBody RegionListRequest regionListRequest) {
-		Page<Region> pages = regionService
-			.page(new Page<>(regionListRequest.getPageNo(), regionListRequest.getPageSize()), Wrappers.<Region>lambdaQuery().eq(Region::getCode, regionListRequest.getCode()));
-		return ApiResponse.ok(regionMapStruct.toVo(pages));
+	public ApiResponse<Page<RegionDetailResponse>> list(@Valid @RequestBody RegionPageRequest regionPageRequest) {
+		return ApiResponse.ok(regionService.page(regionPageRequest));
 	}
 
 	/**
@@ -64,7 +64,8 @@ public class RegionController {
 	@PostMapping("/save")
 	@ApiOperation(value = "新增")
 	public ApiResponse save(@Valid @RequestBody RegionAddRequest regionAddRequest) {
-		return R.status(regionService.add(regionAddRequest));
+		regionService.add(regionAddRequest);
+		return ApiResponse.ok();
 	}
 
 	/**
@@ -73,7 +74,9 @@ public class RegionController {
 	@PostMapping("/update")
 	@ApiOperation(value = "修改", notes = "传入region")
 	public ApiResponse update(@Valid @RequestBody RegionUpdateRequest regionUpdateRequest) {
-		return R.status(regionService.update(regionUpdateRequest));
+		regionService.update(regionUpdateRequest);
+		return ApiResponse.ok();
+
 	}
 
 	/**
@@ -82,7 +85,8 @@ public class RegionController {
 	@PostMapping("/submit")
 	@ApiOperation(value = "新增或修改", notes = "传入region")
 	public ApiResponse submit(@Valid @RequestBody RegionAddRequest regionAddRequest) {
-		return R.status(regionService.submit(regionAddRequest));
+		regionService.submit(regionAddRequest);
+		return ApiResponse.ok();
 	}
 
 
@@ -92,7 +96,8 @@ public class RegionController {
 	@PostMapping("/remove")
 	@ApiOperation(value = "删除", notes = "传入主键")
 	public ApiResponse remove(@Valid @RequestBody RegionRemoveRequest regionRemoveRequest) {
-		return R.status(regionService.removeRegion(regionRemoveRequest));
+		regionService.removeRegion(regionRemoveRequest);
+		return ApiResponse.ok();
 	}
 
 }

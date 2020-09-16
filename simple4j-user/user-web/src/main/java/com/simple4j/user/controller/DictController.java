@@ -1,17 +1,15 @@
 package com.simple4j.user.controller;
 
-import com.newdex.web.domain.R;
+import com.simple4j.user.request.DictAddOrUpdateRequest;
+import com.simple4j.user.request.DictDetailRequest;
+import com.simple4j.user.request.DictListRequest;
+import com.simple4j.user.request.DictRemoveRequest;
+import com.simple4j.user.response.DictDetailResponse;
+import com.simple4j.user.service.IDictService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springblade.system.request.DictAddOrUpdateRequest;
-import org.springblade.system.request.DictDetailRequest;
-import org.springblade.system.request.DictListRequest;
-import org.springblade.system.request.DictRemoveRequest;
-import org.springblade.system.response.DictDetailResponse;
-import org.springblade.system.service.IDictService;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-
-import static org.springblade.common.constant.CacheNames.DICT_LIST;
-import static org.springblade.common.constant.CacheNames.DICT_VALUE;
 
 /**
  * 控制器
@@ -72,7 +67,8 @@ public class DictController {
 	@PostMapping("/submit")
 	@ApiOperation(value = "新增或修改", notes = "传入dict")
 	public ApiResponse submit(@Valid @RequestBody DictAddOrUpdateRequest dictAddOrUpdateRequest) {
-		return R.status(dictService.submit(dictAddOrUpdateRequest));
+		dictService.submit(dictAddOrUpdateRequest);
+		return ApiResponse.ok();
 	}
 
 
@@ -80,7 +76,6 @@ public class DictController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@CacheEvict(cacheNames = {DICT_LIST, DICT_VALUE}, allEntries = true)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public ApiResponse remove(@Valid @RequestBody DictRemoveRequest dictRemoveRequest) {
 		dictService.remove(dictRemoveRequest);

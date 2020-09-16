@@ -30,6 +30,9 @@ public class Page<T> {
 	 */
 	private List<T> results;
 
+	public Page() {
+	}
+
 	public Page(long pageNo, long pageSize, long total, List<T> results) {
 		this.pageNo = pageNo;
 		this.pageSize = pageSize;

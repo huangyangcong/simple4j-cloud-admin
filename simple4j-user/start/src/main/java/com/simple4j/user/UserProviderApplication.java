@@ -4,12 +4,14 @@ import org.mybatis.spring.annotation.MapperScan;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
 /**
  * @author hyc
  */
 @SpringCloudApplication
-@MapperScan("com.simple4j.user.dao")
+@EnableOpenApi
+@MapperScan("com.simple4j.user.mapper")
 public class UserProviderApplication {
 
 	public static void main(String[] args) {

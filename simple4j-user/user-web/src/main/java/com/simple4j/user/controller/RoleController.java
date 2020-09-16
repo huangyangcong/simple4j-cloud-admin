@@ -1,11 +1,6 @@
 package com.simple4j.user.controller;
 
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
-import com.simple4j.user.request.MenuGrantRequest;
-import com.simple4j.user.request.RoleDetailRequest;
-import com.simple4j.user.request.RoleListRequest;
-import com.simple4j.user.request.RoleRemoveRequest;
+import com.simple4j.user.request.*;
 import com.simple4j.user.response.RoleDetailResponse;
 import com.simple4j.user.service.IRoleMenuService;
 import com.simple4j.user.service.IRoleService;
@@ -59,8 +54,7 @@ public class RoleController {
 	@PostMapping("/tree")
 	@ApiOperation(value = "树形结构", notes = "树形结构")
 	public ApiResponse<List<RoleDetailResponse>> tree(String tenantId) {
-		List<RoleDetailResponse> tree = roleService
-			.tree(StrUtil.nullToDefault(tenantId, SecurityUtils.getTenantId()));
+		List<RoleDetailResponse> tree = roleService.tree(tenantId);
 		return ApiResponse.ok(tree);
 	}
 
@@ -69,11 +63,9 @@ public class RoleController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperation(value = "新增或修改", notes = "传入role")
-	public ApiResponse submit(@Valid @RequestBody Role role) {
-		if (ObjectUtil.isEmpty(role.getId())) {
-			role.setTenantId(SecurityUtils.getTenantId());
-		}
-		return R.status(roleService.saveOrUpdate(role));
+	public ApiResponse addOrUpdate(@Valid @RequestBody RoleAddOrUpdateRequest roleAddOrUpdateRequest) {
+		roleService.addOrUpdate(roleAddOrUpdateRequest);
+		return ApiResponse.ok();
 	}
 
 
@@ -83,7 +75,8 @@ public class RoleController {
 	@PostMapping("/remove")
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public ApiResponse remove(@RequestBody RoleRemoveRequest roleRemoveRequest) {
-		return R.status(roleService.removeByIds(roleRemoveRequest.getRoleIds()));
+		roleService.remove(roleRemoveRequest);
+		return ApiResponse.ok();
 	}
 
 	/**
@@ -92,7 +85,8 @@ public class RoleController {
 	@PostMapping("/grant")
 	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
 	public ApiResponse grant(@Valid @RequestBody MenuGrantRequest menuGrantRequest) {
-		return R.status(roleMenuService.grant(menuGrantRequest));
+		roleMenuService.grant(menuGrantRequest);
+		return ApiResponse.ok();
 	}
 
 }

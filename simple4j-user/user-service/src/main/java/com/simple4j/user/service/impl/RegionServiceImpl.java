@@ -4,18 +4,17 @@ import java.util.List;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.user.base.BusinessException;
+import com.simple4j.user.base.Page;
+import com.simple4j.user.entity.Post;
+import com.simple4j.user.request.*;
 import com.simple4j.user.service.IRegionService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.Region;
 import com.simple4j.user.mapper.RegionMapper;
 import com.simple4j.user.mapstruct.RegionMapStruct;
-import com.simple4j.user.request.RegionAddRequest;
-import com.simple4j.user.request.RegionDetailRequest;
-import com.simple4j.user.request.RegionLazyListRequest;
-import com.simple4j.user.request.RegionRemoveRequest;
-import com.simple4j.user.request.RegionUpdateRequest;
 import com.simple4j.user.response.RegionDetailResponse;
 
 import org.springframework.stereotype.Service;
@@ -109,5 +108,16 @@ public class RegionServiceImpl implements IRegionService {
 		return regionMapStruct.toVo(regionMapper.lazyList(regionLazyListRequest.getParentCode(),
 			regionLazyListRequest.getCode()
 			, regionLazyListRequest.getName()));
+	}
+
+	@Override
+	public Page<RegionDetailResponse> page(RegionPageRequest regionPageRequest) {
+		IPage<Region> page = regionMapper
+				.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(regionPageRequest.getPageNo(),
+								regionPageRequest.getPageSize()),
+						Wrappers.<Region>lambdaQuery().eq(Region::getCode, regionPageRequest.getCode()));
+		Page<Region> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
+				page.getRecords());
+		return regionMapStruct.toVo(pages);
 	}
 }

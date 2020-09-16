@@ -1,17 +1,19 @@
 package com.simple4j.user.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.newdex.web.domain.R;
+import com.simple4j.user.base.Page;
+import com.simple4j.user.request.*;
+import com.simple4j.user.response.NavbarDetailResponse;
+import com.simple4j.user.response.NavbarPermissionResponse;
+import com.simple4j.user.service.INavbarMenuService;
+import com.simple4j.user.service.INavbarService;
+import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springblade.common.util.SecurityUtils;
-import org.springblade.system.request.*;
-import org.springblade.system.response.NavbarDetailResponse;
-import org.springblade.system.response.NavbarPermissionResponse;
-import org.springblade.system.service.INavbarMenuService;
-import org.springblade.system.service.INavbarService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -48,7 +50,6 @@ public class NavbarController {
 	@PostMapping("/list")
 	@ApiOperation(value = "列表")
 	public ApiResponse<List<NavbarDetailResponse>> list(@Valid @RequestBody NavbarListRequest navbarListRequest) {
-		navbarListRequest.setTenantId(SecurityUtils.getTenantId());
 		List<NavbarDetailResponse> pages = navbarService.list(navbarListRequest);
 		return ApiResponse.ok(pages);
 	}
@@ -59,9 +60,8 @@ public class NavbarController {
 	 */
 	@PostMapping("/page")
 	@ApiOperation(value = "分页")
-	public ApiResponse<IPage<NavbarDetailResponse>> page(@Valid @RequestBody NavbarPageRequest navbarPageRequest) {
-		IPage<NavbarDetailResponse> pages = navbarService.page(navbarPageRequest);
-		return ApiResponse.ok(pages);
+	public ApiResponse<Page<NavbarDetailResponse>> page(@Valid @RequestBody NavbarPageRequest navbarPageRequest) {
+		return ApiResponse.ok(navbarService.page(navbarPageRequest));
 	}
 
 	/**
@@ -70,7 +70,6 @@ public class NavbarController {
 	@PostMapping("/add")
 	@ApiOperation(value = "新增")
 	public ApiResponse add(@Valid @RequestBody NavbarAddRequest navbarAddRequest) {
-		navbarAddRequest.setTenantId(SecurityUtils.getTenantId());
 		navbarService.add(navbarAddRequest);
 		return ApiResponse.ok();
 	}
@@ -81,7 +80,6 @@ public class NavbarController {
 	@PostMapping("/update")
 	@ApiOperation(value = "修改")
 	public ApiResponse update(@Valid @RequestBody NavbarUpdateRequest navbarUpdateRequest) {
-		navbarUpdateRequest.setTenantId(SecurityUtils.getTenantId());
 		navbarService.update(navbarUpdateRequest);
 		return ApiResponse.ok();
 	}
@@ -92,7 +90,6 @@ public class NavbarController {
 	@PostMapping("/submit")
 	@ApiOperation(value = "新增或修改")
 	public ApiResponse addOrUpdate(@Valid @RequestBody NavbarAddOrUpdateRequest navbarAddOrUpdateRequest) {
-		navbarAddOrUpdateRequest.setTenantId(SecurityUtils.getTenantId());
 		navbarService.addOrUpdate(navbarAddOrUpdateRequest);
 		return ApiResponse.ok();
 	}

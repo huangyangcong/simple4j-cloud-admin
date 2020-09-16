@@ -1,19 +1,19 @@
 package com.simple4j.user.controller;
 
-import cn.hutool.core.util.StrUtil;
 import com.simple4j.user.base.Page;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.newdex.web.domain.R;
+import com.simple4j.user.request.*;
+import com.simple4j.user.response.DeptDetailResponse;
+import com.simple4j.user.service.IDeptService;
+import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springblade.common.util.SecurityUtils;
-import org.springblade.system.mapstruct.DeptMapStruct;
-import org.springblade.system.request.*;
-import org.springblade.system.response.DeptDetailResponse;
-import org.springblade.system.service.IDeptService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,7 +30,6 @@ import java.util.List;
 public class DeptController {
 
 	private IDeptService deptService;
-	private DeptMapStruct deptMapStruct;
 
 	/**
 	 * 详情
@@ -45,10 +44,6 @@ public class DeptController {
 	 * 列表
 	 */
 	@PostMapping("/page")
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "deptName", value = "部门名称", paramType = "query", dataType = "string"),
-		@ApiImplicitParam(name = "fullName", value = "部门全称", paramType = "query", dataType = "string")
-	})
 	@ApiOperation(value = "列表")
 	public ApiResponse<Page<DeptDetailResponse>> list(@Valid @RequestBody DeptPageRequest deptPageRequest) {
 		return ApiResponse.ok(deptService.page(deptPageRequest));
@@ -62,8 +57,7 @@ public class DeptController {
 	@PostMapping("/tree")
 	@ApiOperation(value = "树形结构", notes = "树形结构")
 	public ApiResponse<List<DeptDetailResponse>> tree(String tenantId) {
-		List<DeptDetailResponse> tree = deptService.tree(
-			StrUtil.nullToDefault(tenantId, SecurityUtils.getTenantId()));
+		List<DeptDetailResponse> tree = deptService.tree(tenantId);
 		return ApiResponse.ok(tree);
 	}
 

@@ -1,13 +1,11 @@
 package com.simple4j.user.controller;
 
 
-import cn.hutool.core.util.StrUtil;
-import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
-import com.simple4j.user.base.Page;
 import com.simple4j.autoconfigure.jwt.annotation.AnonymousAccess;
-import com.simple4j.user.dto.JwtDto;
+import com.simple4j.user.base.Page;
 import com.simple4j.user.request.*;
 import com.simple4j.user.response.UserDetailResponse;
+import com.simple4j.user.response.UserInfo;
 import com.simple4j.user.response.UserLoginResponse;
 import com.simple4j.user.service.IUserRoleService;
 import com.simple4j.user.service.IUserService;
@@ -16,9 +14,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
@@ -30,8 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 控制器
@@ -44,10 +37,7 @@ import java.util.List;
 public class UserController {
 
 	private final IUserService userService;
-	private final AbstractUserDetailsService userDetailsService;
 	private final IUserRoleService userRoleService;
-	private final UserMapStruct userMapStruct;
-	private final RedisTemplate redisTemplate;
 
 	/**
 	 * 用户登录
@@ -56,25 +46,7 @@ public class UserController {
 	@PostMapping("/login")
 	@AnonymousAccess
 	public ApiResponse<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
-		//TODO 用户验证码
-
-		String key = userLoginRequest.getCaptchaKey();
-		String code = userLoginRequest.getCaptchaCode();
-		// 获取验证码
-		String redisCode = String
-			.valueOf(redisTemplate.opsForValue().get(CacheNames.CAPTCHA_KEY + key));
-		// 判断验证码
-		if (code == null || !StrUtil.equalsIgnoreCase(redisCode, code)) {
-//			throw new BusinessException("验证码错误");
-		}
-
-		String token = userDetailsService.usernameAndPasswordAuth(userLoginRequest.getUsername(),
-			userLoginRequest.getPassword());
-		JwtDto jwtUserDto = (JwtDto) SecurityContextHolder.getContext().getAuthentication()
-			.getPrincipal();
-		UserLoginResponse userLoginResponse = userMapStruct
-			.toVo(jwtUserDto.getUserInfo());
-		userLoginResponse.setToken(token);
+		UserLoginResponse userLoginResponse = userService.login(userLoginRequest);
 		return ApiResponse.ok(userLoginResponse);
 	}
 
@@ -85,7 +57,7 @@ public class UserController {
 	@PostMapping("/logout")
 	@AnonymousAccess
 	public ApiResponse logout() {
-		userDetailsService.logout(SecurityUtils.getCurrentUsername());
+		userService.logout("");
 		return ApiResponse.ok();
 	}
 
@@ -105,7 +77,7 @@ public class UserController {
 	@ApiOperation(value = "查看详情", notes = "传入id")
 	@PostMapping("/info")
 	public ApiResponse<UserInfo> info() {
-		return ApiResponse.ok(SecurityUtils.getCurrentUser().getUserInfo());
+		return ApiResponse.ok(userService.currentUserInfo());
 	}
 
 	/**
@@ -133,7 +105,6 @@ public class UserController {
 	@PostMapping("/update")
 	@ApiOperation(value = "修改", notes = "传入User")
 	public ApiResponse update(@Valid @RequestBody UserUpdateRequest userUpdateRequest) {
-		userUpdateRequest.setTenantId(SecurityUtils.getTenantId());
 		userService.update(userUpdateRequest);
 		return ApiResponse.ok();
 	}
@@ -149,12 +120,6 @@ public class UserController {
 	}
 
 
-	/**
-	 * 设置菜单权限
-	 *
-	 * @param userRoleGrantRequest
-	 * @return
-	 */
 	@PostMapping("/grant")
 	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
 	public ApiResponse grant(@Valid @RequestBody UserRoleGrantRequest userRoleGrantRequest) {
@@ -165,8 +130,8 @@ public class UserController {
 	@PostMapping("/reset-password")
 	@ApiOperation(value = "初始化密码", notes = "传入userId集合")
 	public ApiResponse resetPassword(UserResetPasswordRequest userResetPasswordRequest) {
-		boolean temp = userService.resetPassword(userResetPasswordRequest);
-		return R.status(temp);
+		userService.resetPassword(userResetPasswordRequest);
+		return ApiResponse.ok();
 	}
 
 	/**
@@ -180,12 +145,12 @@ public class UserController {
 	@PostMapping("/update-password")
 	@ApiOperation(value = "修改密码", notes = "传入密码")
 	public ApiResponse updatePassword(@ApiParam(value = "旧密码", required = true) @RequestParam String oldPassword,
-							@ApiParam(value = "新密码", required = true) @RequestParam String newPassword,
-							@ApiParam(value = "新密码", required = true) @RequestParam String newPassword1) {
+									  @ApiParam(value = "新密码", required = true) @RequestParam String newPassword,
+									  @ApiParam(value = "新密码", required = true) @RequestParam String newPassword1) {
 		boolean temp = userService
-			.updatePassword(SecurityUtils.getCurrentUserId(), oldPassword, newPassword,
-				newPassword1);
-		return R.status(temp);
+				.updatePassword(oldPassword, newPassword,
+						newPassword1);
+		return ApiResponse.ok();
 	}
 
 	/**
@@ -227,7 +192,6 @@ public class UserController {
 	@PostMapping("export-template")
 	@ApiOperation(value = "导出模板")
 	public void exportUser(HttpServletResponse response) {
-		List<UserExcelImportRequest> list = new ArrayList<>();
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		String fileName = URLEncoder.encode("用户数据模板", StandardCharsets.UTF_8.name());

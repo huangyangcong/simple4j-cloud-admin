@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.simple4j.common.orm.BaseEntity;
+import com.simple4j.user.base.BaseEntity;
 
 import java.util.Scanner;
 

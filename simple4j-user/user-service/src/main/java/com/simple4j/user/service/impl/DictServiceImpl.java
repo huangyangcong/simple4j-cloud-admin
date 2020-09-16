@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.simple4j.user.base.Page;
 import com.simple4j.user.common.constant.CacheNames;
+import com.simple4j.user.common.constant.CommonConstant;
 import com.simple4j.user.mapper.DictMapper;
 import com.simple4j.user.entity.Dict;
 import com.simple4j.user.mapstruct.DictMapStruct;
@@ -104,6 +105,7 @@ public class DictServiceImpl implements IDictService {
 		return dictMapStruct.toVo(pages);
 	}
 
+	@CacheEvict(cacheNames = {CacheNames.DICT_LIST, CacheNames.DICT_VALUE}, allEntries = true)
 	@Override
 	public boolean remove(DictRemoveRequest dictRemoveRequest) {
 		return dictMapper.removeByIds(dictRemoveRequest.getIds());

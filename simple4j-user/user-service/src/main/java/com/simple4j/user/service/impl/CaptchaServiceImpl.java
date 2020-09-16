@@ -2,6 +2,8 @@ package com.simple4j.user.service.impl;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
+import cn.hutool.core.util.StrUtil;
+import com.simple4j.user.base.BusinessException;
 import com.simple4j.user.common.constant.CacheNames;
 import com.simple4j.user.response.CaptchaResponse;
 import com.simple4j.user.service.ICaptchaService;
@@ -36,5 +38,19 @@ public class CaptchaServiceImpl implements ICaptchaService {
 		captchaResponse.setKey(key);
 		captchaResponse.setImage("data:image/jpg;base64," + imageBase64);
 		return captchaResponse;
+	}
+	@Override
+	public void verify(String captchaKey, String captchaCode) {
+		String redisCode = String
+				.valueOf(redisTemplate.opsForValue().get(CacheNames.CAPTCHA_KEY + captchaKey));
+		// 判断验证码
+		if (captchaCode == null || !StrUtil.equalsIgnoreCase(redisCode, captchaCode)) {
+			throw new BusinessException("验证码错误");
+		}
+	}
+	@Override
+	public void deleteCaptcha(String captchaKey) {
+		// 删除验证码
+		 redisTemplate.delete(CacheNames.CAPTCHA_KEY + captchaKey);
 	}
 }

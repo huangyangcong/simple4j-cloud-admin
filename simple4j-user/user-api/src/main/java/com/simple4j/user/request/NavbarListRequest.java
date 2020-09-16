@@ -19,11 +19,4 @@ public class NavbarListRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 租户ID
-	 */
-	@ApiModelProperty(hidden = true, value = "租户ID")
-	@JsonProperty("tenant_id")
-	private String tenantId;
-
 }

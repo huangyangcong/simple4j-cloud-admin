@@ -1,16 +1,18 @@
 package com.simple4j.user.controller;
 
-import com.newdex.web.domain.R;
+import com.simple4j.user.request.*;
+import com.simple4j.user.response.MenuDetailResponse;
+import com.simple4j.user.response.MenuRoutersResponse;
+import com.simple4j.user.response.RoleMenuKeyResponse;
+import com.simple4j.user.service.IMenuService;
+import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import org.springblade.common.util.SecurityUtils;
-import org.springblade.system.entity.Menu;
-import org.springblade.system.request.*;
-import org.springblade.system.response.MenuDetailResponse;
-import org.springblade.system.response.MenuRoutersResponse;
-import org.springblade.system.response.RoleMenuKeyResponse;
-import org.springblade.system.service.IMenuService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -51,8 +53,9 @@ public class MenuController {
 	 */
 	@PostMapping("/submit")
 	@ApiOperation(value = "新增或修改", notes = "传入menu")
-	public ApiResponse submit(@Valid @RequestBody Menu menu) {
-		return R.status(menuService.saveOrUpdate(menu));
+	public ApiResponse addOrUpdate(@Valid @RequestBody MenuAddOrUpdateRequest menuAddOrUpdateRequest) {
+		menuService.addOrUpdate(menuAddOrUpdateRequest);
+		return ApiResponse.ok();
 	}
 
 
@@ -62,7 +65,8 @@ public class MenuController {
 	@PostMapping("/remove")
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public ApiResponse remove(@RequestBody MenuRemoveRequest menuRemoveRequest) {
-		return R.status(menuService.removeByIds(menuRemoveRequest.getMenuIds()));
+		menuService.remove(menuRemoveRequest);
+		return ApiResponse.ok();
 	}
 
 	/**
@@ -72,8 +76,7 @@ public class MenuController {
 	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
 	public ApiResponse<List<MenuDetailResponse>> routes(@Valid @RequestBody MenuRoutersRequest menuRoutersRequest) {
 		List<MenuDetailResponse> list =
-			menuService.routes(menuRoutersRequest.getNavbarId(), SecurityUtils.isTenantAdmin() ? null :
-				SecurityUtils.getCurrentUserDataRoles());
+				menuService.routes(menuRoutersRequest);
 		return ApiResponse.ok(list);
 	}
 
@@ -83,7 +86,7 @@ public class MenuController {
 	@PostMapping("/buttons")
 	@ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
 	public ApiResponse<List<MenuDetailResponse>> buttons() {
-		return ApiResponse.ok(menuService.buttons(SecurityUtils.getCurrentUserDataRoles()));
+		return ApiResponse.ok(menuService.buttons());
 	}
 
 	/**
@@ -119,18 +122,12 @@ public class MenuController {
 	@PostMapping("auth-routes")
 	@ApiOperation(value = "菜单的角色权限")
 	public ApiResponse<List<MenuRoutersResponse>> authRoutes() {
-		if (SecurityUtils.getCurrentUserId() == null || SecurityUtils.getCurrentUserId() == 0L) {
-			return null;
-		}
 		return ApiResponse.ok(menuService.authRoutes());
 	}
 
 	@PostMapping("/top-menu")
 	@ApiOperation(value = "顶部菜单")
 	public ApiResponse<List<MenuRoutersResponse>> topMenu() {
-		if (SecurityUtils.getCurrentUserId() == null || SecurityUtils.getCurrentUserId() == 0L) {
-			return null;
-		}
 		return ApiResponse.ok(menuService.authRoutes());
 	}
 }

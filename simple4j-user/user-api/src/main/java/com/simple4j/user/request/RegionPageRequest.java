@@ -17,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "行政区划表分页请求实体类", description = "行政区划表分页请求实体类")
-public class RegionPageRequest implements Serializable {
+public class RegionPageRequest extends RegionListRequest {
 
 	private static final long serialVersionUID = 1L;
 

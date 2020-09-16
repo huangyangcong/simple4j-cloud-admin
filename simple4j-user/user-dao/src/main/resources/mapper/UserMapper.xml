@@ -3,35 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.simple4j.user.mapper.UserMapper">
 
-	<!-- 通用查询映射结果 -->
-	<resultMap id="userResultMap" type="com.simple4j.user.entity.User">
-		<result column="id" property="id"/>
-		<result column="tenant_id" property="tenantId"/>
-		<result column="create_user" property="createUser"/>
-		<result column="create_time" property="createTime"/>
-		<result column="update_user" property="updateUser"/>
-		<result column="update_time" property="updateTime"/>
-		<result column="status" property="status"/>
-		<result column="is_deleted" property="isDeleted"/>
-		<result column="code" property="code"/>
-		<result column="account" property="account"/>
-		<result column="password" property="password"/>
-		<result column="name" property="name"/>
-		<result column="real_name" property="realName"/>
-		<result column="email" property="email"/>
-		<result column="phone" property="phone"/>
-		<result column="birthday" property="birthday"/>
-		<result column="sex" property="sex"/>
-		<result column="role_id" property="roleId"/>
-		<result column="dept_id" property="deptId"/>
-	</resultMap>
-
-	<!-- 通用查询结果列 -->
-	<select id="selectUserPage" resultMap="userResultMap">
-        select * from simple4j_user where is_deleted = 0
-    </select>
-
-	<select id="getUser" resultMap="userResultMap">
+	<select id="getUser" resultType="com.simple4j.user.entity.User">
         SELECT
             *
         FROM
@@ -65,10 +37,6 @@
 		</foreach>
 		and is_deleted = 0
 	</select>
-
-	<select id="exportUser" resultType="com.simple4j.user.excel.UserExcel">
-        SELECT id, tenant_id, account, name, real_name, email, phone, birthday, role_id, dept_id, post_id FROM simple4j_user ${ew.customSqlSegment}
-    </select>
 
 	<sql id="baseColumnList">
         select id,

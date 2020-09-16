@@ -13,4 +13,20 @@ public interface ICaptchaService {
 	 * @return
 	 */
 	CaptchaResponse captcha();
+
+	/**
+	 * 校验验证码
+	 *
+	 * @param captchaKey
+	 * @param captchaCode
+	 * @return
+	 */
+	void verify(String captchaKey, String captchaCode);
+
+	/**
+	 * 删除验证码
+	 *
+	 * @param captchaKey
+	 */
+	void deleteCaptcha(String captchaKey);
 }

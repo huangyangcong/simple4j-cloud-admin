@@ -1,22 +1,15 @@
 package com.simple4j.user.service;
 
 
+import com.simple4j.user.base.Page;
+import com.simple4j.user.request.*;
+import com.simple4j.user.response.UserDetailResponse;
+import com.simple4j.user.response.UserInfo;
+import com.simple4j.user.response.UserLoginResponse;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
-
-import com.simple4j.user.base.Page;
-import com.simple4j.user.request.UserAddRequest;
-import com.simple4j.user.request.UserDetailRequest;
-import com.simple4j.user.request.UserListRequest;
-import com.simple4j.user.request.UserOauthAddOrUpdateRequest;
-import com.simple4j.user.request.UserPageRequest;
-import com.simple4j.user.request.UserRegisterGuestRequest;
-import com.simple4j.user.request.UserRemoveRequest;
-import com.simple4j.user.request.UserResetPasswordRequest;
-import com.simple4j.user.request.UserUpdateRequest;
-import com.simple4j.user.response.UserDetailResponse;
-import com.simple4j.user.response.UserInfo;
 
 /**
  * 服务类
@@ -38,6 +31,13 @@ public interface IUserService {
 	 * @return
 	 */
 	boolean update(UserUpdateRequest userUpdateRequest);
+
+	/**
+	 * 当前用户信息
+	 *
+	 * @return
+	 */
+	UserInfo currentUserInfo();
 
 	/**
 	 * 用户信息
@@ -82,8 +82,8 @@ public interface IUserService {
 	 * @param newPassword1
 	 * @return
 	 */
-	boolean updatePassword(Long userId, String oldPassword, String newPassword,
-			String newPassword1);
+	boolean updatePassword(String oldPassword, String newPassword,
+						   String newPassword1);
 
 	/**
 	 * 获取部门名
@@ -101,15 +101,6 @@ public interface IUserService {
 	 * @return
 	 */
 	boolean registerGuest(UserRegisterGuestRequest userRegisterGuestRequest);
-
-
-	/**
-	 * 根据用户名查找用户信息
-	 *
-	 * @param username
-	 * @return
-	 */
-	UserInfo loadUserByUsername(String username);
 
 	/**
 	 * 获取用户列表
@@ -167,4 +158,18 @@ public interface IUserService {
 	 */
 	void exportUser(OutputStream outputStream);
 
+	/**
+	 * 用户登录
+	 *
+	 * @param userLoginRequest
+	 * @return
+	 */
+	UserLoginResponse login(UserLoginRequest userLoginRequest);
+
+	/**
+	 * 登出
+	 *
+	 * @param username
+	 */
+	void logout(String username);
 }

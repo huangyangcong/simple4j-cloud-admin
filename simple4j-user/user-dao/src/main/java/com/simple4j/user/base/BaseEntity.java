@@ -1,4 +1,4 @@
-package com.simple4j.common.orm;
+package com.simple4j.user.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;

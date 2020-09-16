@@ -3,10 +3,7 @@ package com.simple4j.user.service;
 import java.util.List;
 
 import com.simple4j.user.base.Page;
-import com.simple4j.user.request.RoleDetailRequest;
-import com.simple4j.user.request.RoleListRequest;
-import com.simple4j.user.request.RolePageRequest;
-import com.simple4j.user.request.RoleRemoveRequest;
+import com.simple4j.user.request.*;
 import com.simple4j.user.response.RoleDetailResponse;
 
 /**
@@ -65,6 +62,11 @@ public interface IRoleService{
 	 */
 	List<String> getRoleAlias(Long userId);
 
+
+	/**
+	 * 新增或修改 角色表
+	 */
+	boolean addOrUpdate(RoleAddOrUpdateRequest roleAddOrUpdateRequest);
 
 	/**
 	 * 查询角色详情

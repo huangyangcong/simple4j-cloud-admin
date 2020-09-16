@@ -1,20 +1,17 @@
 package com.simple4j.user.service;
 
-import java.util.List;
-
-import com.simple4j.user.request.RegionAddRequest;
-import com.simple4j.user.request.RegionDetailRequest;
-import com.simple4j.user.request.RegionLazyListRequest;
-import com.simple4j.user.request.RegionRemoveRequest;
-import com.simple4j.user.request.RegionUpdateRequest;
+import com.simple4j.user.base.Page;
+import com.simple4j.user.request.*;
 import com.simple4j.user.response.RegionDetailResponse;
+
+import java.util.List;
 
 /**
  * 行政区划表 服务类
  *
  * @author Chill
  */
-public interface IRegionService{
+public interface IRegionService {
 
 	/**
 	 * 提交
@@ -65,4 +62,12 @@ public interface IRegionService{
 	 * @return
 	 */
 	boolean update(RegionUpdateRequest regionUpdateRequest);
+
+	/**
+	 * 分页获取
+	 *
+	 * @param regionPageRequest
+	 * @return
+	 */
+	Page<RegionDetailResponse> page(RegionPageRequest regionPageRequest);
 }

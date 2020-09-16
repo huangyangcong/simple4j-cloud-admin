@@ -44,7 +44,7 @@ public class DeptServiceImpl implements IDeptService {
 
 	@Override
 	public List<DeptDetailResponse> tree(String tenantId) {
-		List<Dept> depts = deptMapper.tree(tenantId);
+		List<Dept> depts = deptMapper.tree(StrUtil.nullToDefault(tenantId, SecurityUtils.getTenantId()));
 		return TreeUtil.buildTree(deptMapStruct.toVo(depts));
 	}
 

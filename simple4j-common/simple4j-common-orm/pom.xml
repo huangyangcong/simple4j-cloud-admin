@@ -11,14 +11,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>simple4j-common-orm</artifactId>
 	<dependencies>
-		<dependency>
-			<groupId>com.simple4j.boot</groupId>
-			<artifactId>simple4j-springboot-starter-mybatis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
+
 	</dependencies>
 </project>

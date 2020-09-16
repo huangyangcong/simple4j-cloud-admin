@@ -1,6 +1,7 @@
 package com.simple4j.user.service.impl;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
@@ -13,19 +14,24 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.google.common.collect.Lists;
+import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
+import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
 import com.simple4j.user.base.BusinessException;
 import com.simple4j.user.base.Page;
 import com.simple4j.user.common.constant.CommonConstant;
-import com.simple4j.user.response.UserOauthDetailResponse;
+import com.simple4j.user.dto.JwtDto;
 import com.simple4j.user.entity.User;
+import com.simple4j.user.excel.UserExcelImport;
 import com.simple4j.user.mapper.UserMapper;
 import com.simple4j.user.mapstruct.UserMapStruct;
 import com.simple4j.user.request.*;
-import com.simple4j.user.response.TenantDetailResponse;
-import com.simple4j.user.response.UserDetailResponse;
-import com.simple4j.user.response.UserInfo;
+import com.simple4j.user.response.*;
 import com.simple4j.user.service.*;
+import com.simple4j.user.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +42,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 服务实现类
@@ -44,9 +52,10 @@ import java.util.Objects;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implements IUserService {
 
 	private final UserMapStruct userMapStruct;
+	private final JwtProperties jwtProperties;
 
 	private final UserMapper userMapper;
 	private final IRoleService roleService;
@@ -60,6 +69,8 @@ public class UserServiceImpl implements IUserService {
 	private final IRoleMenuService roleMenuService;
 	private final IDictService dictService;
 	private final PasswordEncoder passwordEncoder;
+	private final ICaptchaService captchaService;
+	private final RedisTemplate redisTemplate;
 
 	@Override
 	public Page<UserDetailResponse> page(
@@ -123,7 +134,7 @@ public class UserServiceImpl implements IUserService {
 			userAddRequest.setPassword(passwordEncoder.encode(userAddRequest.getPassword()));
 		}
 		Integer cnt = userMapper.selectCount(
-				Wrappers.<User>query().lambda().eq(User::getTenantId, userAddRequest.getTenantId())
+				Wrappers.<User>query().lambda().eq(User::getTenantId, SecurityUtils.getTenantId())
 						.eq(User::getAccount, userAddRequest.getAccount()));
 		if (cnt > 0) {
 			throw new BusinessException("当前用户已存在!");
@@ -140,7 +151,7 @@ public class UserServiceImpl implements IUserService {
 			userUpdateRequest.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
 		}
 		Integer cnt = userMapper.selectCount(
-				Wrappers.<User>query().lambda().eq(User::getTenantId, userUpdateRequest.getTenantId())
+				Wrappers.<User>query().lambda().eq(User::getTenantId, SecurityUtils.getTenantId())
 						.eq(User::getAccount, userUpdateRequest.getAccount()));
 		if (cnt == 0) {
 			throw new BusinessException("当前用户不存在!");
@@ -161,6 +172,11 @@ public class UserServiceImpl implements IUserService {
 		userDeptService.grant(userIds, userAddRequest.getDepts());
 		//授予岗位
 		userPostService.grant(userIds, userAddRequest.getPosts());
+	}
+
+	@Override
+	public UserInfo currentUserInfo() {
+		return SecurityUtils.getCurrentUser().getUserInfo();
 	}
 
 	@Override
@@ -218,8 +234,9 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public boolean updatePassword(Long userId, String oldPassword, String newPassword,
+	public boolean updatePassword(String oldPassword, String newPassword,
 								  String newPassword1) {
+		Long userId = SecurityUtils.getCurrentUserId();
 		User user = userMapper.getById(userId);
 		if (!newPassword.equals(newPassword1)) {
 			throw new BusinessException("请输入正确的确认密码!");
@@ -251,12 +268,12 @@ public class UserServiceImpl implements IUserService {
 		//默认每隔3000条存储数据库
 		int batchCount = 3000;
 		//缓存的数据列表
-		List<UserExcelImportRequest> list = new ArrayList<>();
+		List<UserExcelImport> list = new ArrayList<>();
 
-		ExcelReaderBuilder builder = EasyExcel.read(inputStream, UserExcelImportRequest.class,
-				new AnalysisEventListener<UserExcelImportRequest>() {
+		ExcelReaderBuilder builder = EasyExcel.read(inputStream, UserExcelImport.class,
+				new AnalysisEventListener<UserExcelImport>() {
 					@Override
-					public void invoke(UserExcelImportRequest data, AnalysisContext context) {
+					public void invoke(UserExcelImport data, AnalysisContext context) {
 						list.add(data);
 						// 达到BATCH_COUNT，则调用importer方法入库，防止数据几万条数据在内存，容易OOM
 						if (list.size() >= batchCount) {
@@ -275,7 +292,7 @@ public class UserServiceImpl implements IUserService {
 						list.clear();
 					}
 
-					public void importUser(List<UserExcelImportRequest> data) {
+					public void importUser(List<UserExcelImport> data) {
 						data.forEach(userExcel -> {
 							User user = Objects.requireNonNull(userMapStruct.toPo(userExcel));
 							// 设置默认密码
@@ -306,24 +323,24 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void exportUser(OutputStream outputStream, UserListRequest userListRequest) {
 		List<UserDetailResponse> users = this.list(userListRequest);
-		List<UserExcelImportRequest> userExcelImportList = userMapStruct.toExcel(users);
+		List<UserExcelImport> userExcelImportList = userMapStruct.toExcel(users);
 		userExcelImportList.forEach(user -> {
 			user.setRoleName(roleService.getRoleNames(user.getId()));
 			user.setDeptName(deptService.getDeptNames(user.getId()));
 			user.setPostName(postService.getPostNames(user.getId()));
 		});
-		EasyExcel.write(outputStream, UserExcelImportRequest.class).sheet("用户数据表").doWrite(userExcelImportList);
+		EasyExcel.write(outputStream, UserExcelImport.class).sheet("用户数据表").doWrite(userExcelImportList);
 	}
 
 	@Override
 	public void exportUser(OutputStream outputStream) {
-		EasyExcel.write(outputStream, UserExcelImportRequest.class).sheet("用户数据表").doWrite(new ArrayList<>());
+		EasyExcel.write(outputStream, UserExcelImport.class).sheet("用户数据表").doWrite(new ArrayList<>());
 	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public boolean registerGuest(UserRegisterGuestRequest userRegisterGuestRequest) {
-		String tenantId = userRegisterGuestRequest.getTenantId();
+		String tenantId = SecurityUtils.getTenantId();
 		Long oauthId = userRegisterGuestRequest.getOauthId();
 		TenantDetailResponse tenant = tenantService.getByTenantId(tenantId);
 		if (tenant == null || tenant.getId() == null) {
@@ -347,22 +364,97 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public UserInfo loadUserByUsername(String username) {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userMapper
 				.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAccount, username));
-		if (ObjectUtil.isNotEmpty(user)) {
-			UserInfo userInfo = userMapStruct.toUserInfo(user);
-			List<Long> roleIds = userRoleService.getRoleIds(user.getId());
-			userInfo.setRoles(roleIds);
-			List<String> permissions = roleMenuService.getPermission(roleIds);
-			userInfo.setPermissions(permissions);
-			return userInfo;
+		if (ObjectUtil.isEmpty(user)) {
+			throw new UsernameNotFoundException("");
 		}
-		return null;
+		UserInfo userInfo = userMapStruct.toUserInfo(user);
+		List<Long> roleIds = userRoleService.getRoleIds(user.getId());
+		userInfo.setRoles(roleIds);
+		List<String> permissions = roleMenuService.getPermission(roleIds);
+		userInfo.setPermissions(permissions);
+		return new JwtDto(userInfo);
 	}
 
 	@Override
 	public boolean remove(UserRemoveRequest userRemoveRequest) {
 		return userMapper.removeByIds(userRemoveRequest.getIds());
+	}
+
+	@Override
+	public UserLoginResponse login(UserLoginRequest userLoginRequest) {
+		String captchaKey = userLoginRequest.getCaptchaKey();
+		//校验验证码
+		captchaService.verify(captchaKey, userLoginRequest.getCaptchaCode());
+		//登录校验
+		String token = usernameAndPasswordAuth(userLoginRequest.getUsername(),
+				userLoginRequest.getPassword());
+		UserLoginResponse userLoginResponse = new UserLoginResponse();
+		userLoginResponse.setToken(token);
+		//删除验证码
+		captchaService.deleteCaptcha(captchaKey);
+		return userLoginResponse;
+	}
+
+
+	//userDetail实现----------------------------------------------------
+
+	@Override
+	public void save(JwtDto userDetails, String token) {
+		redisTemplate.opsForValue().set(jwtProperties.getOnlineKey() + token, userDetails,
+				jwtProperties.getTokenValidityInSeconds(), TimeUnit.MILLISECONDS);
+		redisTemplate.opsForSet()
+				.add(jwtProperties.getOnlineKey() + userDetails.getUsername(), token);
+	}
+
+	@Override
+	public JwtDto get(String token) {
+		return (JwtDto) redisTemplate.opsForValue().get(jwtProperties.getOnlineKey() + token);
+	}
+
+	@Override
+	public boolean checkExpire(String token) {
+		return redisTemplate.opsForValue().get(jwtProperties.getOnlineKey() + token) != null;
+	}
+
+	@Override
+	public void removeOtherToken(String userName, String ignoreToken) {
+		Set<Object> tokens = redisTemplate.opsForSet()
+				.members(jwtProperties.getOnlineKey() + userName);
+		if (CollUtil.isEmpty(tokens)) {
+			return;
+		}
+		List<Object> delTokens = new ArrayList<>();
+		List<String> delKeys = new ArrayList<>();
+		for (Object token : tokens) {
+			if (!token.equals(ignoreToken)) {
+				delTokens.add(token);
+				delKeys.add(jwtProperties.getOnlineKey() + token);
+			}
+		}
+		if (CollUtil.isNotEmpty(delTokens)) {
+			redisTemplate.opsForSet()
+					.remove(jwtProperties.getOnlineKey() + userName, delTokens.toArray());
+		}
+		if (CollUtil.isNotEmpty(delKeys)) {
+			redisTemplate.delete(delKeys);
+		}
+	}
+
+	@Override
+	public void logout(String username) {
+		removeOtherToken(username, null);
+	}
+
+	@Override
+	public long getExpire(String token) {
+		return redisTemplate.getExpire(jwtProperties.getOnlineKey() + token, TimeUnit.MILLISECONDS);
+	}
+
+	@Override
+	public void setExpire(String token, long renew, TimeUnit milliseconds) {
+		redisTemplate.expire(jwtProperties.getOnlineKey() + token, renew, milliseconds);
 	}
 }

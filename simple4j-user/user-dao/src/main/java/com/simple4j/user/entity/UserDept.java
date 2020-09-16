@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.simple4j.common.orm.BaseEntity;
+import com.simple4j.user.base.BaseEntity;
 
 /**
  * 用户部门关联

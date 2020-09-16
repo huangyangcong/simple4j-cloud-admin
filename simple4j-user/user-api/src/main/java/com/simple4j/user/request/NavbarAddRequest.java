@@ -43,11 +43,4 @@ public class NavbarAddRequest implements Serializable {
 	@ApiModelProperty(name = "icon", value = "图标")
 	@JsonProperty("icon")
 	private String icon;
-
-	/**
-	 * 租户ID
-	 */
-	@ApiModelProperty(hidden = true, value = "租户ID")
-	@JsonProperty("tenant_id")
-	private String tenantId;
 }

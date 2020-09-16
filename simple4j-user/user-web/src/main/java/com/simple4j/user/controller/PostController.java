@@ -1,7 +1,9 @@
 package com.simple4j.user.controller;
 
+import com.simple4j.user.base.Page;
 import com.simple4j.user.request.*;
 import com.simple4j.user.response.PostDetailResponse;
+import com.simple4j.user.service.IPostService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,7 +51,7 @@ public class PostController {
 	 */
 	@PostMapping("/page")
 	@ApiOperation(value = "分页", notes = "传入post")
-	public ApiResponse<IPage<PostDetailResponse>> page(@Valid @RequestBody PostPageRequest postPageRequest) {
+	public ApiResponse<Page<PostDetailResponse>> page(@Valid @RequestBody PostPageRequest postPageRequest) {
 		return ApiResponse.ok(postService.page(postPageRequest));
 	}
 

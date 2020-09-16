@@ -1,5 +1,6 @@
 package com.simple4j.user.response;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -8,12 +9,12 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class UserDetailResponse {
+public class UserDetailResponse implements Serializable {
 
 	/**
 	 * 主键id
 	 */
-	@ApiModelProperty(name = "roles", value = "主键id")
+	@ApiModelProperty(name = "id", value = "主键id")
 	private Long id;
 
 	/**

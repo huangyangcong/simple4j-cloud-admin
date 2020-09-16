@@ -3,19 +3,4 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.simple4j.user.mapper.TenantMapper">
 
-	<!-- 通用查询映射结果 -->
-	<resultMap id="tenantResultMap" type="com.simple4j.user.entity.Tenant">
-		<result column="id" property="id"/>
-		<result column="create_user" property="createUser"/>
-		<result column="create_time" property="createTime"/>
-		<result column="update_user" property="updateUser"/>
-		<result column="update_time" property="updateTime"/>
-		<result column="status" property="status"/>
-		<result column="is_deleted" property="isDeleted"/>
-		<result column="tenant_name" property="tenantName"/>
-		<result column="linkman" property="linkman"/>
-		<result column="contact_number" property="contactNumber"/>
-		<result column="address" property="address"/>
-	</resultMap>
-
 </mapper>

@@ -9,14 +9,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.user.base.Page;
 import com.simple4j.user.common.constant.CommonConstant;
+import com.simple4j.user.request.*;
 import com.simple4j.user.util.SecurityUtils;
 import com.simple4j.user.mapper.RoleMapper;
 import com.simple4j.user.entity.Role;
 import com.simple4j.user.mapstruct.RoleMapStruct;
-import com.simple4j.user.request.RoleDetailRequest;
-import com.simple4j.user.request.RoleListRequest;
-import com.simple4j.user.request.RolePageRequest;
-import com.simple4j.user.request.RoleRemoveRequest;
 import com.simple4j.user.response.RoleDetailResponse;
 import com.simple4j.user.service.IRoleMenuService;
 import com.simple4j.user.service.IRoleService;
@@ -68,7 +65,8 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<RoleDetailResponse> tree(String tenantId) {
-		return TreeUtil.buildTree(roleMapStruct.toVo(roleMapper.tree(tenantId, null)));
+		return TreeUtil.buildTree(roleMapStruct.toVo(roleMapper.tree(StrUtil.nullToDefault(tenantId,
+				SecurityUtils.getTenantId()), null)));
 	}
 
 	@Override
@@ -95,6 +93,14 @@ public class RoleServiceImpl implements IRoleService {
 				.collect(Collectors.toList());
 		}
 		return null;
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public boolean addOrUpdate(RoleAddOrUpdateRequest roleAddOrUpdateRequest){
+		Role role = roleMapStruct.toPo(roleAddOrUpdateRequest);
+		role.setTenantId(SecurityUtils.getTenantId());
+		return roleMapper.saveOrUpdate(role);
 	}
 
 	@Transactional(rollbackFor = Exception.class)

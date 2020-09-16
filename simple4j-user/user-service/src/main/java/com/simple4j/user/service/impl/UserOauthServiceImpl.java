@@ -1,7 +1,5 @@
 package com.simple4j.user.service.impl;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -9,19 +7,14 @@ import com.simple4j.user.base.Page;
 import com.simple4j.user.entity.UserOauth;
 import com.simple4j.user.mapper.UserOauthMapper;
 import com.simple4j.user.mapstruct.UserOauthMapStruct;
-import com.simple4j.user.request.UserOauthAddOrUpdateRequest;
-import com.simple4j.user.request.UserOauthAddRequest;
-import com.simple4j.user.request.UserOauthDetailRequest;
-import com.simple4j.user.request.UserOauthListRequest;
-import com.simple4j.user.request.UserOauthPageRequest;
-import com.simple4j.user.request.UserOauthRemoveRequest;
-import com.simple4j.user.request.UserOauthUpdateRequest;
+import com.simple4j.user.request.*;
 import com.simple4j.user.response.UserOauthDetailResponse;
 import com.simple4j.user.service.IUserOauthService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -34,52 +27,52 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserOauthServiceImpl implements IUserOauthService {
 
-private final UserOauthMapStruct userOauthMapStruct;
-private final UserOauthMapper userOauthMapper;
+	private final UserOauthMapStruct userOauthMapStruct;
+	private final UserOauthMapper userOauthMapper;
 
 	@Override
-	public UserOauthDetailResponse detail(UserOauthDetailRequest userOauthDetailRequest){
+	public UserOauthDetailResponse detail(UserOauthDetailRequest userOauthDetailRequest) {
 		UserOauth detail = userOauthMapper.getOne(
-		Wrappers.<UserOauth>lambdaQuery().eq(UserOauth::getId, userOauthDetailRequest.getId()));
+				Wrappers.<UserOauth>lambdaQuery().eq(UserOauth::getId, userOauthDetailRequest.getId()));
 		return userOauthMapStruct.toVo(detail);
 	}
 
 	@Override
-	public List<UserOauthDetailResponse>list(UserOauthListRequest userOauthListRequest){
-		LambdaQueryWrapper<UserOauth>queryWrapper = Wrappers.<UserOauth>lambdaQuery();
+	public List<UserOauthDetailResponse> list(UserOauthListRequest userOauthListRequest) {
+		LambdaQueryWrapper<UserOauth> queryWrapper = Wrappers.<UserOauth>lambdaQuery();
 		List<UserOauth> list = userOauthMapper.list(queryWrapper);
 		return userOauthMapStruct.toVo(list);
 	}
 
 	@Override
-	public Page<UserOauthDetailResponse>page(UserOauthPageRequest userOauthPageRequest){
-		LambdaQueryWrapper<UserOauth>queryWrapper = Wrappers.<UserOauth>lambdaQuery();
-		IPage<UserOauth> page = userOauthMapper.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(userOauthPageRequest.getPageNo(), userOauthPageRequest.getPageSize()),queryWrapper);
+	public Page<UserOauthDetailResponse> page(UserOauthPageRequest userOauthPageRequest) {
+		LambdaQueryWrapper<UserOauth> queryWrapper = Wrappers.<UserOauth>lambdaQuery();
+		IPage<UserOauth> page = userOauthMapper.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(userOauthPageRequest.getPageNo(), userOauthPageRequest.getPageSize()), queryWrapper);
 		Page<UserOauth> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getRecords());
 		return userOauthMapStruct.toVo(pages);
 	}
 
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean add(UserOauthAddRequest userOauthAddRequest){
+	public boolean add(UserOauthAddRequest userOauthAddRequest) {
 		return userOauthMapper.save(userOauthMapStruct.toPo(userOauthAddRequest));
 	}
 
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean update(UserOauthUpdateRequest userOauthUpdateRequest){
+	public boolean update(UserOauthUpdateRequest userOauthUpdateRequest) {
 		return userOauthMapper.updateByIdBool(userOauthMapStruct.toPo(userOauthUpdateRequest));
 	}
 
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean addOrUpdate(UserOauthAddOrUpdateRequest userOauthAddOrUpdateRequest){
+	public boolean addOrUpdate(UserOauthAddOrUpdateRequest userOauthAddOrUpdateRequest) {
 		return userOauthMapper.saveOrUpdate(userOauthMapStruct.toPo(userOauthAddOrUpdateRequest));
 	}
 
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean remove(UserOauthRemoveRequest userOauthRemoveRequest){
+	public boolean remove(UserOauthRemoveRequest userOauthRemoveRequest) {
 		return userOauthMapper.physicsDeleteBatchByIdsBool(userOauthRemoveRequest.getIds());
 	}
 }

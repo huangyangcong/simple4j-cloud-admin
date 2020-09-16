@@ -1,6 +1,12 @@
 package com.simple4j.user.controller;
 
 import com.simple4j.user.base.Page;
+import com.simple4j.user.request.ParamAddOrUpdateRequest;
+import com.simple4j.user.request.ParamDetailRequest;
+import com.simple4j.user.request.ParamPageRequest;
+import com.simple4j.user.request.ParamRemoveRequest;
+import com.simple4j.user.response.ParamDetailResponse;
+import com.simple4j.user.service.IParamService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

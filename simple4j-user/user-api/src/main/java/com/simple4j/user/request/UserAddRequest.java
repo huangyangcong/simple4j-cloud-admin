@@ -15,11 +15,6 @@ import lombok.Data;
 public class UserAddRequest {
 
 	/**
-	 * 租户ID
-	 */
-	@ApiModelProperty(value = "租户ID")
-	private String tenantId;
-	/**
 	 * 编号
 	 */
 	@ApiModelProperty(name = "code", value = "编号")

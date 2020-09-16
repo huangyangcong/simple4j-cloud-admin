@@ -5,9 +5,9 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.simple4j.user.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.simple4j.common.orm.BaseEntity;
 
 /**
  * 实体类
