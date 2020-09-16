@@ -25,6 +25,8 @@ public interface UserMapStruct {
 
 	Page<UserDetailResponse> toVo(Page<User> user);
 
+	List<UserDetailResponse> toVo(List<User> user);
+
 	User toPo(UserAddRequest userAddRequest);
 
 	List<UserExcelImportRequest> toExcel(List<UserDetailResponse> users);

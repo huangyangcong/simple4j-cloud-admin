@@ -12,6 +12,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -40,10 +41,18 @@ public class ExtendRequestResponseBodyMethodProcessor extends RequestResponseBod
 	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
 		Object o = super.resolveArgument(parameter, mavContainer, webRequest, binderFactory);
-		ReflectionUtils.setField();
-		String tenantId = SecurityUtils.getTenantId();
-		Long userId = SecurityUtils.getCurrentUserId();
-		String username = SecurityUtils.getCurrentUsername();
+		Field tenantIdField = ReflectionUtils.findField(parameter.getDeclaringClass(), "tenantId");
+		if (tenantIdField != null) {
+			ReflectionUtils.setField(tenantIdField, o, SecurityUtils.getTenantId());
+		}
+		Field userIdField = ReflectionUtils.findField(parameter.getDeclaringClass(), "userId");
+		if (userIdField != null) {
+			ReflectionUtils.setField(userIdField, o, SecurityUtils.getCurrentUserId());
+		}
+		Field usernameField = ReflectionUtils.findField(parameter.getDeclaringClass(), "username");
+		if (usernameField != null) {
+			ReflectionUtils.setField(usernameField, o, SecurityUtils.getCurrentUsername());
+		}
 		return o;
 	}
 }
