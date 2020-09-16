@@ -6,12 +6,11 @@ import java.util.List;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.simple4j.user.service.IUserDeptService;
 import com.simple4j.user.entity.UserDept;
-import com.simple4j.user.dao.UserDeptMapper;
+import com.simple4j.user.mapper.UserDeptMapper;
 import com.simple4j.user.request.UserDeptGrantRequest;
-import com.simple4j.user.service.IUserDeptService;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Chill
  */
 @Service
+@RequiredArgsConstructor
 public class UserDeptServiceImpl implements
 		IUserDeptService {
 
+	private final UserDeptMapper userDeptMapper;
 	@Override
 	public List<Long> getDeptIds(Long userId) {
-		return baseMapper.getDeptIds(userId);
+		return userDeptMapper.getDeptIds(userId);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -39,7 +40,7 @@ public class UserDeptServiceImpl implements
 	@Override
 	public void grant(List<Long> userIds, List<Long> deptIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
-			baseMapper
+			userDeptMapper
 				.physicsDelete(Wrappers.<UserDept>lambdaQuery().in(UserDept::getUserId, userIds));
 			if (CollUtil.isNotEmpty(deptIds)) {
 				List<UserDept> userDepts = new ArrayList<>();
@@ -51,7 +52,7 @@ public class UserDeptServiceImpl implements
 						userDepts.add(userDept);
 					}
 				}
-				this.saveBatch(userDepts);
+				userDeptMapper.saveBatch(userDepts);
 			}
 		}
 	}
@@ -59,14 +60,14 @@ public class UserDeptServiceImpl implements
 	@Override
 	public void removeByDeptIds(List<String> deptIds) {
 		if (CollUtil.isNotEmpty(deptIds)) {
-			baseMapper.physicsDelete(
+			userDeptMapper.physicsDelete(
 					Wrappers.<UserDept>lambdaQuery().in(UserDept::getDeptId, deptIds));
 		}
 	}
 	@Override
 	public void removeByUserIds(List<String> userIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
-			baseMapper.physicsDelete(
+			userDeptMapper.physicsDelete(
 					Wrappers.<UserDept>lambdaQuery().in(UserDept::getUserId, userIds));
 		}
 	}

@@ -44,17 +44,17 @@ public interface ITenantService{
 	/**
 	 * 新增 租户表
 	 */
-	void add(TenantAddOrUpdateRequest tenantAddRequest);
+	boolean add(TenantAddOrUpdateRequest tenantAddRequest);
 
 	/**
 	 * 修改 租户表
 	 */
-	void update(TenantUpdateRequest tenantUpdateRequest);
+	boolean update(TenantUpdateRequest tenantUpdateRequest);
 
 	/**
 	 * 删除 租户表
 	 */
-	void remove(TenantRemoveRequest tenantRemoveRequest);
+	boolean remove(TenantRemoveRequest tenantRemoveRequest);
 
 
 	/**
@@ -62,5 +62,5 @@ public interface ITenantService{
 	 *
 	 * @param tenantAddOrUpdateRequest
 	 */
-	void addOrUpdate(TenantAddOrUpdateRequest tenantAddOrUpdateRequest);
+	boolean addOrUpdate(TenantAddOrUpdateRequest tenantAddOrUpdateRequest);
 }

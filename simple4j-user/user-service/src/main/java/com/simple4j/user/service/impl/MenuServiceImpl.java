@@ -8,18 +8,17 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.simple4j.autoconfigure.util.TreeUtil;
 import com.simple4j.user.common.constant.CommonConstant;
 import com.simple4j.user.common.util.SecurityUtils;
 import com.simple4j.user.service.IDictService;
 import com.simple4j.user.service.IMenuService;
 import com.simple4j.user.service.IRoleMenuService;
+import com.simple4j.user.util.TreeUtil;
 import lombok.AllArgsConstructor;
 import com.simple4j.user.dto.MenuDTO;
 import com.simple4j.user.entity.Menu;
 import com.simple4j.user.entity.RoleMenu;
-import com.simple4j.user.dao.MenuMapper;
+import com.simple4j.user.mapper.MenuMapper;
 import com.simple4j.user.mapstruct.MenuMapStruct;
 import com.simple4j.user.request.MenuDetailRequest;
 import com.simple4j.user.request.MenuListRequest;
@@ -42,19 +41,20 @@ import org.springframework.transaction.annotation.Transactional;
 @AllArgsConstructor
 public class MenuServiceImpl implements IMenuService {
 
-	IRoleMenuService roleMenuService;
-	IDictService dictService;
-	MenuMapStruct menuMapStruct;
+	private final IRoleMenuService roleMenuService;
+	private final IDictService dictService;
+	private final MenuMapStruct menuMapStruct;
+	private final MenuMapper menuMapper;
 
 	@Override
 	public MenuDetailResponse detail(MenuDetailRequest menuDetailRequest) {
-		Menu detail = getOne(
+		Menu detail = menuMapper.getOne(
 			Wrappers.<Menu>lambdaQuery().eq(Menu::getId, menuDetailRequest.getId()));
 		MenuDetailResponse menuDetailResponse = menuMapStruct.toVo(detail);
 		if (menuDetailResponse.getParentId().equals(CommonConstant.TOP_PARENT_ID)) {
 			menuDetailResponse.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {
-			Menu parent = getById(menuDetailResponse.getParentId());
+			Menu parent = menuMapper.getById(menuDetailResponse.getParentId());
 			menuDetailResponse.setParentName(parent.getName());
 		}
 		String d1 = dictService.getValue("menu_category", menuDetailResponse.getCategory());
@@ -78,7 +78,7 @@ public class MenuServiceImpl implements IMenuService {
 		//List<Menu> menus = routes.stream()
 		//	.filter(x -> x.getCategory() == 1)
 		//	.collect(Collectors.toList());
-		List<Menu> menus = baseMapper.routes(navbarId, roleIds);
+		List<Menu> menus = menuMapper.routes(navbarId, roleIds);
 		return TreeUtil.buildTree(menuMapStruct.toVo(menus));
 	}
 
@@ -101,21 +101,21 @@ public class MenuServiceImpl implements IMenuService {
 
 	@Override
 	public List<MenuDetailResponse> buttons(List<Long> roleIds) {
-		List<Menu> buttons = baseMapper.buttons(roleIds);
+		List<Menu> buttons = menuMapper.buttons(roleIds);
 		return TreeUtil.buildTree(menuMapStruct.toVo(buttons));
 	}
 
 	@Override
 	public List<MenuDetailResponse> tree() {
-		return TreeUtil.buildTree(menuMapStruct.toVo(baseMapper.tree()));
+		return TreeUtil.buildTree(menuMapStruct.toVo(menuMapper.tree()));
 	}
 
 	@Override
 	public List<MenuDetailResponse> grantTree() {
 		return TreeUtil
 			.buildTree(menuMapStruct.toVo(SecurityUtils.getTenantId().equals(CommonConstant.ADMIN_TENANT_ID) ?
-				baseMapper.grantTree()
-				: baseMapper.grantTreeByRole(SecurityUtils.getCurrentUserDataRoles())));
+					menuMapper.grantTree()
+				: menuMapper.grantTreeByRole(SecurityUtils.getCurrentUserDataRoles())));
 	}
 
 	@Override
@@ -125,8 +125,7 @@ public class MenuServiceImpl implements IMenuService {
 			return roleMenuKeyResponse;
 		}
 		List<RoleMenu> roleMenus = roleMenuService
-			.list(Wrappers.<RoleMenu>query().lambda()
-				.in(RoleMenu::getRoleId, roleMenuKeyRequest.getRoles()));
+			.getPermission(roleMenuKeyRequest.getRoles());
 
 		roleMenuKeyResponse.setMenus(roleMenus.stream().map(RoleMenu::getMenuId)
 			.collect(Collectors.toList()));
@@ -148,15 +147,16 @@ public class MenuServiceImpl implements IMenuService {
 				menuListRequest.getCode())
 			.eq(StrUtil.isNotEmpty(menuListRequest.getName()), Menu::getName,
 				menuListRequest.getName());
-		List<Menu> list = list(queryWrapper.orderByAsc(Menu::getSort));
+		List<Menu> list = menuMapper.list(queryWrapper.orderByAsc(Menu::getSort));
 		return TreeUtil.buildTree(menuMapStruct.toVo(list));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void remove(MenuRemoveRequest menuRemoveRequest) {
+	public boolean remove(MenuRemoveRequest menuRemoveRequest) {
 		List<Long> menuIds = menuRemoveRequest.getMenuIds();
-		baseMapper.physicsDeleteBatchByIds(menuIds);
+		menuMapper.physicsDeleteBatchByIds(menuIds);
 		roleMenuService.removeByMenuIds(menuIds);
+		return true;
 	}
 }

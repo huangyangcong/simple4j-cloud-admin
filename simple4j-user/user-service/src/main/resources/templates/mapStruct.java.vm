@@ -7,14 +7,14 @@ import $!{package.Entity}.$!{entity};
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-	#set($requestPackage=$package.Entity.replace("entity","request"))
-	#set($responsePackage=$package.Entity.replace("entity","response"))
+#set($requestPackage=$package.Entity.replace("entity","request"))
+#set($responsePackage=$package.Entity.replace("entity","response"))
 import $!{requestPackage}.$!{entity}AddRequest;
 import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
 import $!{requestPackage}.$!{entity}UpdateRequest;
 import $!{responsePackage}.$!{entity}DetailResponse;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
+#set($pagePackage=$package.Entity.replace("entity",""))
+import $!{pagePackage}base.Page;
 /**
  * $!{table.comment}数据转换类
  *
@@ -30,7 +30,7 @@ public interface $!{entity}MapStruct {
 	 * @param vo
 	 * @return
 	 */
-		$!{entity} toPo($!{entity}AddRequest vo);
+	$!{entity} toPo($!{entity}AddRequest vo);
 
 	/**
 	 * VO转PO
@@ -38,7 +38,7 @@ public interface $!{entity}MapStruct {
 	 * @param vo
 	 * @return
 	 */
-		$!{entity} toPo($!{entity}AddOrUpdateRequest vo);
+	$!{entity} toPo($!{entity}AddOrUpdateRequest vo);
 
 	/**
 	 * VO转PO
@@ -46,7 +46,7 @@ public interface $!{entity}MapStruct {
 	 * @vo vo
 	 * @return
 	 */
-		$!{entity} toPo($!{entity}UpdateRequest vo);
+	$!{entity} toPo($!{entity}UpdateRequest vo);
 
 	/**
 	* PO转VO
@@ -54,7 +54,7 @@ public interface $!{entity}MapStruct {
 	* @param po
 	* @return
 	*/
-		$!{entity}DetailResponse toVo($!{entity} po);
+	$!{entity}DetailResponse toVo($!{entity} po);
 
 	/**
 	* PO转VO

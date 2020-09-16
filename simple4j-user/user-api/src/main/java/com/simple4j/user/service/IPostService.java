@@ -54,16 +54,16 @@ public interface IPostService {
 	/**
 	 * 新增 岗位表
 	 */
-	void add(PostAddRequest postAddRequest);
+	boolean add(PostAddRequest postAddRequest);
 
 	/**
 	 * 修改 岗位表
 	 */
-	void update(PostUpdateRequest postUpdateRequest);
+	boolean update(PostUpdateRequest postUpdateRequest);
 
 	/**
 	 * 删除 岗位表
 	 */
-	void remove(PostRemoveRequest postRemoveRequest);
+	boolean remove(PostRemoveRequest postRemoveRequest);
 
 }

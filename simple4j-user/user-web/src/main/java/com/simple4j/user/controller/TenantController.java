@@ -24,7 +24,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/tenant")
-@ApiIgnore
 @Api(value = "租户管理", tags = "接口")
 public class TenantController {
 

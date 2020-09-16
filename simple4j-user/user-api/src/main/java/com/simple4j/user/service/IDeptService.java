@@ -62,17 +62,17 @@ public interface IDeptService {
 	/**
 	 * 新增 部门表
 	 */
-	void add(DeptAddRequest deptAddRequest);
+	boolean add(DeptAddRequest deptAddRequest);
 
 	/**
 	 * 修改 部门表
 	 */
-	void update(DeptUpdateRequest deptUpdateRequest);
+	boolean update(DeptUpdateRequest deptUpdateRequest);
 
 	/**
 	 * 删除 部门表
 	 */
-	void remove(DeptRemoveRequest deptRemoveRequest);
+	boolean remove(DeptRemoveRequest deptRemoveRequest);
 
 
 }

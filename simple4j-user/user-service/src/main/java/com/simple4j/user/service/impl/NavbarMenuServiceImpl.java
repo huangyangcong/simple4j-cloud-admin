@@ -6,13 +6,11 @@ import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.simple4j.user.service.INavbarMenuService;
-import lombok.RequiredArgsConstructor;
+import com.simple4j.user.base.Page;
+import com.simple4j.user.mapper.NavbarMenuMapper;
 import com.simple4j.user.entity.NavbarMenu;
-import com.simple4j.user.dao.NavbarMenuMapper;
 import com.simple4j.user.mapstruct.NavbarMenuMapStruct;
 import com.simple4j.user.request.NavbarGrantRequest;
 import com.simple4j.user.request.NavbarMenuAddOrUpdateRequest;
@@ -26,6 +24,7 @@ import com.simple4j.user.request.NavbarPermissionRequest;
 import com.simple4j.user.response.NavbarMenuDetailResponse;
 import com.simple4j.user.response.NavbarPermissionResponse;
 import com.simple4j.user.service.INavbarMenuService;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,59 +42,64 @@ public class NavbarMenuServiceImpl implements
 		INavbarMenuService {
 
 	private final NavbarMenuMapStruct navbarMenuMapStruct;
+	private final NavbarMenuMapper navbarMenuMapper;
 
 	@Override
 	public NavbarMenuDetailResponse detail(NavbarMenuDetailRequest navbarMenuDetailRequest) {
-		NavbarMenu detail = getOne(
-			Wrappers.<NavbarMenu>lambdaQuery()
-				.eq(NavbarMenu::getId, navbarMenuDetailRequest.getId()));
+		NavbarMenu detail = navbarMenuMapper.getOne(
+				Wrappers.<NavbarMenu>lambdaQuery()
+						.eq(NavbarMenu::getId, navbarMenuDetailRequest.getId()));
 		return navbarMenuMapStruct.toVo(detail);
 	}
 
 	@Override
 	public List<NavbarMenuDetailResponse> list(NavbarMenuListRequest navbarMenuListRequest) {
 		LambdaQueryWrapper<NavbarMenu> queryWrapper = Wrappers.<NavbarMenu>lambdaQuery();
-		List<NavbarMenu> pages = list(queryWrapper);
+		List<NavbarMenu> pages = navbarMenuMapper.list(queryWrapper);
 		return navbarMenuMapStruct.toVo(pages);
 	}
 
 	@Override
 	public Page<NavbarMenuDetailResponse> page(NavbarMenuPageRequest navbarMenuPageRequest) {
 		LambdaQueryWrapper<NavbarMenu> queryWrapper = Wrappers.<NavbarMenu>lambdaQuery();
-		Page<NavbarMenu> pages = page(
-			new Page<>(navbarMenuPageRequest.getPageNo(), navbarMenuPageRequest.getPageSize()),
-			queryWrapper);
+		IPage<NavbarMenu> page = navbarMenuMapper.page(
+				new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
+						navbarMenuPageRequest.getPageNo(), navbarMenuPageRequest.getPageSize()),
+				queryWrapper);
+		Page<NavbarMenu> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
+				page.getRecords());
 		return navbarMenuMapStruct.toVo(pages);
 	}
 
 	@Override
-	public void add(NavbarMenuAddRequest navbarMenuAddRequest) {
-		save(navbarMenuMapStruct.toPo(navbarMenuAddRequest));
+	public boolean add(NavbarMenuAddRequest navbarMenuAddRequest) {
+		return navbarMenuMapper.save(navbarMenuMapStruct.toPo(navbarMenuAddRequest));
 	}
 
 	@Override
-	public void update(NavbarMenuUpdateRequest navbarMenuUpdateRequest) {
-		updateById(navbarMenuMapStruct.toPo(navbarMenuUpdateRequest));
+	public boolean update(NavbarMenuUpdateRequest navbarMenuUpdateRequest) {
+		return navbarMenuMapper.updateByIdBool(navbarMenuMapStruct.toPo(navbarMenuUpdateRequest));
 	}
 
 	@Override
-	public void addOrUpdate(NavbarMenuAddOrUpdateRequest navbarMenuAddOrUpdateRequest) {
-		saveOrUpdate(navbarMenuMapStruct.toPo(navbarMenuAddOrUpdateRequest));
+	public boolean addOrUpdate(NavbarMenuAddOrUpdateRequest navbarMenuAddOrUpdateRequest) {
+		return navbarMenuMapper
+				.saveOrUpdate(navbarMenuMapStruct.toPo(navbarMenuAddOrUpdateRequest));
 	}
 
 	@Override
-	public void remove(NavbarMenuRemoveRequest navbarMenuRemoveRequest) {
-		removeByIds(navbarMenuRemoveRequest.getIds());
+	public boolean remove(NavbarMenuRemoveRequest navbarMenuRemoveRequest) {
+		return navbarMenuMapper.removeByIds(navbarMenuRemoveRequest.getIds());
 	}
 
 	@Override
 	public NavbarPermissionResponse permission(
-		NavbarPermissionRequest navbarPermissionRequest) {
+			NavbarPermissionRequest navbarPermissionRequest) {
 		NavbarPermissionResponse navbarPermissionResponse = new NavbarPermissionResponse();
-		navbarPermissionResponse.setMenuIds(list(Wrappers.<NavbarMenu>lambdaQuery()
-			.eq(NavbarMenu::getNavbarId, navbarPermissionRequest.getId())).stream()
-			.map(NavbarMenu::getMenuId).collect(
-				Collectors.toList()));
+		navbarPermissionResponse.setMenuIds(navbarMenuMapper.list(Wrappers.<NavbarMenu>lambdaQuery()
+				.eq(NavbarMenu::getNavbarId, navbarPermissionRequest.getId())).stream()
+				.map(NavbarMenu::getMenuId).collect(
+						Collectors.toList()));
 		return navbarPermissionResponse;
 	}
 
@@ -108,8 +112,8 @@ public class NavbarMenuServiceImpl implements
 	@Override
 	public void grant(Long navbarId, List<Long> menuIds) {
 		if (navbarId != null) {
-			baseMapper.physicsDelete(
-				Wrappers.<NavbarMenu>lambdaQuery().eq(NavbarMenu::getNavbarId, navbarId));
+			navbarMenuMapper.physicsDelete(
+					Wrappers.<NavbarMenu>lambdaQuery().eq(NavbarMenu::getNavbarId, navbarId));
 			if (CollUtil.isNotEmpty(menuIds)) {
 				List<NavbarMenu> navbarMenus = new ArrayList<>();
 				for (Long menuId : menuIds) {
@@ -118,7 +122,7 @@ public class NavbarMenuServiceImpl implements
 					navbarMenu.setMenuId(menuId);
 					navbarMenus.add(navbarMenu);
 				}
-				this.saveBatch(navbarMenus);
+				navbarMenuMapper.saveBatch(navbarMenus);
 			}
 		}
 	}

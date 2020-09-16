@@ -6,11 +6,11 @@ import java.util.List;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.simple4j.user.service.IUserPostService;
 import com.simple4j.user.entity.UserPost;
-import com.simple4j.user.dao.UserPostMapper;
+import com.simple4j.user.mapper.UserPostMapper;
 import com.simple4j.user.request.UserPostGrantRequest;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Chill
  */
 @Service
+@RequiredArgsConstructor
 public class UserPostServiceImpl implements
 		IUserPostService {
+	private final UserPostMapper userPostMapper;
 
 	@Override
 	public List<Long> getPostIds(Long userId) {
-		return baseMapper.getPostIds(userId);
+		return userPostMapper.getPostIds(userId);
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -39,7 +41,7 @@ public class UserPostServiceImpl implements
 	@Override
 	public void grant(List<Long> userIds, List<Long> postIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
-			baseMapper
+			userPostMapper
 				.physicsDelete(Wrappers.<UserPost>lambdaQuery().in(UserPost::getUserId, userIds));
 			if (CollUtil.isNotEmpty(postIds)) {
 				List<UserPost> userPosts = new ArrayList<>();
@@ -51,7 +53,7 @@ public class UserPostServiceImpl implements
 						userPosts.add(userPost);
 					}
 				}
-				this.saveBatch(userPosts);
+				userPostMapper.saveBatch(userPosts);
 			}
 		}
 	}
@@ -59,14 +61,14 @@ public class UserPostServiceImpl implements
 	@Override
 	public void removeByPostIds(List<String> postIds) {
 		if (CollUtil.isNotEmpty(postIds)) {
-			baseMapper.physicsDelete(
+			userPostMapper.physicsDelete(
 					Wrappers.<UserPost>lambdaQuery().in(UserPost::getPostId, postIds));
 		}
 	}
 	@Override
 	public void removeByUserIds(List<String> userIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
-			baseMapper.physicsDelete(
+			userPostMapper.physicsDelete(
 					Wrappers.<UserPost>lambdaQuery().in(UserPost::getUserId, userIds));
 		}
 	}

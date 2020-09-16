@@ -1,7 +1,7 @@
 package com.simple4j.user.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.simple4j.user.base.Page;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.newdex.web.domain.R;
 import io.swagger.annotations.Api;

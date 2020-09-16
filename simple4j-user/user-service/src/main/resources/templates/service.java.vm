@@ -10,8 +10,8 @@ import $!{requestPackage}.$!{entity}ListRequest;
 import $!{requestPackage}.$!{entity}RemoveRequest;
 import $!{requestPackage}.$!{entity}PageRequest;
 import $!{responsePackage}.$!{entity}DetailResponse;
-import $!{package.Entity}.$!{entity};
-iimport com.simple4j.$!{module}.base.Page;
+#set($pagePackage=$package.Entity.replace("entity",""))
+import $!{pagePackage}base.Page;
 
 import java.util.List;
 #if($!{cfg.tree})
@@ -28,7 +28,7 @@ import $!{requestPackage}.$!{entity}TreeRequest;
 #if($!{kotlin})
 interface $!{table.serviceName}
 #else
-public interface $!{table.serviceName} {
+public interface $!{table.serviceName}{
 
 	/**
 	 * 详情
@@ -48,29 +48,28 @@ public interface $!{table.serviceName} {
 	/**
 	 * 新增 $!{table.comment}
 	 */
-	void add($!{entity}AddRequest $!{table.entityPath}AddRequest);
+	boolean add($!{entity}AddRequest $!{table.entityPath}AddRequest);
 
 	/**
 	 * 修改 $!{table.comment}
 	 */
-	void update($!{entity}UpdateRequest $!{table.entityPath}UpdateRequest);
+	boolean update($!{entity}UpdateRequest $!{table.entityPath}UpdateRequest);
 
 	/**
 	 * 新增或修改 $!{table.comment}
 	 */
-	void addOrUpdate($!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest);
+	boolean addOrUpdate($!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest);
 
 	#if($!{cfg.tree})
-		/**
-		 * 树形 $!{table.comment}
-		 */
-		List<$!{entity}DetailResponse> tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest);
+	/**
+	 * 树形 $!{table.comment}
+	 */
+	List<$!{entity}DetailResponse> tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest);
 	#end
 
 	/**
 	 * 删除 $!{table.comment}
 	 */
-	void remove($!{entity}RemoveRequest $!{table.entityPath}RemoveRequest);
-
-	}
+	boolean remove($!{entity}RemoveRequest $!{table.entityPath}RemoveRequest);
+}
 #end

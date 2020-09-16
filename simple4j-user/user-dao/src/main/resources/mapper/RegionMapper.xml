@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.simple4j.user.dao.RegionMapper">
+<mapper namespace="com.simple4j.user.mapper.RegionMapper">
 
 	<select id="lazyList" resultType="com.simple4j.user.entity.Region">
 		SELECT

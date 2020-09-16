@@ -67,6 +67,6 @@ public interface IDictService {
 	/**
 	 * 删除 字典表
 	 */
-	void remove(DictRemoveRequest dictRemoveRequest);
+	boolean remove(DictRemoveRequest dictRemoveRequest);
 
 }

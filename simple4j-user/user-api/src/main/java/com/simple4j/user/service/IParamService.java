@@ -37,20 +37,20 @@ public interface IParamService{
 	/**
 	 * 新增 参数表
 	 */
-	void add(ParamAddRequest paramAddRequest);
+	boolean add(ParamAddRequest paramAddRequest);
 
 	/**
 	 * 修改 参数表
 	 */
-	void update(ParamUpdateRequest paramUpdateRequest);
+	boolean update(ParamUpdateRequest paramUpdateRequest);
 
 	/**
 	 * 新增或修改 参数表
 	 */
-	void addOrUpdate(ParamAddOrUpdateRequest paramAddOrUpdateRequest);
+	boolean addOrUpdate(ParamAddOrUpdateRequest paramAddOrUpdateRequest);
 
 	/**
 	 * 删除 参数表
 	 */
-	void remove(ParamRemoveRequest paramRemoveRequest);
+	boolean remove(ParamRemoveRequest paramRemoveRequest);
 }

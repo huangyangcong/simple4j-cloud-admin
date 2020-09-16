@@ -1,9 +1,9 @@
 #set($dtoPackage=$package.Entity.replace("entity","dto"))
 package $!{dtoPackage};
 
-	#if($!{entityLombokModel})
-	import lombok.Data;
-	#end
+#if($!{entityLombokModel})
+import lombok.Data;
+#end
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,12 +15,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author $!{author}
  * @since $!{date}
  */
-	#if($!{entityLombokModel})
-	@Data
-	#end
-	#if($!{swagger2})
-	@ApiModel(value = "$!{table.comment}分页请求实体类", description = "$!{table.comment}分页请求实体类")
-	#end
+#if($!{entityLombokModel})
+@Data
+#end
+#if($!{swagger2})
+@ApiModel(value = "$!{table.comment}分页请求实体类", description = "$!{table.comment}分页请求实体类")
+#end
 public class $!{entity}PageRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

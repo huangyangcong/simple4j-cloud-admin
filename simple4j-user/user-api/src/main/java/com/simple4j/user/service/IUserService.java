@@ -34,7 +34,7 @@ public interface IUserService{
 	 * @param userUpdateRequest
 	 * @return
 	 */
-	void update(UserUpdateRequest userUpdateRequest);
+	boolean update(UserUpdateRequest userUpdateRequest);
 
 	/**
 	 * 自定义分页
@@ -143,10 +143,10 @@ public interface IUserService{
 	/**
 	 * 用户详情
 	 *
-	 * @param userDetailRequest
+	 * @param userPageRequest
 	 * @return
 	 */
-	PageR<UserDetailResponse> page(UserPageRequest userPageRequest);
+	Page<UserDetailResponse> page(UserPageRequest userPageRequest);
 
 	/**
 	 * 删除用户
@@ -154,5 +154,5 @@ public interface IUserService{
 	 * @param userRemoveRequest
 	 * @return
 	 */
-	void remove(UserRemoveRequest userRemoveRequest);
+	boolean remove(UserRemoveRequest userRemoveRequest);
 }

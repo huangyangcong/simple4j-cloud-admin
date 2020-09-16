@@ -1,12 +1,12 @@
 package $!{package.Entity};
 
-	#if($!{entityLombokModel})
-	import lombok.Data;
-	#end
-	#if($!{swagger2})
-	import io.swagger.annotations.ApiModel;
-	import io.swagger.annotations.ApiModelProperty;
-	#end
+#if($!{entityLombokModel})
+import lombok.Data;
+#end
+#if($!{swagger2})
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,68 +17,68 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author $!{author}
  * @since $!{date}
  */
-	#if($!{entityLombokModel})
-	@Data
-	#end
-	#if($!{swagger2})
-	@ApiModel(value = "$!{table.comment}添新增请求实体类", description = "$!{table.comment}添新增请求实体类")
-	#end
+#if($!{entityLombokModel})
+@Data
+#end
+#if($!{swagger2})
+@ApiModel(value = "$!{table.comment}添新增请求实体类", description = "$!{table.comment}添新增请求实体类")
+#end
 public class $!{entity}AddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	## ----------  BEGIN 字段循环遍历  ----------
 	#foreach($field in $!{table.fields})
-		#if($!{field.name}!=$!{cfg.tenantColumn} && $!{logicDeleteFieldName}!=$!{field.name} &&
-			$!{versionFieldName}!=$!{field.name} && !$!{field.keyFlag})
-			#if($!{field.keyFlag})
-				#set($keyPropertyName=$!{field.propertyName})
-			#end
-			#if("$!field.comment" != "")
-				/**
-				 * $!{field.comment}
-				 */
-				#if($!{swagger2})
-				@ApiModelProperty(name = "$!{field.name}", value = "$!{field.comment}")
-				#end
-				#if($!{cfg.jackson})
-				@JsonProperty("$!{field.name}")
-				#end
-			#end
-		private $!{field.propertyType} $!{field.propertyName};
-		#end
+	#if($!{field.name}!=$!{cfg.tenantColumn} && $!{logicDeleteFieldName}!=$!{field.name} &&
+	$!{versionFieldName}!=$!{field.name} && !$!{field.keyFlag})
+	#if($!{field.keyFlag})
+	#set($keyPropertyName=$!{field.propertyName})
+	#end
+	#if("$!field.comment" != "")
+	/**
+	 * $!{field.comment}
+	 */
+	#if($!{swagger2})
+	@ApiModelProperty(name = "$!{field.name}", value = "$!{field.comment}")
+	#end
+	#if($!{cfg.jackson})
+	@JsonProperty("$!{field.name}")
+	#end
+	#end
+	private $!{field.propertyType} $!{field.propertyName};
+	#end
 	#end
 	## ----------  END 字段循环遍历  ----------
 
 	#if(!$!{entityLombokModel})
-		#foreach($field in $!{table.fields})
-			#if($!{field.name}!=$!{cfg.tenantColumn} && $!{logicDeleteFieldName}!=$!{field.name} &&
-				$!{versionFieldName}!=$!{field.name} && !$!{field.keyFlag})
-				#if($!{field.propertyType.equals("boolean")})
-					#set($getprefix="is")
-				#else
-					#set($getprefix="get")
-				#end
+	#foreach($field in $!{table.fields})
+	#if($!{field.name}!=$!{cfg.tenantColumn} && $!{logicDeleteFieldName}!=$!{field.name} &&
+	$!{versionFieldName}!=$!{field.name} && !$!{field.keyFlag})
+	#if($!{field.propertyType.equals("boolean")})
+		#set($getprefix="is")
+	#else
+		#set($getprefix="get")
+	#end
 
-				public $!{field.propertyType} $!{getprefix}$!{field.capitalName}()
+	public $!{field.propertyType} $!{getprefix}$!{field.capitalName}()
 
-				{
-					return $!{field.propertyName};
-				}
+	{
+		return $!{field.propertyName};
+	}
 
-				#if($!{entityBuilderModel})
-				public $!{entity} set$!{field.capitalName}($!{field.propertyType} $!{field.propertyName}) {
-				#else
-					public void set$!{field.capitalName}
-					($!{field.propertyType} $!{field.propertyName}) {
-				#end
-				this.$!{field.propertyName} = $!{field.propertyName};
-				#if($!{entityBuilderModel})
-					return this;
-				#end
-			}
-			#end
-		#end
+	#if($!{entityBuilderModel})
+	public $!{entity} set$!{field.capitalName}($!{field.propertyType} $!{field.propertyName}) {
+	#else
+		public void set$!{field.capitalName}
+		($!{field.propertyType} $!{field.propertyName}) {
+	#end
+	this.$!{field.propertyName} = $!{field.propertyName};
+	#if($!{entityBuilderModel})
+		return this;
+	#end
+	}
+	#end
+	#end
 	#end
 
 	#if($!{entityColumnConstant})

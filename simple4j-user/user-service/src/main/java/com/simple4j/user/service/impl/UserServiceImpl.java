@@ -12,11 +12,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.simple4j.user.base.Page;
 import com.google.common.collect.Lists;
 import com.simple4j.user.base.BusinessException;
 import com.simple4j.user.common.constant.CommonConstant;
 import com.simple4j.user.common.util.SecurityUtils;
+import com.simple4j.user.response.TenantDetailResponse;
 import com.simple4j.user.service.IDeptService;
 import com.simple4j.user.service.IDictService;
 import com.simple4j.user.service.IPostService;
@@ -29,12 +30,11 @@ import com.simple4j.user.service.IUserPostService;
 import com.simple4j.user.service.IUserRoleService;
 import com.simple4j.user.service.IUserService;
 import lombok.RequiredArgsConstructor;
-import com.simple4j.user.entity.Tenant;
 import com.simple4j.user.entity.User;
 import com.simple4j.user.response.UserInfo;
 import com.simple4j.user.entity.UserOauth;
 import com.simple4j.user.excel.UserExcel;
-import com.simple4j.user.dao.UserMapper;
+import com.simple4j.user.mapper.UserMapper;
 import com.simple4j.user.mapstruct.UserMapStruct;
 import com.simple4j.user.request.UserAddRequest;
 import com.simple4j.user.request.UserDetailRequest;
@@ -59,6 +59,7 @@ public class UserServiceImpl implements IUserService {
 
 	private final UserMapStruct userMapStruct;
 
+	private final UserMapper userMapper;
 	private final IRoleService roleService;
 	private final IDeptService deptService;
 	private final IPostService postService;
@@ -79,18 +80,18 @@ public class UserServiceImpl implements IUserService {
 				userPageRequest.getAccount())
 			.eq(StrUtil.isNotEmpty(userPageRequest.getRealName()), User::getRealName,
 				userPageRequest.getRealName());
-		Page<User> users = this
-			.page(new Page<>(userPageRequest.getPageNo(), userPageRequest.getPageSize()),
+		IPage<User> page = userMapper
+			.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(userPageRequest.getPageNo(), userPageRequest.getPageSize()),
 				(!SecurityUtils.getTenantId().equals(CommonConstant.ADMIN_TENANT_ID)) ? queryWrapper
 					.eq(User::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
-		Page<UserDetailResponse> userDetailResponsePage = userMapStruct.toVo(users);
-		userDetailResponsePage.getRecords().forEach(this::convert);
-		return userDetailResponsePage;
+		Page<User> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
+				page.getRecords());
+		return userMapStruct.toVo(pages);
 	}
 
 	@Override
 	public UserDetailResponse detail(UserDetailRequest userDetailRequest) {
-		User user = this
+		User user = userMapper
 			.getOne(Wrappers.<User>lambdaQuery().eq(User::getId, userDetailRequest.getId()));
 		if (user != null) {
 			UserDetailResponse userDetailResponse = userMapStruct.toVo(user);
@@ -116,7 +117,7 @@ public class UserServiceImpl implements IUserService {
 		if (StrUtil.isNotEmpty(userAddRequest.getPassword())) {
 			userAddRequest.setPassword(passwordEncoder.encode(userAddRequest.getPassword()));
 		}
-		Integer cnt = baseMapper.selectCount(
+		Integer cnt = userMapper.selectCount(
 			Wrappers.<User>query().lambda().eq(User::getTenantId, userAddRequest.getTenantId())
 				.eq(User::getAccount, userAddRequest.getAccount()));
 		if (cnt > 0) {
@@ -129,11 +130,11 @@ public class UserServiceImpl implements IUserService {
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void update(UserUpdateRequest userUpdateRequest) {
+	public boolean update(UserUpdateRequest userUpdateRequest) {
 		if (StrUtil.isNotEmpty(userUpdateRequest.getPassword())) {
 			userUpdateRequest.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
 		}
-		Integer cnt = baseMapper.selectCount(
+		Integer cnt = userMapper.selectCount(
 			Wrappers.<User>query().lambda().eq(User::getTenantId, userUpdateRequest.getTenantId())
 				.eq(User::getAccount, userUpdateRequest.getAccount()));
 		if (cnt == 0) {
@@ -142,11 +143,12 @@ public class UserServiceImpl implements IUserService {
 		User user = userMapStruct.toPo(userUpdateRequest);
 		user.setId(userUpdateRequest.getId());
 		grant(userUpdateRequest, user);
+		return true;
 	}
 
 	private void grant(UserAddRequest userAddRequest, User user) {
 		//保存用户
-		saveOrUpdate(user);
+		userMapper.saveOrUpdate(user);
 		List<Long> userIds = Lists.newArrayList(user.getId());
 		//授予角色
 		userRoleService.grant(userIds, userAddRequest.getRoles());
@@ -158,12 +160,12 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public IPage<User> selectUserPage(IPage<User> page, User user) {
-		return page.setRecords(baseMapper.selectUserPage(page, user));
+		return page.setRecords(userMapper.selectUserPage(page, user));
 	}
 
 	@Override
 	public UserInfo userInfo(Long userId) {
-		User user = baseMapper.selectById(userId);
+		User user = userMapper.selectById(userId);
 		UserInfo userInfo = userMapStruct.toUserInfo(user);
 		if (ObjectUtil.isNotEmpty(user)) {
 //			List<String> roleAlias = roleService.getRoleAlias(user.getId());
@@ -174,7 +176,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public UserInfo userInfo(String tenantId, String account, String password) {
-		User user = baseMapper.getUser(tenantId, account, password);
+		User user = userMapper.getUser(tenantId, account, password);
 		UserInfo userInfo = userMapStruct.toUserInfo(user);
 		if (ObjectUtil.isNotEmpty(user)) {
 //			List<String> roleAlias = roleService.getRoleAlias(user.getId());
@@ -186,7 +188,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public UserInfo userInfo(UserOauth userOauth) {
-		UserOauth uo = userOauthService.getOne(
+		UserOauth uo = userOauthService.(
 			Wrappers.<UserOauth>query().lambda().eq(UserOauth::getUuid, userOauth.getUuid())
 				.eq(UserOauth::getSource, userOauth.getSource()));
 		UserInfo userInfo;
@@ -211,27 +213,27 @@ public class UserServiceImpl implements IUserService {
 	public boolean resetPassword(UserResetPasswordRequest userResetPasswordRequest) {
 		User user = new User();
 		user.setPassword(passwordEncoder.encode(CommonConstant.DEFAULT_PASSWORD));
-		return this.update(user, Wrappers.<User>update().lambda()
+		return userMapper.updateBool(user, Wrappers.<User>update().lambda()
 			.in(User::getId, userResetPasswordRequest.getUserIds()));
 	}
 
 	@Override
 	public boolean updatePassword(Long userId, String oldPassword, String newPassword,
 		String newPassword1) {
-		User user = getById(userId);
+		User user = userMapper.getById(userId);
 		if (!newPassword.equals(newPassword1)) {
 			throw new BusinessException("请输入正确的确认密码!");
 		}
 		if (!user.getPassword().equals(DigestUtil.sha256Hex(oldPassword))) {
 			throw new BusinessException("原密码不正确!");
 		}
-		return this.update(Wrappers.<User>update().lambda()
+		return userMapper.update(Wrappers.<User>update().lambda()
 			.set(User::getPassword, DigestUtil.sha256Hex(newPassword)).eq(User::getId, userId));
 	}
 
 	@Override
 	public List<String> getDeptName(List<Long> deptIds) {
-		return baseMapper.getDeptName(deptIds);
+		return userMapper.getDeptName(deptIds);
 	}
 
 	@Override
@@ -240,7 +242,7 @@ public class UserServiceImpl implements IUserService {
 			User user = Objects.requireNonNull(userMapStruct.toPo(userExcel));
 			// 设置默认密码
 			user.setPassword(CommonConstant.DEFAULT_PASSWORD);
-			this.saveOrUpdate(user);
+			userMapper.saveOrUpdate(user);
 
 			List<Long> userIds = Lists.newArrayList(user.getId());
 			// 设置部门ID
@@ -262,7 +264,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<UserExcel> exportUser(Wrapper<User> queryWrapper) {
-		List<UserExcel> userList = baseMapper.exportUser(queryWrapper);
+		List<UserExcel> userList = userMapper.exportUser(queryWrapper);
 		userList.forEach(user -> {
 			user.setRoleName(roleService.getRoleNames(user.getId()));
 			user.setDeptName(deptService.getDeptNames(user.getId()));
@@ -274,7 +276,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public boolean registerGuest(User user, Long oauthId) {
-		Tenant tenant = tenantService.getByTenantId(user.getTenantId());
+		TenantDetailResponse tenant = tenantService.getByTenantId(user.getTenantId());
 		if (tenant == null || tenant.getId() == null) {
 			throw new ApiException("租户信息错误!");
 		}
@@ -284,7 +286,7 @@ public class UserServiceImpl implements IUserService {
 		}
 		user.setRealName(user.getName());
 		user.setAvatar(userOauth.getAvatar());
-		boolean userTemp = this.save(user);
+		boolean userTemp = userMapper.save(user);
 		userOauth.setUserId(user.getId());
 		userOauth.setTenantId(user.getTenantId());
 		boolean oauthTemp = userOauthService.updateById(userOauth);
@@ -293,7 +295,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public UserInfo loadUserByUsername(String username) {
-		User user = baseMapper
+		User user = userMapper
 			.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAccount, username));
 		if (ObjectUtil.isNotEmpty(user)) {
 			UserInfo userInfo = userMapStruct.toUserInfo(user);
@@ -307,7 +309,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void remove(UserRemoveRequest userRemoveRequest) {
-		removeByIds(userRemoveRequest.getIds());
+	public boolean remove(UserRemoveRequest userRemoveRequest) {
+		userMapper.removeByIds(userRemoveRequest.getIds());
 	}
 }

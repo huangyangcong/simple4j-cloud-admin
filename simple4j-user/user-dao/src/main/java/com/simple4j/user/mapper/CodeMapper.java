@@ -1,13 +1,13 @@
-package com.simple4j.user.dao;
-
+package com.simple4j.user.mapper;
 
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import com.simple4j.user.entity.Code;
 
 /**
- * Mapper 接口
+ * 代码生成表 Mapper 接口
  *
- * @author Chill
+ * @author Blade
+ * @since 2020-09-16
  */
 public interface CodeMapper extends ExtendMapper<Code> {
 

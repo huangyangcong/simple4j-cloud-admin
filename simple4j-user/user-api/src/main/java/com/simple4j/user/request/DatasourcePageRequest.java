@@ -1,19 +1,19 @@
 package com.simple4j.user.request;
 
-	import lombok.Data;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 
 /**
  * 数据源配置表分页请求实体类
  *
  * @author Blade
- * @since 2020-09-15
+ * @since 2020-09-16
  */
-	@Data
-	@ApiModel(value = "数据源配置表分页请求实体类", description = "数据源配置表分页请求实体类")
+@Data
+@ApiModel(value = "数据源配置表分页请求实体类", description = "数据源配置表分页请求实体类")
 public class DatasourcePageRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

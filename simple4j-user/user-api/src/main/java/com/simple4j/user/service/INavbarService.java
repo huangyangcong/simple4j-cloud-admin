@@ -39,22 +39,22 @@ public interface INavbarService {
 	/**
 	 * 新增
 	 */
-	void add(NavbarAddRequest navbarAddRequest);
+	boolean add(NavbarAddRequest navbarAddRequest);
 
 	/**
 	 * 修改
 	 */
-	void update(NavbarUpdateRequest navbarUpdateRequest);
+	boolean update(NavbarUpdateRequest navbarUpdateRequest);
 
 	/**
 	 * 新增或修改
 	 */
-	void addOrUpdate(NavbarAddOrUpdateRequest navbarAddOrUpdateRequest);
+	boolean addOrUpdate(NavbarAddOrUpdateRequest navbarAddOrUpdateRequest);
 
 
 	/**
 	 * 删除
 	 */
-	void remove(NavbarRemoveRequest navbarRemoveRequest);
+	boolean remove(NavbarRemoveRequest navbarRemoveRequest);
 
 }

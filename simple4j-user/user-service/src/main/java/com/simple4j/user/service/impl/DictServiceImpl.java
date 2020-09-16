@@ -6,16 +6,13 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.simple4j.autoconfigure.util.TreeUtil;
+import com.simple4j.user.base.Page;
 import com.simple4j.user.common.constant.CacheNames;
-import com.simple4j.user.service.IDictService;
-import lombok.RequiredArgsConstructor;
+import com.simple4j.user.mapper.DictMapper;
 import com.simple4j.user.entity.Dict;
-import com.simple4j.user.dao.DictMapper;
 import com.simple4j.user.mapstruct.DictMapStruct;
 import com.simple4j.user.request.DictAddOrUpdateRequest;
 import com.simple4j.user.request.DictDetailRequest;
@@ -23,6 +20,9 @@ import com.simple4j.user.request.DictListRequest;
 import com.simple4j.user.request.DictPageRequest;
 import com.simple4j.user.request.DictRemoveRequest;
 import com.simple4j.user.response.DictDetailResponse;
+import com.simple4j.user.service.IDictService;
+import com.simple4j.user.util.TreeUtil;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -38,23 +38,24 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DictServiceImpl  implements IDictService {
 
+	private final DictMapper dictMapper;
 	private final DictMapStruct dictMapStruct;
 
 	@Override
 	public List<DictDetailResponse> tree() {
-		return TreeUtil.buildTree(dictMapStruct.toVo(baseMapper.tree()));
+		return TreeUtil.buildTree(dictMapStruct.toVo(dictMapper.tree()));
 	}
 
 	@Override
 	@Cacheable(cacheNames = CacheNames.DICT_VALUE, key = "#code+'_'+#dictKey")
 	public String getValue(String code, Integer dictKey) {
-		return StrUtil.nullToDefault(baseMapper.getValue(code, dictKey), StrUtil.EMPTY);
+		return StrUtil.nullToDefault(dictMapper.getValue(code, dictKey), StrUtil.EMPTY);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CacheNames.DICT_LIST, key = "#code")
 	public List<DictDetailResponse> getList(String code) {
-		List<Dict> list = baseMapper.getList(code);
+		List<Dict> list = dictMapper.getList(code);
 		return dictMapStruct.toVo(list);
 	}
 
@@ -64,18 +65,18 @@ public class DictServiceImpl  implements IDictService {
 		LambdaQueryWrapper<Dict> lqw = Wrappers.<Dict>query().lambda()
 			.eq(Dict::getCode, dictAddOrUpdateRequest.getCode())
 			.eq(Dict::getDictKey, dictAddOrUpdateRequest.getDictKey());
-		Integer cnt = baseMapper.selectCount(
+		Integer cnt = dictMapper.selectCount(
 			(ObjectUtil.isEmpty(dictAddOrUpdateRequest.getId())) ? lqw
 				: lqw.notIn(Dict::getId, dictAddOrUpdateRequest.getId()));
 		if (cnt > 0) {
 			throw new ApiException("当前字典键值已存在!");
 		}
-		return saveOrUpdate(dictMapStruct.toPo(dictAddOrUpdateRequest));
+		return dictMapper.saveOrUpdate(dictMapStruct.toPo(dictAddOrUpdateRequest));
 	}
 
 	@Override
 	public DictDetailResponse detail(DictDetailRequest dictDetailRequest) {
-		Dict detail = getOne(
+		Dict detail = dictMapper.getOne(
 			Wrappers.<Dict>lambdaQuery().eq(Dict::getId, dictDetailRequest.getId()));
 		return dictMapStruct.toVo(detail);
 	}
@@ -88,7 +89,7 @@ public class DictServiceImpl  implements IDictService {
 			.eq(StrUtil.isNotEmpty(dictListRequest.getDictValue()), Dict::getDictValue,
 				dictListRequest.getDictValue())
 			.orderByAsc(Dict::getSort);
-		List<Dict> pages = list(queryWrapper);
+		List<Dict> pages = dictMapper.list(queryWrapper);
 		return TreeUtil.buildTree(dictMapStruct.toVo(pages));
 	}
 
@@ -96,13 +97,15 @@ public class DictServiceImpl  implements IDictService {
 	public Page<DictDetailResponse> page(DictPageRequest dictPageRequest) {
 		LambdaQueryWrapper<Dict> queryWrapper = Wrappers.<Dict>lambdaQuery()
 			.orderByAsc(Dict::getSort);
-		Page<Dict> pages = page(
-			new Page<>(dictPageRequest.getPageNo(), dictPageRequest.getPageSize()), queryWrapper);
+		IPage<Dict> page = dictMapper.page(
+			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(dictPageRequest.getPageNo(), dictPageRequest.getPageSize()), queryWrapper);
+		Page<Dict> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
+				page.getRecords());
 		return dictMapStruct.toVo(pages);
 	}
 
 	@Override
-	public void remove(DictRemoveRequest dictRemoveRequest) {
-		removeByIds(dictRemoveRequest.getIds());
+	public boolean remove(DictRemoveRequest dictRemoveRequest) {
+		return dictMapper.removeByIds(dictRemoveRequest.getIds());
 	}
 }

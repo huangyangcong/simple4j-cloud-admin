@@ -1,16 +1,17 @@
 package com.simple4j.user.response;
 
+import java.io.Serializable;
+
+import com.simple4j.user.request.DatasourceAddOrUpdateRequest;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-
-import java.io.Serializable;
 
 
 /**
  * 数据源配置表详情响应实体类
  *
  * @author Blade
- * @since 2020-09-15
+ * @since 2020-09-16
  */
 	@Data
 	@ApiModel(value = "数据源配置表详情响应实体类", description = "数据源配置表详情响应实体类")

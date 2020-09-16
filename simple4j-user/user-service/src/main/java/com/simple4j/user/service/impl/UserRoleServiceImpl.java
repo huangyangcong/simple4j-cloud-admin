@@ -6,11 +6,11 @@ import java.util.List;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.simple4j.user.dao.UserRoleMapper;
+import com.simple4j.user.mapper.UserRoleMapper;
 import com.simple4j.user.entity.UserRole;
 import com.simple4j.user.request.UserRoleGrantRequest;
 import com.simple4j.user.service.IUserRoleService;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,13 +21,15 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Chill
  */
 @Service
+@RequiredArgsConstructor
 public class UserRoleServiceImpl implements
 		IUserRoleService {
 
+	private final UserRoleMapper userRoleMapper;
 
 	@Override
 	public List<Long> getRoleIds(Long userId) {
-		return baseMapper.getRoleIds(userId);
+		return userRoleMapper.getRoleIds(userId);
 	}
 
 	@Override
@@ -39,8 +41,9 @@ public class UserRoleServiceImpl implements
 	@Override
 	public void grant(List<Long> userIds, List<Long> roleIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
-			baseMapper
-				.physicsDelete(Wrappers.<UserRole>lambdaQuery().in(UserRole::getUserId, userIds));
+			userRoleMapper
+					.physicsDelete(
+							Wrappers.<UserRole>lambdaQuery().in(UserRole::getUserId, userIds));
 			if (CollUtil.isNotEmpty(roleIds)) {
 				List<UserRole> userRoles = new ArrayList<>();
 				for (Long userId : userIds) {
@@ -51,7 +54,7 @@ public class UserRoleServiceImpl implements
 						userRoles.add(userRole);
 					}
 				}
-				this.saveBatch(userRoles);
+				userRoleMapper.saveBatch(userRoles);
 			}
 		}
 	}

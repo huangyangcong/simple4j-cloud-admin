@@ -1,19 +1,25 @@
 package com.simple4j.user.service;
 
-import com.simple4j.user.base.Page;
-import com.simple4j.user.request.*;
-import com.simple4j.user.response.DatasourceDetailResponse;
-
 import java.util.List;
+
+import com.simple4j.user.base.Page;
+import com.simple4j.user.request.DatasourceAddOrUpdateRequest;
+import com.simple4j.user.request.DatasourceAddRequest;
+import com.simple4j.user.request.DatasourceDetailRequest;
+import com.simple4j.user.request.DatasourceListRequest;
+import com.simple4j.user.request.DatasourcePageRequest;
+import com.simple4j.user.request.DatasourceRemoveRequest;
+import com.simple4j.user.request.DatasourceUpdateRequest;
+import com.simple4j.user.response.DatasourceDetailResponse;
 
 
 /**
  * 数据源配置表 服务类
  *
  * @author Blade
- * @since 2020-09-15
+ * @since 2020-09-16
  */
-public interface IDatasourceService {
+public interface IDatasourceService{
 
 	/**
 	 * 详情
@@ -33,21 +39,21 @@ public interface IDatasourceService {
 	/**
 	 * 新增 数据源配置表
 	 */
-	void add(DatasourceAddRequest datasourceAddRequest);
+	boolean add(DatasourceAddRequest datasourceAddRequest);
 
 	/**
 	 * 修改 数据源配置表
 	 */
-	void update(DatasourceUpdateRequest datasourceUpdateRequest);
+	boolean update(DatasourceUpdateRequest datasourceUpdateRequest);
 
 	/**
 	 * 新增或修改 数据源配置表
 	 */
-	void addOrUpdate(DatasourceAddOrUpdateRequest datasourceAddOrUpdateRequest);
+	boolean addOrUpdate(DatasourceAddOrUpdateRequest datasourceAddOrUpdateRequest);
 
 
 	/**
 	 * 删除 数据源配置表
 	 */
-	void remove(DatasourceRemoveRequest datasourceRemoveRequest);
+	boolean remove(DatasourceRemoveRequest datasourceRemoveRequest);
 }

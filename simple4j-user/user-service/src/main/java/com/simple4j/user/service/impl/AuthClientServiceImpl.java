@@ -4,13 +4,13 @@ import java.util.List;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.simple4j.user.base.Page;
 import com.simple4j.user.service.IAuthClientService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.AuthClient;
-import com.simple4j.user.dao.AuthClientMapper;
+import com.simple4j.user.mapper.AuthClientMapper;
 import com.simple4j.user.mapstruct.ClientMapStruct;
 import com.simple4j.user.request.ClientAddOrUpdateRequest;
 import com.simple4j.user.request.ClientAddRequest;
@@ -20,7 +20,6 @@ import com.simple4j.user.request.ClientPageRequest;
 import com.simple4j.user.request.ClientRemoveRequest;
 import com.simple4j.user.request.ClientUpdateRequest;
 import com.simple4j.user.response.ClientDetailResponse;
-import com.simple4j.user.service.IAuthClientService;
 
 import org.springframework.stereotype.Service;
 
@@ -34,10 +33,11 @@ import org.springframework.stereotype.Service;
 public class AuthClientServiceImpl implements IAuthClientService {
 
 	private final ClientMapStruct clientMapStruct;
+	private final AuthClientMapper authClientMapper;
 
 	@Override
 	public ClientDetailResponse detail(ClientDetailRequest clientDetailRequest) {
-		AuthClient detail = getOne(
+		AuthClient detail = authClientMapper.getOne(
 			Wrappers.<AuthClient>lambdaQuery().eq(AuthClient::getId, clientDetailRequest.getId()));
 		return clientMapStruct.toVo(detail);
 	}
@@ -45,40 +45,44 @@ public class AuthClientServiceImpl implements IAuthClientService {
 	@Override
 	public List<ClientDetailResponse> list(ClientListRequest clientListRequest) {
 		LambdaQueryWrapper<AuthClient> queryWrapper = Wrappers.lambdaQuery();
-		List<AuthClient> pages = list(queryWrapper);
+		List<AuthClient> pages = authClientMapper.list(queryWrapper);
 		return clientMapStruct.toVo(pages);
 	}
 
 	@Override
 	public Page<ClientDetailResponse> page(ClientPageRequest clientPageRequest) {
-		Page<AuthClient> pages = page(
-			new Page<>(clientPageRequest.getPageNo(), clientPageRequest.getPageSize()),
-			Wrappers.<AuthClient>lambdaQuery()
-				.eq(StrUtil.isNotEmpty(clientPageRequest.getClientId()), AuthClient::getClientId,
-					clientPageRequest.getClientId())
-				.eq(StrUtil.isNotEmpty(clientPageRequest.getClientSecret()),
-					AuthClient::getClientSecret,
-					clientPageRequest.getClientSecret()));
+		IPage<AuthClient> page = authClientMapper.page(
+				new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
+						clientPageRequest.getPageNo(), clientPageRequest.getPageSize()),
+				Wrappers.<AuthClient>lambdaQuery()
+						.eq(StrUtil.isNotEmpty(clientPageRequest.getClientId()),
+								AuthClient::getClientId,
+								clientPageRequest.getClientId())
+						.eq(StrUtil.isNotEmpty(clientPageRequest.getClientSecret()),
+								AuthClient::getClientSecret,
+								clientPageRequest.getClientSecret()));
+		Page<AuthClient> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
+				page.getRecords());
 		return clientMapStruct.toVo(pages);
 	}
 
 	@Override
-	public void add(ClientAddRequest clientAddRequest) {
-		save(clientMapStruct.toPo(clientAddRequest));
+	public boolean add(ClientAddRequest clientAddRequest) {
+		return authClientMapper.save(clientMapStruct.toPo(clientAddRequest));
 	}
 
 	@Override
-	public void update(ClientUpdateRequest clientUpdateRequest) {
-		updateById(clientMapStruct.toPo(clientUpdateRequest));
+	public boolean update(ClientUpdateRequest clientUpdateRequest) {
+		return authClientMapper.updateByIdBool(clientMapStruct.toPo(clientUpdateRequest));
 	}
 
 	@Override
-	public void addOrUpdate(ClientAddOrUpdateRequest clientAddOrUpdateRequest) {
-		saveOrUpdate(clientMapStruct.toPo(clientAddOrUpdateRequest));
+	public boolean addOrUpdate(ClientAddOrUpdateRequest clientAddOrUpdateRequest) {
+		return authClientMapper.saveOrUpdate(clientMapStruct.toPo(clientAddOrUpdateRequest));
 	}
 
 	@Override
-	public void remove(ClientRemoveRequest clientRemoveRequest) {
-		removeByIds(clientRemoveRequest.getIds());
+	public boolean remove(ClientRemoveRequest clientRemoveRequest) {
+		return authClientMapper.removeByIds(clientRemoveRequest.getIds());
 	}
 }

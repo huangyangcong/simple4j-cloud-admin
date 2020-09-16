@@ -2,16 +2,9 @@ package com.simple4j.user.controller;
 
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.builder.ExcelReaderBuilder;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.newdex.web.annotation.AnonymousAccess;
-import com.newdex.web.annotation.ApiVersion;
-import com.newdex.web.domain.R;
-import com.newdex.web.jwt.service.AbstractUserDetailsService;
+import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
+import com.simple4j.user.base.Page;
+import com.simple4j.autoconfigure.jwt.annotation.AnonymousAccess;
 import com.simple4j.user.request.*;
 import com.simple4j.user.response.UserDetailResponse;
 import com.simple4j.user.response.UserLoginResponse;
@@ -22,7 +15,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;

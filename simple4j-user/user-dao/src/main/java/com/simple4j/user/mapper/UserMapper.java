@@ -1,4 +1,4 @@
-package com.simple4j.user.dao;
+package com.simple4j.user.mapper;
 
 import java.util.List;
 

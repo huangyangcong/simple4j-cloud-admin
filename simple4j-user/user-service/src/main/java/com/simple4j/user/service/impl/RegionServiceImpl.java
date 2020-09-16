@@ -4,13 +4,12 @@ import java.util.List;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.api.exception.BusinessException;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.simple4j.user.base.BusinessException;
 import com.simple4j.user.service.IRegionService;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.Region;
-import com.simple4j.user.dao.RegionMapper;
+import com.simple4j.user.mapper.RegionMapper;
 import com.simple4j.user.mapstruct.RegionMapStruct;
 import com.simple4j.user.request.RegionAddRequest;
 import com.simple4j.user.request.RegionDetailRequest;
@@ -36,36 +35,37 @@ public class RegionServiceImpl implements IRegionService {
 	public static final int TOWN_LEVEL = 4;
 	public static final int VILLAGE_LEVEL = 5;
 
+	private final RegionMapper regionMapper;
 	private final RegionMapStruct regionMapStruct;
 
 	@Override
 	public boolean add(RegionAddRequest regionAddRequest) {
 		Region region = regionMapStruct.toPo(regionAddRequest);
-		return save(region);
+		return regionMapper.save(region);
 	}
 
 	@Override
 	public boolean update(RegionUpdateRequest regionUpdateRequest) {
 		Region region = regionMapStruct.toPo(regionUpdateRequest);
-		return updateById(region);
+		return regionMapper.updateByIdBool(region);
 	}
 
 	@Override
 	public RegionDetailResponse detail(RegionDetailRequest regionDetailRequest) {
-		Region region = baseMapper.detail(regionDetailRequest.getCode());
+		Region region = regionMapper.detail(regionDetailRequest.getCode());
 		return regionMapStruct.toVo(region);
 	}
 
 	@Override
 	public boolean submit(RegionAddRequest regionAddRequest) {
 		Region region = regionMapStruct.toPo(regionAddRequest);
-		Integer cnt = baseMapper
+		Integer cnt = regionMapper
 			.selectCount(Wrappers.<Region>query().lambda().eq(Region::getCode, region.getCode()));
 		if (cnt > 0) {
-			return this.updateById(region);
+			return regionMapper.updateByIdBool(region);
 		}
 		// 设置祖区划编号
-		Region parent = baseMapper.selectById(region.getParentCode());
+		Region parent = regionMapper.selectById(region.getParentCode());
 		if (ObjectUtil.isNotEmpty(parent) || StrUtil.isNotEmpty(parent.getCode())) {
 			String ancestors = parent.getAncestors() + StrUtil.COMMA + parent.getCode();
 			region.setAncestors(ancestors);
@@ -90,23 +90,23 @@ public class RegionServiceImpl implements IRegionService {
 			region.setVillageCode(code);
 			region.setVillageName(name);
 		}
-		return this.save(region);
+		return regionMapper.save(region);
 	}
 
 	@Override
 	public boolean removeRegion(RegionRemoveRequest regionRemoveRequest) {
 		String id = regionRemoveRequest.getId();
-		Integer cnt = baseMapper
+		Integer cnt = regionMapper
 			.selectCount(Wrappers.<Region>query().lambda().eq(Region::getParentCode, id));
 		if (cnt > 0) {
 			throw new BusinessException("请先删除子节点!");
 		}
-		return removeById(id);
+		return regionMapper.removeById(id);
 	}
 
 	@Override
 	public List<RegionDetailResponse> lazyList(RegionLazyListRequest regionLazyListRequest) {
-		return regionMapStruct.toVo(baseMapper.lazyList(regionLazyListRequest.getParentCode(),
+		return regionMapStruct.toVo(regionMapper.lazyList(regionLazyListRequest.getParentCode(),
 			regionLazyListRequest.getCode()
 			, regionLazyListRequest.getName()));
 	}

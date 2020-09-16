@@ -79,5 +79,5 @@ public interface IMenuService{
 	 * 删除菜单
 	 * @param menuRemoveRequest
 	 */
-	void remove(MenuRemoveRequest menuRemoveRequest);
+	boolean remove(MenuRemoveRequest menuRemoveRequest);
 }

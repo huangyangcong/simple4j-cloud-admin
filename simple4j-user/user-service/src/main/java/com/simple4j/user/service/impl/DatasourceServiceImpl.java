@@ -1,14 +1,84 @@
 package com.simple4j.user.service.impl;
 
+import java.util.List;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.simple4j.user.base.Page;
+import com.simple4j.user.entity.Datasource;
+import com.simple4j.user.mapper.DatasourceMapper;
+import com.simple4j.user.mapstruct.DatasourceMapStruct;
+import com.simple4j.user.request.DatasourceAddOrUpdateRequest;
+import com.simple4j.user.request.DatasourceAddRequest;
+import com.simple4j.user.request.DatasourceDetailRequest;
+import com.simple4j.user.request.DatasourceListRequest;
+import com.simple4j.user.request.DatasourcePageRequest;
+import com.simple4j.user.request.DatasourceRemoveRequest;
+import com.simple4j.user.request.DatasourceUpdateRequest;
+import com.simple4j.user.response.DatasourceDetailResponse;
 import com.simple4j.user.service.IDatasourceService;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 /**
  * 数据源配置表 服务实现类
  *
- * @author Chill
+ * @author Blade
+ * @since 2020-09-16
  */
 @Service
-public class DatasourceServiceImpl implements IDatasourceService {
+@RequiredArgsConstructor
+	public class DatasourceServiceImpl implements IDatasourceService {
 
+	private final DatasourceMapStruct datasourceMapStruct;
+	private final DatasourceMapper datasourceMapper;
+
+	@Override
+	public DatasourceDetailResponse detail(DatasourceDetailRequest datasourceDetailRequest){
+		Datasource detail = datasourceMapper.getOne(
+		Wrappers.<Datasource>lambdaQuery().eq(Datasource::getId, datasourceDetailRequest.getId()));
+		return datasourceMapStruct.toVo(detail);
+	}
+	@Override
+	public List<DatasourceDetailResponse>list(DatasourceListRequest datasourceListRequest){
+		LambdaQueryWrapper<Datasource>queryWrapper = Wrappers.<Datasource>lambdaQuery();
+		List<Datasource> list = datasourceMapper.list(queryWrapper);
+		return datasourceMapStruct.toVo(list);
+	}
+
+	@Override
+	public Page<DatasourceDetailResponse>page(DatasourcePageRequest datasourcePageRequest){
+		LambdaQueryWrapper<Datasource>queryWrapper = Wrappers.<Datasource>lambdaQuery();
+		IPage<Datasource> page = datasourceMapper.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(datasourcePageRequest.getPageNo(), datasourcePageRequest.getPageSize()),queryWrapper);
+		Page<Datasource> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getRecords());
+		return datasourceMapStruct.toVo(pages);
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public boolean add(DatasourceAddRequest datasourceAddRequest){
+		return datasourceMapper.save(datasourceMapStruct.toPo(datasourceAddRequest));
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public boolean update(DatasourceUpdateRequest datasourceUpdateRequest){
+		return datasourceMapper.updateByIdBool(datasourceMapStruct.toPo(datasourceUpdateRequest));
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public boolean addOrUpdate(DatasourceAddOrUpdateRequest datasourceAddOrUpdateRequest){
+		return datasourceMapper.saveOrUpdate(datasourceMapStruct.toPo(datasourceAddOrUpdateRequest));
+	}
+
+	@Transactional(rollbackFor=Exception.class)
+	@Override
+	public boolean remove(DatasourceRemoveRequest datasourceRemoveRequest){
+		return datasourceMapper.physicsDeleteBatchByIdsBool(datasourceRemoveRequest.getIds());
+	}
 }

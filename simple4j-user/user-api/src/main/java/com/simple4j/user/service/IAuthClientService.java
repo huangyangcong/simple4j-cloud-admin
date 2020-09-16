@@ -37,22 +37,22 @@ public interface IAuthClientService {
 	/**
 	 * 新增 客户端表
 	 */
-	void add(ClientAddRequest clientAddRequest);
+	boolean add(ClientAddRequest clientAddRequest);
 
 	/**
 	 * 修改 客户端表
 	 */
-	void update(ClientUpdateRequest clientUpdateRequest);
+	boolean update(ClientUpdateRequest clientUpdateRequest);
 
 	/**
 	 * 新增或修改 客户端表
 	 */
-	void addOrUpdate(ClientAddOrUpdateRequest clientAddOrUpdateRequest);
+	boolean addOrUpdate(ClientAddOrUpdateRequest clientAddOrUpdateRequest);
 
 
 	/**
 	 * 删除 客户端表
 	 */
-	void remove(ClientRemoveRequest clientRemoveRequest);
+	boolean remove(ClientRemoveRequest clientRemoveRequest);
 
 }

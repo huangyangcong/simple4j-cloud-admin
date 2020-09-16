@@ -1,6 +1,6 @@
 package com.simple4j.user.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.simple4j.user.base.Page;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

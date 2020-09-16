@@ -5,17 +5,13 @@ import java.util.stream.Collectors;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.simple4j.autoconfigure.util.TreeUtil;
+import com.simple4j.user.base.Page;
 import com.simple4j.user.common.constant.CommonConstant;
 import com.simple4j.user.common.util.SecurityUtils;
-import com.simple4j.user.service.IRoleMenuService;
-import com.simple4j.user.service.IRoleService;
-import lombok.AllArgsConstructor;
+import com.simple4j.user.mapper.RoleMapper;
 import com.simple4j.user.entity.Role;
-import com.simple4j.user.dao.RoleMapper;
 import com.simple4j.user.mapstruct.RoleMapStruct;
 import com.simple4j.user.request.RoleDetailRequest;
 import com.simple4j.user.request.RoleListRequest;
@@ -24,6 +20,8 @@ import com.simple4j.user.request.RoleRemoveRequest;
 import com.simple4j.user.response.RoleDetailResponse;
 import com.simple4j.user.service.IRoleMenuService;
 import com.simple4j.user.service.IRoleService;
+import com.simple4j.user.util.TreeUtil;
+import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,19 +37,20 @@ import org.springframework.validation.annotation.Validated;
 @AllArgsConstructor
 public class RoleServiceImpl implements IRoleService {
 
+	private final RoleMapper roleMapper;
 	private final IRoleMenuService roleMenuService;
 	private final RoleMapStruct roleMapStruct;
 
 	@Override
 	public RoleDetailResponse detail(
 		RoleDetailRequest roleDetailRequest) {
-		Role detail = getOne(
+		Role detail = roleMapper.getOne(
 			Wrappers.<Role>lambdaQuery().eq(Role::getId, roleDetailRequest.getId()));
 		RoleDetailResponse roleDetailResponse = roleMapStruct.toVo(detail);
 		if (roleDetailResponse.getParentId().equals(CommonConstant.TOP_PARENT_ID)) {
 			roleDetailResponse.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {
-			Role parent = getById(roleDetailResponse.getParentId());
+			Role parent = roleMapper.getById(roleDetailResponse.getParentId());
 			roleDetailResponse.setParentName(parent.getRoleName());
 		}
 		return roleDetailResponse;
@@ -60,14 +59,16 @@ public class RoleServiceImpl implements IRoleService {
 	@Override
 	public Page<RoleDetailResponse> page(RolePageRequest rolePageRequest) {
 		LambdaQueryWrapper<Role> queryWrapper = Wrappers.<Role>lambdaQuery();
-		Page<Role> pages = page(
-			new Page<>(rolePageRequest.getPageNo(), rolePageRequest.getPageSize()), queryWrapper);
+		IPage<Role> page = roleMapper.page(
+			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(rolePageRequest.getPageNo(), rolePageRequest.getPageSize()), queryWrapper);
+		Page<Role> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
+				page.getRecords());
 		return roleMapStruct.toVo(pages);
 	}
 
 	@Override
 	public List<RoleDetailResponse> tree(String tenantId) {
-		return TreeUtil.buildTree(roleMapStruct.toVo(baseMapper.tree(tenantId, null)));
+		return TreeUtil.buildTree(roleMapStruct.toVo(roleMapper.tree(tenantId, null)));
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class RoleServiceImpl implements IRoleService {
 				roleListRequest.getRoleName())
 			.eq(StrUtil.isNotEmpty(roleListRequest.getRoleAlias()), Role::getRoleAlias,
 				roleListRequest.getRoleAlias());
-		List<Role> pages = list(
+		List<Role> pages = roleMapper.list(
 			(!SecurityUtils.getTenantId().equals(CommonConstant.ADMIN_TENANT_ID)) ? queryWrapper
 				.eq(Role::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
 		;
@@ -86,7 +87,7 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public List<Long> getRoleIds(String tenantId, List<String> roleNames) {
-		List<Role> roleList = baseMapper.selectList(
+		List<Role> roleList = roleMapper.selectList(
 			Wrappers.<Role>query().lambda().eq(Role::getTenantId, tenantId)
 				.in(Role::getRoleName, roleNames));
 		if (roleList != null && roleList.size() > 0) {
@@ -98,19 +99,20 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void remove(RoleRemoveRequest roleRemoveRequest) {
+	public boolean remove(RoleRemoveRequest roleRemoveRequest) {
 		List<Long> roleIds = roleRemoveRequest.getRoleIds();
-		baseMapper.physicsDeleteBatchByIds(roleIds);
+		roleMapper.physicsDeleteBatchByIds(roleIds);
 		roleMenuService.removeByRoleIds(roleIds);
+		return true;
 	}
 
 	@Override
 	public List<String> getRoleNames(Long userId) {
-		return baseMapper.getRoleNames(userId);
+		return roleMapper.getRoleNames(userId);
 	}
 
 	@Override
 	public List<String> getRoleAlias(Long userId) {
-		return baseMapper.getRoleAlias(userId);
+		return roleMapper.getRoleAlias(userId);
 	}
 }

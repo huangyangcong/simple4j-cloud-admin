@@ -42,23 +42,23 @@ public interface INavbarMenuService {
 	/**
 	 * 新增
 	 */
-	void add(NavbarMenuAddRequest navbarMenuAddRequest);
+	boolean add(NavbarMenuAddRequest navbarMenuAddRequest);
 
 	/**
 	 * 修改
 	 */
-	void update(NavbarMenuUpdateRequest navbarMenuUpdateRequest);
+	boolean update(NavbarMenuUpdateRequest navbarMenuUpdateRequest);
 
 	/**
 	 * 新增或修改
 	 */
-	void addOrUpdate(NavbarMenuAddOrUpdateRequest navbarMenuAddOrUpdateRequest);
+	boolean addOrUpdate(NavbarMenuAddOrUpdateRequest navbarMenuAddOrUpdateRequest);
 
 
 	/**
 	 * 删除
 	 */
-	void remove(NavbarMenuRemoveRequest navbarMenuRemoveRequest);
+	boolean remove(NavbarMenuRemoveRequest navbarMenuRemoveRequest);
 
 	/**
 	 * 查询顶部菜单权限

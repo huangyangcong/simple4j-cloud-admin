@@ -1,6 +1,6 @@
 package com.simple4j.user.mapstruct;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.simple4j.user.base.Page;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import com.simple4j.user.entity.User;

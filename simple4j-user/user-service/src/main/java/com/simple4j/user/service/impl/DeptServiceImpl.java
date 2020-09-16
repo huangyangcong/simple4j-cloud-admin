@@ -5,17 +5,17 @@ import java.util.stream.Collectors;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.simple4j.autoconfigure.util.TreeUtil;
+import com.simple4j.user.base.Page;
 import com.simple4j.user.common.constant.CommonConstant;
 import com.simple4j.user.common.util.SecurityUtils;
 import com.simple4j.user.service.IDeptService;
 import com.simple4j.user.service.IUserDeptService;
+import com.simple4j.user.util.TreeUtil;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.user.entity.Dept;
-import com.simple4j.user.dao.DeptMapper;
+import com.simple4j.user.mapper.DeptMapper;
 import com.simple4j.user.mapstruct.DeptMapStruct;
 import com.simple4j.user.request.DeptAddRequest;
 import com.simple4j.user.request.DeptDetailRequest;
@@ -38,18 +38,19 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DeptServiceImpl implements IDeptService {
 
+	private final DeptMapper deptMapper;
 	private final DeptMapStruct deptMapStruct;
 	private final IUserDeptService userDeptService;
 
 	@Override
 	public List<DeptDetailResponse> tree(String tenantId) {
-		List<Dept> depts = baseMapper.tree(tenantId);
+		List<Dept> depts = deptMapper.tree(tenantId);
 		return TreeUtil.buildTree(deptMapStruct.toVo(depts));
 	}
 
 	@Override
 	public List<Long> getDeptIds(String tenantId, List<String> deptNames) {
-		List<Dept> deptList = baseMapper.selectList(
+		List<Dept> deptList = deptMapper.selectList(
 			Wrappers.<Dept>query().lambda().eq(Dept::getTenantId, tenantId)
 				.in(Dept::getDeptName, deptNames));
 		if (deptList != null && deptList.size() > 0) {
@@ -61,19 +62,19 @@ public class DeptServiceImpl implements IDeptService {
 
 	@Override
 	public List<String> getDeptNames(Long userId) {
-		return baseMapper.getDeptNames(userId);
+		return deptMapper.getDeptNames(userId);
 	}
 
 	@Override
 	public DeptDetailResponse detail(DeptDetailRequest deptDetailRequest) {
-		Dept detail = getOne(
+		Dept detail = deptMapper.getOne(
 			Wrappers.<Dept>lambdaQuery().eq(Dept::getId, deptDetailRequest.getId()));
 
 		DeptDetailResponse deptDetailResponse = deptMapStruct.toVo(detail);
 		if (deptDetailResponse.getParentId().equals(CommonConstant.TOP_PARENT_ID)) {
 			deptDetailResponse.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {
-			Dept parent = getById(deptDetailResponse.getParentId());
+			Dept parent = deptMapper.getById(deptDetailResponse.getParentId());
 			deptDetailResponse.setParentName(parent.getDeptName());
 		}
 		return deptDetailResponse;
@@ -82,7 +83,7 @@ public class DeptServiceImpl implements IDeptService {
 	@Override
 	public List<DeptDetailResponse> list(DeptListRequest deptListRequest) {
 		LambdaQueryWrapper<Dept> queryWrapper = Wrappers.<Dept>lambdaQuery();
-		List<Dept> pages = list(queryWrapper);
+		List<Dept> pages = deptMapper.list(queryWrapper);
 		return deptMapStruct.toVo(pages);
 	}
 
@@ -93,29 +94,32 @@ public class DeptServiceImpl implements IDeptService {
 				deptPageRequest.getDeptName())
 			.like(StrUtil.isNotEmpty(deptPageRequest.getFullName()), Dept::getFullName,
 				deptPageRequest.getFullName());
-		Page<Dept> list = page(
-			new Page<>(deptPageRequest.getPageNo(), deptPageRequest.getPageSize()),
+		IPage<Dept> page = deptMapper.page(
+			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(deptPageRequest.getPageNo(), deptPageRequest.getPageSize()),
 			!CommonConstant.ADMIN_TENANT_ID.equals(
 				SecurityUtils.getTenantId()) ? queryWrapper
 				.eq(Dept::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
-		return deptMapStruct.toVo(list);
+		Page<Dept> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
+				page.getRecords());
+		return deptMapStruct.toVo(pages);
 	}
 
 	@Override
-	public void add(DeptAddRequest deptAddRequest) {
-		save(deptMapStruct.toPo(deptAddRequest));
+	public boolean add(DeptAddRequest deptAddRequest) {
+		return deptMapper.save(deptMapStruct.toPo(deptAddRequest));
 	}
 
 	@Override
-	public void update(DeptUpdateRequest deptUpdateRequest) {
-		updateById(deptMapStruct.toPo(deptUpdateRequest));
+	public boolean update(DeptUpdateRequest deptUpdateRequest) {
+		return deptMapper.updateByIdBool(deptMapStruct.toPo(deptUpdateRequest));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void remove(DeptRemoveRequest deptRemoveRequest) {
+	public boolean remove(DeptRemoveRequest deptRemoveRequest) {
 		List<String> deptIds = deptRemoveRequest.getIds();
-		baseMapper.physicsDeleteBatchByIds(deptIds);
+		deptMapper.physicsDeleteBatchByIds(deptIds);
 		userDeptService.removeByDeptIds(deptIds);
+		return true;
 	}
 }

@@ -80,5 +80,5 @@ public interface IRoleService{
 	 * @param roleRemoveRequest
 	 * @return
 	 */
-	void remove(RoleRemoveRequest roleRemoveRequest);
+	boolean remove(RoleRemoveRequest roleRemoveRequest);
 }
