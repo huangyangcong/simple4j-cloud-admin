@@ -22,7 +22,7 @@ public class BaseEntity {
 	 * 是否删除
 	 */
 	@TableField(value = "is_deleted", fill = FieldFill.INSERT)
-	private Boolean isDeleted;
+	private Integer isDeleted;
 
 	/**
 	 * 创建者
