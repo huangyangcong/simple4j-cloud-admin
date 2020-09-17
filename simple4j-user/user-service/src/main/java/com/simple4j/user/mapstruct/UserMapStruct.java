@@ -1,6 +1,6 @@
 package com.simple4j.user.mapstruct;
 
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

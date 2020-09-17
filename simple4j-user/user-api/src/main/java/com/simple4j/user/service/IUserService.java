@@ -1,7 +1,7 @@
 package com.simple4j.user.service;
 
 
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.request.*;
 import com.simple4j.user.response.UserDetailResponse;
 import com.simple4j.user.response.UserInfo;

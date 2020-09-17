@@ -3,7 +3,7 @@ package com.simple4j.user.service.impl;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.core.util.StrUtil;
-import com.simple4j.user.base.BusinessException;
+import com.simple4j.api.base.BusinessException;
 import com.simple4j.user.common.constant.CacheNames;
 import com.simple4j.user.response.CaptchaResponse;
 import com.simple4j.user.service.ICaptchaService;

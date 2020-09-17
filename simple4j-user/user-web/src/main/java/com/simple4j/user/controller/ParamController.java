@@ -1,6 +1,6 @@
 package com.simple4j.user.controller;
 
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.request.ParamAddOrUpdateRequest;
 import com.simple4j.user.request.ParamDetailRequest;
 import com.simple4j.user.request.ParamPageRequest;

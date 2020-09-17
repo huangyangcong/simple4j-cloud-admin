@@ -16,8 +16,8 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.google.common.collect.Lists;
 import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
 import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
-import com.simple4j.user.base.BusinessException;
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.BusinessException;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.common.constant.CommonConstant;
 import com.simple4j.user.dto.JwtDto;
 import com.simple4j.user.entity.User;
@@ -99,7 +99,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 		if (!SecurityUtils.isAdministrator()) {
 			queryWrapper.eq(User::getTenantId, userListRequest.getTenantId());
 		}
-		queryWrapper.eq(User::getIsDelete, CommonConstant.DB_NOT_DELETED);
+		queryWrapper.eq(User::getIsDeleted, CommonConstant.DB_NOT_DELETED);
 
 		List<User> list = userMapper.list(queryWrapper);
 		return userMapStruct.toVo(list);
@@ -387,7 +387,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	public UserLoginResponse login(UserLoginRequest userLoginRequest) {
 		String captchaKey = userLoginRequest.getCaptchaKey();
 		//校验验证码
-		captchaService.verify(captchaKey, userLoginRequest.getCaptchaCode());
+//		captchaService.verify(captchaKey, userLoginRequest.getCaptchaCode());
 		//登录校验
 		String token = usernameAndPasswordAuth(userLoginRequest.getUsername(),
 				userLoginRequest.getPassword());

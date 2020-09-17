@@ -2,7 +2,7 @@ package com.simple4j.user.mapstruct;
 
 import java.util.List;
 
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.entity.Code;
 import com.simple4j.user.request.CodeAddOrUpdateRequest;
 import com.simple4j.user.request.CodeAddRequest;

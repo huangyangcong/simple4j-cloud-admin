@@ -2,7 +2,7 @@ package com.simple4j.user.service;
 
 import java.util.List;
 
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.request.NavbarGrantRequest;
 import com.simple4j.user.request.NavbarMenuAddOrUpdateRequest;
 import com.simple4j.user.request.NavbarMenuAddRequest;

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.simple4j.user.base.INode;
+import com.simple4j.api.base.INode;
 
 /**
  * @Date 2020/4/14 13:44

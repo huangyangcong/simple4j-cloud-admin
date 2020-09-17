@@ -19,7 +19,7 @@ import com.simple4j.user.request.CodeListRequest;
 import com.simple4j.user.request.CodeRemoveRequest;
 import com.simple4j.user.request.CodePageRequest;
 import com.simple4j.user.response.CodeDetailResponse;
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 
 import com.simple4j.user.service.ICodeService;
 

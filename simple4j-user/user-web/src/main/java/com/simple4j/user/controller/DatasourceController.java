@@ -1,6 +1,6 @@
 package com.simple4j.user.controller;
 
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.request.*;
 import com.simple4j.user.response.DatasourceDetailResponse;
 import com.simple4j.user.service.IDatasourceService;

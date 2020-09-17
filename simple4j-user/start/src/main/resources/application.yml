@@ -1,6 +1,6 @@
 logging:
     level:
-        com.newdex.example.modules.system.mapper: debug
+      root: debug
 spring:
     devtools:
         restart:

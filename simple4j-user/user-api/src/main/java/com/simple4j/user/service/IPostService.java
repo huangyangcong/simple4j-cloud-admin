@@ -2,7 +2,7 @@ package com.simple4j.user.service;
 
 import java.util.List;
 
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.request.PostAddRequest;
 import com.simple4j.user.request.PostDetailRequest;
 import com.simple4j.user.request.PostListRequest;

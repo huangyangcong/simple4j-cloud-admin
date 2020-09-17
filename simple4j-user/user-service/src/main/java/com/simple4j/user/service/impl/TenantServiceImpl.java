@@ -10,7 +10,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.common.constant.CommonConstant;
 import com.simple4j.user.util.SecurityUtils;
 import com.simple4j.user.mapper.DeptMapper;
@@ -128,7 +128,7 @@ public class TenantServiceImpl implements ITenantService {
 		Tenant tenant = tenantMapStruct.toPo(tenantAddOrUpdateRequest);
 		if (ObjectUtil.isEmpty(tenant.getId())) {
 			List<Tenant> tenants = tenantMapper
-					.selectList(Wrappers.<Tenant>query().lambda().eq(Tenant::getIsDelete,
+					.selectList(Wrappers.<Tenant>query().lambda().eq(Tenant::getIsDeleted,
 							CommonConstant.DB_NOT_DELETED));
 			List<String> codes = tenants.stream().map(Tenant::getTenantId)
 					.collect(Collectors.toList());

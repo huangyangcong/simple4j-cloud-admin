@@ -5,7 +5,7 @@ import java.util.List;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.mapper.NavbarMapper;
 import com.simple4j.user.entity.Navbar;
 import com.simple4j.user.mapstruct.NavbarMapStruct;

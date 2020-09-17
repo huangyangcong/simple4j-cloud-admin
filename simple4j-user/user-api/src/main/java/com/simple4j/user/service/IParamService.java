@@ -2,7 +2,7 @@ package com.simple4j.user.service;
 
 import java.util.List;
 
-import com.simple4j.user.base.Page;
+import com.simple4j.api.base.Page;
 import com.simple4j.user.request.ParamAddOrUpdateRequest;
 import com.simple4j.user.request.ParamAddRequest;
 import com.simple4j.user.request.ParamDetailRequest;

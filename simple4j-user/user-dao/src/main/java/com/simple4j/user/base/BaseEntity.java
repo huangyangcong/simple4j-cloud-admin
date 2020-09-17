@@ -1,12 +1,10 @@
 package com.simple4j.user.base;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
 
 /**
  * @author hyc
@@ -17,30 +15,30 @@ public class BaseEntity {
 	/**
 	 * 创建时间
 	 */
-	@TableField(value = "created_on_utc", fill = FieldFill.INSERT)
-	private Date createdOnUtc;
+	@TableField(value = "create_time", fill = FieldFill.INSERT)
+	private Date createTime;
 
 	/**
 	 * 是否删除
 	 */
-	@TableField(value = "is_delete", fill = FieldFill.INSERT)
-	private Boolean isDelete;
+	@TableField(value = "is_deleted", fill = FieldFill.INSERT)
+	private Boolean isDeleted;
 
 	/**
 	 * 创建者
 	 */
-	@TableField(value = "creator", fill = FieldFill.INSERT)
-	private Integer creator;
+	@TableField(value = "create_user", fill = FieldFill.INSERT)
+	private Long createUser;
 
 	/**
 	 * 更新时间
 	 */
-	@TableField(value = "updated_on_utc", fill = FieldFill.INSERT_UPDATE)
-	private Date updatedOnUtc;
+	@TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+	private Date updateTime;
 
 	/**
 	 * 更新人
 	 */
-	@TableField(value = "updator", fill = FieldFill.INSERT)
-	private Integer updator;
+	@TableField(value = "update_user", fill = FieldFill.INSERT)
+	private Long updateUser;
 }
