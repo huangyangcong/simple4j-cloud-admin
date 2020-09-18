@@ -48,19 +48,6 @@ public class SwaggerConfig {
 								typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
 								typeResolver.resolve(WildcardType.class)))
 				.useDefaultResponseMessages(false)
-				.globalResponses(HttpMethod.GET,
-						singletonList(new ResponseBuilder()
-								.code("500")
-								.description("500 message")
-								.representation(MediaType.TEXT_XML)
-								.apply(r ->
-										r.model(m ->
-												m.referenceModel(ref ->
-														ref.key(k ->
-																k.qualifiedModelName(q ->
-																		q.namespace("some:namespace")
-																				.name("ERROR"))))))
-								.build()))
 				.securitySchemes(singletonList(apiKey()))
 				.securityContexts(singletonList(securityContext()))
 				.enableUrlTemplating(true)
