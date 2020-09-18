@@ -10,6 +10,7 @@ import com.simple4j.user.response.UserLoginResponse;
 import com.simple4j.user.service.IUserRoleService;
 import com.simple4j.user.service.IUserService;
 import com.simple4j.web.bean.ApiResponse;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequestMapping("/user/api/v1")
 @AllArgsConstructor
+@Api(tags = "用户管理")
 public class UserController {
 
 	private final IUserService userService;
