@@ -1,0 +1,25 @@
+#set($requestPackage=$package.Entity.replace(".entity",""))
+package $!{requestPackage};
+
+
+import org.mybatis.spring.annotation.MapperScan;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
+import springfox.documentation.oas.annotations.EnableOpenApi;
+
+/**
+ * $!{cfg.upperModuleName}模块启动类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+@SpringCloudApplication
+@EnableOpenApi
+@MapperScan("$!{package.Mapper}")
+public class $!{cfg.upperModuleName}Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run($!{cfg.upperModuleName}Application.class, args);
+	}
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<parent>
+<artifactId>${cfg.projectName}-$!{package.ModuleName}</artifactId>
+<groupId>$!{cfg.groupId}</groupId>
+<version>1.0-SNAPSHOT</version>
+</parent>
+<modelVersion>4.0.0</modelVersion>
+
+<artifactId>$!{package.ModuleName}-web</artifactId>
+<dependencies>
+<dependency>
+<groupId>$!{cfg.groupId}</groupId>
+<artifactId>$!{package.ModuleName}-api</artifactId>
+<version>1.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+<groupId>com.simple4j.boot</groupId>
+<artifactId>simple4j-springboot-starter-web</artifactId>
+</dependency>
+<dependency>
+<groupId>com.simple4j.boot</groupId>
+<artifactId>simple4j-springboot-starter-jwt</artifactId>
+</dependency>
+<dependency>
+<groupId>io.springfox</groupId>
+<artifactId>springfox-boot-starter</artifactId>
+</dependency>
+<dependency>
+<groupId>org.hibernate.validator</groupId>
+<artifactId>hibernate-validator</artifactId>
+</dependency>
+<dependency>
+<groupId>org.projectlombok</groupId>
+<artifactId>lombok</artifactId>
+<scope>provided</scope>
+</dependency>
+</dependencies>
+</project>

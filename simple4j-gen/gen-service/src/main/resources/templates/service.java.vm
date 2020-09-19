@@ -1,0 +1,74 @@
+package $!{package.Service};
+
+#set($requestPackage=$package.Entity.replace("entity","request"))
+#set($responsePackage=$package.Entity.replace("entity","response"))
+import $!{requestPackage}.$!{entity}AddRequest;
+import $!{requestPackage}.$!{entity}UpdateRequest;
+import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
+import $!{requestPackage}.$!{entity}DetailRequest;
+import $!{requestPackage}.$!{entity}ListRequest;
+import $!{requestPackage}.$!{entity}RemoveRequest;
+import $!{requestPackage}.$!{entity}PageRequest;
+import $!{responsePackage}.$!{entity}DetailResponse;
+import com.simple4j.api.base.Page;
+
+import java.util.List;
+#if($!{cfg.tree})
+import $!{requestPackage}.$!{entity}TreeRequest;
+#end
+
+
+/**
+ * $!{table.comment} 服务类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+#if($!{kotlin})
+interface $!{table.serviceName}
+#else
+public interface $!{table.serviceName}{
+
+	/**
+	 * 详情
+	 */
+	$!{entity}DetailResponse detail($!{entity}DetailRequest $!{table.entityPath}DetailRequest);
+
+	/**
+	 * 列表 $!{table.comment}
+	 */
+	List<$!{entity}DetailResponse> list($!{entity}ListRequest $!{table.entityPath}ListRequest);
+
+	/**
+	 * 自定义分页 $!{table.comment}
+	 */
+	Page<$!{entity}DetailResponse> page($!{entity}PageRequest $!{table.entityPath}PageRequest);
+
+	/**
+	 * 新增 $!{table.comment}
+	 */
+	boolean add($!{entity}AddRequest $!{table.entityPath}AddRequest);
+
+	/**
+	 * 修改 $!{table.comment}
+	 */
+	boolean update($!{entity}UpdateRequest $!{table.entityPath}UpdateRequest);
+
+	/**
+	 * 新增或修改 $!{table.comment}
+	 */
+	boolean addOrUpdate($!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest);
+
+	#if($!{cfg.tree})
+	/**
+	 * 树形 $!{table.comment}
+	 */
+	List<$!{entity}DetailResponse> tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest);
+	#end
+
+	/**
+	 * 删除 $!{table.comment}
+	 */
+	boolean remove($!{entity}RemoveRequest $!{table.entityPath}RemoveRequest);
+}
+#end

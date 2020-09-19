@@ -1,0 +1,44 @@
+#set($requestPackage=$package.Entity.replace("entity","request"))
+package $!{requestPackage};
+
+#if($!{entityLombokModel})
+import lombok.Data;
+#end
+import java.io.Serializable;
+#if($!{swagger2})
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+/**
+ * $!{table.comment}分页请求实体类
+ *
+ * @author $!{author}
+ * @since $!{date}
+ */
+#if($!{entityLombokModel})
+@Data
+#end
+#if($!{swagger2})
+@ApiModel(value = "$!{table.comment}分页请求实体类", description = "$!{table.comment}分页请求实体类")
+#end
+public class $!{entity}PageRequest implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 页码
+	 */
+	@ApiModelProperty(name = "page_no", value = "页码")
+	@JsonProperty("page_no")
+	private int pageNo;
+
+	/**
+	 * 分页数
+	 */
+	@ApiModelProperty(name = "pageSize", value = "分页数")
+	@JsonProperty("page_size")
+	private int pageSize;
+}
