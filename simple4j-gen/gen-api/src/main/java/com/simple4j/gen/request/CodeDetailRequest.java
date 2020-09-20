@@ -4,6 +4,9 @@ import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+
+import javax.validation.constraints.NotNull;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,7 +25,8 @@ public class CodeDetailRequest implements Serializable {
 	/**
 	 * 代码生成表详情编号
 	 */
-	@ApiModelProperty(value = "代码生成表详情编号", name = "id")
+	@ApiModelProperty(value = "代码生成表详情编号", name = "id", required = true)
+	@NotNull(message = "编号不能为空")
 	@JsonProperty("id")
 	private Long id;
 	}

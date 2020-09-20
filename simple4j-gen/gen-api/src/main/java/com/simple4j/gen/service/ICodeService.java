@@ -1,6 +1,8 @@
 package com.simple4j.gen.service;
 
+import com.simple4j.api.base.BusinessException;
 import com.simple4j.gen.request.CodeAddRequest;
+import com.simple4j.gen.request.CodeGenRequest;
 import com.simple4j.gen.request.CodeUpdateRequest;
 import com.simple4j.gen.request.CodeAddOrUpdateRequest;
 import com.simple4j.gen.request.CodeDetailRequest;
@@ -10,6 +12,7 @@ import com.simple4j.gen.request.CodePageRequest;
 import com.simple4j.gen.response.CodeDetailResponse;
 import com.simple4j.api.base.Page;
 
+import java.io.OutputStream;
 import java.util.List;
 
 
@@ -56,4 +59,10 @@ public interface ICodeService{
 	 * 删除 代码生成表
 	 */
 	boolean remove(CodeRemoveRequest codeRemoveRequest);
+
+	/**
+	 * 代码生成
+	 * @param codeGenRequest
+	 */
+	void codeGen(OutputStream outputStream, CodeGenRequest codeGenRequest) throws BusinessException;
 }

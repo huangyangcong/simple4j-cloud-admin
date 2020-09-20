@@ -9,10 +9,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 import java.io.Serializable;
-#if($!{swagger2})
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-#end
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -34,8 +32,9 @@ public class $!{entity}DetailRequest implements Serializable {
 	 * $!{table.comment}详情编号
 	 */
 	#if($!{swagger2})
-	@ApiModelProperty(value = "$!{table.comment}详情编号", name = "id")
+	@ApiModelProperty(value = "$!{table.comment}详情编号", name = "id", required = true)
 	#end
+	@NotNull(message = "编号不能为空")
 	@JsonProperty("id")
 	private Long id;
 	## ----------  END 字段循环遍历  ----------

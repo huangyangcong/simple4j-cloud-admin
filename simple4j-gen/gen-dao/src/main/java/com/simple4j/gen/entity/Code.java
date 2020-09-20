@@ -1,9 +1,9 @@
 package com.simple4j.gen.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.simple4j.dao.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,61 +19,61 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Code extends BaseEntity {
 
-private static final long serialVersionUID=1L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键
 	 */
-		@TableId(value = "id", type = IdType.NONE)
-				private Long id;
+	@TableId(value = "id", type = IdType.NONE)
+	private Long id;
 	/**
 	 * 数据源主键
 	 */
-			private Long datasourceId;
+	private Long datasourceId;
 	/**
 	 * 服务名称
 	 */
-			private String serviceName;
+	private String serviceName;
 	/**
 	 * 模块名称
 	 */
-			private String codeName;
+	private String codeName;
 	/**
 	 * 表名
 	 */
-			private String tableName;
+	private String tableName;
 	/**
 	 * 表前缀
 	 */
-			private String tablePrefix;
+	private String tablePrefix;
 	/**
 	 * 主键名
 	 */
-			private String pkName;
+	private String pkName;
 	/**
 	 * 后端包名
 	 */
-			private String packageName;
+	private String packageName;
 	/**
 	 * 基础业务模式
 	 */
-			private Integer baseMode;
+	private Integer baseMode;
 	/**
 	 * 包装器模式
 	 */
-			private Integer wrapMode;
+	private Integer wrapMode;
 	/**
 	 * 后端路径
 	 */
-			private String apiPath;
+	private String apiPath;
 	/**
 	 * 前端路径
 	 */
-			private String webPath;
+	private String webPath;
 	/**
 	 * 是否已删除
 	 */
-			@TableLogic
+	@TableLogic
 	private Integer isDeleted;
 
 
