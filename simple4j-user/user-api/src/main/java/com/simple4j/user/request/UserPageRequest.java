@@ -1,6 +1,5 @@
 package com.simple4j.user.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,11 +22,4 @@ public class UserPageRequest {
 	@ApiModelProperty(name = "real_name", value = "姓名")
 	@JsonProperty("real_name")
 	private String realName;
-
-	/**
-	 * 租户ID
-	 */
-	@ApiModelProperty(hidden = true, value = "租户ID")
-	@JsonIgnore
-	private String tenantId;
 }

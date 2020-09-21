@@ -83,7 +83,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 		IPage<User> page = userMapper
 				.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(userPageRequest.getPageNo(), userPageRequest.getPageSize()),
 						SecurityUtils.isTenantAdmin() ? queryWrapper
-								.eq(User::getTenantId, userPageRequest.getTenantId()) : queryWrapper);
+								.eq(User::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
 		Page<User> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
 				page.getRecords());
 		return userMapStruct.toVo(pages);
