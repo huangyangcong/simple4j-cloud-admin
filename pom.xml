@@ -42,7 +42,6 @@
 		<module>simple4j-task</module>
 		<module>simple4j-user</module>
 		<module>simple4j-gen</module>
-		<module>simple4j-common</module>
 	</modules>
 	<reporting>
 		<plugins>

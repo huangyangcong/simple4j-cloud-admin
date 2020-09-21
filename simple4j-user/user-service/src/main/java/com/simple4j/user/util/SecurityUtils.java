@@ -104,6 +104,6 @@ public class SecurityUtils {
 	}
 
 	public static boolean isTenantAdmin() {
-		return SecurityUtils.getCurrentUserId() == null || SecurityUtils.getCurrentUserId() == 0L;
+		return "000000".equals(getTenantId());
 	}
 }
