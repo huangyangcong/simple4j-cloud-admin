@@ -12,10 +12,5 @@
 	<artifactId>simple4j-pay-api</artifactId>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.simple4j.admin</groupId>
-			<artifactId>simple4j-common-api</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 </project>

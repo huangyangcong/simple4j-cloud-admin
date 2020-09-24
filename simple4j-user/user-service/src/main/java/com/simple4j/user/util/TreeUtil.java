@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 import com.simple4j.api.base.INode;
 
 /**
- * @Date 2020/4/14 13:44
- * @Created by hyc
+ * 树形工具类
+ *
+ * @author hyc
  */
 public class TreeUtil {
 
@@ -21,13 +22,13 @@ public class TreeUtil {
 			return null;
 		}
 		List<F> treeList = new ArrayList<>();
-		Map<E, F> map = list.stream().collect(Collectors.toMap(INode::getTid, Function.identity()));
+		Map<E, F> map = list.stream().collect(Collectors.toMap(INode::getId, Function.identity()));
 		for (F tree : list) {
-			if (null == map.get(tree.getTParentId())) {
+			if (null == map.get(tree.getParentId())) {
 				treeList.add(tree);
 			} else {
 				// 子级通过父id获取到父级的类型
-				F parent = map.get(tree.getTParentId());
+				F parent = map.get(tree.getParentId());
 				// 父级获得子级，再将子级放到对应的父级中
 				parent.addChildren(tree);
 			}

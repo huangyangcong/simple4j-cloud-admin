@@ -3,12 +3,14 @@ package com.simple4j.user.response;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.simple4j.api.base.INode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.Getter;
 
 /**
  * 角色表详情响应实体类
@@ -27,6 +29,7 @@ public class RoleDetailResponse implements INode<RoleDetailResponse, Long> {
 	 */
 	@ApiModelProperty(name = "id", value = "主键")
 	@JsonProperty("id")
+	@Getter(onMethod=@__({@JsonIgnore}))
 	private Long id;
 
 	/**
@@ -41,6 +44,7 @@ public class RoleDetailResponse implements INode<RoleDetailResponse, Long> {
 	 */
 	@ApiModelProperty(name = "parent_id", value = "父主键")
 	@JsonProperty("parent_id")
+	@Getter(onMethod=@__({@JsonIgnore}))
 	private Long parentId;
 	/**
 	 * 角色名
@@ -77,16 +81,6 @@ public class RoleDetailResponse implements INode<RoleDetailResponse, Long> {
 	 * 上级角色
 	 */
 	private String parentName;
-
-	@Override
-	public Long getTid() {
-		return getId();
-	}
-
-	@Override
-	public Long getTParentId() {
-		return getParentId();
-	}
 
 	@Override
 	public void addChildren(com.simple4j.user.response.RoleDetailResponse children) {

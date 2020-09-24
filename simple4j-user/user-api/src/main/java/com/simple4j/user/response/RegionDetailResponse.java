@@ -145,12 +145,12 @@ public class RegionDetailResponse implements INode<RegionDetailResponse, String>
 	}
 
 	@Override
-	public String getTid() {
+	public String getId() {
 		return getCode();
 	}
 
 	@Override
-	public String getTParentId() {
+	public String getParentId() {
 		return getParentCode();
 	}
 

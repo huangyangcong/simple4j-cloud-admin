@@ -10,6 +10,7 @@ import com.simple4j.api.base.INode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.Getter;
 
 /**
  * 菜单表详情响应实体类
@@ -28,12 +29,14 @@ public class MenuDetailResponse implements INode<MenuDetailResponse, Long> {
 	 */
 	@ApiModelProperty(name = "id", value = "主键")
 	@JsonProperty("id")
+	@Getter(onMethod=@__({@JsonIgnore}))
 	private Long id;
 	/**
 	 * 父级菜单
 	 */
 	@ApiModelProperty(name = "parent_id", value = "父级菜单")
 	@JsonProperty("parent_id")
+	@Getter(onMethod=@__({@JsonIgnore}))
 	private Long parentId;
 	/**
 	 * 菜单编号
@@ -143,18 +146,6 @@ public class MenuDetailResponse implements INode<MenuDetailResponse, Long> {
 			this.children = new ArrayList<>();
 		}
 		this.children.add(children);
-	}
-
-	@JsonIgnore
-	@Override
-	public Long getTid() {
-		return getId();
-	}
-
-	@JsonIgnore
-	@Override
-	public Long getTParentId() {
-		return getParentId();
 	}
 
 	@Override

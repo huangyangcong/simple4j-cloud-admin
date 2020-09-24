@@ -9,6 +9,7 @@ import com.simple4j.api.base.INode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.Getter;
 
 /**
  * 部门表详情响应实体类
@@ -27,12 +28,14 @@ public class DeptDetailResponse implements INode<DeptDetailResponse, Long> {
 	 */
 	@ApiModelProperty(name = "id", value = "主键")
 	@JsonProperty("id")
+	@Getter(onMethod=@__({@JsonIgnore}))
 	private Long id;
 	/**
 	 * 父主键
 	 */
 	@ApiModelProperty(name = "parent_id", value = "父主键")
 	@JsonProperty("parent_id")
+	@Getter(onMethod=@__({@JsonIgnore}))
 	private Long parentId;
 	/**
 	 * 部门名
@@ -90,18 +93,6 @@ public class DeptDetailResponse implements INode<DeptDetailResponse, Long> {
 			this.children = new ArrayList<>();
 		}
 		this.children.add(children);
-	}
-
-	@JsonIgnore
-	@Override
-	public Long getTid() {
-		return getId();
-	}
-
-	@JsonIgnore
-	@Override
-	public Long getTParentId() {
-		return getParentId();
 	}
 
 	@Override
