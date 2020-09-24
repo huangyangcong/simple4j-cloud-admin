@@ -30,6 +30,7 @@ import java.util.Date;
 public class JobExecutionLog {
     
     @Id
+	@Column(length = 128)
     private String id;
     
     @Column(name = "job_name")

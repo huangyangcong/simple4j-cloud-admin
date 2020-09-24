@@ -26,10 +26,13 @@ spring:
   jpa:
     show-sql: true
     generate-ddl: true
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL5Dialect
   datasource:
     default:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: ""
+      url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
       username: root
       password: 123456
+logging:
+  file:
+    path:
