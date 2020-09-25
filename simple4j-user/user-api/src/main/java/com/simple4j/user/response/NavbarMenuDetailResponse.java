@@ -11,7 +11,7 @@ import lombok.Data;
 /**
  * 详情响应实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 @Data

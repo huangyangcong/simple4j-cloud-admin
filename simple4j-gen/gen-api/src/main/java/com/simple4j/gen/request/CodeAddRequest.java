@@ -11,11 +11,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * 代码生成表新增请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 @Data
-@ApiModel(value = "代码生成表添新增请求实体类", description = "代码生成表添新增请求实体类")
+@ApiModel(value = "代码生成表新增请求实体类", description = "代码生成表新增请求实体类")
 public class CodeAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

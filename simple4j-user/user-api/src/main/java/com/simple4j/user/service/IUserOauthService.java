@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 用户第三方认证表 服务类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-16
  */
 public interface IUserOauthService {

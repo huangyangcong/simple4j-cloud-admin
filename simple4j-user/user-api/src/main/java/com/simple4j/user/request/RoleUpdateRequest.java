@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 /**
  * 角色表修改请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-16
  */
 @Data

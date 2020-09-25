@@ -13,7 +13,7 @@ import com.simple4j.gen.request.DatasourceAddOrUpdateRequest;
 /**
  * 数据源配置表详情响应实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 	@Data

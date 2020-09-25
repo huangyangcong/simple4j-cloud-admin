@@ -60,7 +60,7 @@ open class $!{table.serviceImplName} , $!{table.serviceName} {
 		return $!{table.entityPath}MapStruct.toVo(detail);
 	}
 	@Override
-	public List<$!{entity}DetailResponse>list($!{entity}ListRequest $!{table.entityPath}ListRequest){
+	public Collection<$!{entity}DetailResponse>list($!{entity}ListRequest $!{table.entityPath}ListRequest){
 		LambdaQueryWrapper<$!{entity}>queryWrapper = Wrappers.<$!{entity}>lambdaQuery();
 		List<$!{entity}> list = $!{table.entityPath}Mapper.list(queryWrapper);
 		return $!{table.entityPath}MapStruct.toVo(list);
@@ -92,7 +92,7 @@ open class $!{table.serviceImplName} , $!{table.serviceName} {
 		return $!{table.entityPath}Mapper.saveOrUpdate($!{table.entityPath}MapStruct.toPo($!{table.entityPath}AddOrUpdateRequest));
 	}
 	#if($!{cfg.tree})
-	List<$!{entity}DetailResponse>tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest){
+	Collection<$!{entity}DetailResponse>tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest){
 		LambdaQueryWrapper<$!{entity}>queryWrapper = Wrappers.<$!{entity}>lambdaQuery();
 		List<$!{entity}> list = $!{table.entityPath}Mapper.list(queryWrapper);
 		return TreeUtils.buildTree($!{table.entityPath}MapStruct.toVo(list));

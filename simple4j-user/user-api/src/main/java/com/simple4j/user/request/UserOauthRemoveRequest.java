@@ -13,7 +13,7 @@ import lombok.Data;
 /**
  * 用户第三方认证表删除请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-16
  */
 @Data

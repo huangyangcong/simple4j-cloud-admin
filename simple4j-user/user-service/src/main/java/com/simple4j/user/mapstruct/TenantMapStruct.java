@@ -13,7 +13,7 @@ import com.simple4j.user.response.TenantDetailResponse;
 /**
  * 租户表数据转换类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

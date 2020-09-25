@@ -27,7 +27,7 @@ import com.simple4j.gen.service.IDatasourceService;
 /**
  * 数据源配置表 控制器
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 @RestController

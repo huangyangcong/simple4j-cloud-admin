@@ -10,11 +10,11 @@ import lombok.Data;
 /**
  * 行政区划表新增请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-25
  */
 @Data
-@ApiModel(value = "行政区划表添新增请求实体类", description = "行政区划表添新增请求实体类")
+@ApiModel(value = "行政区划表新增请求实体类", description = "行政区划表新增请求实体类")
 public class RegionAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

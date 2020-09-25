@@ -10,11 +10,11 @@ import lombok.Data;
 /**
  * 用户第三方认证表新增请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-16
  */
 @Data
-@ApiModel(value = "用户第三方认证表添新增请求实体类", description = "用户第三方认证表添新增请求实体类")
+@ApiModel(value = "用户第三方认证表新增请求实体类", description = "用户第三方认证表新增请求实体类")
 public class UserOauthAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * 字典表列表请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-25
  */
 @Data

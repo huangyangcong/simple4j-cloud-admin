@@ -12,11 +12,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * 数据源配置表新增请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 @Data
-@ApiModel(value = "数据源配置表添新增请求实体类", description = "数据源配置表添新增请求实体类")
+@ApiModel(value = "数据源配置表新增请求实体类", description = "数据源配置表新增请求实体类")
 public class DatasourceAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

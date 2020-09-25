@@ -14,7 +14,7 @@ import org.mapstruct.ReportingPolicy;
 /**
  * 用户第三方认证表数据转换类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-16
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

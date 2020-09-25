@@ -16,7 +16,7 @@ import com.simple4j.user.response.NavbarDetailResponse;
 /**
  * 服务类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 public interface INavbarService {

@@ -10,11 +10,11 @@ import lombok.Data;
 /**
  * 字典表新增请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-25
  */
 @Data
-@ApiModel(value = "字典表添新增请求实体类", description = "字典表添新增请求实体类")
+@ApiModel(value = "字典表新增请求实体类", description = "字典表新增请求实体类")
 public class DictAddOrUpdateRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

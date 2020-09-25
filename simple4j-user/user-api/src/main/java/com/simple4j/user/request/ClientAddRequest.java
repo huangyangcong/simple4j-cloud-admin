@@ -11,11 +11,11 @@ import lombok.Data;
 /**
  * 客户端表新增请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 @Data
-@ApiModel(value = "客户端表添新增请求实体类", description = "客户端表添新增请求实体类")
+@ApiModel(value = "客户端表新增请求实体类", description = "客户端表新增请求实体类")
 public class ClientAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

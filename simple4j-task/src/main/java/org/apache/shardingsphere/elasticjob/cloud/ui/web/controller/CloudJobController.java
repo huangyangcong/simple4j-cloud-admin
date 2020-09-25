@@ -29,7 +29,7 @@ import org.apache.shardingsphere.elasticjob.cloud.statistics.type.task.TaskResul
 import org.apache.shardingsphere.elasticjob.cloud.statistics.type.task.TaskRunningStatistics;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.FacadeService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.job.CloudJobConfigurationService;
-import org.apache.shardingsphere.elasticjob.cloud.ui.service.producer.ProducerManager;
+import org.apache.shardingsphere.elasticjob.cloud.ui.service.producer.ProducerService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.failover.FailoverTaskInfo;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.statistics.StatisticManager;
 import org.apache.shardingsphere.elasticjob.cloud.ui.web.controller.search.JobEventRdbSearch;
@@ -77,7 +77,7 @@ public final class CloudJobController {
     private JobEventRdbSearch jobEventRdbSearch;
     
     @Autowired
-    private ProducerManager producerManager;
+    private ProducerService producerManager;
     
     @Autowired
     private CloudJobConfigurationService jobConfigService;

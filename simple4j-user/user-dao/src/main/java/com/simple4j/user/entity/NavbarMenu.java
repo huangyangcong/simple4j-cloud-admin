@@ -9,7 +9,7 @@ import com.simple4j.dao.base.BaseEntity;
 /**
  * 顶部菜单实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 @Data

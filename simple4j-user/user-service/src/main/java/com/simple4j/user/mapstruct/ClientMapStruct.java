@@ -14,7 +14,7 @@ import com.simple4j.user.response.ClientDetailResponse;
 /**
  * 客户端表数据转换类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

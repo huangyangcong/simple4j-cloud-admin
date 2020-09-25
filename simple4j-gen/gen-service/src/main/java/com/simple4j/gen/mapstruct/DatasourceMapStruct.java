@@ -14,7 +14,7 @@ import com.simple4j.api.base.Page;
 /**
  * 数据源配置表数据转换类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

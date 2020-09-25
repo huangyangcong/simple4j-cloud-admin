@@ -10,7 +10,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 /**
  * Gen模块启动类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 @SpringCloudApplication

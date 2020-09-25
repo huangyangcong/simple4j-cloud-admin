@@ -19,7 +19,7 @@ import com.simple4j.user.response.NavbarPermissionResponse;
 /**
  * 服务类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 public interface INavbarMenuService {

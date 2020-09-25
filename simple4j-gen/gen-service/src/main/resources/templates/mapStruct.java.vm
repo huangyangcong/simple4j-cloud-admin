@@ -1,7 +1,7 @@
 #set($mapstructPackage=$package.Entity.replace("entity","mapstruct"))
 package $!{mapstructPackage};
 
-import java.util.List;
+import java.util.Collection;
 
 import $!{package.Entity}.$!{entity};
 import org.mapstruct.Mapper;
@@ -61,7 +61,7 @@ public interface $!{entity}MapStruct {
 	* @param po
 	* @return
 	*/
-	List<$!{entity}DetailResponse> toVo(List<$!{entity}> po);
+	Collection<$!{entity}DetailResponse> toVo(Collection<$!{entity}> po);
 
 
 	/**

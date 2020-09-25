@@ -10,11 +10,11 @@ import lombok.Data;
 /**
  * 新增请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 @Data
-@ApiModel(value = "添新增请求实体类", description = "添新增请求实体类")
+@ApiModel(value = "新增请求实体类", description = "新增请求实体类")
 public class NavbarAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;

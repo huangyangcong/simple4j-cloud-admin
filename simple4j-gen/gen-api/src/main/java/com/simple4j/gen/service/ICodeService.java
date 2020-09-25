@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 代码生成表 服务类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 public interface ICodeService{

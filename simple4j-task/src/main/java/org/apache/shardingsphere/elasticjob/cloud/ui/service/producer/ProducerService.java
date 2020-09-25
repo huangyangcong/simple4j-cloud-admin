@@ -35,7 +35,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-public final class ProducerManager {
+public final class ProducerService {
     
     @Autowired
     private CloudAppConfigurationService appConfigService;

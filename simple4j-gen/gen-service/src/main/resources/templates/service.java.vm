@@ -37,7 +37,7 @@ public interface $!{table.serviceName}{
 	/**
 	 * 列表 $!{table.comment}
 	 */
-	List<$!{entity}DetailResponse> list($!{entity}ListRequest $!{table.entityPath}ListRequest);
+	Collection<$!{entity}DetailResponse> list($!{entity}ListRequest $!{table.entityPath}ListRequest);
 
 	/**
 	 * 自定义分页 $!{table.comment}
@@ -63,7 +63,7 @@ public interface $!{table.serviceName}{
 	/**
 	 * 树形 $!{table.comment}
 	 */
-	List<$!{entity}DetailResponse> tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest);
+	Collection<$!{entity}DetailResponse> tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest);
 	#end
 
 	/**

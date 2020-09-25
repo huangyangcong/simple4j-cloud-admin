@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 代码生成表 控制器
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 @Controller

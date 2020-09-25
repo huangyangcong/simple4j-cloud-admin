@@ -158,14 +158,15 @@ public class CodeGenerator {
 		generator.setSuperMapperClass("com.simple4j.autoconfigure.mybatis.base.ExtendMapper");
 		generator.setSystemName(SABER_NAME);
 		generator.setProjectName("simple4j");
-		generator.setModuleName("gen");
+		generator.setModuleName("task");
 		generator.setGroupId("com.simple4j.admin");
 		generator.setPackageName("com.simple4j");
 		generator.setTablePrefix(new String[]{"simple4j_"});
-		generator.setIncludeTables(new String[]{"simple4j_code", "simple4j_datasource"});
+		generator.setIncludeTables(new String[]{"cloud_app_config"});
 		generator.setTree(false);
 		generator.setSuperEntityClass(BaseEntity.class);
 		generator.setIdType(1);
+		generator.setOutputStream(new FileOutputStream("D:/task"));
 		generator.run();
 	}
 

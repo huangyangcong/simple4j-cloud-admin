@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 客户端表列表请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 @Data

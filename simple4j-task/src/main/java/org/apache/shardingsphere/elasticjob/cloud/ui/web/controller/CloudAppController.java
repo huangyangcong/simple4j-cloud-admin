@@ -22,7 +22,7 @@ import org.apache.shardingsphere.elasticjob.exception.AppConfigurationException;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.app.CloudAppConfigurationService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.app.pojo.CloudAppConfigurationPOJO;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.job.CloudJobConfigurationService;
-import org.apache.shardingsphere.elasticjob.cloud.ui.service.producer.ProducerManager;
+import org.apache.shardingsphere.elasticjob.cloud.ui.service.producer.ProducerService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.disable.app.DisableAppService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.web.dto.CloudAppConfiguration;
 import org.apache.shardingsphere.elasticjob.response.ResponseResult;
@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 public final class CloudAppController {
     
     @Autowired
-    private ProducerManager producerManager;
+    private ProducerService producerManager;
     
     @Autowired
     private CloudAppConfigurationService appConfigService;

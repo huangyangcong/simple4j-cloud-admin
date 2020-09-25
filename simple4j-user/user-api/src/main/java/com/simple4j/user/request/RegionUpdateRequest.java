@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 行政区划表修改请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-25
  */
 @Data

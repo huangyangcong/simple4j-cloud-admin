@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * 代码生成表详情请求实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 @Data

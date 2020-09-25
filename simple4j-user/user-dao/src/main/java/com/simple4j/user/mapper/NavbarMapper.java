@@ -6,7 +6,7 @@ import com.simple4j.user.entity.Navbar;
 /**
  * Mapper 接口
  *
- * @author Blade
+ * @author hyc
  * @since 2020-08-26
  */
 public interface NavbarMapper extends ExtendMapper<Navbar> {

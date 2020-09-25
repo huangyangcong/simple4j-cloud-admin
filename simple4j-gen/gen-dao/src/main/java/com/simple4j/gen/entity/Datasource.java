@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 数据源配置表实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-19
  */
 @Data

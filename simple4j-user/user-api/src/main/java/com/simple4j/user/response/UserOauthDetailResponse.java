@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * 用户第三方认证表详情响应实体类
  *
- * @author Blade
+ * @author hyc
  * @since 2020-09-16
  */
 @Data
