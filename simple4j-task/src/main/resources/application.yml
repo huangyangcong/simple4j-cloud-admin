@@ -36,3 +36,5 @@ spring:
 logging:
   file:
     path:
+  level:
+    root: debug

@@ -17,13 +17,12 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.web.controller;
 
+import com.simple4j.web.bean.ApiResponse;
 import org.apache.shardingsphere.elasticjob.lite.ui.dto.request.FindJobExecutionEventsRequest;
 import org.apache.shardingsphere.elasticjob.lite.ui.dto.request.FindJobStatusTraceEventsRequest;
 import org.apache.shardingsphere.elasticjob.lite.ui.dto.response.BasePageResponse;
 import org.apache.shardingsphere.elasticjob.lite.ui.service.EventTraceDataSourceConfigurationService;
 import org.apache.shardingsphere.elasticjob.lite.ui.service.EventTraceHistoryService;
-import org.apache.shardingsphere.elasticjob.response.ResponseResult;
-import org.apache.shardingsphere.elasticjob.response.ResponseResultUtil;
 import org.apache.shardingsphere.elasticjob.util.SessionEventTraceDataSourceConfiguration;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobExecutionEvent;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobStatusTraceEvent;
@@ -56,9 +55,9 @@ public final class EventTraceHistoryController {
      * @return job execution event trace result
      */
     @PostMapping(value = "/execution")
-    public ResponseResult<BasePageResponse<JobExecutionEvent>> findJobExecutionEvents(@RequestBody final FindJobExecutionEventsRequest requestParams) {
+    public ApiResponse<BasePageResponse<JobExecutionEvent>> findJobExecutionEvents(@RequestBody final FindJobExecutionEventsRequest requestParams) {
         Page<JobExecutionEvent> jobExecutionEvents = eventTraceHistoryService.findJobExecutionEvents(requestParams);
-        return ResponseResultUtil.build(BasePageResponse.of(jobExecutionEvents));
+        return ApiResponse.ok(BasePageResponse.of(jobExecutionEvents));
     }
     
     /**
@@ -68,9 +67,9 @@ public final class EventTraceHistoryController {
      * @return job status trace result
      */
     @PostMapping(value = "/status")
-    public ResponseResult<BasePageResponse<JobStatusTraceEvent>> findJobStatusTraceEvents(@RequestBody final FindJobStatusTraceEventsRequest requestParams) {
+    public ApiResponse<BasePageResponse<JobStatusTraceEvent>> findJobStatusTraceEvents(@RequestBody final FindJobStatusTraceEventsRequest requestParams) {
         Page<JobStatusTraceEvent> jobStatusTraceEvents = eventTraceHistoryService.findJobStatusTraceEvents(requestParams);
-        return ResponseResultUtil.build(BasePageResponse.of(jobStatusTraceEvents));
+        return ApiResponse.ok(BasePageResponse.of(jobStatusTraceEvents));
     }
     
     @ModelAttribute

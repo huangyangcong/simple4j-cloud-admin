@@ -17,11 +17,9 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.web.controller;
 
+import com.simple4j.web.bean.ApiResponse;
 import org.apache.shardingsphere.elasticjob.infra.pojo.JobConfigurationPOJO;
 import org.apache.shardingsphere.elasticjob.lite.ui.service.JobAPIService;
-import org.apache.shardingsphere.elasticjob.response.ResponseResult;
-import org.apache.shardingsphere.elasticjob.response.ResponseResultUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,45 +35,45 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/jobs/config")
 public final class JobConfigController {
-    
-    private JobAPIService jobAPIService;
-    
-    @Autowired
-    public JobConfigController(final JobAPIService jobAPIService) {
-        this.jobAPIService = jobAPIService;
-    }
-    
-    /**
-     * Get job configuration.
-     *
-     * @param jobName job name
-     * @return job configuration
-     */
-    @GetMapping(value = "/{jobName}")
-    public ResponseResult<JobConfigurationPOJO> getJobConfig(@PathVariable("jobName") final String jobName) {
-        JobConfigurationPOJO data = jobAPIService.getJobConfigurationAPI().getJobConfiguration(jobName);
-        return ResponseResultUtil.build(data);
-    }
-    
-    /**
-     * Update job configuration.
-     *
-     * @param jobConfiguration job configuration
-     */
-    @PutMapping
-    public ResponseResult<Boolean> updateJobConfig(@RequestBody final JobConfigurationPOJO jobConfiguration) {
-        jobAPIService.getJobConfigurationAPI().updateJobConfiguration(jobConfiguration);
-        return ResponseResultUtil.build(Boolean.TRUE);
-    }
-    
-    /**
-     * Remove job configuration.
-     *
-     * @param jobName job name
-     */
-    @DeleteMapping("/{jobName}")
-    public ResponseResult<Boolean> removeJob(@PathVariable("jobName") final String jobName) {
-        jobAPIService.getJobConfigurationAPI().removeJobConfiguration(jobName);
-        return ResponseResultUtil.build(Boolean.TRUE);
-    }
+
+	private JobAPIService jobAPIService;
+
+	@Autowired
+	public JobConfigController(final JobAPIService jobAPIService) {
+		this.jobAPIService = jobAPIService;
+	}
+
+	/**
+	 * Get job configuration.
+	 *
+	 * @param jobName job name
+	 * @return job configuration
+	 */
+	@GetMapping(value = "/{jobName}")
+	public ApiResponse<JobConfigurationPOJO> getJobConfig(@PathVariable("jobName") final String jobName) {
+		JobConfigurationPOJO data = jobAPIService.getJobConfigurationAPI().getJobConfiguration(jobName);
+		return ApiResponse.ok(data);
+	}
+
+	/**
+	 * Update job configuration.
+	 *
+	 * @param jobConfiguration job configuration
+	 */
+	@PutMapping
+	public ApiResponse<Boolean> updateJobConfig(@RequestBody final JobConfigurationPOJO jobConfiguration) {
+		jobAPIService.getJobConfigurationAPI().updateJobConfiguration(jobConfiguration);
+		return ApiResponse.ok(Boolean.TRUE);
+	}
+
+	/**
+	 * Remove job configuration.
+	 *
+	 * @param jobName job name
+	 */
+	@DeleteMapping("/{jobName}")
+	public ApiResponse<Boolean> removeJob(@PathVariable("jobName") final String jobName) {
+		jobAPIService.getJobConfigurationAPI().removeJobConfiguration(jobName);
+		return ApiResponse.ok(Boolean.TRUE);
+	}
 }

@@ -1,0 +1,8 @@
+spring:
+    application:
+        name: system-service
+    cloud:
+        nacos:
+            server-addr: 122.51.133.124:30000
+            config:
+                file-extension: yml

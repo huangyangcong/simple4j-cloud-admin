@@ -40,8 +40,9 @@
 		<module>simple4j-msg</module>
 		<module>simple4j-oss</module>
 		<module>simple4j-task</module>
-		<module>simple4j-user</module>
+		<module>simple4j-system</module>
 		<module>simple4j-gen</module>
+		<module>simple4j-base-modules</module>
 	</modules>
 	<reporting>
 		<plugins>

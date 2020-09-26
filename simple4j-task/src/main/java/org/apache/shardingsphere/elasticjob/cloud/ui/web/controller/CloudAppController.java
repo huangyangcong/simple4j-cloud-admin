@@ -17,6 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.web.controller;
 
+import com.simple4j.web.bean.ApiResponse;
 import org.apache.shardingsphere.elasticjob.cloud.config.pojo.CloudJobConfigurationPOJO;
 import org.apache.shardingsphere.elasticjob.exception.AppConfigurationException;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.app.CloudAppConfigurationService;
@@ -25,8 +26,6 @@ import org.apache.shardingsphere.elasticjob.cloud.ui.service.job.CloudJobConfigu
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.producer.ProducerService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.disable.app.DisableAppService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.web.dto.CloudAppConfiguration;
-import org.apache.shardingsphere.elasticjob.response.ResponseResult;
-import org.apache.shardingsphere.elasticjob.response.ResponseResultUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,13 +64,13 @@ public final class CloudAppController {
      * @param appConfig cloud app config
      */
     @PostMapping("/register")
-    public ResponseResult register(@RequestBody final CloudAppConfigurationPOJO appConfig) {
+    public ApiResponse register(@RequestBody final CloudAppConfigurationPOJO appConfig) {
         Optional<CloudAppConfigurationPOJO> appConfigFromZk = appConfigService.load(appConfig.getAppName());
         if (appConfigFromZk.isPresent()) {
             throw new AppConfigurationException("app '%s' already existed.", appConfig.getAppName());
         }
         appConfigService.add(appConfig);
-        return ResponseResultUtil.success();
+        return ApiResponse.ok();
     }
     
     /**
@@ -79,9 +78,9 @@ public final class CloudAppController {
      * @param appConfig cloud app config
      */
     @PostMapping("/update")
-    public ResponseResult update(@RequestBody final CloudAppConfigurationPOJO appConfig) {
+    public ApiResponse update(@RequestBody final CloudAppConfigurationPOJO appConfig) {
         appConfigService.update(appConfig);
-        return ResponseResultUtil.success();
+        return ApiResponse.ok();
     }
     
     /**
@@ -90,9 +89,9 @@ public final class CloudAppController {
      * @return cloud app config
      */
     @GetMapping("/{appName}")
-    public ResponseResult<CloudAppConfigurationPOJO> detail(@PathVariable("appName") final String appName) {
+    public ApiResponse<CloudAppConfigurationPOJO> detail(@PathVariable("appName") final String appName) {
         Optional<CloudAppConfigurationPOJO> appConfig = appConfigService.load(appName);
-        return ResponseResultUtil.build(appConfig.orElse(null));
+        return ApiResponse.ok(appConfig.orElse(null));
     }
     
     /**
@@ -100,8 +99,8 @@ public final class CloudAppController {
      * @return collection of registered app configs
      */
     @GetMapping("/list")
-    public ResponseResult<Collection<CloudAppConfiguration>> findAllApps() {
-        return ResponseResultUtil.build(build(appConfigService.loadAll()));
+    public ApiResponse<Collection<CloudAppConfiguration>> findAllApps() {
+        return ApiResponse.ok(build(appConfigService.loadAll()));
     }
     
     /**
@@ -119,11 +118,11 @@ public final class CloudAppController {
      * @param appName app name
      */
     @PostMapping("/{appName}/disable")
-    public ResponseResult disable(@PathVariable("appName") final String appName) {
+    public ApiResponse disable(@PathVariable("appName") final String appName) {
         if (appConfigService.load(appName).isPresent()) {
             disableAppService.add(appName);
         }
-        return ResponseResultUtil.success();
+        return ApiResponse.ok();
     }
     
     /**
@@ -131,11 +130,11 @@ public final class CloudAppController {
      * @param appName app name
      */
     @PostMapping("/{appName}/enable")
-    public ResponseResult enable(@PathVariable("appName") final String appName) {
+    public ApiResponse enable(@PathVariable("appName") final String appName) {
         if (appConfigService.load(appName).isPresent()) {
             disableAppService.remove(appName);
         }
-        return ResponseResultUtil.success();
+        return ApiResponse.ok();
     }
     
     /**
@@ -143,11 +142,11 @@ public final class CloudAppController {
      * @param appName app name
      */
     @DeleteMapping("/{appName}")
-    public ResponseResult deregister(@PathVariable("appName") final String appName) {
+    public ApiResponse deregister(@PathVariable("appName") final String appName) {
         if (appConfigService.load(appName).isPresent()) {
             removeAppAndJobConfigurations(appName);
         }
-        return ResponseResultUtil.success();
+        return ApiResponse.ok();
     }
     
     private void removeAppAndJobConfigurations(final String appName) {
@@ -161,7 +160,7 @@ public final class CloudAppController {
     }
     
     private Collection<CloudAppConfiguration> build(final Collection<CloudAppConfigurationPOJO> cloudAppConfigurationPOJOS) {
-        return cloudAppConfigurationPOJOS.stream().map(each -> convert(each)).collect(Collectors.toList());
+        return cloudAppConfigurationPOJOS.stream().map(this::convert).collect(Collectors.toList());
     }
     
     private CloudAppConfiguration convert(final CloudAppConfigurationPOJO cloudAppConfigurationPOJO) {

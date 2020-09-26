@@ -17,11 +17,10 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.web.controller;
 
+import com.simple4j.web.bean.ApiResponse;
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfiguration;
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceFactory;
 import org.apache.shardingsphere.elasticjob.lite.ui.service.EventTraceDataSourceConfigurationService;
-import org.apache.shardingsphere.elasticjob.response.ResponseResult;
-import org.apache.shardingsphere.elasticjob.response.ResponseResultUtil;
 import org.apache.shardingsphere.elasticjob.util.SessionEventTraceDataSourceConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -69,9 +68,9 @@ public final class EventTraceDataSourceController {
      * @return event trace data source configurations
      */
     @GetMapping("/load")
-    public ResponseResult<Collection<EventTraceDataSourceConfiguration>> load(final HttpServletRequest request) {
+    public ApiResponse<Collection<EventTraceDataSourceConfiguration>> load(final HttpServletRequest request) {
         eventTraceDataSourceConfigurationService.loadActivated().ifPresent(eventTraceDataSourceConfig -> setDataSourceNameToSession(eventTraceDataSourceConfig, request.getSession()));
-        return ResponseResultUtil.build(eventTraceDataSourceConfigurationService.loadAll().getEventTraceDataSourceConfiguration());
+        return ApiResponse.ok(eventTraceDataSourceConfigurationService.loadAll().getEventTraceDataSourceConfiguration());
     }
     
     /**
@@ -81,8 +80,8 @@ public final class EventTraceDataSourceController {
      * @return success to added or not
      */
     @PostMapping("/add")
-    public ResponseResult<Boolean> add(@RequestBody final EventTraceDataSourceConfiguration config) {
-        return ResponseResultUtil.build(eventTraceDataSourceConfigurationService.add(config));
+    public ApiResponse<Boolean> add(@RequestBody final EventTraceDataSourceConfiguration config) {
+        return ApiResponse.ok(eventTraceDataSourceConfigurationService.add(config));
     }
     
     /**
@@ -91,9 +90,9 @@ public final class EventTraceDataSourceController {
      * @param config event trace data source configuration
      */
     @DeleteMapping
-    public ResponseResult delete(@RequestBody final EventTraceDataSourceConfiguration config) {
+    public ApiResponse delete(@RequestBody final EventTraceDataSourceConfiguration config) {
         eventTraceDataSourceConfigurationService.delete(config.getName());
-        return ResponseResultUtil.success();
+        return ApiResponse.ok();
     }
     
     /**
@@ -104,8 +103,8 @@ public final class EventTraceDataSourceController {
      * @return success or not
      */
     @PostMapping(value = "/connectTest")
-    public ResponseResult<Boolean> connectTest(@RequestBody final EventTraceDataSourceConfiguration config, final HttpServletRequest request) {
-        return ResponseResultUtil.build(setDataSourceNameToSession(config, request.getSession()));
+    public ApiResponse<Boolean> connectTest(@RequestBody final EventTraceDataSourceConfiguration config, final HttpServletRequest request) {
+        return ApiResponse.ok(setDataSourceNameToSession(config, request.getSession()));
     }
     
     /**
@@ -116,12 +115,12 @@ public final class EventTraceDataSourceController {
      * @return success or not
      */
     @PostMapping(value = "/connect")
-    public ResponseResult<Boolean> connect(@RequestBody final EventTraceDataSourceConfiguration config, final HttpServletRequest request) {
+    public ApiResponse<Boolean> connect(@RequestBody final EventTraceDataSourceConfiguration config, final HttpServletRequest request) {
         boolean isConnected = setDataSourceNameToSession(eventTraceDataSourceConfigurationService.find(config.getName(), eventTraceDataSourceConfigurationService.loadAll()), request.getSession());
         if (isConnected) {
             eventTraceDataSourceConfigurationService.load(config.getName());
         }
-        return ResponseResultUtil.build(isConnected);
+        return ApiResponse.ok(isConnected);
     }
     
     private boolean setDataSourceNameToSession(final EventTraceDataSourceConfiguration dataSourceConfig, final HttpSession session) {
