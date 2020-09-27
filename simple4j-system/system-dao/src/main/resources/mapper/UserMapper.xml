@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.simple4j.user.mapper.UserMapper">
+<mapper namespace="com.simple4j.system.mapper.UserMapper">
 
-	<select id="getUser" resultType="com.simple4j.user.entity.User">
+	<select id="getUser" resultType="com.simple4j.system.entity.User">
         SELECT
             *
         FROM
