@@ -1,0 +1,16 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
+    username: root
+    password: 123456
+management:
+  health:
+    defaults:
+      enabled: false
+logging:
+  level:
+    root: info
+

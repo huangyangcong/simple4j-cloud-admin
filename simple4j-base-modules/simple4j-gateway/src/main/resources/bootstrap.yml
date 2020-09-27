@@ -52,3 +52,9 @@ spring:
             - Path=/task/**
           filters:
             - StripPrefix=1
+        - id: flow-service
+          uri: lb://flow-service
+          predicates:
+            - Path=/flow/**
+          filters:
+            - StripPrefix=1
