@@ -1,10 +1,10 @@
-package com.simple4j.user.service;
+package com.simple4j.system.service;
 
 import java.util.List;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.user.request.*;
-import com.simple4j.user.response.RoleDetailResponse;
+import com.simple4j.system.request.*;
+import com.simple4j.system.response.RoleDetailResponse;
 
 /**
  * 服务类

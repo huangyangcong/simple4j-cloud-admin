@@ -1,4 +1,4 @@
-package com.simple4j.user.request;
+package com.simple4j.system.request;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

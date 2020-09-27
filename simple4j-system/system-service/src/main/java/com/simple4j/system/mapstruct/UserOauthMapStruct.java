@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.UserOauth;
-import com.simple4j.system.request.UserOauthAddOrUpdateRequest;
+import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
 import com.simple4j.system.request.UserOauthAddRequest;
 import com.simple4j.system.request.UserOauthUpdateRequest;
 import com.simple4j.system.response.UserOauthDetailResponse;

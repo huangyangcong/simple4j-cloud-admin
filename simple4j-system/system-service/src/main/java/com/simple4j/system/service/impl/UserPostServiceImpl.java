@@ -1,4 +1,4 @@
-package com.simple4j.user.service.impl;
+package com.simple4j.system.service.impl;
 
 
 import java.util.ArrayList;
@@ -6,10 +6,10 @@ import java.util.List;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.simple4j.user.service.IUserPostService;
-import com.simple4j.user.entity.UserPost;
-import com.simple4j.user.mapper.UserPostMapper;
-import com.simple4j.user.request.UserPostGrantRequest;
+import com.simple4j.system.service.IUserPostService;
+import com.simple4j.system.entity.UserPost;
+import com.simple4j.system.mapper.UserPostMapper;
+import com.simple4j.system.request.UserPostGrantRequest;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;

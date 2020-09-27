@@ -1,9 +1,9 @@
 package com.simple4j.system.service;
 
 
-import java.util.List;
-
 import com.simple4j.system.request.UserDeptGrantRequest;
+
+import java.util.List;
 
 /**
  * 服务类

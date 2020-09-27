@@ -1,4 +1,4 @@
-package com.simple4j.user.entity;
+package com.simple4j.system.entity;
 
 import java.util.Date;
 

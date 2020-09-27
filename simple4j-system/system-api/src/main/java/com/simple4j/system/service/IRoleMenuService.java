@@ -1,8 +1,8 @@
-package com.simple4j.user.service;
+package com.simple4j.system.service;
 
 import java.util.List;
 
-import com.simple4j.user.request.MenuGrantRequest;
+import com.simple4j.system.request.MenuGrantRequest;
 
 /**
  * 服务类

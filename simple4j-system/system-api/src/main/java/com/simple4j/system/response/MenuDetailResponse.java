@@ -1,8 +1,5 @@
 package com.simple4j.system.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +8,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 菜单表详情响应实体类
@@ -141,7 +141,7 @@ public class MenuDetailResponse implements INode<MenuDetailResponse, Long> {
 	private String isOpenName;
 
 	@Override
-	public void addChildren(com.simple4j.system.response.MenuDetailResponse children) {
+	public void addChildren(MenuDetailResponse children) {
 		if (this.children == null) {
 			this.children = new ArrayList<>();
 		}
@@ -149,7 +149,7 @@ public class MenuDetailResponse implements INode<MenuDetailResponse, Long> {
 	}
 
 	@Override
-	public int compareTo(com.simple4j.system.response.MenuDetailResponse o) {
+	public int compareTo(MenuDetailResponse o) {
 		if (o.getSort().equals(this.getSort())) {
 			return 0;
 		} else if (o.getSort() > this.getSort()) {

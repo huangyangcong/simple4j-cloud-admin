@@ -1,15 +1,15 @@
-package com.simple4j.user.mapstruct;
+package com.simple4j.system.mapstruct;
 
 import java.util.List;
 
 import com.simple4j.api.base.Page;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-import com.simple4j.user.entity.NavbarMenu;
-import com.simple4j.user.request.NavbarMenuAddOrUpdateRequest;
-import com.simple4j.user.request.NavbarMenuAddRequest;
-import com.simple4j.user.request.NavbarMenuUpdateRequest;
-import com.simple4j.user.response.NavbarMenuDetailResponse;
+import com.simple4j.system.entity.NavbarMenu;
+import com.simple4j.system.request.NavbarMenuAddOrUpdateRequest;
+import com.simple4j.system.request.NavbarMenuAddRequest;
+import com.simple4j.system.request.NavbarMenuUpdateRequest;
+import com.simple4j.system.response.NavbarMenuDetailResponse;
 
 /**
  * 数据转换类

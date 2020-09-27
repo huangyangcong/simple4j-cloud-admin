@@ -1,4 +1,4 @@
-package com.simple4j.user.request;
+package com.simple4j.system.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

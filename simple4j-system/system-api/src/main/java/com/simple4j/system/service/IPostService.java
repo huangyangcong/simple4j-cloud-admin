@@ -1,15 +1,15 @@
-package com.simple4j.user.service;
+package com.simple4j.system.service;
 
 import java.util.List;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.user.request.PostAddRequest;
-import com.simple4j.user.request.PostDetailRequest;
-import com.simple4j.user.request.PostListRequest;
-import com.simple4j.user.request.PostPageRequest;
-import com.simple4j.user.request.PostRemoveRequest;
-import com.simple4j.user.request.PostUpdateRequest;
-import com.simple4j.user.response.PostDetailResponse;
+import com.simple4j.system.request.PostAddRequest;
+import com.simple4j.system.request.PostDetailRequest;
+import com.simple4j.system.request.PostListRequest;
+import com.simple4j.system.request.PostPageRequest;
+import com.simple4j.system.request.PostRemoveRequest;
+import com.simple4j.system.request.PostUpdateRequest;
+import com.simple4j.system.response.PostDetailResponse;
 
 /**
  * 岗位表 服务类

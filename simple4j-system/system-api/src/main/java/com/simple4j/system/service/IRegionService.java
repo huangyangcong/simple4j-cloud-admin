@@ -1,8 +1,8 @@
-package com.simple4j.user.service;
+package com.simple4j.system.service;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.user.request.*;
-import com.simple4j.user.response.RegionDetailResponse;
+import com.simple4j.system.request.*;
+import com.simple4j.system.response.RegionDetailResponse;
 
 import java.util.List;
 

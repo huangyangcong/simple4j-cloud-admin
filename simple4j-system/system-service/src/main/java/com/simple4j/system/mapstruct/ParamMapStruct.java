@@ -1,15 +1,15 @@
-package com.simple4j.user.mapstruct;
+package com.simple4j.system.mapstruct;
 
 import java.util.List;
 
 import com.simple4j.api.base.Page;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-import com.simple4j.user.entity.Param;
-import com.simple4j.user.request.ParamAddOrUpdateRequest;
-import com.simple4j.user.request.ParamAddRequest;
-import com.simple4j.user.request.ParamUpdateRequest;
-import com.simple4j.user.response.ParamDetailResponse;
+import com.simple4j.system.entity.Param;
+import com.simple4j.system.request.ParamAddOrUpdateRequest;
+import com.simple4j.system.request.ParamAddRequest;
+import com.simple4j.system.request.ParamUpdateRequest;
+import com.simple4j.system.response.ParamDetailResponse;
 
 /**
  * 参数表数据转换类

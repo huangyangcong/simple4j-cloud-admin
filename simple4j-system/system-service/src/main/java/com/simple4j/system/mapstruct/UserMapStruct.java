@@ -1,15 +1,15 @@
-package com.simple4j.user.mapstruct;
+package com.simple4j.system.mapstruct;
 
 import com.simple4j.api.base.Page;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import com.simple4j.user.entity.User;
-import com.simple4j.user.response.UserInfo;
-import com.simple4j.user.excel.UserExcelImport;
-import com.simple4j.user.request.UserAddRequest;
-import com.simple4j.user.response.UserDetailResponse;
-import com.simple4j.user.response.UserLoginResponse;
+import com.simple4j.system.entity.User;
+import com.simple4j.system.response.UserInfo;
+import com.simple4j.system.excel.UserExcelImport;
+import com.simple4j.system.request.UserAddRequest;
+import com.simple4j.system.response.UserDetailResponse;
+import com.simple4j.system.response.UserLoginResponse;
 
 import java.util.List;
 

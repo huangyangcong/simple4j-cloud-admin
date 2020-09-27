@@ -1,9 +1,9 @@
-package com.simple4j.user.controller;
+package com.simple4j.system.controller;
 
-import com.simple4j.user.request.*;
-import com.simple4j.user.response.RoleDetailResponse;
-import com.simple4j.user.service.IRoleMenuService;
-import com.simple4j.user.service.IRoleService;
+import com.simple4j.system.request.*;
+import com.simple4j.system.response.RoleDetailResponse;
+import com.simple4j.system.service.IRoleMenuService;
+import com.simple4j.system.service.IRoleService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

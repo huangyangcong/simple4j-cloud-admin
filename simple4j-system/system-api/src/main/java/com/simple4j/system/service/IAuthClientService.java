@@ -1,7 +1,5 @@
 package com.simple4j.system.service;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.system.request.ClientAddOrUpdateRequest;
 import com.simple4j.system.request.ClientAddRequest;
@@ -11,6 +9,8 @@ import com.simple4j.system.request.ClientPageRequest;
 import com.simple4j.system.request.ClientRemoveRequest;
 import com.simple4j.system.request.ClientUpdateRequest;
 import com.simple4j.system.response.ClientDetailResponse;
+
+import java.util.List;
 
 /**
  * 服务类

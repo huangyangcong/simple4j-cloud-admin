@@ -1,15 +1,15 @@
-package com.simple4j.user.service;
+package com.simple4j.system.service;
 
 import java.util.List;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.user.request.DeptAddRequest;
-import com.simple4j.user.request.DeptDetailRequest;
-import com.simple4j.user.request.DeptListRequest;
-import com.simple4j.user.request.DeptPageRequest;
-import com.simple4j.user.request.DeptRemoveRequest;
-import com.simple4j.user.request.DeptUpdateRequest;
-import com.simple4j.user.response.DeptDetailResponse;
+import com.simple4j.system.request.DeptAddRequest;
+import com.simple4j.system.request.DeptDetailRequest;
+import com.simple4j.system.request.DeptListRequest;
+import com.simple4j.system.request.DeptPageRequest;
+import com.simple4j.system.request.DeptRemoveRequest;
+import com.simple4j.system.request.DeptUpdateRequest;
+import com.simple4j.system.response.DeptDetailResponse;
 
 /**
  * 服务类

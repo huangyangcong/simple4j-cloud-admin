@@ -1,9 +1,9 @@
-package com.simple4j.user.service;
+package com.simple4j.system.service;
 
 
 import java.util.List;
 
-import com.simple4j.user.request.UserRoleGrantRequest;
+import com.simple4j.system.request.UserRoleGrantRequest;
 
 /**
  * 服务类

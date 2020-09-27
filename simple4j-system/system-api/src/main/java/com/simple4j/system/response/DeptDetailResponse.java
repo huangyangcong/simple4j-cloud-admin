@@ -1,8 +1,5 @@
 package com.simple4j.system.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.simple4j.api.base.INode;
@@ -10,6 +7,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 部门表详情响应实体类
@@ -88,7 +88,7 @@ public class DeptDetailResponse implements INode<DeptDetailResponse, Long> {
 	private List<DeptDetailResponse> children;
 
 	@Override
-	public void addChildren(com.simple4j.system.response.DeptDetailResponse children) {
+	public void addChildren(DeptDetailResponse children) {
 		if (this.children == null) {
 			this.children = new ArrayList<>();
 		}
@@ -96,7 +96,7 @@ public class DeptDetailResponse implements INode<DeptDetailResponse, Long> {
 	}
 
 	@Override
-	public int compareTo(com.simple4j.system.response.DeptDetailResponse o) {
+	public int compareTo(DeptDetailResponse o) {
 		if (o.getSort().equals(this.getSort())) {
 			return 0;
 		} else if (o.getSort() > this.getSort()) {
