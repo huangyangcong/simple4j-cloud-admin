@@ -32,7 +32,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 public class SwaggerConfig {
 	@Bean
 	public Docket petApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
+		return new Docket(DocumentationType.OAS_30)
 				.select()
 				.apis(RequestHandlerSelectors.any())
 				.paths(PathSelectors.any())

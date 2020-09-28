@@ -12,5 +12,7 @@ management:
       enabled: false
 logging:
   level:
-    root: info
-
+    root: debug
+server:
+  servlet:
+    context-path: /flow

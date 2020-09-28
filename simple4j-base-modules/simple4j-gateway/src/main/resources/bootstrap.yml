@@ -57,4 +57,3 @@ spring:
           predicates:
             - Path=/flow/**
           filters:
-            - StripPrefix=1
