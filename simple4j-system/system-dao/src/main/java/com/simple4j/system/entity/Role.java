@@ -22,7 +22,7 @@ public class Role  extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 
 	/**
 	 * 租户ID

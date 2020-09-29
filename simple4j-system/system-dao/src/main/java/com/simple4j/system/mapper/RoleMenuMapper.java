@@ -1,6 +1,7 @@
 package com.simple4j.system.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,5 +20,5 @@ public interface RoleMenuMapper extends ExtendMapper<RoleMenu> {
 	 * @param roleIds
 	 * @return
 	 */
-	List<String> permissions(@Param("roleIds") List<Long> roleIds);
+	Set<String> permissions(@Param("roleIds") Set<String> roleIds);
 }

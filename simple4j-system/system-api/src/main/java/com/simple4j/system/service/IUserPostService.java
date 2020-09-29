@@ -4,6 +4,7 @@ package com.simple4j.system.service;
 import com.simple4j.system.request.UserPostGrantRequest;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 服务类
@@ -19,7 +20,7 @@ public interface IUserPostService{
 	 * @param userId
 	 * @return
 	 */
-	List<Long> getPostIds(Long userId);
+	Set<String> getPostIds(String userId);
 
 	/**
 	 * 授权岗位
@@ -31,18 +32,18 @@ public interface IUserPostService{
 	/**
 	 * 授权岗位
 	 */
-	void grant(List<Long> userIds, List<Long> postIds);
+	void grant(Set<String> userIds, Set<String> postIds);
 
 	/**
 	 * 根据postIds删除
 	 *
 	 * @param postIds
 	 */
-	void removeByPostIds(List<String> postIds);
+	void removeByPostIds(Set<String> postIds);
 
 	/**
 	 * 根据userIds删除
 	 * @param userIds
 	 */
-	void removeByUserIds(List<String> userIds);
+	void removeByUserIds(Set<String> userIds);
 }

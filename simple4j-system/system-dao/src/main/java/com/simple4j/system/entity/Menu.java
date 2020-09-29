@@ -22,7 +22,7 @@ public class Menu  extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 
 	/**
 	 * 菜单父主键

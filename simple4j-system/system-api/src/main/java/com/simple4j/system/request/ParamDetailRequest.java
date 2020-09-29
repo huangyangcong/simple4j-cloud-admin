@@ -21,5 +21,5 @@ public class ParamDetailRequest implements Serializable {
 	 * 参数表详情编号
 	 */
 	@ApiModelProperty(value = "参数表详情编号", name = "id")
-	private Long id;
+	private String id;
 }

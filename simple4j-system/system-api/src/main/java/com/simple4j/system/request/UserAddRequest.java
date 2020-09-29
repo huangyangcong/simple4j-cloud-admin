@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author hyc
@@ -69,15 +70,15 @@ public class UserAddRequest {
 	 * 角色
 	 */
 	@ApiModelProperty(name = "roles", value = "角色")
-	private List<Long> roles;
+	private Set<String> roles;
 	/**
 	 * 部门
 	 */
 	@ApiModelProperty(name = "depts", value = "部门")
-	private List<Long> depts;
+	private Set<String> depts;
 	/**
 	 * 岗位
 	 */
 	@ApiModelProperty(name = "posts", value = "岗位")
-	private List<Long> posts;
+	private Set<String> posts;
 }

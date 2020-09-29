@@ -19,6 +19,6 @@ public interface PostMapper extends ExtendMapper<Post> {
 	 * @param userId
 	 * @return
 	 */
-	List<String> getPostNames(@Param("userId") Long userId);
+	List<String> getPostNames(@Param("userId") String userId);
 
 }

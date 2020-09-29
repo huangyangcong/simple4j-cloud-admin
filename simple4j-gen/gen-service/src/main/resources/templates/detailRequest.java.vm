@@ -36,7 +36,7 @@ public class $!{entity}DetailRequest implements Serializable {
 	#end
 	@NotNull(message = "编号不能为空")
 	@JsonProperty("id")
-	private Long id;
+	private String id;
 	## ----------  END 字段循环遍历  ----------
 	#if(!$!{entityLombokModel})
 	public Long getId() {

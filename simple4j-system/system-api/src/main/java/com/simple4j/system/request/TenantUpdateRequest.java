@@ -20,6 +20,6 @@ public class TenantUpdateRequest extends TenantAddOrUpdateRequest {
 	 * 租户表ID
 	 */
 	@ApiModelProperty(value = "租户表ID")
-	private Long id;
+	private String id;
 
 }

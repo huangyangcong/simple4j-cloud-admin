@@ -21,5 +21,5 @@ public class DeptDetailRequest implements Serializable {
 	 * 部门表详情编号
 	 */
 	@ApiModelProperty(value = "部门表详情编号", name = "id")
-	private Long id;
+	private String id;
 }

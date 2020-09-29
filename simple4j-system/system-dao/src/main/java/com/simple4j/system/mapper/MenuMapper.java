@@ -1,6 +1,7 @@
 package com.simple4j.system.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import org.apache.ibatis.annotations.Param;
@@ -34,7 +35,7 @@ public interface MenuMapper extends ExtendMapper<Menu> {
 	 * @param roleId
 	 * @return
 	 */
-	List<Menu> grantTreeByRole(List<Long> roleId);
+	List<Menu> grantTreeByRole(Set<String> roleId);
 
 	/**
 	 * 所有菜单
@@ -58,7 +59,7 @@ public interface MenuMapper extends ExtendMapper<Menu> {
 	 * @param roleIds
 	 * @return
 	 */
-	List<Menu> routes(@Param("navbarId") Long navbarId, @Param("roleIds") List<Long> roleIds);
+	List<Menu> routes(@Param("navbarId") Long navbarId, @Param("roleIds") Set<String> roleIds);
 
 	/**
 	 * 按钮树形结构
@@ -66,7 +67,7 @@ public interface MenuMapper extends ExtendMapper<Menu> {
 	 * @param roleIds
 	 * @return
 	 */
-	List<Menu> buttons(@Param("roleIds") List<Long> roleIds);
+	List<Menu> buttons(@Param("roleIds") Set<String> roleIds);
 
 	/**
 	 * 获取配置的角色权限
@@ -74,5 +75,5 @@ public interface MenuMapper extends ExtendMapper<Menu> {
 	 * @param roleIds
 	 * @return
 	 */
-	List<MenuDTO> authRoutes(@Param("roleIds") List<Long> roleIds);
+	List<MenuDTO> authRoutes(@Param("roleIds") Set<String> roleIds);
 }

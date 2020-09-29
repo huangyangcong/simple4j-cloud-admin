@@ -12,5 +12,5 @@ public class NavbarPermissionRequest {
 	 */
 	@ApiModelProperty(name = "id", value = "顶部菜单id")
 	@JsonProperty("id")
-	private Long id;
+	private String id;
 }

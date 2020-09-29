@@ -20,6 +20,6 @@ public class MenuUpdateRequest extends MenuAddRequest {
 	 * 菜单表ID
 	 */
 	@ApiModelProperty(value = "菜单表ID")
-	private Long id;
+	private String id;
 
 }

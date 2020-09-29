@@ -25,6 +25,6 @@ public class DatasourceUpdateRequest extends DatasourceAddRequest {
 	 */
 		@ApiModelProperty(value = "数据源配置表ID")
 	@NotNull(message = "数据源配置表编号不能为空")
-	private Long id;
+	private String id;
 
 	}

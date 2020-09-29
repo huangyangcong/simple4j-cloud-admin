@@ -22,7 +22,7 @@ public class DictAddOrUpdateRequest implements Serializable {
 	 * 字典表ID
 	 */
 	@ApiModelProperty(value = "字典表ID")
-	private Long id;
+	private String id;
 
 	/**
 	 * 父主键

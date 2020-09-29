@@ -23,6 +23,6 @@ public class UserOauthUpdateRequest extends UserOauthAddRequest {
 	 */
 		@ApiModelProperty(value = "用户第三方认证表ID")
 	@NotNull(message = "用户第三方认证表编号不能为空")
-	private Long id;
+	private String id;
 
 	}

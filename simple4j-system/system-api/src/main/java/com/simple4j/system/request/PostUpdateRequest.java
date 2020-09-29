@@ -20,6 +20,6 @@ public class PostUpdateRequest extends com.simple4j.system.request.PostAddReques
 	 * 岗位表ID
 	 */
 	@ApiModelProperty(value = "岗位表ID")
-	private Long id;
+	private String id;
 
 }

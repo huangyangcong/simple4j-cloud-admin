@@ -3,6 +3,7 @@ package com.simple4j.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -27,7 +28,7 @@ public class UserDeptServiceImpl implements
 
 	private final UserDeptMapper userDeptMapper;
 	@Override
-	public List<Long> getDeptIds(Long userId) {
+	public Set<String> getDeptIds(String userId) {
 		return userDeptMapper.getDeptIds(userId);
 	}
 
@@ -38,14 +39,14 @@ public class UserDeptServiceImpl implements
 	}
 
 	@Override
-	public void grant(List<Long> userIds, List<Long> deptIds) {
+	public void grant(Set<String> userIds, Set<String> deptIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
 			userDeptMapper
 				.physicsDelete(Wrappers.<UserDept>lambdaQuery().in(UserDept::getUserId, userIds));
 			if (CollUtil.isNotEmpty(deptIds)) {
 				List<UserDept> userDepts = new ArrayList<>();
-				for (Long userId : userIds) {
-					for (Long deptId : deptIds) {
+				for (String userId : userIds) {
+					for (String deptId : deptIds) {
 						UserDept userDept = new UserDept();
 						userDept.setUserId(userId);
 						userDept.setDeptId(deptId);
@@ -58,14 +59,14 @@ public class UserDeptServiceImpl implements
 	}
 
 	@Override
-	public void removeByDeptIds(List<String> deptIds) {
+	public void removeByDeptIds(Set<String> deptIds) {
 		if (CollUtil.isNotEmpty(deptIds)) {
 			userDeptMapper.physicsDelete(
 					Wrappers.<UserDept>lambdaQuery().in(UserDept::getDeptId, deptIds));
 		}
 	}
 	@Override
-	public void removeByUserIds(List<String> userIds) {
+	public void removeByUserIds(Set<String> userIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
 			userDeptMapper.physicsDelete(
 					Wrappers.<UserDept>lambdaQuery().in(UserDept::getUserId, userIds));

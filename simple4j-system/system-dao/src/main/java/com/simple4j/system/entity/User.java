@@ -25,7 +25,7 @@ public class User extends BaseEntity {
 	 * 主键id
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 
 	/**
 	 * 租户ID

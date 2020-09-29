@@ -20,6 +20,6 @@ public class ClientUpdateRequest extends ClientAddRequest {
 	 * 客户端表ID
 	 */
 	@ApiModelProperty(value = "客户端表ID")
-	private Long id;
+	private String id;
 
 }

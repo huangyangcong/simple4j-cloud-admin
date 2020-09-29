@@ -24,7 +24,7 @@ public class AuthClient extends BaseEntity {
 	 * 主键id
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 
 	/**
 	 * 客户端id

@@ -26,7 +26,7 @@ private static final long serialVersionUID=1L;
 	 * 主键
 	 */
 		@TableId(value = "id", type = IdType.NONE)
-				private Long id;
+				private String id;
 	/**
 	 * 名称
 	 */

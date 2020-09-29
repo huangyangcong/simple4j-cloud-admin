@@ -30,7 +30,7 @@ public class NavbarMenu extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 
 
 }

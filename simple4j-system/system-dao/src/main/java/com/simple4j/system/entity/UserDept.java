@@ -19,15 +19,15 @@ public class UserDept extends BaseEntity {
 	 * 主键id
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 
 
 	/**
 	 * 用户编号
 	 */
-	private Long userId;
+	private String userId;
 	/**
 	 * 角色编号
 	 */
-	private Long deptId;
+	private String deptId;
 }

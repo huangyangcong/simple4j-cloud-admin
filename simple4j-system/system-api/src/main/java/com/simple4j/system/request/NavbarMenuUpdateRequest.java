@@ -20,6 +20,6 @@ public class NavbarMenuUpdateRequest extends NavbarMenuAddRequest{
 	 * ID
 	 */
 	@ApiModelProperty(value = "ID")
-	private Long id;
+	private String id;
 
 }

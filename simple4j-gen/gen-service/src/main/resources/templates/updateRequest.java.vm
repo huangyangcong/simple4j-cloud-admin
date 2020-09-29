@@ -37,7 +37,7 @@ public class $!{entity}UpdateRequest extends $!{entity}AddRequest {
 		@ApiModelProperty(value = "$!{table.comment}ID")
 		#end
 	@NotNull(message = "$!{table.comment}编号不能为空")
-	private Long id;
+	private String id;
 
 	## ----------  END 字段循环遍历  ----------
 	#if(!$!{entityLombokModel})

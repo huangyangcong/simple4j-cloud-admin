@@ -7,5 +7,5 @@ import lombok.Data;
 public class UserDetailRequest {
 
 	@ApiModelProperty("用户编号")
-	private Long id;
+	private String id;
 }

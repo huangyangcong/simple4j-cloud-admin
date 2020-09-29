@@ -24,5 +24,5 @@ public class DatasourceDetailRequest implements Serializable {
 	 */
 	@ApiModelProperty(value = "数据源配置表详情编号", name = "id")
 	@JsonProperty("id")
-	private Long id;
+	private String id;
 	}

@@ -21,5 +21,5 @@ public class DictDetailRequest implements Serializable {
 	 * 字典表详情编号
 	 */
 	@ApiModelProperty(value = "字典表详情编号", name = "id")
-	private Long id;
+	private String id;
 }

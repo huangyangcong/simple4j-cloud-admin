@@ -54,7 +54,7 @@ public interface IUserService {
 	 * @param userId
 	 * @return
 	 */
-	UserInfo userInfo(Long userId);
+	UserInfo userInfo(String userId);
 
 	/**
 	 * 用户信息

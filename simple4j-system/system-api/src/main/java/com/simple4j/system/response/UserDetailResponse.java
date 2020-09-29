@@ -1,21 +1,21 @@
 package com.simple4j.system.response;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
 
 @Data
 public class UserDetailResponse implements Serializable {
 
 	/**
-	 * 主键id
+	 * 用户编号
 	 */
-	@ApiModelProperty(name = "id", value = "主键id")
-	private Long id;
+	@ApiModelProperty(name = "user_id", value = "用户编号")
+	private String userId;
 
 	/**
 	 * 租户ID
@@ -74,19 +74,19 @@ public class UserDetailResponse implements Serializable {
 	 * 角色id
 	 */
 	@ApiModelProperty(name = "roles", value = "角色id")
-	private List<Long> roles;
+	private Set<String> roles;
 
 	/**
 	 * 部门id
 	 */
 	@ApiModelProperty(name = "depts", value = "部门id")
-	private List<Long> depts;
+	private Set<String> depts;
 
 	/**
 	 * 岗位名id
 	 */
 	@ApiModelProperty(name = "posts", value = "岗位名id")
-	private List<Long> posts;
+	private Set<String> posts;
 
 	/**
 	 * 性别

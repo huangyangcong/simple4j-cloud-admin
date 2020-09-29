@@ -1,8 +1,8 @@
 package com.simple4j.system.service;
 
-import java.util.List;
-
 import com.simple4j.system.request.MenuGrantRequest;
+
+import java.util.Set;
 
 /**
  * 服务类
@@ -17,7 +17,7 @@ public interface IRoleMenuService {
 	 * @param roleIds
 	 * @return
 	 */
-	List<String> getPermission(List<Long> roleIds);
+	Set<String> getPermission(Set<String> roleIds);
 
 	/**
 	 * 角色授权
@@ -34,7 +34,7 @@ public interface IRoleMenuService {
 	 * @param roleIds
 	 * @return
 	 */
-	boolean grant(List<Long> menuIds, List<Long> roleIds);
+	boolean grant(Set<String> menuIds, Set<String> roleIds);
 
 	/**
 	 * 删除角色
@@ -42,7 +42,7 @@ public interface IRoleMenuService {
 	 * @param roleIds
 	 * @return
 	 */
-	void removeByRoleIds(List<Long> roleIds);
+	void removeByRoleIds(Set<String> roleIds);
 
 	/**
 	 * 删除角色
@@ -50,5 +50,5 @@ public interface IRoleMenuService {
 	 * @param menuIds
 	 * @return
 	 */
-	void removeByMenuIds(List<Long> menuIds);
+	void removeByMenuIds(Set<String> menuIds);
 }

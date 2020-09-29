@@ -1,7 +1,6 @@
 package com.simple4j.system.service.impl;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import cn.hutool.core.util.ObjectUtil;
@@ -11,8 +10,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
+import com.simple4j.autoconfigure.jwt.security.SecurityScope;
+import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.system.common.constant.CommonConstant;
-import com.simple4j.system.util.SecurityUtils;
 import com.simple4j.system.mapper.DeptMapper;
 import com.simple4j.system.mapper.RoleMapper;
 import com.simple4j.system.mapper.TenantMapper;
@@ -80,10 +80,11 @@ public class TenantServiceImpl implements ITenantService {
 						tenantListRequest.getContactNumber())
 				.eq(StrUtil.isNotEmpty(tenantListRequest.getTenantName()), Tenant::getTenantName,
 						tenantListRequest.getTenantName());
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		List<Tenant> list = tenantMapper.list(
-				(!Objects.equals(SecurityUtils.getTenantId(), CommonConstant.ADMIN_TENANT_ID))
+				!securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID)
 						? queryWrapper
-						.eq(Tenant::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
+						.eq(Tenant::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		return tenantMapStruct.toVo(list);
 	}
 
@@ -97,12 +98,13 @@ public class TenantServiceImpl implements ITenantService {
 						tenantPageRequest.getContactNumber())
 				.eq(StrUtil.isNotEmpty(tenantPageRequest.getTenantName()), Tenant::getTenantName,
 						tenantPageRequest.getTenantName());
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		IPage<Tenant> page = tenantMapper.page(
 				new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
 						tenantPageRequest.getPageNo(), tenantPageRequest.getPageSize()),
-				(!Objects.equals(SecurityUtils.getTenantId(), CommonConstant.ADMIN_TENANT_ID))
+				!securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID)
 						? queryWrapper
-						.eq(Tenant::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
+						.eq(Tenant::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		Page<Tenant> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
 				page.getRecords());
 		return tenantMapStruct.toVo(pages);

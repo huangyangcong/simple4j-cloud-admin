@@ -15,6 +15,6 @@ public class UserUpdateRequest extends UserAddRequest {
 	 * 用户ID
 	 */
 	@ApiModelProperty(value = "用户ID")
-	private Long id;
+	private String id;
 
 }

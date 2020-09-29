@@ -23,6 +23,6 @@ public class NavbarUpdateRequest extends NavbarAddRequest {
 	 */
 	@NotEmpty(message = "顶部菜单编号不能为空")
 	@ApiModelProperty(value = "ID")
-	private Long id;
+	private String id;
 
 }

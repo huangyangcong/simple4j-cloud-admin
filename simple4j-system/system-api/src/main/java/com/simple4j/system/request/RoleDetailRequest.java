@@ -7,5 +7,5 @@ import lombok.Data;
 public class RoleDetailRequest {
 
 	@ApiModelProperty("角色编号")
-	private Long id;
+	private String id;
 }

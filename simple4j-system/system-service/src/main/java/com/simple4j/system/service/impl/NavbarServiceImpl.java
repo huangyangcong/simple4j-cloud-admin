@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
+import com.simple4j.autoconfigure.jwt.security.SecurityScope;
+import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.system.mapper.NavbarMapper;
 import com.simple4j.system.entity.Navbar;
 import com.simple4j.system.mapstruct.NavbarMapStruct;
@@ -19,7 +21,6 @@ import com.simple4j.system.request.NavbarUpdateRequest;
 import com.simple4j.system.response.NavbarDetailResponse;
 import com.simple4j.system.service.INavbarMenuService;
 import com.simple4j.system.service.INavbarService;
-import com.simple4j.system.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -49,9 +50,10 @@ public class NavbarServiceImpl implements INavbarService {
 
 	@Override
 	public List<NavbarDetailResponse> list(NavbarListRequest navbarListRequest) {
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		LambdaQueryWrapper<Navbar> queryWrapper = Wrappers.<Navbar>lambdaQuery()
 				.eq(Navbar::getTenantId,
-						SecurityUtils.getTenantId());
+						securityScope.getTenantId());
 		List<Navbar> pages = navbarMapper.list(queryWrapper);
 		return navbarMapStruct.toVo(pages);
 	}
@@ -70,22 +72,25 @@ public class NavbarServiceImpl implements INavbarService {
 
 	@Override
 	public boolean add(NavbarAddRequest navbarAddRequest) {
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		Navbar navbar = navbarMapStruct.toPo(navbarAddRequest);
-		navbar.setTenantId(SecurityUtils.getTenantId());
+		navbar.setTenantId(securityScope.getTenantId());
 		return navbarMapper.save(navbar);
 	}
 
 	@Override
 	public boolean update(NavbarUpdateRequest navbarUpdateRequest) {
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		Navbar navbar = navbarMapStruct.toPo(navbarUpdateRequest);
-		navbar.setTenantId(SecurityUtils.getTenantId());
+		navbar.setTenantId(securityScope.getTenantId());
 		return navbarMapper.updateByIdBool(navbar);
 	}
 
 	@Override
 	public boolean addOrUpdate(NavbarAddOrUpdateRequest navbarAddOrUpdateRequest) {
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		Navbar navbar = navbarMapStruct.toPo(navbarAddOrUpdateRequest);
-		navbar.setTenantId(SecurityUtils.getTenantId());
+		navbar.setTenantId(securityScope.getTenantId());
 		return navbarMapper.saveOrUpdate(navbar);
 	}
 

@@ -1,19 +1,19 @@
 package com.simple4j.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.google.common.collect.Lists;
-import com.simple4j.system.mapper.RoleMenuMapper;
+import com.google.common.collect.Sets;
 import com.simple4j.system.entity.RoleMenu;
+import com.simple4j.system.mapper.RoleMenuMapper;
 import com.simple4j.system.request.MenuGrantRequest;
 import com.simple4j.system.service.IRoleMenuService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 服务实现类
@@ -28,9 +28,9 @@ public class RoleMenuServiceImpl implements
 	private final RoleMenuMapper roleMenuMapper;
 
 	@Override
-	public List<String> getPermission(List<Long> roleIds) {
+	public Set<String>getPermission(Set<String> roleIds) {
 		if (CollUtil.isEmpty(roleIds)) {
-			return Lists.newArrayList();
+			return Sets.newHashSet();
 		}
 		return roleMenuMapper.permissions(roleIds);
 	}
@@ -43,7 +43,7 @@ public class RoleMenuServiceImpl implements
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean grant(List<Long> menuIds, List<Long> roleIds) {
+	public boolean grant(Set<String> menuIds, Set<String> roleIds) {
 		// 删除角色配置的菜单集合
 		roleMenuMapper
 				.physicsDelete(
@@ -61,7 +61,7 @@ public class RoleMenuServiceImpl implements
 	}
 
 	@Override
-	public void removeByRoleIds(List<Long> roleIds) {
+	public void removeByRoleIds(Set<String> roleIds) {
 		if (CollUtil.isNotEmpty(roleIds)) {
 			roleMenuMapper.physicsDelete(
 					Wrappers.<RoleMenu>lambdaQuery().in(RoleMenu::getRoleId, roleIds));
@@ -69,7 +69,7 @@ public class RoleMenuServiceImpl implements
 	}
 
 	@Override
-	public void removeByMenuIds(List<Long> menuIds) {
+	public void removeByMenuIds(Set<String> menuIds) {
 		if (CollUtil.isNotEmpty(menuIds)) {
 			roleMenuMapper.physicsDelete(
 					Wrappers.<RoleMenu>lambdaQuery().in(RoleMenu::getMenuId, menuIds));

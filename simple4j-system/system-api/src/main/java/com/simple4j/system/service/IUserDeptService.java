@@ -4,6 +4,7 @@ package com.simple4j.system.service;
 import com.simple4j.system.request.UserDeptGrantRequest;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 服务类
@@ -18,7 +19,7 @@ public interface IUserDeptService {
 	 * @param userId
 	 * @return
 	 */
-	List<Long> getDeptIds(Long userId);
+	Set<String> getDeptIds(String userId);
 
 	/**
 	 * 授权部门
@@ -31,19 +32,19 @@ public interface IUserDeptService {
 	/**
 	 * 授权部门
 	 */
-	void grant(List<Long> userIds, List<Long> deptIds);
+	void grant(Set<String> userIds, Set<String> deptIds);
 
 	/**
 	 * 根据部门编号删除
 	 *
 	 * @param deptIds
 	 */
-	void removeByDeptIds(List<String> deptIds);
+	void removeByDeptIds(Set<String> deptIds);
 
 	/**
 	 * 根据用户编号删除
 	 *
 	 * @param userIds
 	 */
-	void removeByUserIds(List<String> userIds);
+	void removeByUserIds(Set<String> userIds);
 }

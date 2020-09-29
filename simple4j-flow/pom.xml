@@ -133,5 +133,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-actuator-autoconfigure</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.simple4j.boot</groupId>
+			<artifactId>simple4j-springboot-starter-web</artifactId>
+		</dependency>
 	</dependencies>
 </project>

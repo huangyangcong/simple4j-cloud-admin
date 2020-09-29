@@ -27,6 +27,6 @@ public interface DeptMapper extends ExtendMapper<Dept> {
 	 * @param ids
 	 * @return
 	 */
-	List<String> getDeptNames(@Param("userId") Long userId);
+	List<String> getDeptNames(@Param("userId") String userId);
 
 }

@@ -1,9 +1,9 @@
 package com.simple4j.system.mapper;
 
-import java.util.List;
-
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import com.simple4j.system.entity.UserPost;
+
+import java.util.Set;
 
 /**
  * Mapper 接口
@@ -19,5 +19,5 @@ public interface UserPostMapper extends ExtendMapper<UserPost> {
 	 * @param userId
 	 * @return
 	 */
-	List<Long> getPostIds(Long userId);
+	Set<String> getPostIds(String userId);
 }

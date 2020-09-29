@@ -13,5 +13,5 @@ public class UserRegisterGuestRequest extends UserAddRequest{
 
 	@ApiModelProperty(name = "oauth_id", value = "第三方id")
 	@JsonProperty("oauth_id")
-	private Long oauthId;
+	private String oauthId;
 }

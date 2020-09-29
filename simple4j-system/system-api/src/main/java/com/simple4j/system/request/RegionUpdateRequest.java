@@ -20,6 +20,6 @@ public class RegionUpdateRequest extends RegionAddRequest {
 	 * 行政区划表ID
 	 */
 	@ApiModelProperty(value = "行政区划表ID")
-	private Long id;
+	private String id;
 
 }

@@ -20,6 +20,6 @@ public class DeptUpdateRequest extends DeptAddRequest {
 	 * 部门表ID
 	 */
 	@ApiModelProperty(value = "部门表ID")
-	private Long id;
+	private String id;
 
 }

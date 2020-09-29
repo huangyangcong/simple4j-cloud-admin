@@ -28,5 +28,5 @@ public class CodeDetailRequest implements Serializable {
 	@ApiModelProperty(value = "代码生成表详情编号", name = "id", required = true)
 	@NotNull(message = "编号不能为空")
 	@JsonProperty("id")
-	private Long id;
+	private String id;
 	}

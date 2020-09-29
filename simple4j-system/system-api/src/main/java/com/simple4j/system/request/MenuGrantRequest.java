@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * GrantVO
@@ -22,13 +23,13 @@ public class MenuGrantRequest implements Serializable {
 	 */
 	@ApiModelProperty(value = "roleIds集合", name = "role_ids")
 	@JsonProperty("role_ids")
-	private List<Long> roleIds;
+	private Set<String> roleIds;
 
 	/**
 	 * menuIds集合
 	 */
 	@ApiModelProperty(value = "menuIds集合", name = "menu_ids")
 	@JsonProperty("menu_ids")
-	private List<Long> menuIds;
+	private Set<String> menuIds;
 
 }

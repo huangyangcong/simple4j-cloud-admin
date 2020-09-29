@@ -1,6 +1,7 @@
 package com.simple4j.system.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.simple4j.api.base.Page;
 import com.simple4j.system.request.PostAddRequest;
@@ -30,7 +31,7 @@ public interface IPostService {
 	 * @param postNames
 	 * @return
 	 */
-	List<Long> getPostIds(String tenantId, List<String> postNames);
+	Set<String> getPostIds(String tenantId, List<String> postNames);
 
 	/**
 	 * 获取岗位名
@@ -38,7 +39,7 @@ public interface IPostService {
 	 * @param userId
 	 * @return
 	 */
-	List<String> getPostNames(Long userId);
+	List<String> getPostNames(String userId);
 
 
 	/**

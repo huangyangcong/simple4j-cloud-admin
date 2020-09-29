@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 部门表删除请求实体类
@@ -25,5 +25,5 @@ public class DeptRemoveRequest implements Serializable {
 	 */
 	@ApiModelProperty(value = "部门表删除编号列表", name = "ids")
 	@JsonProperty("ids")
-	private List<String> ids;
+	private Set<String> ids;
 }

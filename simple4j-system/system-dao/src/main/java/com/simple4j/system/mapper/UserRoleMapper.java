@@ -1,6 +1,7 @@
 package com.simple4j.system.mapper;
 
 import java.util.List;
+import java.util.Set;
 
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,5 +21,5 @@ public interface UserRoleMapper extends ExtendMapper<UserRole> {
 	 * @param userId
 	 * @return
 	 */
-	List<Long> getRoleIds(@Param("userId") Long userId);
+	Set<String> getRoleIds(@Param("userId") String userId);
 }

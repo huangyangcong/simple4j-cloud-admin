@@ -14,7 +14,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
+import com.simple4j.autoconfigure.jwt.security.SecurityScope;
+import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
 import com.simple4j.api.base.BusinessException;
 import com.simple4j.api.base.Page;
@@ -27,9 +30,10 @@ import com.simple4j.system.mapstruct.UserMapStruct;
 import com.simple4j.system.request.*;
 import com.simple4j.system.response.*;
 import com.simple4j.system.service.*;
-import com.simple4j.system.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -75,6 +79,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	@Override
 	public Page<UserDetailResponse> page(
 			UserPageRequest userPageRequest) {
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		LambdaQueryWrapper<User> queryWrapper = Wrappers.<User>lambdaQuery()
 				.eq(StrUtil.isNotEmpty(userPageRequest.getAccount()), User::getAccount,
 						userPageRequest.getAccount())
@@ -82,8 +87,8 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 						userPageRequest.getRealName());
 		IPage<User> page = userMapper
 				.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(userPageRequest.getPageNo(), userPageRequest.getPageSize()),
-						SecurityUtils.isTenantAdmin() ? queryWrapper
-								.eq(User::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
+						securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ? queryWrapper
+								.eq(User::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		Page<User> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
 				page.getRecords());
 		return userMapStruct.toVo(pages);
@@ -96,7 +101,8 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 						userListRequest.getAccount())
 				.eq(StrUtil.isNotEmpty(userListRequest.getRealName()), User::getRealName,
 						userListRequest.getRealName());
-		if (!SecurityUtils.isAdministrator()) {
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
+		if (!securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ) {
 			queryWrapper.eq(User::getTenantId, userListRequest.getTenantId());
 		}
 		queryWrapper.eq(User::getIsDeleted, CommonConstant.DB_NOT_DELETED);
@@ -118,7 +124,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	}
 
 	private void convert(UserDetailResponse userDetailResponse) {
-		Long userId = userDetailResponse.getId();
+		String userId = userDetailResponse.getUserId();
 		Integer sex = userDetailResponse.getSex();
 		userDetailResponse.setRoles(userRoleService.getRoleIds(userId));
 		userDetailResponse.setDepts(userDeptService.getDeptIds(userId));
@@ -133,8 +139,9 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 		if (StrUtil.isNotEmpty(userAddRequest.getPassword())) {
 			userAddRequest.setPassword(passwordEncoder.encode(userAddRequest.getPassword()));
 		}
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		Integer cnt = userMapper.selectCount(
-				Wrappers.<User>query().lambda().eq(User::getTenantId, SecurityUtils.getTenantId())
+				Wrappers.<User>query().lambda().eq(User::getTenantId, securityScope.getTenantId())
 						.eq(User::getAccount, userAddRequest.getAccount()));
 		if (cnt > 0) {
 			throw new BusinessException("当前用户已存在!");
@@ -150,8 +157,9 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 		if (StrUtil.isNotEmpty(userUpdateRequest.getPassword())) {
 			userUpdateRequest.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
 		}
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		Integer cnt = userMapper.selectCount(
-				Wrappers.<User>query().lambda().eq(User::getTenantId, SecurityUtils.getTenantId())
+				Wrappers.<User>query().lambda().eq(User::getTenantId, securityScope.getTenantId())
 						.eq(User::getAccount, userUpdateRequest.getAccount()));
 		if (cnt == 0) {
 			throw new BusinessException("当前用户不存在!");
@@ -165,7 +173,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	private void grant(UserAddRequest userAddRequest, User user) {
 		//保存用户
 		userMapper.saveOrUpdate(user);
-		List<Long> userIds = Lists.newArrayList(user.getId());
+		Set<String> userIds = Sets.newHashSet(user.getId());
 		//授予角色
 		userRoleService.grant(userIds, userAddRequest.getRoles());
 		//授予部门
@@ -176,11 +184,11 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 
 	@Override
 	public UserInfo currentUserInfo() {
-		return SecurityUtils.getCurrentUser().getUserInfo();
+		return userInfo(SecurityUtils.getCurrentUserId());
 	}
 
 	@Override
-	public UserInfo userInfo(Long userId) {
+	public UserInfo userInfo(String userId) {
 		User user = userMapper.selectById(userId);
 		UserInfo userInfo = userMapStruct.toUserInfo(user);
 		if (ObjectUtil.isNotEmpty(user)) {
@@ -236,7 +244,8 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	@Override
 	public boolean updatePassword(String oldPassword, String newPassword,
 								  String newPassword1) {
-		Long userId = SecurityUtils.getCurrentUserId();
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
+		String userId = securityScope.getUserId();
 		User user = userMapper.getById(userId);
 		if (!newPassword.equals(newPassword1)) {
 			throw new BusinessException("请输入正确的确认密码!");
@@ -299,19 +308,19 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 							user.setPassword(CommonConstant.DEFAULT_PASSWORD);
 							userMapper.saveOrUpdate(user);
 
-							List<Long> userIds = Lists.newArrayList(user.getId());
+							Set<String> userIds = Sets.newHashSet(user.getId());
 							// 设置部门ID
-							List<Long> deptIds = deptService
+							Set<String> deptIds = deptService
 									.getDeptIds(userExcel.getTenantId(), userExcel.getDeptName());
 							userDeptService.grant(userIds, deptIds);
 
 							// 设置岗位ID
-							List<Long> postIds = postService
+							Set<String> postIds = postService
 									.getPostIds(userExcel.getTenantId(), userExcel.getDeptName());
 							userPostService.grant(userIds, postIds);
 
 							// 设置角色ID
-							List<Long> roleIds = roleService
+							Set<String> roleIds = roleService
 									.getRoleIds(userExcel.getTenantId(), userExcel.getDeptName());
 							userRoleService.grant(userIds, roleIds);
 						});
@@ -340,8 +349,9 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public boolean registerGuest(UserRegisterGuestRequest userRegisterGuestRequest) {
-		String tenantId = SecurityUtils.getTenantId();
-		Long oauthId = userRegisterGuestRequest.getOauthId();
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
+		String tenantId = securityScope.getTenantId();
+		String oauthId = userRegisterGuestRequest.getOauthId();
 		TenantDetailResponse tenant = tenantService.getByTenantId(tenantId);
 		if (tenant == null || tenant.getId() == null) {
 			throw new ApiException("租户信息错误!");
@@ -370,12 +380,28 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 		if (ObjectUtil.isEmpty(user)) {
 			throw new UsernameNotFoundException("");
 		}
-		UserInfo userInfo = userMapStruct.toUserInfo(user);
-		List<Long> roleIds = userRoleService.getRoleIds(user.getId());
-		userInfo.setRoles(roleIds);
-		List<String> permissions = roleMenuService.getPermission(roleIds);
-		userInfo.setPermissions(permissions);
-		return new JwtDto(userInfo);
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+
+		Set<String> roleIds = userRoleService.getRoleIds(user.getId());
+		for (String role : roleIds) {
+			grantedAuthorities.add(new SimpleGrantedAuthority(role));
+		}
+		Set<String> permissions = roleMenuService.getPermission(roleIds);
+		for (String permission : permissions) {
+			grantedAuthorities.add(SecurityUtils.createPermissionAuthority(permission));
+		}
+
+		if (StrUtil.isNotBlank(user.getTenantId())) {
+			grantedAuthorities.add(SecurityUtils.createTenantAuthority(user.getTenantId()));
+		}
+		if (StrUtil.isNotBlank(user.getId())) {
+			grantedAuthorities.add(SecurityUtils.createUserIdAuthority(user.getId()));
+		}
+		if (StrUtil.isNotBlank(user.getName())) {
+			grantedAuthorities.add(SecurityUtils.createUsernameAuthority(user.getName()));
+		}
+		return org.springframework.security.core.userdetails.User.withUsername(user.getName())
+				.authorities(grantedAuthorities).build();
 	}
 
 	@Override

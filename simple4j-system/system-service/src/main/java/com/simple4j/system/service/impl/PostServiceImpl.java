@@ -1,15 +1,13 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
-import com.simple4j.system.mapper.PostMapper;
 import com.simple4j.system.entity.Post;
+import com.simple4j.system.mapper.PostMapper;
 import com.simple4j.system.mapstruct.PostMapStruct;
 import com.simple4j.system.request.PostAddRequest;
 import com.simple4j.system.request.PostDetailRequest;
@@ -22,9 +20,12 @@ import com.simple4j.system.service.IDictService;
 import com.simple4j.system.service.IPostService;
 import com.simple4j.system.service.IUserPostService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 岗位表 服务实现类
@@ -53,19 +54,19 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public List<Long> getPostIds(String tenantId, List<String> postNames) {
+	public Set<String> getPostIds(String tenantId, List<String> postNames) {
 		List<Post> postList = postMapper.selectList(
 				Wrappers.<Post>query().lambda().eq(Post::getTenantId, tenantId)
 						.in(Post::getPostName, postNames));
-		if (postList != null && postList.size() > 0) {
-			return postList.stream().map(Post::getId).distinct()
-					.collect(Collectors.toList());
+		if (CollUtil.isNotEmpty(postList)) {
+			return postList.stream().map(Post::getId)
+					.collect(Collectors.toSet());
 		}
 		return null;
 	}
 
 	@Override
-	public List<String> getPostNames(Long userId) {
+	public List<String> getPostNames(String userId) {
 		return postMapper.getPostNames(userId);
 	}
 
@@ -106,7 +107,7 @@ public class PostServiceImpl implements IPostService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public boolean remove(PostRemoveRequest postRemoveRequest) {
-		List<String> postIds = postRemoveRequest.getIds();
+		Set<String> postIds = postRemoveRequest.getIds();
 		postMapper.physicsDeleteBatchByIds(postIds);
 		userPostService.removeByPostIds(postIds);
 		return true;

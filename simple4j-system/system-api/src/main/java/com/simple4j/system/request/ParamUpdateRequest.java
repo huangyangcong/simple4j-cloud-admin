@@ -20,6 +20,6 @@ public class ParamUpdateRequest extends ParamAddRequest {
 	 * 参数表ID
 	 */
 	@ApiModelProperty(value = "参数表ID")
-	private Long id;
+	private String id;
 
 }

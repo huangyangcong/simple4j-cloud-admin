@@ -26,7 +26,7 @@ public class Navbar extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 	/**
 	 * 按钮编号
 	 */

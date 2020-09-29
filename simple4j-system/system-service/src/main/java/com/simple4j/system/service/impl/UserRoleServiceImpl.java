@@ -3,6 +3,7 @@ package com.simple4j.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -28,7 +29,7 @@ public class UserRoleServiceImpl implements
 	private final UserRoleMapper userRoleMapper;
 
 	@Override
-	public List<Long> getRoleIds(Long userId) {
+	public Set<String> getRoleIds(String userId) {
 		return userRoleMapper.getRoleIds(userId);
 	}
 
@@ -39,15 +40,15 @@ public class UserRoleServiceImpl implements
 	}
 
 	@Override
-	public void grant(List<Long> userIds, List<Long> roleIds) {
+	public void grant(Set<String>  userIds, Set<String>  roleIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
 			userRoleMapper
 					.physicsDelete(
 							Wrappers.<UserRole>lambdaQuery().in(UserRole::getUserId, userIds));
 			if (CollUtil.isNotEmpty(roleIds)) {
 				List<UserRole> userRoles = new ArrayList<>();
-				for (Long userId : userIds) {
-					for (Long roleId : roleIds) {
+				for (String userId : userIds) {
+					for (String roleId : roleIds) {
 						UserRole userRole = new UserRole();
 						userRole.setUserId(userId);
 						userRole.setRoleId(roleId);

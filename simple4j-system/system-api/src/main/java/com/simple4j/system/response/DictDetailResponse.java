@@ -20,7 +20,7 @@ import lombok.Getter;
  */
 @Data
 @ApiModel(value = "字典表详情响应实体类", description = "字典表详情响应实体类")
-public class DictDetailResponse implements INode<DictDetailResponse, Long> {
+public class DictDetailResponse implements INode<DictDetailResponse, String> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,14 +30,14 @@ public class DictDetailResponse implements INode<DictDetailResponse, Long> {
 	@ApiModelProperty(name = "id", value = "主键")
 	@JsonProperty("id")
 	@Getter(onMethod=@__({@JsonIgnore}))
-	private Long id;
+	private String id;
 	/**
 	 * 父主键
 	 */
 	@ApiModelProperty(name = "parent_id", value = "父主键")
 	@JsonProperty("parent_id")
 	@Getter(onMethod=@__({@JsonIgnore}))
-	private Long parentId;
+	private String parentId;
 	/**
 	 * 字典码
 	 */

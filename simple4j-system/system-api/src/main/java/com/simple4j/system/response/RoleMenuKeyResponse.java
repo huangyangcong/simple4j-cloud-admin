@@ -3,7 +3,7 @@ package com.simple4j.system.response;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author hyc
@@ -16,5 +16,5 @@ public class RoleMenuKeyResponse {
 	 * 菜单编号列表
 	 */
 	@ApiModelProperty(value = "菜单编号列表", name = "menus")
-	List<Long> menus;
+	Set<String> menus;
 }

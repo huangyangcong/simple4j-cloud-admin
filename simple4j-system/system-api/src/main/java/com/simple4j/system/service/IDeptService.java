@@ -1,6 +1,7 @@
 package com.simple4j.system.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.simple4j.api.base.Page;
 import com.simple4j.system.request.DeptAddRequest;
@@ -33,7 +34,7 @@ public interface IDeptService {
 	 * @param deptNames
 	 * @return
 	 */
-	List<Long> getDeptIds(String tenantId, List<String> deptNames);
+	Set<String> getDeptIds(String tenantId, List<String> deptNames);
 
 	/**
 	 * 获取部门名
@@ -41,7 +42,7 @@ public interface IDeptService {
 	 * @param userId
 	 * @return
 	 */
-	List<String> getDeptNames(Long userId);
+	List<String> getDeptNames(String userId);
 
 
 	/**

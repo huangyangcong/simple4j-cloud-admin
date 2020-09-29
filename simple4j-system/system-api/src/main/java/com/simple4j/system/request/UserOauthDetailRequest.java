@@ -23,7 +23,7 @@ public class UserOauthDetailRequest implements Serializable {
 	 */
 	@ApiModelProperty(value = "用户第三方认证表详情编号", name = "id")
 	@JsonProperty("id")
-	private Long id;
+	private String id;
 	/**
 	 * 第三方系统用户ID
 	 */

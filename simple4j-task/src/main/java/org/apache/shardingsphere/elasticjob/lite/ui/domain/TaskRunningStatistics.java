@@ -41,7 +41,7 @@ public class TaskRunningStatistics {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     
     @Column(name = "running_count", length = 11)
     private Integer runningCount;

@@ -1,6 +1,7 @@
 package com.simple4j.system.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.simple4j.api.base.Page;
 import com.simple4j.system.request.*;
@@ -44,7 +45,7 @@ public interface IRoleService{
 	 * @param roleNames
 	 * @return
 	 */
-	List<Long> getRoleIds(String tenantId, List<String> roleNames);
+	Set<String> getRoleIds(String tenantId, List<String> roleNames);
 
 	/**
 	 * 获取角色名
@@ -52,7 +53,7 @@ public interface IRoleService{
 	 * @param userId
 	 * @return
 	 */
-	List<String> getRoleNames(Long userId);
+	List<String> getRoleNames(String userId);
 
 	/**
 	 * 根据用户id获取角色别名
@@ -60,7 +61,7 @@ public interface IRoleService{
 	 * @param userId
 	 * @return
 	 */
-	List<String> getRoleAlias(Long userId);
+	List<String> getRoleAlias(String userId);
 
 
 	/**

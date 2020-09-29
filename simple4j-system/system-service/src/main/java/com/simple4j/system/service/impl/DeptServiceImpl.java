@@ -1,18 +1,21 @@
 package com.simple4j.system.service.impl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
+import com.simple4j.api.util.TreeUtil;
+import com.simple4j.autoconfigure.jwt.security.SecurityScope;
+import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.system.common.constant.CommonConstant;
-import com.simple4j.system.util.SecurityUtils;
 import com.simple4j.system.service.IDeptService;
 import com.simple4j.system.service.IUserDeptService;
-import com.simple4j.system.util.TreeUtil;
 import lombok.RequiredArgsConstructor;
 import com.simple4j.system.entity.Dept;
 import com.simple4j.system.mapper.DeptMapper;
@@ -44,24 +47,25 @@ public class DeptServiceImpl implements IDeptService {
 
 	@Override
 	public List<DeptDetailResponse> tree(String tenantId) {
-		List<Dept> depts = deptMapper.tree(StrUtil.nullToDefault(tenantId, SecurityUtils.getTenantId()));
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
+		List<Dept> depts = deptMapper.tree(StrUtil.nullToDefault(tenantId, securityScope.getTenantId()));
 		return TreeUtil.buildTree(deptMapStruct.toVo(depts));
 	}
 
 	@Override
-	public List<Long> getDeptIds(String tenantId, List<String> deptNames) {
+	public Set<String> getDeptIds(String tenantId, List<String> deptNames) {
 		List<Dept> deptList = deptMapper.selectList(
 			Wrappers.<Dept>query().lambda().eq(Dept::getTenantId, tenantId)
 				.in(Dept::getDeptName, deptNames));
-		if (deptList != null && deptList.size() > 0) {
-			return deptList.stream().map(Dept::getId).distinct()
-				.collect(Collectors.toList());
+		if (CollUtil.isNotEmpty(deptList)) {
+			return deptList.stream().map(Dept::getId)
+				.collect(Collectors.toSet());
 		}
 		return null;
 	}
 
 	@Override
-	public List<String> getDeptNames(Long userId) {
+	public List<String> getDeptNames(String userId) {
 		return deptMapper.getDeptNames(userId);
 	}
 
@@ -94,11 +98,11 @@ public class DeptServiceImpl implements IDeptService {
 				deptPageRequest.getDeptName())
 			.like(StrUtil.isNotEmpty(deptPageRequest.getFullName()), Dept::getFullName,
 				deptPageRequest.getFullName());
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		IPage<Dept> page = deptMapper.page(
 			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(deptPageRequest.getPageNo(), deptPageRequest.getPageSize()),
-			!CommonConstant.ADMIN_TENANT_ID.equals(
-				SecurityUtils.getTenantId()) ? queryWrapper
-				.eq(Dept::getTenantId, SecurityUtils.getTenantId()) : queryWrapper);
+				!securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID)  ? queryWrapper
+				.eq(Dept::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		Page<Dept> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
 				page.getRecords());
 		return deptMapStruct.toVo(pages);
@@ -117,7 +121,7 @@ public class DeptServiceImpl implements IDeptService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public boolean remove(DeptRemoveRequest deptRemoveRequest) {
-		List<String> deptIds = deptRemoveRequest.getIds();
+		Set<String> deptIds = deptRemoveRequest.getIds();
 		deptMapper.physicsDeleteBatchByIds(deptIds);
 		userDeptService.removeByDeptIds(deptIds);
 		return true;

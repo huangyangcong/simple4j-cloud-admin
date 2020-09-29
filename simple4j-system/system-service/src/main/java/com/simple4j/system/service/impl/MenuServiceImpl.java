@@ -1,21 +1,24 @@
 package com.simple4j.system.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.simple4j.api.util.TreeUtil;
+import com.simple4j.autoconfigure.jwt.security.SecurityScope;
+import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.system.common.constant.CommonConstant;
 import com.simple4j.system.mapper.RoleMenuMapper;
 import com.simple4j.system.request.*;
-import com.simple4j.system.util.SecurityUtils;
 import com.simple4j.system.service.IDictService;
 import com.simple4j.system.service.IMenuService;
 import com.simple4j.system.service.IRoleMenuService;
-import com.simple4j.system.util.TreeUtil;
 import lombok.AllArgsConstructor;
 import com.simple4j.system.dto.MenuDTO;
 import com.simple4j.system.entity.Menu;
@@ -77,9 +80,10 @@ public class MenuServiceImpl implements IMenuService {
 		//List<Menu> menus = routes.stream()
 		//	.filter(x -> x.getCategory() == 1)
 		//	.collect(Collectors.toList());
+		SecurityScope securityScope = SecurityUtils.getCurrentSecurityScope();
 		Long navbarId = menuRoutersRequest.getNavbarId();
-		List<Long> roleIds = SecurityUtils.isTenantAdmin() ? null :
-				SecurityUtils.getCurrentUserDataRoles();
+		Set<String> roleIds = securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ? null :
+				securityScope.getRoleIds();
 		List<Menu> menus = menuMapper.routes(navbarId, roleIds);
 		return TreeUtil.buildTree(menuMapStruct.toVo(menus));
 	}
@@ -103,7 +107,8 @@ public class MenuServiceImpl implements IMenuService {
 
 	@Override
 	public List<MenuDetailResponse> buttons() {
-		List<Long> roleIds = SecurityUtils.getCurrentUserDataRoles();
+		SecurityScope securityScope = SecurityUtils.getCurrentSecurityScope();
+		Set<String> roleIds = securityScope.getRoleIds();
 		List<Menu> buttons = menuMapper.buttons(roleIds);
 		return TreeUtil.buildTree(menuMapStruct.toVo(buttons));
 	}
@@ -115,10 +120,11 @@ public class MenuServiceImpl implements IMenuService {
 
 	@Override
 	public List<MenuDetailResponse> grantTree() {
+		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		return TreeUtil
-			.buildTree(menuMapStruct.toVo(SecurityUtils.getTenantId().equals(CommonConstant.ADMIN_TENANT_ID) ?
+			.buildTree(menuMapStruct.toVo(securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ?
 					menuMapper.grantTree()
-				: menuMapper.grantTreeByRole(SecurityUtils.getCurrentUserDataRoles())));
+				: menuMapper.grantTreeByRole(securityScope.getRoleIds())));
 	}
 
 	@Override
@@ -131,17 +137,18 @@ public class MenuServiceImpl implements IMenuService {
 				.list(Wrappers.<RoleMenu>query().lambda()
 						.in(RoleMenu::getRoleId, roleMenuKeyRequest.getRoles()));
 
-		roleMenuKeyResponse.setMenus(roleMenus.stream().map(roleMenu -> roleMenu.getMenuId())
-				.collect(Collectors.toList()));
+		roleMenuKeyResponse.setMenus(roleMenus.stream().map(RoleMenu::getMenuId)
+				.collect(Collectors.toSet()));
 		return roleMenuKeyResponse;
 	}
 
 	@Override
 	public List<MenuRoutersResponse> authRoutes() {
-		if (SecurityUtils.getCurrentUserId() == null || SecurityUtils.getCurrentUserId() == 0L) {
-			return null;
+		SecurityScope securityScope = SecurityUtils.getCurrentSecurityScope();
+		if (securityScope == null) {
+			return Collections.emptyList();
 		}
-		List<MenuDTO> routes = menuMapper.authRoutes(SecurityUtils.getCurrentUserDataRoles());
+		List<MenuDTO> routes = menuMapper.authRoutes(securityScope.getRoleIds());
 		return routes.stream().map(
 			route -> new MenuRoutersResponse(route.getPath(), StrUtil.split(route.getAlias(), ',')))
 			.collect(Collectors.toList());
@@ -161,7 +168,7 @@ public class MenuServiceImpl implements IMenuService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public boolean remove(MenuRemoveRequest menuRemoveRequest) {
-		List<Long> menuIds = menuRemoveRequest.getMenuIds();
+		Set<String> menuIds = menuRemoveRequest.getMenuIds();
 		menuMapper.physicsDeleteBatchByIds(menuIds);
 		roleMenuService.removeByMenuIds(menuIds);
 		return true;

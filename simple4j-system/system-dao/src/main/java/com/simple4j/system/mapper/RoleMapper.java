@@ -28,7 +28,7 @@ public interface RoleMapper extends ExtendMapper<Role> {
 	 * @param userId
 	 * @return
 	 */
-	List<String> getRoleNames(@Param("userId") Long userId);
+	List<String> getRoleNames(@Param("userId") String userId);
 
 	/**
 	 * 获取角色别名
@@ -36,5 +36,5 @@ public interface RoleMapper extends ExtendMapper<Role> {
 	 * @param userId
 	 * @return
 	 */
-	List<String> getRoleAlias(Long userId);
+	List<String> getRoleAlias(String userId);
 }

@@ -1,16 +1,16 @@
 package com.simple4j.system.service;
 
 
-import java.util.List;
-
 import com.simple4j.system.request.UserRoleGrantRequest;
+
+import java.util.Set;
 
 /**
  * 服务类
  *
  * @author Chill
  */
-public interface IUserRoleService{
+public interface IUserRoleService {
 
 	/**
 	 * 获取角色
@@ -18,7 +18,7 @@ public interface IUserRoleService{
 	 * @param userId
 	 * @return
 	 */
-	List<Long> getRoleIds(Long userId);
+	Set<String> getRoleIds(String userId);
 
 	/**
 	 * 授权角色
@@ -32,5 +32,5 @@ public interface IUserRoleService{
 	/**
 	 * 授权角色
 	 */
-	void grant(List<Long> userIds, List<Long> roleIds);
+	void grant(Set<String> userIds, Set<String> roleIds);
 }

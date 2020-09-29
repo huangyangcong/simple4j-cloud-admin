@@ -42,7 +42,7 @@ public class UserExcelImport implements Serializable {
 
 	@ExcelIgnore
 	@ExcelProperty("用户编号")
-	private Long id;
+	private String id;
 
 	@ColumnWidth(15)
 	@ExcelProperty("租户编号")

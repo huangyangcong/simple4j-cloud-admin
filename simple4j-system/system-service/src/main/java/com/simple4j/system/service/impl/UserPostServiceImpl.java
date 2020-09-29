@@ -3,6 +3,7 @@ package com.simple4j.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -22,12 +23,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @RequiredArgsConstructor
-public class UserPostServiceImpl implements
-		IUserPostService {
+public class UserPostServiceImpl implements IUserPostService {
 	private final UserPostMapper userPostMapper;
 
 	@Override
-	public List<Long> getPostIds(Long userId) {
+	public Set<String> getPostIds(String userId) {
 		return userPostMapper.getPostIds(userId);
 	}
 
@@ -39,17 +39,17 @@ public class UserPostServiceImpl implements
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public void grant(List<Long> userIds, List<Long> postIds) {
+	public void grant(Set<String> userIds, Set<String> postIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
 			userPostMapper
 				.physicsDelete(Wrappers.<UserPost>lambdaQuery().in(UserPost::getUserId, userIds));
 			if (CollUtil.isNotEmpty(postIds)) {
 				List<UserPost> userPosts = new ArrayList<>();
-				for (Long userId : userIds) {
-					for (Long PostId : postIds) {
+				for (String userId : userIds) {
+					for (String pstId : postIds) {
 						UserPost userPost = new UserPost();
 						userPost.setUserId(userId);
-						userPost.setPostId(PostId);
+						userPost.setPostId(pstId);
 						userPosts.add(userPost);
 					}
 				}
@@ -59,14 +59,14 @@ public class UserPostServiceImpl implements
 	}
 
 	@Override
-	public void removeByPostIds(List<String> postIds) {
+	public void removeByPostIds(Set<String> postIds) {
 		if (CollUtil.isNotEmpty(postIds)) {
 			userPostMapper.physicsDelete(
 					Wrappers.<UserPost>lambdaQuery().in(UserPost::getPostId, postIds));
 		}
 	}
 	@Override
-	public void removeByUserIds(List<String> userIds) {
+	public void removeByUserIds(Set<String> userIds) {
 		if (CollUtil.isNotEmpty(userIds)) {
 			userPostMapper.physicsDelete(
 					Wrappers.<UserPost>lambdaQuery().in(UserPost::getUserId, userIds));

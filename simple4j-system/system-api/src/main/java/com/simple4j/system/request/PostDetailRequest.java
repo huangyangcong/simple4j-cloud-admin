@@ -7,5 +7,5 @@ import lombok.Data;
 public class PostDetailRequest {
 
 	@ApiModelProperty("岗位编号")
-	private Long id;
+	private String id;
 }

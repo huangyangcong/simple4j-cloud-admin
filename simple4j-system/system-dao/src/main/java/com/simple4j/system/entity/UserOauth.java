@@ -22,7 +22,7 @@ public class UserOauth  extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 
 	/**
 	 * 租户ID
@@ -37,7 +37,7 @@ public class UserOauth  extends BaseEntity {
 	/**
 	 * 用户ID
 	 */
-	private Long userId;
+	private String userId;
 
 	/**
 	 * 用户名

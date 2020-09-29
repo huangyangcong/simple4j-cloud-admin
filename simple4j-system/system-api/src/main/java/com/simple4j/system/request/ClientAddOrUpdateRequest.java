@@ -25,7 +25,7 @@ public class ClientAddOrUpdateRequest implements Serializable {
 	 */
 	@ApiModelProperty(name = "id", value = "主键")
 	@JsonProperty("id")
-	private Long id;
+	private String id;
 	/**
 	 * 客户端id
 	 */

@@ -21,17 +21,17 @@ public class RoleMenu extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+	private String id;
 
 	/**
 	 * 菜单id
 	 */
-	private Long menuId;
+	private String menuId;
 
 	/**
 	 * 角色id
 	 */
-	private Long roleId;
+	private String roleId;
 
 
 }

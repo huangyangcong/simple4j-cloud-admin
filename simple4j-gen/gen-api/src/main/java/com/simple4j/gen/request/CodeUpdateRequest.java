@@ -25,6 +25,6 @@ public class CodeUpdateRequest extends CodeAddRequest {
 	 */
 		@ApiModelProperty(value = "代码生成表ID")
 	@NotNull(message = "代码生成表编号不能为空")
-	private Long id;
+	private String id;
 
 	}

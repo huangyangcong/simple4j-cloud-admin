@@ -24,7 +24,7 @@ public class UserInfo implements Serializable {
 	 * 主键id
 	 */
 	@ApiModelProperty(value = "用户id")
-	private Long id;
+	private String id;
 
 	/**
 	 * 租户ID

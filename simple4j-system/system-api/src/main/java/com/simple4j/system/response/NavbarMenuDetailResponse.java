@@ -37,7 +37,7 @@ public class NavbarMenuDetailResponse implements Serializable {
 	 */
 	@ApiModelProperty(name = "id", value = "主键")
 	@JsonProperty("id")
-	private Long id;
+	private String id;
 	/**
 	 * 创建人
 	 */

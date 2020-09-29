@@ -41,7 +41,7 @@ public class TaskResultStatistics {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     
     @Column(name = "success_count", length = 11)
     private Long successCount;
