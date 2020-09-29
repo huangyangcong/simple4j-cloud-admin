@@ -190,12 +190,9 @@ public class FlowableUiSecurityAutoConfiguration {
 					.headers().frameOptions().disable().and()
 					// Never persist the security context
 					.securityContext().securityContextRepository(new NullSecurityContextRepository())
-					.and()
-					.authorizeRequests(DEFAULT_AUTHORIZE_REQUESTS)
 			;
 
 			http.formLogin().disable();
-			http.apply(new FlowableUiCustomFormLoginConfigurer<>());
 		}
 	}
 

@@ -13,6 +13,3 @@ management:
 logging:
   level:
     root: info
-server:
-  servlet:
-    context-path: /flow
