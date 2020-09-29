@@ -25,8 +25,7 @@ public class SecurityConfiguration {
 				.and()
 				.csrf().disable()
 				.headers()
-				.frameOptions()
-				.mode(XFrameOptionsServerHttpHeadersWriter.Mode.SAMEORIGIN)
+				.frameOptions().disable()
 				.and()
 				.build();
 	}
