@@ -401,6 +401,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 			grantedAuthorities.add(SecurityUtils.createUsernameAuthority(user.getName()));
 		}
 		return org.springframework.security.core.userdetails.User.withUsername(user.getName())
+				.password(user.getPassword())
 				.authorities(grantedAuthorities).build();
 	}
 
