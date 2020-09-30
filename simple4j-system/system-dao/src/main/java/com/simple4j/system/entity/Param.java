@@ -23,7 +23,7 @@ public class Param extends BaseEntity {
 	 * 主键id
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private String id;
+	private Long id;
 
 	/**
 	 * 参数名

@@ -22,7 +22,7 @@ public class Code extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private String id;
+	private Long id;
 
 	/**
 	 * 数据源主键

@@ -21,11 +21,11 @@ public class NavbarMenu extends BaseEntity {
 	/**
 	 * 按钮编号
 	 */
-	private Long menuId;
+	private String menuId;
 	/**
 	 * 顶部按钮编号
 	 */
-	private Long NavbarId;
+	private String NavbarId;
 	/**
 	 * 主键
 	 */

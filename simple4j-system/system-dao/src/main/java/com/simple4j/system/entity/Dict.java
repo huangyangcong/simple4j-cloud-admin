@@ -23,7 +23,7 @@ public class Dict  extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private String id;
+	private Long id;
 
 	/**
 	 * 父主键

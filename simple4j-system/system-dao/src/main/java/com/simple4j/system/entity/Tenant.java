@@ -23,7 +23,7 @@ public class Tenant extends BaseEntity {
 	 * 主键id
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private String id;
+	private Long id;
 
 	/**
 	 * 租户ID

@@ -23,7 +23,7 @@ public class Datasource extends BaseEntity {
 	 * 主键
 	 */
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private String id;
+	private Long id;
 
 	/**
 	 * 名称

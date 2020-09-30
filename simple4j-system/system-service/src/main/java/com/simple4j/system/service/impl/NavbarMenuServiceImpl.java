@@ -2,6 +2,7 @@ package com.simple4j.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import cn.hutool.core.collection.CollUtil;
@@ -99,7 +100,7 @@ public class NavbarMenuServiceImpl implements
 		navbarPermissionResponse.setMenuIds(navbarMenuMapper.list(Wrappers.<NavbarMenu>lambdaQuery()
 				.eq(NavbarMenu::getNavbarId, navbarPermissionRequest.getId())).stream()
 				.map(NavbarMenu::getMenuId).collect(
-						Collectors.toList()));
+						Collectors.toSet()));
 		return navbarPermissionResponse;
 	}
 
@@ -110,13 +111,13 @@ public class NavbarMenuServiceImpl implements
 	}
 
 	@Override
-	public void grant(Long navbarId, List<Long> menuIds) {
+	public void grant(String navbarId, Set<String> menuIds) {
 		if (navbarId != null) {
 			navbarMenuMapper.physicsDelete(
 					Wrappers.<NavbarMenu>lambdaQuery().eq(NavbarMenu::getNavbarId, navbarId));
 			if (CollUtil.isNotEmpty(menuIds)) {
 				List<NavbarMenu> navbarMenus = new ArrayList<>();
-				for (Long menuId : menuIds) {
+				for (String menuId : menuIds) {
 					NavbarMenu navbarMenu = new NavbarMenu();
 					navbarMenu.setNavbarId(navbarId);
 					navbarMenu.setMenuId(menuId);

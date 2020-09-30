@@ -14,6 +14,7 @@ import com.simple4j.system.response.NavbarMenuDetailResponse;
 import com.simple4j.system.response.NavbarPermissionResponse;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -81,5 +82,5 @@ public interface INavbarMenuService {
 	 * @param navbarId
 	 * @param menuIds
 	 */
-	void grant(Long navbarId, List<Long> menuIds);
+	void grant(String navbarId, Set<String> menuIds);
 }
