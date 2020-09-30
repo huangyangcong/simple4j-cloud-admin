@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.simple4j.system.mapper.UserDeptMapper">
-	<select id="getDeptIds" resultType="java.lang.Long">
+	<select id="getDeptIds" resultType="java.lang.String">
 		select dept_id
 		from simple4j_user_dept
 		where user_id = #{userId}

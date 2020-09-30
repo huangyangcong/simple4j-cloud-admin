@@ -29,7 +29,7 @@ public class Code extends BaseEntity {
 	/**
 	 * 数据源主键
 	 */
-	private Long datasourceId;
+	private String datasourceId;
 	/**
 	 * 服务名称
 	 */

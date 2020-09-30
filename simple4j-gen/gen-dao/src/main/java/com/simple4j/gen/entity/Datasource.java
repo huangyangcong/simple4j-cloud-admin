@@ -54,7 +54,7 @@ private static final long serialVersionUID=1L;
 	/**
 	 * 创建人
 	 */
-			private Long createUser;
+			private String createUser;
 	/**
 	 * 创建时间
 	 */
@@ -62,7 +62,7 @@ private static final long serialVersionUID=1L;
 	/**
 	 * 修改人
 	 */
-			private Long updateUser;
+			private String updateUser;
 	/**
 	 * 修改时间
 	 */

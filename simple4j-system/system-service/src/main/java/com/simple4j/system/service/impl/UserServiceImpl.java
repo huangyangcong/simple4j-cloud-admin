@@ -1,6 +1,14 @@
 package com.simple4j.system.service.impl;
 
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -13,41 +21,55 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.simple4j.api.base.BusinessException;
+import com.simple4j.api.base.Page;
 import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
 import com.simple4j.autoconfigure.jwt.security.SecurityScope;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
-import com.simple4j.api.base.BusinessException;
-import com.simple4j.api.base.Page;
 import com.simple4j.system.common.constant.CommonConstant;
-import com.simple4j.system.dto.JwtDto;
 import com.simple4j.system.entity.User;
 import com.simple4j.system.excel.UserExcelImport;
 import com.simple4j.system.mapper.UserMapper;
 import com.simple4j.system.mapstruct.UserMapStruct;
-import com.simple4j.system.request.*;
-import com.simple4j.system.response.*;
-import com.simple4j.system.service.*;
+import com.simple4j.system.request.UserAddRequest;
+import com.simple4j.system.request.UserDetailRequest;
+import com.simple4j.system.request.UserListRequest;
+import com.simple4j.system.request.UserLoginRequest;
+import com.simple4j.system.request.UserOauthDetailRequest;
+import com.simple4j.system.request.UserPageRequest;
+import com.simple4j.system.request.UserRegisterGuestRequest;
+import com.simple4j.system.request.UserRemoveRequest;
+import com.simple4j.system.request.UserResetPasswordRequest;
+import com.simple4j.system.request.UserUpdateRequest;
+import com.simple4j.system.response.TenantDetailResponse;
+import com.simple4j.system.response.UserDetailResponse;
+import com.simple4j.system.response.UserInfo;
+import com.simple4j.system.response.UserLoginResponse;
+import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
+import com.simple4j.system.response.UserOauthDetailResponse;
+import com.simple4j.system.service.ICaptchaService;
+import com.simple4j.system.service.IDeptService;
+import com.simple4j.system.service.IPostService;
+import com.simple4j.system.service.IRoleMenuService;
+import com.simple4j.system.service.IRoleService;
+import com.simple4j.system.service.ITenantService;
+import com.simple4j.system.service.IUserDeptService;
+import com.simple4j.system.service.IUserOauthService;
+import com.simple4j.system.service.IUserPostService;
+import com.simple4j.system.service.IUserRoleService;
+import com.simple4j.system.service.IUserService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 服务实现类
@@ -56,7 +78,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implements IUserService {
+public class UserServiceImpl extends AbstractUserDetailsService implements IUserService {
 
 	private final UserMapStruct userMapStruct;
 	private final JwtProperties jwtProperties;
@@ -71,7 +93,6 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	private final IUserDeptService userDeptService;
 	private final IUserPostService userPostService;
 	private final IRoleMenuService roleMenuService;
-	private final IDictService dictService;
 	private final PasswordEncoder passwordEncoder;
 	private final ICaptchaService captchaService;
 	private final RedisTemplate redisTemplate;
@@ -87,7 +108,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 						userPageRequest.getRealName());
 		IPage<User> page = userMapper
 				.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(userPageRequest.getPageNo(), userPageRequest.getPageSize()),
-						securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ? queryWrapper
+						CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? queryWrapper
 								.eq(User::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		Page<User> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
 				page.getRecords());
@@ -102,7 +123,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 				.eq(StrUtil.isNotEmpty(userListRequest.getRealName()), User::getRealName,
 						userListRequest.getRealName());
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		if (!securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ) {
+		if (!CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId())) {
 			queryWrapper.eq(User::getTenantId, userListRequest.getTenantId());
 		}
 		queryWrapper.eq(User::getIsDeleted, CommonConstant.DB_NOT_DELETED);
@@ -116,22 +137,11 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 		User user = userMapper
 				.getOne(Wrappers.<User>lambdaQuery().eq(User::getId, userDetailRequest.getId()));
 		if (user != null) {
-			UserDetailResponse userDetailResponse = userMapStruct.toVo(user);
-			convert(userDetailResponse);
-			return userDetailResponse;
+			return userMapStruct.toVo(user);
 		}
 		return null;
 	}
 
-	private void convert(UserDetailResponse userDetailResponse) {
-		String userId = userDetailResponse.getUserId();
-		Integer sex = userDetailResponse.getSex();
-		userDetailResponse.setRoles(userRoleService.getRoleIds(userId));
-		userDetailResponse.setDepts(userDeptService.getDeptIds(userId));
-		userDetailResponse.setPosts(userPostService.getPostIds(userId));
-		String sexName = dictService.getValue("sex", sex);
-		userDetailResponse.setSexName(sexName);
-	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
@@ -184,7 +194,13 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 
 	@Override
 	public UserInfo currentUserInfo() {
-		return userInfo(SecurityUtils.getCurrentUserId());
+		User user = userMapper.selectById(SecurityUtils.getCurrentUserId());
+		UserInfo userInfo = userMapStruct.toUserInfo(user);
+		if (ObjectUtil.isNotEmpty(user)) {
+			userInfo.setRoles(SecurityUtils.getCurrentRoleIds());
+			userInfo.setPermissions(SecurityUtils.getCurrentPermissionIds());
+		}
+		return userInfo;
 	}
 
 	@Override
@@ -192,8 +208,10 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 		User user = userMapper.selectById(userId);
 		UserInfo userInfo = userMapStruct.toUserInfo(user);
 		if (ObjectUtil.isNotEmpty(user)) {
-//			List<String> roleAlias = roleService.getRoleAlias(user.getId());
-//			userInfo.setRoles(roleAlias);
+			Set<String> roleIds = userRoleService.getRoleIds(user.getId());
+			userInfo.setRoles(roleIds);
+			Set<String> permissions = roleMenuService.getPermission(roleIds);
+			userInfo.setRoles(permissions);
 		}
 		return userInfo;
 	}
@@ -203,8 +221,10 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 		User user = userMapper.getUser(tenantId, account, password);
 		UserInfo userInfo = userMapStruct.toUserInfo(user);
 		if (ObjectUtil.isNotEmpty(user)) {
-//			List<String> roleAlias = roleService.getRoleAlias(user.getId());
-//			userInfo.setRoles(roleAlias);
+			Set<String> roleIds = userRoleService.getRoleIds(user.getId());
+			userInfo.setRoles(roleIds);
+			Set<String> permissions = roleMenuService.getPermission(roleIds);
+			userInfo.setRoles(permissions);
 		}
 		return userInfo;
 	}
@@ -384,7 +404,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 
 		Set<String> roleIds = userRoleService.getRoleIds(user.getId());
 		for (String role : roleIds) {
-			grantedAuthorities.add(new SimpleGrantedAuthority(role));
+			grantedAuthorities.add(SecurityUtils.createRoleAuthority(role));
 		}
 		Set<String> permissions = roleMenuService.getPermission(roleIds);
 		for (String permission : permissions) {
@@ -398,7 +418,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 			grantedAuthorities.add(SecurityUtils.createUserIdAuthority(user.getId()));
 		}
 		if (StrUtil.isNotBlank(user.getName())) {
-			grantedAuthorities.add(SecurityUtils.createUsernameAuthority(user.getName()));
+			grantedAuthorities.add(SecurityUtils.createUserNameAuthority(user.getName()));
 		}
 		return org.springframework.security.core.userdetails.User.withUsername(user.getName())
 				.password(user.getPassword())
@@ -429,7 +449,7 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	//userDetail实现----------------------------------------------------
 
 	@Override
-	public void save(JwtDto userDetails, String token) {
+	public void save(UserDetails userDetails, String token) {
 		redisTemplate.opsForValue().set(jwtProperties.getOnlineKey() + token, userDetails,
 				jwtProperties.getTokenValidityInSeconds(), TimeUnit.MILLISECONDS);
 		redisTemplate.opsForSet()
@@ -437,8 +457,8 @@ public class UserServiceImpl extends AbstractUserDetailsService<JwtDto> implemen
 	}
 
 	@Override
-	public JwtDto get(String token) {
-		return (JwtDto) redisTemplate.opsForValue().get(jwtProperties.getOnlineKey() + token);
+	public UserDetails get(String token) {
+		return (UserDetails) redisTemplate.opsForValue().get(jwtProperties.getOnlineKey() + token);
 	}
 
 	@Override

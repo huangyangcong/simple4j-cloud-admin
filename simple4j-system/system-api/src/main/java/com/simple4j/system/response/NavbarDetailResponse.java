@@ -32,7 +32,7 @@ public class NavbarDetailResponse extends NavbarAddOrUpdateRequest {
 	 */
 	@ApiModelProperty(name = "update_user", value = "修改人")
 	@JsonProperty("update_user")
-	private Long updateUser;
+	private String updateUser;
 	/**
 	 * 修改时间
 	 */

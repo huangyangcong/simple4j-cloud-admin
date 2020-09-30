@@ -101,7 +101,7 @@ public class DeptServiceImpl implements IDeptService {
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		IPage<Dept> page = deptMapper.page(
 			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(deptPageRequest.getPageNo(), deptPageRequest.getPageSize()),
-				!securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID)  ? queryWrapper
+				!CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId())  ? queryWrapper
 				.eq(Dept::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		Page<Dept> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
 				page.getRecords());

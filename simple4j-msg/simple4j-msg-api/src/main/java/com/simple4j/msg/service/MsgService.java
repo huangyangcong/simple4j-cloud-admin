@@ -1,7 +1,7 @@
 package com.simple4j.msg.service;
 
 
-import com.api.exception.BusinessException;
+import com.simple4j.api.base.BusinessException;
 import com.simple4j.msg.request.*;
 import com.simple4j.msg.response.*;
 
@@ -22,7 +22,7 @@ public interface MsgService {
 	 * @return
 	 * @throws BusinessException
 	 */
-	SendMailMsgResponse sendMailMsg(SendMailMsgRequest request) throws BusinessException, BusinessException;
+	SendMailMsgResponse sendMailMsg(SendMailMsgRequest request) throws BusinessException;
 
 	/**
 	 * 发送钉钉消息

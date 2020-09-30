@@ -55,7 +55,7 @@ public class ParamAddOrUpdateRequest implements Serializable {
 	 */
 	@ApiModelProperty(name = "create_user", value = "创建人")
 	@JsonProperty("create_user")
-	private Long createUser;
+	private String createUser;
 	/**
 	 * 创建时间
 	 */
@@ -67,7 +67,7 @@ public class ParamAddOrUpdateRequest implements Serializable {
 	 */
 	@ApiModelProperty(name = "update_user", value = "修改人")
 	@JsonProperty("update_user")
-	private Long updateUser;
+	private String updateUser;
 	/**
 	 * 修改时间
 	 */

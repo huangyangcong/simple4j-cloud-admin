@@ -14,8 +14,8 @@ public class UserDetailResponse implements Serializable {
 	/**
 	 * 用户编号
 	 */
-	@ApiModelProperty(name = "user_id", value = "用户编号")
-	private String userId;
+	@ApiModelProperty(name = "id", value = "用户编号")
+	private String id;
 
 	/**
 	 * 租户ID

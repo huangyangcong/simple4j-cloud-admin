@@ -82,7 +82,7 @@ public class RoleServiceImpl implements IRoleService {
 				roleListRequest.getRoleAlias());
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		List<Role> pages = roleMapper.list(
-				securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ? queryWrapper
+				CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? queryWrapper
 				.eq(Role::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		return roleMapStruct.toVo(pages);
 	}
@@ -123,7 +123,7 @@ public class RoleServiceImpl implements IRoleService {
 	}
 
 	@Override
-	public List<String> getRoleAlias(String userId) {
+	public Set<String> getRoleAlias(String userId) {
 		return roleMapper.getRoleAlias(userId);
 	}
 }

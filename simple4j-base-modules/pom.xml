@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>simple4j-base-modules</artifactId>
-
+	<packaging>pom</packaging>
 	<modules>
 		<module>simple4j-eureka</module>
 		<module>simple4j-springbootadmin</module>

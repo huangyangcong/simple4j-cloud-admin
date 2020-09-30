@@ -35,7 +35,7 @@ public interface MenuMapper extends ExtendMapper<Menu> {
 	 * @param roleId
 	 * @return
 	 */
-	List<Menu> grantTreeByRole(Set<String> roleId);
+	List<Menu> grantTreeByRole(@Param("list") Set<String> roleId);
 
 	/**
 	 * 所有菜单
@@ -50,7 +50,7 @@ public interface MenuMapper extends ExtendMapper<Menu> {
 	 * @param roleId
 	 * @return
 	 */
-	List<Menu> roleMenu(List<Long> roleId);
+	List<Menu> roleMenu(@Param("list") Set<Long> roleId);
 
 	/**
 	 * 菜单树形结构

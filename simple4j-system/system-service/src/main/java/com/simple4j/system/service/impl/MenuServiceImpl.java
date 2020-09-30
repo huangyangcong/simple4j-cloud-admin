@@ -82,7 +82,7 @@ public class MenuServiceImpl implements IMenuService {
 		//	.collect(Collectors.toList());
 		SecurityScope securityScope = SecurityUtils.getCurrentSecurityScope();
 		Long navbarId = menuRoutersRequest.getNavbarId();
-		Set<String> roleIds = securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ? null :
+		Set<String> roleIds = CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? null :
 				securityScope.getRoleIds();
 		List<Menu> menus = menuMapper.routes(navbarId, roleIds);
 		return TreeUtil.buildTree(menuMapStruct.toVo(menus));
@@ -120,11 +120,10 @@ public class MenuServiceImpl implements IMenuService {
 
 	@Override
 	public List<MenuDetailResponse> grantTree() {
-		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		return TreeUtil
-			.buildTree(menuMapStruct.toVo(securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID) ?
+			.buildTree(menuMapStruct.toVo(CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ?
 					menuMapper.grantTree()
-				: menuMapper.grantTreeByRole(securityScope.getRoleIds())));
+				: menuMapper.grantTreeByRole(SecurityUtils.getCurrentRoleIds())));
 	}
 
 	@Override

@@ -61,7 +61,7 @@ public interface IRoleService{
 	 * @param userId
 	 * @return
 	 */
-	List<String> getRoleAlias(String userId);
+	Set<String> getRoleAlias(String userId);
 
 
 	/**

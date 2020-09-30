@@ -3,6 +3,7 @@ package com.simple4j.system.response;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
@@ -94,12 +95,12 @@ public class UserInfo implements Serializable {
 	 * 权限标识集合
 	 */
 	@ApiModelProperty(value = "权限集合")
-	private List<String> permissions;
+	private Set<String> permissions;
 
 	/**
 	 * 角色标识集合
 	 */
 	@ApiModelProperty(value = "角色集合")
-	private List<Long> roles;
+	private Set<String> roles;
 
 }

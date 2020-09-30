@@ -82,7 +82,7 @@ public class TenantServiceImpl implements ITenantService {
 						tenantListRequest.getTenantName());
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		List<Tenant> list = tenantMapper.list(
-				!securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID)
+				!CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId())
 						? queryWrapper
 						.eq(Tenant::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		return tenantMapStruct.toVo(list);
@@ -102,7 +102,7 @@ public class TenantServiceImpl implements ITenantService {
 		IPage<Tenant> page = tenantMapper.page(
 				new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
 						tenantPageRequest.getPageNo(), tenantPageRequest.getPageSize()),
-				!securityScope.hasAuthority(CommonConstant.ADMIN_TENANT_ID)
+				!CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId())
 						? queryWrapper
 						.eq(Tenant::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		Page<Tenant> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
