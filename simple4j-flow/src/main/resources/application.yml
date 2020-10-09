@@ -3,8 +3,13 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
+    url: jdbc:mysql://122.51.133.124:30002/flow?useUnicode=true&useSSL=true&nullCatalogMeansCurrent=true
     username: root
+    password: uY;:rs623ic&
+  redis:
+    database: 0
+    host: localhost
+    port: 6380
     password: 123456
 management:
   health:
@@ -12,4 +17,9 @@ management:
       enabled: false
 logging:
   level:
-    root: info
+    root: debug
+flowable:
+  database-schema-update: true
+server:
+  servlet:
+    context-path: /

@@ -42,7 +42,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.simple4j.dao.base.BaseEntity;
+import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -151,22 +151,22 @@ public class CodeGenerator {
 		// 设置数据源
 		generator.setDriverName("com.mysql.cj.jdbc.Driver");
 		generator.setUrl(
-				"jdbc:mysql://122.51.133.124:30002/blade?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&serverTimezone=GMT%2B8");
+				"jdbc:mysql://122.51.133.124:30002/flow?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&serverTimezone=GMT%2B8");
 		generator.setUsername("root");
-		generator.setPassword("123456");
+		generator.setPassword("uY;:rs623ic&");
 		// 设置基础配置
 		generator.setSuperMapperClass("com.simple4j.autoconfigure.mybatis.base.ExtendMapper");
 		generator.setSystemName(SABER_NAME);
 		generator.setProjectName("simple4j");
-		generator.setModuleName("task");
+		generator.setModuleName("flow");
 		generator.setGroupId("com.simple4j.admin");
 		generator.setPackageName("com.simple4j");
 		generator.setTablePrefix(new String[]{"simple4j_"});
-		generator.setIncludeTables(new String[]{"cloud_app_config"});
+		generator.setIncludeTables(new String[]{"act_adm_databasechangelog","act_adm_databasechangeloglock","act_adm_server_config","act_app_appdef","act_app_databasechangelog","act_app_databasechangeloglock","act_app_deployment","act_app_deployment_resource","act_cmmn_casedef","act_cmmn_databasechangelog","act_cmmn_databasechangeloglock","act_cmmn_deployment","act_cmmn_deployment_resource","act_cmmn_hi_case_inst","act_cmmn_hi_mil_inst","act_cmmn_hi_plan_item_inst","act_cmmn_ru_case_inst","act_cmmn_ru_mil_inst","act_cmmn_ru_plan_item_inst","act_cmmn_ru_sentry_part_inst","act_co_content_item","act_co_databasechangelog","act_co_databasechangeloglock","act_de_databasechangelog","act_de_databasechangeloglock","act_de_model","act_de_model_history","act_de_model_relation","act_dmn_databasechangelog","act_dmn_databasechangeloglock","act_dmn_decision","act_dmn_deployment","act_dmn_deployment_resource","act_dmn_hi_decision_execution","act_evt_log","act_fo_databasechangelog","act_fo_databasechangeloglock","act_fo_form_definition","act_fo_form_deployment","act_fo_form_instance","act_fo_form_resource","act_ge_bytearray","act_ge_property","act_hi_actinst","act_hi_attachment","act_hi_comment","act_hi_detail","act_hi_entitylink","act_hi_identitylink","act_hi_procinst","act_hi_taskinst","act_hi_tsk_log","act_hi_varinst","act_id_bytearray","act_id_group","act_id_info","act_id_membership","act_id_priv","act_id_priv_mapping","act_id_property","act_id_token","act_id_user","act_procdef_info","act_re_deployment","act_re_model","act_re_procdef","act_ru_actinst","act_ru_deadletter_job","act_ru_entitylink","act_ru_event_subscr","act_ru_execution","act_ru_external_job","act_ru_history_job","act_ru_identitylink","act_ru_job","act_ru_suspended_job","act_ru_task","act_ru_timer_job","act_ru_variable","flw_channel_definition","flw_ev_databasechangelog","flw_ev_databasechangeloglock","flw_event_definition","flw_event_deployment","flw_event_resource","flw_ru_batch","flw_ru_batch_part"});
 		generator.setTree(false);
 		generator.setSuperEntityClass(BaseEntity.class);
 		generator.setIdType(1);
-		generator.setOutputStream(new FileOutputStream("D:/task"));
+		generator.setOutputStream(new FileOutputStream("/home/hyc/temp"));
 		generator.run();
 	}
 
@@ -511,22 +511,19 @@ public class CodeGenerator {
 			focList.add(new FileOutConfig("/templates/sword/action.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
-					return front + "/actions" + File.separator + tableInfo
-							.getEntityName().toLowerCase() + ".js";
+					return front + "/actions" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/model.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
-					return front + "/models" + File.separator + tableInfo
-							.getEntityName().toLowerCase() + ".js";
+					return front + "/models" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/service.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
-					return front + "/services" + File.separator + tableInfo
-							.getEntityName().toLowerCase() + ".js";
+					return front + "/services" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/list.js.vm") {
@@ -535,7 +532,7 @@ public class CodeGenerator {
 					return front + "/pages" + File.separator + StrUtil
 							.upperFirst(servicePackage) + File.separator + tableInfo
 							.getEntityName()
-							+ File.separator + tableInfo.getEntityName() + ".js";
+							+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/add.js.vm") {
@@ -544,7 +541,7 @@ public class CodeGenerator {
 					return front + "/pages" + File.separator + StrUtil
 							.upperFirst(servicePackage) + File.separator + tableInfo
 							.getEntityName()
-							+ File.separator + tableInfo.getEntityName() + "Add.js";
+							+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "Add.js";
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/edit.js.vm") {
@@ -553,7 +550,7 @@ public class CodeGenerator {
 					return front + "/pages" + File.separator + StrUtil
 							.upperFirst(servicePackage) + File.separator + tableInfo
 							.getEntityName()
-							+ File.separator + tableInfo.getEntityName() + "Edit.js";
+							+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "Edit.js";
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/view.js.vm") {
@@ -562,7 +559,7 @@ public class CodeGenerator {
 					return front + "/pages" + File.separator + StrUtil
 							.upperFirst(servicePackage) + File.separator + tableInfo
 							.getEntityName()
-							+ File.separator + tableInfo.getEntityName() + "View.js";
+							+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "View.js";
 				}
 			});
 		} else if (systemName.equals(SABER_NAME)) {
@@ -570,16 +567,14 @@ public class CodeGenerator {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return front + "/api" + File.separator + moduleName
-							.toLowerCase() + File.separator + tableInfo.getEntityName()
-							.toLowerCase() + ".js";
+							.toLowerCase() + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
 				}
 			});
 			focList.add(new FileOutConfig("/templates/saber/crud.vue.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return front + "/views" + File.separator + moduleName
-							.toLowerCase() + File.separator + tableInfo.getEntityName()
-							.toLowerCase() + ".vue";
+							.toLowerCase() + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".vue";
 				}
 			});
 		}

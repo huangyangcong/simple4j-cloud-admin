@@ -9,7 +9,6 @@
 		<relativePath>../</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.simple4j.admin</groupId>
 	<artifactId>simple4j-gen</artifactId>
 	<packaging>pom</packaging>
 	<modules>

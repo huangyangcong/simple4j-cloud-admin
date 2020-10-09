@@ -1,66 +1,50 @@
-import request from '@/router/axios';
-import {baseUrl} from '@/config/env';
+import request from '@/utils/request'
 
 export const getPage = (page_no, page_size, params) => {
-	return request({
-		url: baseUrl + '/$!{cfg.serviceName}/$!{cfg.entityKey}/page',
-		method: 'post',
-		data: {
-...
-	params,
-		page_no
-:
-	page_no,
-		page_size
-:
-	page_size
-}
-})
-}
-export const getPage = (params) => {
-	return request({
-		url: baseUrl + '/$!{cfg.serviceName}/$!{cfg.entityKey}/list',
-		method: 'post',
-		data: {
-...
-	params
-}
-})
+  return request({
+    url: '/$!{cfg.moduleName}/$!{cfg.entityKey}/page',
+    method: 'post',
+    data: {
+      page_no,
+      page_size,
+      ...params
+    }
+  })
 }
 
 export const getDetail = (id) => {
-	return request({
-		url: baseUrl + '/$!{cfg.serviceName}/$!{cfg.entityKey}/detail',
-		method: 'post',
-		data: {
-			id: id
-		}
-	})
+  return request({
+    url: '/$!{cfg.moduleName}/$!{cfg.entityKey}/detail',
+    method: 'post',
+    data: {
+      id: id
+    }
+  })
 }
 
 export const remove = (ids) => {
-	return request({
-		url: baseUrl + '/$!{cfg.serviceName}/$!{cfg.entityKey}/remove',
-		method: 'post',
-		data: {
-			ids: ids
-		}
-	})
+  return request({
+    url: '/$!{cfg.moduleName}/$!{cfg.entityKey}/remove',
+    method: 'post',
+    data: {
+      ids: ids
+    }
+  })
 }
 
 export const add = (row) => {
-	return request({
-		url: baseUrl + '/$!{cfg.serviceName}/$!{cfg.entityKey}/add',
-		method: 'post',
-		data: row
-	})
+  return request({
+    url: '/$!{cfg.moduleName}/$!{cfg.entityKey}/add',
+    method: 'post',
+    data: row
+  })
 }
 
 export const update = (row) => {
-	return request({
-		url: baseUrl + '/$!{cfg.serviceName}/$!{cfg.entityKey}/update',
-		method: 'post',
-		data: row
-	})
+  return request({
+    url: '$!{cfg.serviceName}/$!{cfg.entityKey}/update',
+    method: 'post',
+    data: row
+  })
 }
 

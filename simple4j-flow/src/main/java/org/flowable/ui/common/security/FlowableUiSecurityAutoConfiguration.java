@@ -44,6 +44,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
@@ -69,30 +70,6 @@ import org.springframework.security.web.header.writers.XXssProtectionHeaderWrite
 		OAuth2ClientAutoConfiguration.class,
 })
 public class FlowableUiSecurityAutoConfiguration {
-
-	private static final Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> DEFAULT_AUTHORIZE_REQUESTS = requests -> {
-		requests.antMatchers("/app/rest/account").authenticated()
-				.antMatchers("/app/rest/runtime/app-definitions").authenticated()
-				.antMatchers("/idm-app/rest/authenticate").authenticated()
-				.antMatchers("/idm-app/rest/account").authenticated()
-				.antMatchers("/app/rest/**", "/workflow/").hasAuthority(DefaultPrivileges.ACCESS_TASK)
-				.antMatchers("/admin-app/**", "/admin/").hasAuthority(DefaultPrivileges.ACCESS_ADMIN)
-				.antMatchers("/idm-app/**").hasAuthority(DefaultPrivileges.ACCESS_IDM)
-				.antMatchers("/modeler-app/**", "/modeler/").hasAuthority(DefaultPrivileges.ACCESS_MODELER)
-				.antMatchers("/").authenticated()
-				.antMatchers("/app/authentication").permitAll()
-				.antMatchers("/idm").permitAll();
-	};
-
-	private static final Customizer<LogoutConfigurer<HttpSecurity>> DEFAULT_LOGOUT = logout -> {
-		logout.logoutUrl("/app/logout");
-	};
-
-	private static final Customizer<HeadersConfigurer<HttpSecurity>> DEFAULT_HEADERS = headers -> {
-		headers.frameOptions()
-				.sameOrigin()
-				.addHeaderWriter(new XXssProtectionHeaderWriter());
-	};
 
 	public FlowableUiSecurityAutoConfiguration(ObjectProvider<SecurityScopeProvider> securityScopeProvider) {
 		// Override the default security scope provider if there is such bean
@@ -151,51 +128,6 @@ public class FlowableUiSecurityAutoConfiguration {
 		}
 	}
 
-	@Configuration(proxyBeanMethods = false)
-	@Order(SecurityConstants.FORM_LOGIN_SECURITY_ORDER)
-	@ConditionalOnProperty(prefix = "flowable.common.app.security", name = "type", havingValue = "idm", matchIfMissing = true)
-	public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-
-		@Autowired
-		protected ObjectProvider<RememberMeServices> rememberMeServicesObjectProvider;
-
-		@Autowired
-		protected FlowableCommonAppProperties commonAppProperties;
-
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			RememberMeServices rememberMeServices = rememberMeServicesObjectProvider.getIfAvailable();
-			String key = null;
-			if (rememberMeServices instanceof AbstractRememberMeServices) {
-				key = ((AbstractRememberMeServices) rememberMeServices).getKey();
-			}
-			if (rememberMeServices != null) {
-				http.rememberMe()
-						.key(key)
-						.rememberMeServices(rememberMeServices);
-			}
-			http
-					.exceptionHandling()
-					.and()
-					.sessionManagement()
-					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-					.and()
-					.logout(logout -> {
-						DEFAULT_LOGOUT.customize(logout);
-						logout.logoutSuccessUrl("/");
-						logout.addLogoutHandler(new ClearFlowableCookieLogoutHandler());
-					})
-					.csrf()
-					.disable() // Disabled, cause enabling it will cause sessions
-					.headers().frameOptions().disable().and()
-					// Never persist the security context
-					.securityContext().securityContextRepository(new NullSecurityContextRepository())
-			;
-
-			http.formLogin().disable();
-		}
-	}
-
 	//
 	// Actuator
 	//
@@ -211,11 +143,14 @@ public class FlowableUiSecurityAutoConfiguration {
 			this.apiHttpSecurityCustomizer = apiHttpSecurityCustomizer;
 		}
 
+		@Override
 		protected void configure(HttpSecurity http) throws Exception {
 
 			http
 					.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+					.and()
+					.cors()
 					.and()
 					.csrf()
 					.disable();

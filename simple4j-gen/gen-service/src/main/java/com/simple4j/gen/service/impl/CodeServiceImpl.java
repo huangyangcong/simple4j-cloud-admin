@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
-import com.simple4j.dao.base.BaseEntity;
+import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 import com.simple4j.gen.entity.Code;
 import com.simple4j.gen.mapper.CodeMapper;
 import com.simple4j.gen.mapstruct.CodeMapStruct;

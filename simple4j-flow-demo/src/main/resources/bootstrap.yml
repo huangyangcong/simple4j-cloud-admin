@@ -1,0 +1,10 @@
+server:
+  port: 3001
+spring:
+  application:
+    name: flow-service
+  cloud:
+    nacos:
+      server-addr: 122.51.133.124:30000
+      config:
+        file-extension: yml

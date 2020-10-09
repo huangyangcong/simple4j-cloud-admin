@@ -81,7 +81,6 @@ import org.springframework.util.StringUtils;
 public class UserServiceImpl extends AbstractUserDetailsService implements IUserService {
 
 	private final UserMapStruct userMapStruct;
-	private final JwtProperties jwtProperties;
 
 	private final UserMapper userMapper;
 	private final IRoleService roleService;
@@ -95,7 +94,6 @@ public class UserServiceImpl extends AbstractUserDetailsService implements IUser
 	private final IRoleMenuService roleMenuService;
 	private final PasswordEncoder passwordEncoder;
 	private final ICaptchaService captchaService;
-	private final RedisTemplate redisTemplate;
 
 	@Override
 	public Page<UserDetailResponse> page(
@@ -122,7 +120,6 @@ public class UserServiceImpl extends AbstractUserDetailsService implements IUser
 						userListRequest.getAccount())
 				.eq(StrUtil.isNotEmpty(userListRequest.getRealName()), User::getRealName,
 						userListRequest.getRealName());
-		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		if (!CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId())) {
 			queryWrapper.eq(User::getTenantId, userListRequest.getTenantId());
 		}
@@ -443,65 +440,5 @@ public class UserServiceImpl extends AbstractUserDetailsService implements IUser
 		//删除验证码
 		captchaService.deleteCaptcha(captchaKey);
 		return userLoginResponse;
-	}
-
-
-	//userDetail实现----------------------------------------------------
-
-	@Override
-	public void save(UserDetails userDetails, String token) {
-		redisTemplate.opsForValue().set(jwtProperties.getOnlineKey() + token, userDetails,
-				jwtProperties.getTokenValidityInSeconds(), TimeUnit.MILLISECONDS);
-		redisTemplate.opsForSet()
-				.add(jwtProperties.getOnlineKey() + userDetails.getUsername(), token);
-	}
-
-	@Override
-	public UserDetails get(String token) {
-		return (UserDetails) redisTemplate.opsForValue().get(jwtProperties.getOnlineKey() + token);
-	}
-
-	@Override
-	public boolean checkExpire(String token) {
-		return redisTemplate.opsForValue().get(jwtProperties.getOnlineKey() + token) != null;
-	}
-
-	@Override
-	public void removeOtherToken(String userName, String ignoreToken) {
-		Set<Object> tokens = redisTemplate.opsForSet()
-				.members(jwtProperties.getOnlineKey() + userName);
-		if (CollUtil.isEmpty(tokens)) {
-			return;
-		}
-		List<Object> delTokens = new ArrayList<>();
-		List<String> delKeys = new ArrayList<>();
-		for (Object token : tokens) {
-			if (!token.equals(ignoreToken)) {
-				delTokens.add(token);
-				delKeys.add(jwtProperties.getOnlineKey() + token);
-			}
-		}
-		if (CollUtil.isNotEmpty(delTokens)) {
-			redisTemplate.opsForSet()
-					.remove(jwtProperties.getOnlineKey() + userName, delTokens.toArray());
-		}
-		if (CollUtil.isNotEmpty(delKeys)) {
-			redisTemplate.delete(delKeys);
-		}
-	}
-
-	@Override
-	public void logout(String username) {
-		removeOtherToken(username, null);
-	}
-
-	@Override
-	public long getExpire(String token) {
-		return redisTemplate.getExpire(jwtProperties.getOnlineKey() + token, TimeUnit.MILLISECONDS);
-	}
-
-	@Override
-	public void setExpire(String token, long renew, TimeUnit milliseconds) {
-		redisTemplate.expire(jwtProperties.getOnlineKey() + token, renew, milliseconds);
 	}
 }

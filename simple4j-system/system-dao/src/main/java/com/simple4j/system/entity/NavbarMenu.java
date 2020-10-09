@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import com.simple4j.dao.base.BaseEntity;
+import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 
 /**
  * 顶部菜单实体类

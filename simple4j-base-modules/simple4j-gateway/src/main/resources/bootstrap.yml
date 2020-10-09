@@ -58,3 +58,10 @@ spring:
             - Path=/flow/**
           filters:
             - StripPrefix=1
+            - AddRequestHeader=Forwarded,Authorization
+        - id: flow-service-static
+          uri: lb://flow-service
+          predicates:
+            - Path=/libs/**,/scripts/**,/i18n/**,/views/**,/styles/**,/fonts/**
+          filters:
+            - AddRequestHeader=Forwarded,Authorization

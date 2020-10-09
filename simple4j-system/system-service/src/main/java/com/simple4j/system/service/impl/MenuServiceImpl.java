@@ -53,7 +53,7 @@ public class MenuServiceImpl implements IMenuService {
 		Menu detail = menuMapper.getOne(
 			Wrappers.<Menu>lambdaQuery().eq(Menu::getId, menuDetailRequest.getId()));
 		MenuDetailResponse menuDetailResponse = menuMapStruct.toVo(detail);
-		if (menuDetailResponse.getParentId().equals(CommonConstant.TOP_PARENT_ID)) {
+		if (CommonConstant.TOP_PARENT_ID.equals(menuDetailResponse.getParentId())) {
 			menuDetailResponse.setParentName(CommonConstant.TOP_PARENT_NAME);
 		} else {
 			Menu parent = menuMapper.getById(menuDetailResponse.getParentId());

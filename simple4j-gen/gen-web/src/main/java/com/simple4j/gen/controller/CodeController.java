@@ -3,6 +3,7 @@ package com.simple4j.gen.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -136,7 +137,8 @@ private ICodeService codeService;
 		response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
 		// 下载文件能正常显示中文
 		response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder
-				.encode(codeGenRequest.getProjectName() + "-" + codeGenRequest.getModuleName() + ".zip", "UTF-8"));
+				.encode(codeGenRequest.getProjectName() + "-" + codeGenRequest.getModuleName() + ".zip",
+						StandardCharsets.UTF_8));
 		try(OutputStream outputStream = response.getOutputStream()){
 			codeService.codeGen(outputStream, codeGenRequest);
 		}

@@ -139,6 +139,12 @@ public class MenuDetailResponse implements INode<MenuDetailResponse, String> {
 	@ApiModelProperty(name = "is_open_name", value = "是否新窗口打开")
 	@JsonProperty("is_open_name")
 	private String isOpenName;
+	/**
+	 * 是否隐藏
+	 */
+	@ApiModelProperty(name = "hidden", value = "是否隐藏")
+	@JsonProperty("hidden")
+	private Integer hidden;
 
 	@Override
 	public void addChildren(MenuDetailResponse children) {
