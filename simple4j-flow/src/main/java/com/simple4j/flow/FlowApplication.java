@@ -45,26 +45,26 @@ public class FlowApplication {
 		});
 		SpringApplication.run(FlowApplication.class, args);
 	}
-	@Bean
-	public CorsConfigurationSource corsConfigurationSource(){
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Lists.newArrayList(CorsConfiguration.ALL));
-		configuration.setAllowedMethods(Lists.newArrayList(CorsConfiguration.ALL));
-		configuration.setAllowCredentials(true);
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**",configuration);
-		return source;
-	}
-	@Configuration
-	public class WebMvcConfig implements WebMvcConfigurer {
-
-		@Override
-		public void addCorsMappings(CorsRegistry registry) {
-			registry.addMapping("/**")
-					.allowedOrigins("*")
-					.allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
-					.maxAge(3600)
-					.allowCredentials(true);
-		}
-	}
+//	@Bean
+//	public CorsConfigurationSource corsConfigurationSource(){
+//		CorsConfiguration configuration = new CorsConfiguration();
+//		configuration.setAllowedOrigins(Lists.newArrayList(CorsConfiguration.ALL));
+//		configuration.setAllowedMethods(Lists.newArrayList(CorsConfiguration.ALL));
+//		configuration.setAllowCredentials(true);
+//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//		source.registerCorsConfiguration("/**",configuration);
+//		return source;
+//	}
+//	@Configuration
+//	public class WebMvcConfig implements WebMvcConfigurer {
+//
+//		@Override
+//		public void addCorsMappings(CorsRegistry registry) {
+//			registry.addMapping("/**")
+//					.allowedOrigins("*")
+//					.allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
+//					.maxAge(3600)
+//					.allowCredentials(true);
+//		}
+//	}
 }
