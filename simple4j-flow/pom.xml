@@ -10,7 +10,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>simple4j-flow</artifactId>
-
+	<packaging>pom</packaging>
+	<modules>
+		<module>flow-api</module>
+		<module>flow-service</module>
+		<module>flow-dao</module>
+		<module>flow-front</module>
+		<module>flow-manager</module>
+		<module>flow-web</module>
+		<module>flow-start</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>

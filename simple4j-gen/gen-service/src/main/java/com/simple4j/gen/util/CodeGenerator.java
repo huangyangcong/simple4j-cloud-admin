@@ -162,11 +162,11 @@ public class CodeGenerator {
 		generator.setGroupId("com.simple4j.admin");
 		generator.setPackageName("com.simple4j");
 		generator.setTablePrefix(new String[]{"simple4j_"});
-		generator.setIncludeTables(new String[]{"act_adm_databasechangelog","act_adm_databasechangeloglock","act_adm_server_config","act_app_appdef","act_app_databasechangelog","act_app_databasechangeloglock","act_app_deployment","act_app_deployment_resource","act_cmmn_casedef","act_cmmn_databasechangelog","act_cmmn_databasechangeloglock","act_cmmn_deployment","act_cmmn_deployment_resource","act_cmmn_hi_case_inst","act_cmmn_hi_mil_inst","act_cmmn_hi_plan_item_inst","act_cmmn_ru_case_inst","act_cmmn_ru_mil_inst","act_cmmn_ru_plan_item_inst","act_cmmn_ru_sentry_part_inst","act_co_content_item","act_co_databasechangelog","act_co_databasechangeloglock","act_de_databasechangelog","act_de_databasechangeloglock","act_de_model","act_de_model_history","act_de_model_relation","act_dmn_databasechangelog","act_dmn_databasechangeloglock","act_dmn_decision","act_dmn_deployment","act_dmn_deployment_resource","act_dmn_hi_decision_execution","act_evt_log","act_fo_databasechangelog","act_fo_databasechangeloglock","act_fo_form_definition","act_fo_form_deployment","act_fo_form_instance","act_fo_form_resource","act_ge_bytearray","act_ge_property","act_hi_actinst","act_hi_attachment","act_hi_comment","act_hi_detail","act_hi_entitylink","act_hi_identitylink","act_hi_procinst","act_hi_taskinst","act_hi_tsk_log","act_hi_varinst","act_id_bytearray","act_id_group","act_id_info","act_id_membership","act_id_priv","act_id_priv_mapping","act_id_property","act_id_token","act_id_user","act_procdef_info","act_re_deployment","act_re_model","act_re_procdef","act_ru_actinst","act_ru_deadletter_job","act_ru_entitylink","act_ru_event_subscr","act_ru_execution","act_ru_external_job","act_ru_history_job","act_ru_identitylink","act_ru_job","act_ru_suspended_job","act_ru_task","act_ru_timer_job","act_ru_variable","flw_channel_definition","flw_ev_databasechangelog","flw_ev_databasechangeloglock","flw_event_definition","flw_event_deployment","flw_event_resource","flw_ru_batch","flw_ru_batch_part"});
+		generator.setIncludeTables(new String[]{"act_adm_databasechangelog"});
 		generator.setTree(false);
 		generator.setSuperEntityClass(BaseEntity.class);
 		generator.setIdType(1);
-		generator.setOutputStream(new FileOutputStream("/home/hyc/temp"));
+		generator.setOutputStream(new FileOutputStream("D:/temp"));
 		generator.run();
 	}
 
