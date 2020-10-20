@@ -14,6 +14,8 @@ management:
       enabled: false
 logging:
   level:
-    root: info
+    root: debug
+  file:
+    path: simple4j.log
 flowable:
   database-schema-update: true
