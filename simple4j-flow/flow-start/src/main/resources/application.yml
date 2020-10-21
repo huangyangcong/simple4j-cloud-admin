@@ -17,7 +17,7 @@ management:
       enabled: false
 logging:
   level:
-    root: debug
+    root: info
 flowable:
   database-schema-update: true
 server:
