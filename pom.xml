@@ -44,7 +44,6 @@
 		<module>simple4j-gen</module>
 		<module>simple4j-base-modules</module>
         <module>simple4j-flow</module>
-		<module>simple4j-flow-demo</module>
 	</modules>
 	<reporting>
 		<plugins>

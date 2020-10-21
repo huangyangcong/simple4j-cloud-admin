@@ -5,6 +5,8 @@ import org.mybatis.spring.annotation.MapperScan;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 /**
@@ -14,6 +16,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
  * @since 2020-10-13
  */
 @SpringCloudApplication
+@EnableWebSecurity
 @EnableOpenApi
 @MapperScan("com.simple4j.flow.mapper")
 public class FlowApplication {
