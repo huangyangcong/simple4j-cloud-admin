@@ -13,6 +13,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-				.anyRequest().permitAll().and().logout().permitAll();//配置不需要登录验证
+				.anyRequest().permitAll()
+				.and()
+				.logout().permitAll()//配置不需要登录验证
+				.and()
+				.csrf().disable();
 	}
 }

@@ -80,10 +80,10 @@
 			...mapGetters(['permissions']),
 			permissionList() {
 				return {
-					addBtn: this.vaildData(this.permissions.$!{cfg.entityKey}_add, false),
-					viewBtn: this.vaildData(this.permissions.$!{cfg.entityKey}_view, false),
-					delBtn: this.vaildData(this.permissions.$!{cfg.entityKey}_delete, false),
-					editBtn: this.vaildData(this.permissions.$!{cfg.entityKey}_edit, false)
+					addBtn: this.vaildData(this.permissions['$!{cfg.entityKey}:add'], false),
+					viewBtn: this.vaildData(this.permissions['$!{cfg.entityKey}:view'], false),
+					delBtn: this.vaildData(this.permissions['$!{cfg.entityKey}:delete'], false),
+					editBtn: this.vaildData(this.permissions['$!{cfg.entityKey}:edit'], false)
 				};
 			},
 			ids() {
