@@ -27,8 +27,8 @@ import java.util.List;
 @Api(value = "角色", tags = "角色")
 public class RoleController {
 
-	private IRoleService roleService;
-	private IRoleMenuService roleMenuService;
+	private final IRoleService roleService;
+	private final IRoleMenuService roleMenuService;
 
 	/**
 	 * 详情
