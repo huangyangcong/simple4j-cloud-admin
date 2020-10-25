@@ -2,7 +2,6 @@
 - apollo
 - dubbo
 - fastdfs
-- fastjson
 - flowable
 - redis
 - rocketmq
@@ -11,5 +10,7 @@
 - xxl-job
 - etcd(zookeeper)
 - sharding-jdbc
-- SkyWorking
+- SkyWalking
 - kong
+
+1.0

@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
@@ -24,10 +22,9 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.google.common.collect.Sets;
 import com.simple4j.api.base.BusinessException;
 import com.simple4j.api.base.Page;
-import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
 import com.simple4j.autoconfigure.jwt.security.SecurityScope;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
-import com.simple4j.autoconfigure.jwt.service.AbstractUserDetailsService;
+import com.simple4j.autoconfigure.jwt.security.TokenService;
 import com.simple4j.system.common.constant.CommonConstant;
 import com.simple4j.system.entity.User;
 import com.simple4j.system.excel.UserExcelImport;
@@ -62,9 +59,9 @@ import com.simple4j.system.service.IUserRoleService;
 import com.simple4j.system.service.IUserService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -78,7 +75,7 @@ import org.springframework.util.StringUtils;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl extends AbstractUserDetailsService implements IUserService {
+public class UserServiceImpl implements IUserService, UserDetailsService {
 
 	private final UserMapStruct userMapStruct;
 
@@ -94,6 +91,7 @@ public class UserServiceImpl extends AbstractUserDetailsService implements IUser
 	private final IRoleMenuService roleMenuService;
 	private final PasswordEncoder passwordEncoder;
 	private final ICaptchaService captchaService;
+	private final TokenService tokenService;
 
 	@Override
 	public Page<UserDetailResponse> page(
@@ -433,12 +431,17 @@ public class UserServiceImpl extends AbstractUserDetailsService implements IUser
 		//校验验证码
 //		captchaService.verify(captchaKey, userLoginRequest.getCaptchaCode());
 		//登录校验
-		String token = usernameAndPasswordAuth(userLoginRequest.getUsername(),
+		String token = tokenService.login(userLoginRequest.getUsername(),
 				userLoginRequest.getPassword());
 		UserLoginResponse userLoginResponse = new UserLoginResponse();
 		userLoginResponse.setToken(token);
 		//删除验证码
 		captchaService.deleteCaptcha(captchaKey);
 		return userLoginResponse;
+	}
+
+	@Override
+	public void logout(String username) {
+		tokenService.logout(username);
 	}
 }

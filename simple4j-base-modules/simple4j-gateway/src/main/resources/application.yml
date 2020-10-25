@@ -1,7 +1,6 @@
 spring:
   main:
     allow-bean-definition-overriding: true
-
 management:
   health:
     defaults:
@@ -18,3 +17,4 @@ logging:
   level:
     root: info
     com.alibaba.nacos.client.naming: error
+debug: true

@@ -1,6 +1,8 @@
 package com.simple4j.flow.advice;
 
 import com.simple4j.web.bean.ApiResponse;
+import springfox.documentation.spring.web.json.Json;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
@@ -19,7 +21,9 @@ public class FlowResponseBody implements ResponseBodyAdvice<Object> {
 
 	@Override
 	public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-
+		if (body != null && body.getClass() == Json.class) {
+			return body;
+		}
 		return ApiResponse.ok(body);
 	}
 }
