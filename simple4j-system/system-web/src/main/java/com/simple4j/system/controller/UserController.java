@@ -1,9 +1,27 @@
 package com.simple4j.system.controller;
 
 
-import com.simple4j.autoconfigure.jwt.annotation.AnonymousAccess;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
+import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.UserAddRequest;
+import com.simple4j.system.request.UserDetailRequest;
+import com.simple4j.system.request.UserListRequest;
+import com.simple4j.system.request.UserLoginRequest;
+import com.simple4j.system.request.UserPageRequest;
+import com.simple4j.system.request.UserRegisterGuestRequest;
+import com.simple4j.system.request.UserRemoveRequest;
+import com.simple4j.system.request.UserResetPasswordRequest;
+import com.simple4j.system.request.UserRoleGrantRequest;
+import com.simple4j.system.request.UserUpdateRequest;
 import com.simple4j.system.response.UserDetailResponse;
 import com.simple4j.system.response.UserInfo;
 import com.simple4j.system.response.UserLoginResponse;
@@ -15,17 +33,15 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 控制器
@@ -46,7 +62,7 @@ public class UserController {
 	 */
 	@ApiOperation(value = "登录")
 	@PostMapping("/login")
-	@AnonymousAccess
+	@PermitAll()
 	public ApiResponse<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
 		UserLoginResponse userLoginResponse = userService.login(userLoginRequest);
 		return ApiResponse.ok(userLoginResponse);
@@ -57,7 +73,7 @@ public class UserController {
 	 */
 	@ApiOperation(value = "登出")
 	@PostMapping("/logout")
-	@AnonymousAccess
+	@PreAuthorize("permitAll()")
 	public ApiResponse logout() {
 		userService.logout("");
 		return ApiResponse.ok();
