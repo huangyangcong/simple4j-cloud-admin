@@ -28,7 +28,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
  * @author hyc
  * @version 1.0.0
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class SwaggerConfig {
 	@Bean
 	public Docket petApi() {
