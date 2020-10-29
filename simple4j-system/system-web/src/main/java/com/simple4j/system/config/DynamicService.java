@@ -37,7 +37,7 @@ public class DynamicService implements DynamicSecurityService, ApplicationContex
 				new ExpressionUrlAuthorizationConfigurer<>(context);
 		ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = hExpressionUrlAuthorizationConfigurer.getRegistry();
 		registry.mvcMatchers(HttpMethod.DELETE, "/user/api/v1/info").authenticated();
-		Method createRequestMap = ClassUtils.getMethod(AbstractConfigAttributeRequestMatcherRegistry.class, "createRequestMap");
+		Method createRequestMap = ClassUtils.getMethod(ExpressionUrlAuthorizationConfigurer.ExpressionInterceptUrlRegistry.class, "createRequestMap");
 		createRequestMap.setAccessible(true);
 		LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> requestMap = (LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>) ReflectionUtils.invokeMethod(createRequestMap, registry);
 		return new ExpressionBasedFilterInvocationSecurityMetadataSource(requestMap, new DefaultWebSecurityExpressionHandler());
