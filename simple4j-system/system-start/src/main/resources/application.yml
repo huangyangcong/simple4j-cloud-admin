@@ -71,8 +71,8 @@ spring:
             multi-statement-allow: true
   redis:
     database: 0
-    host: localhost
-    port: 6380
+    host: 122.51.133.124
+    port: 30003
     password: 123456
 #mybatis
 mybatis-plus:
