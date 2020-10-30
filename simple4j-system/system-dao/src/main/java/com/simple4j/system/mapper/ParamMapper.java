@@ -6,7 +6,7 @@ import com.simple4j.system.entity.Param;
 /**
  * Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface ParamMapper extends ExtendMapper<Param> {
 

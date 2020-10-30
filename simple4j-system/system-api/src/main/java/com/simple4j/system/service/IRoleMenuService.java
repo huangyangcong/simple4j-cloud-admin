@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * 服务类
  *
- * @author Chill
+ * @author hyc
  */
 public interface IRoleMenuService {
 

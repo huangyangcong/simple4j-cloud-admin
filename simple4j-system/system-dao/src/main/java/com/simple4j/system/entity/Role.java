@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * 角色实体类
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 @TableName("simple4j_role")

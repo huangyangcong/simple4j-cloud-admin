@@ -10,7 +10,7 @@ import com.simple4j.system.entity.UserRole;
 /**
  * Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface UserRoleMapper extends ExtendMapper<UserRole> {
 

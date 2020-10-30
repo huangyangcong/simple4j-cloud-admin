@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 行政区划表 服务类
  *
- * @author Chill
+ * @author hyc
  */
 public interface IRegionService {
 

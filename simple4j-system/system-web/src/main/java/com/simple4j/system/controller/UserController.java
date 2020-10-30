@@ -46,7 +46,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 控制器
  *
- * @author Chill
+ * @author hyc
  */
 @RestController
 @RequestMapping("/user/api/v1")

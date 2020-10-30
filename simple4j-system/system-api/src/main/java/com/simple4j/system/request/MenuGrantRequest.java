@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * GrantVO
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 public class MenuGrantRequest implements Serializable {

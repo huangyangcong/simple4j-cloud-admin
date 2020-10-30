@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * 定义常量
  *
- * @author YangHu, tangguo, hubin
+ * @author hyc
  * @since 2016-08-31
  */
 public interface ConstVal {

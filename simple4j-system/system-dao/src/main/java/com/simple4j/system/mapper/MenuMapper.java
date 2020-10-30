@@ -11,7 +11,7 @@ import com.simple4j.system.entity.Menu;
 /**
  * Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface MenuMapper extends ExtendMapper<Menu> {
 

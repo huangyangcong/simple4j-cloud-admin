@@ -10,7 +10,7 @@ import com.simple4j.system.entity.RoleMenu;
 /**
  * Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface RoleMenuMapper extends ExtendMapper<RoleMenu> {
 

@@ -32,7 +32,7 @@ import org.apache.velocity.app.VelocityEngine;
 /**
  * Velocity 模板引擎实现文件输出
  *
- * @author hubin
+ * @author hyc
  * @since 2018-01-10
  */
 public class VelocityTemplateEngine extends AbstractTemplateEngine {

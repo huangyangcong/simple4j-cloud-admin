@@ -15,7 +15,7 @@ import com.simple4j.system.response.PostDetailResponse;
 /**
  * 岗位表 服务类
  *
- * @author Chill
+ * @author hyc
  */
 public interface IPostService {
 

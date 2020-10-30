@@ -9,7 +9,7 @@ import lombok.Data;
 /**
  * 实体类
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 @TableName("simple4j_user_oauth")

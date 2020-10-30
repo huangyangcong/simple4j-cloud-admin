@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 /**
  * 配置汇总 传递给文件生成工具
  *
- * @author YangHu, tangguo, hubin, Juzi
+ * @author hyc, Juzi
  * @since 2016-08-30
  */
 public class ConfigBuilder {

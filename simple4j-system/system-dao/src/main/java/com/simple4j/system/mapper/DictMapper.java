@@ -8,7 +8,7 @@ import com.simple4j.system.entity.Dict;
 /**
  * Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface DictMapper extends ExtendMapper<Dict> {
 

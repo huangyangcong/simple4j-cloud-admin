@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 数据源配置表实体类
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 @TableName("simple4j_datasource")

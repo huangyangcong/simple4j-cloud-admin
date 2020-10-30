@@ -9,7 +9,7 @@ import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 /**
  * 角色菜单关联
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 @TableName("simple4j_role_menu")

@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 实体类
  *
- * @author hycX
+ * @author hyc
  * @since 2019-03-24
  */
 @Data

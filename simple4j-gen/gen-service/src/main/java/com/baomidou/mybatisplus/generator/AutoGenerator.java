@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 生成文件
  *
- * @author YangHu, tangguo, hubin
+ * @author hyc
  * @since 2016-08-30
  */
 @Data

@@ -3,7 +3,7 @@ package com.simple4j.system.common.constant;
 /**
  * 缓存名
  *
- * @author Chill
+ * @author hyc
  */
 public interface CacheNames {
 

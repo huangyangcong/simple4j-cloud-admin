@@ -13,7 +13,7 @@ import lombok.Data;
 /**
  * 用户信息
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 @ApiModel(description = "用户信息")

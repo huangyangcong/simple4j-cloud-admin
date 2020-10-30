@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface UserPostMapper extends ExtendMapper<UserPost> {
 

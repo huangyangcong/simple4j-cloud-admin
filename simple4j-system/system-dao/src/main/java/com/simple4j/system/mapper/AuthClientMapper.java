@@ -7,7 +7,7 @@ import com.simple4j.system.entity.AuthClient;
 /**
  * Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface AuthClientMapper extends ExtendMapper<AuthClient> {
 

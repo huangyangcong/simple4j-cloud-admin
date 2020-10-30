@@ -8,7 +8,7 @@ import com.simple4j.system.entity.User;
 /**
  * Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface UserMapper extends ExtendMapper<User> {
 

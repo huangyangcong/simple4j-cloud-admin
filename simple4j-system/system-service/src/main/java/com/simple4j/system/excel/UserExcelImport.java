@@ -30,7 +30,7 @@ import lombok.Data;
 /**
  * UserDTO
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 @ColumnWidth(25)

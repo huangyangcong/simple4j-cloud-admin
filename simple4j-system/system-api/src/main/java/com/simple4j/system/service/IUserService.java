@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 服务类
  *
- * @author Chill
+ * @author hyc
  */
 public interface IUserService {
 

@@ -10,7 +10,7 @@ import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 /**
  * 租户
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 @TableName("simple4j_tenant")

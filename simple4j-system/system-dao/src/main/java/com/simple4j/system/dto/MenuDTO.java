@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 数据传输对象实体类
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 public class MenuDTO implements Serializable {

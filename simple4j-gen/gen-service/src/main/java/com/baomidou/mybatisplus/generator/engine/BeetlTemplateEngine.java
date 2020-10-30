@@ -28,7 +28,7 @@ import org.beetl.core.resource.ClasspathResourceLoader;
 /**
  * Beetl 模板引擎实现文件输出
  *
- * @author yandixuan
+ * @author hyc
  * @since 2018-12-16
  */
 public class BeetlTemplateEngine extends AbstractTemplateEngine {

@@ -9,7 +9,7 @@ import com.simple4j.system.entity.Region;
 /**
  * 行政区划表 Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface RegionMapper extends ExtendMapper<Region> {
 

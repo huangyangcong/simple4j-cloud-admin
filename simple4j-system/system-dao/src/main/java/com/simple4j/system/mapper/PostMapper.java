@@ -9,7 +9,7 @@ import com.simple4j.system.entity.Post;
 /**
  * 岗位表 Mapper 接口
  *
- * @author Chill
+ * @author hyc
  */
 public interface PostMapper extends ExtendMapper<Post> {
 

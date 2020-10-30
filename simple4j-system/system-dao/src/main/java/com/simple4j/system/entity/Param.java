@@ -10,7 +10,7 @@ import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 /**
  * 参数实体类
  *
- * @author Chill
+ * @author hyc
  */
 @Data
 @TableName("simple4j_param")

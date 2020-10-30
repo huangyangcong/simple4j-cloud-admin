@@ -18,7 +18,7 @@ import javax.validation.Valid;
 /**
  * 应用管理控制器
  *
- * @author Chill
+ * @author hyc
  */
 @RestController
 @RequiredArgsConstructor

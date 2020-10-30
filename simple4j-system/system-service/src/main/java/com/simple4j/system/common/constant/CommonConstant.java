@@ -3,7 +3,7 @@ package com.simple4j.system.common.constant;
 /**
  * 通用常量
  *
- * @author Chill
+ * @author hyc
  */
 public interface CommonConstant {
 

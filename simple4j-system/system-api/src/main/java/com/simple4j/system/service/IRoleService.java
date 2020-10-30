@@ -10,7 +10,7 @@ import com.simple4j.system.response.RoleDetailResponse;
 /**
  * 服务类
  *
- * @author Chill
+ * @author hyc
  */
 public interface IRoleService{
 
