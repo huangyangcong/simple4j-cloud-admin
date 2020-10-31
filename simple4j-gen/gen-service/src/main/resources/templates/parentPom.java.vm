@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>$!{cfg.groupId}</groupId>
-	<artifactId>${cfg.projectName}-$!{package.ModuleName}</artifactId>
-	<packaging>pom</packaging>
-	<modules>
-		<module>$!{package.ModuleName}-api</module>
-		<module>$!{package.ModuleName}-service</module>
-		<module>$!{package.ModuleName}-dao</module>
-		<module>$!{package.ModuleName}-front</module>
-		<module>$!{package.ModuleName}-manager</module>
-		<module>$!{package.ModuleName}-web</module>
-		<module>$!{package.ModuleName}-start</module>
-	</modules>
-</project>
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+<groupId>$!{cfg.groupId}</groupId>
+<artifactId>${cfg.projectName}-$!{package.ModuleName}</artifactId>
+<packaging>pom</packaging>
+<modules>
+<module>$!{package.ModuleName}-api</module>
+        <module>$!{package.ModuleName}-service</module>
+        <module>$!{package.ModuleName}-dao</module>
+        <module>$!{package.ModuleName}-front</module>
+        <module>$!{package.ModuleName}-manager</module>
+        <module>$!{package.ModuleName}-web</module>
+        <module>$!{package.ModuleName}-start</module>
+        </modules>
+        </project>
 

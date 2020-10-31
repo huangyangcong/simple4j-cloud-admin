@@ -19,7 +19,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @MapperScan("$!{package.Mapper}")
 public class $!{cfg.upperModuleName}Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run($!{cfg.upperModuleName}Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run($!{cfg.upperModuleName}Application.class, args);
+    }
 }

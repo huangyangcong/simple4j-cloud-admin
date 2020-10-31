@@ -15,10 +15,10 @@
 	<modules>
 		<module>system-api</module>
 		<module>system-service</module>
-    	<module>system-dao</module>
-    	<module>system-front</module>
-        <module>system-manager</module>
-        <module>system-web</module>
-        <module>system-start</module>
-    </modules>
+		<module>system-dao</module>
+		<module>system-front</module>
+		<module>system-manager</module>
+		<module>system-web</module>
+		<module>system-start</module>
+	</modules>
 </project>

@@ -34,43 +34,45 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FindJobExecutionEventsRequest extends BasePageRequest {
-    
-    private String jobName;
-    
-    private String ip;
-    
-    private Boolean isSuccess;
-    
-    @JsonProperty("startTime")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date start;
-    
-    @JsonProperty("endTime")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date end;
-    
-    /**
-     * Create new FindJobExecutionEventsRequest with pageSize and pageNumber.
-     * @param pageNumber page number
-     * @param pageSize page size
-     */
-    public FindJobExecutionEventsRequest(final Integer pageSize, final Integer pageNumber) {
-        super(pageSize, pageNumber, null, null);
-    }
-    
-    /**
-     * Create new FindJobExecutionEventsRequest with properties.
-     * @param pageNumber page number
-     * @param pageSize page size
-     * @param sortBy the field name sort by
-     * @param orderType order type, asc or desc
-     * @param startTime start time
-     * @param endTime end time
-     */
-    public FindJobExecutionEventsRequest(final Integer pageSize, final Integer pageNumber, final String sortBy,
-                                         final String orderType, final Date startTime, final Date endTime) {
-        super(pageSize, pageNumber, sortBy, orderType);
-        this.start = startTime;
-        this.end = endTime;
-    }
+
+	private String jobName;
+
+	private String ip;
+
+	private Boolean isSuccess;
+
+	@JsonProperty("startTime")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date start;
+
+	@JsonProperty("endTime")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private Date end;
+
+	/**
+	 * Create new FindJobExecutionEventsRequest with pageSize and pageNumber.
+	 *
+	 * @param pageNumber page number
+	 * @param pageSize   page size
+	 */
+	public FindJobExecutionEventsRequest(final Integer pageSize, final Integer pageNumber) {
+		super(pageSize, pageNumber, null, null);
+	}
+
+	/**
+	 * Create new FindJobExecutionEventsRequest with properties.
+	 *
+	 * @param pageNumber page number
+	 * @param pageSize   page size
+	 * @param sortBy     the field name sort by
+	 * @param orderType  order type, asc or desc
+	 * @param startTime  start time
+	 * @param endTime    end time
+	 */
+	public FindJobExecutionEventsRequest(final Integer pageSize, final Integer pageNumber, final String sortBy,
+										 final String orderType, final Date startTime, final Date endTime) {
+		super(pageSize, pageNumber, sortBy, orderType);
+		this.start = startTime;
+		this.end = endTime;
+	}
 }

@@ -19,7 +19,7 @@ public class UserOauthAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-		/**
+	/**
 	 * 第三方系统用户ID
 	 */
 	@ApiModelProperty(name = "uuid", value = "第三方系统用户ID")
@@ -99,6 +99,6 @@ public class UserOauthAddRequest implements Serializable {
 	@ApiModelProperty(name = "source", value = "来源")
 	@JsonProperty("source")
 	private String source;
-	
+
 
 }

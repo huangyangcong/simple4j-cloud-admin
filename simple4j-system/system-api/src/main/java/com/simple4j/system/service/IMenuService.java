@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author hyc
  */
-public interface IMenuService{
+public interface IMenuService {
 
 	/**
 	 * 详情
@@ -78,6 +78,7 @@ public interface IMenuService{
 
 	/**
 	 * 删除菜单
+	 *
 	 * @param menuRemoveRequest
 	 */
 	boolean remove(MenuRemoveRequest menuRemoveRequest);

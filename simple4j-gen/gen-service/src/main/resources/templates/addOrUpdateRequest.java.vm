@@ -2,29 +2,31 @@
 package $!{requestPackage};
 
 
-#if($!{entityLombokModel})
-import lombok.Data;
-#end
-#if($!{swagger2})
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-#end
+    #if($!{entityLombokModel})
+    import lombok.Data;
+    #end
+    #if($!{swagger2})
+    import io.swagger.annotations.ApiModel;
+    import io.swagger.annotations.ApiModelProperty;
+    #end
 import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-#set($requestPackage=$package.Entity.replace("entity","request"))
+    #set($requestPackage=$package.Entity.replace("entity","request"))
 import $!{requestPackage}.$!{entity}UpdateRequest;
+
 /**
  * $!{table.comment}新增或修改请求实体类
  *
  * @author $!{author}
  * @since $!{date}
  */
-#if($!{entityLombokModel})
-@Data
-#end
-#if($!{swagger2})
-@ApiModel(value = "$!{table.comment}新增或修改请求实体类", description = "$!{table.comment}新增或修改请求实体类")
-#end
+    #if($!{entityLombokModel})
+    @Data
+    #end
+    #if($!{swagger2})
+    @ApiModel(value = "$!{table.comment}新增或修改请求实体类", description = "$!{table.comment}新增或修改请求实体类")
+    #end
 public class $!{entity}AddOrUpdateRequest extends $!{entity}UpdateRequest {
 
 }

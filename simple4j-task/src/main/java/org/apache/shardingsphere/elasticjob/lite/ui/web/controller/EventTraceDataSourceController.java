@@ -40,99 +40,99 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/api/data-source")
 public final class EventTraceDataSourceController {
-    
-    public static final String DATA_SOURCE_CONFIG_KEY = "data_source_config_key";
-    
-    private EventTraceDataSourceConfigurationService eventTraceDataSourceConfigurationService;
-    
-    @Autowired
-    public EventTraceDataSourceController(final EventTraceDataSourceConfigurationService eventTraceDataSourceConfigurationService) {
-        this.eventTraceDataSourceConfigurationService = eventTraceDataSourceConfigurationService;
-    }
-    
-    /**
-     * Judge whether event trace data source is activated.
-     *
-     * @param request HTTP request
-     * @return event trace data source is activated or not
-     */
-    @GetMapping("/activated")
-    public boolean activated(final HttpServletRequest request) {
-        return eventTraceDataSourceConfigurationService.loadActivated().isPresent();
-    }
-    
-    /**
-     * Load event trace data source configuration.
-     *
-     * @param request HTTP request
-     * @return event trace data source configurations
-     */
-    @GetMapping("/load")
-    public ApiResponse<Collection<EventTraceDataSourceConfiguration>> load(final HttpServletRequest request) {
-        eventTraceDataSourceConfigurationService.loadActivated().ifPresent(eventTraceDataSourceConfig -> setDataSourceNameToSession(eventTraceDataSourceConfig, request.getSession()));
-        return ApiResponse.ok(eventTraceDataSourceConfigurationService.loadAll().getEventTraceDataSourceConfiguration());
-    }
-    
-    /**
-     * Add event trace data source configuration.
-     *
-     * @param config event trace data source configuration
-     * @return success to added or not
-     */
-    @PostMapping("/add")
-    public ApiResponse<Boolean> add(@RequestBody final EventTraceDataSourceConfiguration config) {
-        return ApiResponse.ok(eventTraceDataSourceConfigurationService.add(config));
-    }
-    
-    /**
-     * Delete event trace data source configuration.
-     *
-     * @param config event trace data source configuration
-     */
-    @DeleteMapping
-    public ApiResponse delete(@RequestBody final EventTraceDataSourceConfiguration config) {
-        eventTraceDataSourceConfigurationService.delete(config.getName());
-        return ApiResponse.ok();
-    }
-    
-    /**
-     * Test event trace data source connection.
-     *
-     * @param config  event trace data source configuration
-     * @param request HTTP request
-     * @return success or not
-     */
-    @PostMapping(value = "/connectTest")
-    public ApiResponse<Boolean> connectTest(@RequestBody final EventTraceDataSourceConfiguration config, final HttpServletRequest request) {
-        return ApiResponse.ok(setDataSourceNameToSession(config, request.getSession()));
-    }
-    
-    /**
-     * Connect event trace data source.
-     *
-     * @param config  event trace data source
-     * @param request HTTP request
-     * @return success or not
-     */
-    @PostMapping(value = "/connect")
-    public ApiResponse<Boolean> connect(@RequestBody final EventTraceDataSourceConfiguration config, final HttpServletRequest request) {
-        boolean isConnected = setDataSourceNameToSession(eventTraceDataSourceConfigurationService.find(config.getName(), eventTraceDataSourceConfigurationService.loadAll()), request.getSession());
-        if (isConnected) {
-            eventTraceDataSourceConfigurationService.load(config.getName());
-        }
-        return ApiResponse.ok(isConnected);
-    }
-    
-    private boolean setDataSourceNameToSession(final EventTraceDataSourceConfiguration dataSourceConfig, final HttpSession session) {
-        session.setAttribute(DATA_SOURCE_CONFIG_KEY, dataSourceConfig);
-        try {
-            EventTraceDataSourceFactory.createEventTraceDataSource(dataSourceConfig.getDriver(), dataSourceConfig.getUrl(), dataSourceConfig.getUsername(), dataSourceConfig.getPassword());
-            SessionEventTraceDataSourceConfiguration.setDataSourceConfiguration((EventTraceDataSourceConfiguration) session.getAttribute(DATA_SOURCE_CONFIG_KEY));
-        // CHECKSTYLE:OFF
-        } catch (final Exception ex) {
-        // CHECKSTYLE:ON
-            return false;
-        }
-        return true;
-    }
+
+	public static final String DATA_SOURCE_CONFIG_KEY = "data_source_config_key" ;
+
+	private EventTraceDataSourceConfigurationService eventTraceDataSourceConfigurationService;
+
+	@Autowired
+	public EventTraceDataSourceController(final EventTraceDataSourceConfigurationService eventTraceDataSourceConfigurationService) {
+		this.eventTraceDataSourceConfigurationService = eventTraceDataSourceConfigurationService;
+	}
+
+	/**
+	 * Judge whether event trace data source is activated.
+	 *
+	 * @param request HTTP request
+	 * @return event trace data source is activated or not
+	 */
+	@GetMapping("/activated")
+	public boolean activated(final HttpServletRequest request) {
+		return eventTraceDataSourceConfigurationService.loadActivated().isPresent();
+	}
+
+	/**
+	 * Load event trace data source configuration.
+	 *
+	 * @param request HTTP request
+	 * @return event trace data source configurations
+	 */
+	@GetMapping("/load")
+	public ApiResponse<Collection<EventTraceDataSourceConfiguration>> load(final HttpServletRequest request) {
+		eventTraceDataSourceConfigurationService.loadActivated().ifPresent(eventTraceDataSourceConfig -> setDataSourceNameToSession(eventTraceDataSourceConfig, request.getSession()));
+		return ApiResponse.ok(eventTraceDataSourceConfigurationService.loadAll().getEventTraceDataSourceConfiguration());
+	}
+
+	/**
+	 * Add event trace data source configuration.
+	 *
+	 * @param config event trace data source configuration
+	 * @return success to added or not
+	 */
+	@PostMapping("/add")
+	public ApiResponse<Boolean> add(@RequestBody final EventTraceDataSourceConfiguration config) {
+		return ApiResponse.ok(eventTraceDataSourceConfigurationService.add(config));
+	}
+
+	/**
+	 * Delete event trace data source configuration.
+	 *
+	 * @param config event trace data source configuration
+	 */
+	@DeleteMapping
+	public ApiResponse delete(@RequestBody final EventTraceDataSourceConfiguration config) {
+		eventTraceDataSourceConfigurationService.delete(config.getName());
+		return ApiResponse.ok();
+	}
+
+	/**
+	 * Test event trace data source connection.
+	 *
+	 * @param config  event trace data source configuration
+	 * @param request HTTP request
+	 * @return success or not
+	 */
+	@PostMapping(value = "/connectTest")
+	public ApiResponse<Boolean> connectTest(@RequestBody final EventTraceDataSourceConfiguration config, final HttpServletRequest request) {
+		return ApiResponse.ok(setDataSourceNameToSession(config, request.getSession()));
+	}
+
+	/**
+	 * Connect event trace data source.
+	 *
+	 * @param config  event trace data source
+	 * @param request HTTP request
+	 * @return success or not
+	 */
+	@PostMapping(value = "/connect")
+	public ApiResponse<Boolean> connect(@RequestBody final EventTraceDataSourceConfiguration config, final HttpServletRequest request) {
+		boolean isConnected = setDataSourceNameToSession(eventTraceDataSourceConfigurationService.find(config.getName(), eventTraceDataSourceConfigurationService.loadAll()), request.getSession());
+		if (isConnected) {
+			eventTraceDataSourceConfigurationService.load(config.getName());
+		}
+		return ApiResponse.ok(isConnected);
+	}
+
+	private boolean setDataSourceNameToSession(final EventTraceDataSourceConfiguration dataSourceConfig, final HttpSession session) {
+		session.setAttribute(DATA_SOURCE_CONFIG_KEY, dataSourceConfig);
+		try {
+			EventTraceDataSourceFactory.createEventTraceDataSource(dataSourceConfig.getDriver(), dataSourceConfig.getUrl(), dataSourceConfig.getUsername(), dataSourceConfig.getPassword());
+			SessionEventTraceDataSourceConfiguration.setDataSourceConfiguration((EventTraceDataSourceConfiguration) session.getAttribute(DATA_SOURCE_CONFIG_KEY));
+			// CHECKSTYLE:OFF
+		} catch (final Exception ex) {
+			// CHECKSTYLE:ON
+			return false;
+		}
+		return true;
+	}
 }

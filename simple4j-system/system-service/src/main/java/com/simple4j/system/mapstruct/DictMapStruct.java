@@ -1,13 +1,13 @@
 package com.simple4j.system.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 import com.simple4j.system.entity.Dict;
 import com.simple4j.system.request.DictAddOrUpdateRequest;
 import com.simple4j.system.response.DictDetailResponse;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 字典表数据转换类

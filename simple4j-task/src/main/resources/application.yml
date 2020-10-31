@@ -1,40 +1,40 @@
 server:
-  port: 8088
+    port: 8088
 auth:
-  root_username: root
-  root_password: root
-  guest_username: guest
-  guest_password: guest
+    root_username: root
+    root_password: root
+    guest_username: guest
+    guest_password: guest
 zk:
-  # ElasticJob-Cloud's zookeeper address
-  servers: 127.0.0.1:2181
-  # ElasticJob-Cloud's zookeeper namespace
-  namespace: elasticjob-cloud
-  # ElasticJob-Cloud's zookeeper digest
-  digest:
+    # ElasticJob-Cloud's zookeeper address
+    servers: 127.0.0.1:2181
+    # ElasticJob-Cloud's zookeeper namespace
+    namespace: elasticjob-cloud
+    # ElasticJob-Cloud's zookeeper digest
+    digest:
 # Max size of job accumulated
 job:
-  state.queue_size: 10000
+    state.queue_size: 10000
 # Event trace rdb config
 event:
-  trace:
-    rdb_driver: com.mysql.jdbc.Driver
-    rdb_url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
-    rdb_username: root
-    rdb_password: uY;:rs623ic&
+    trace:
+        rdb_driver: com.mysql.jdbc.Driver
+        rdb_url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
+        rdb_username: root
+        rdb_password: uY;:rs623ic&
 spring:
-  jpa:
-    show-sql: true
-    generate-ddl: true
-    database-platform: org.hibernate.dialect.MySQL5Dialect
-  datasource:
-    default:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
-      username: root
-      password: uY;:rs623ic&
+    jpa:
+        show-sql: true
+        generate-ddl: true
+        database-platform: org.hibernate.dialect.MySQL5Dialect
+    datasource:
+        default:
+            driver-class-name: com.mysql.cj.jdbc.Driver
+            url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
+            username: root
+            password: uY;:rs623ic&
 logging:
-  file:
-    path:
-  level:
-    root: debug
+    file:
+        path:
+    level:
+        root: debug

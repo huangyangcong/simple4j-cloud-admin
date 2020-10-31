@@ -35,64 +35,64 @@ import java.util.Optional;
  */
 @Service
 public final class CloudJobConfigurationService {
-    
-    @Autowired
-    private CoordinatorRegistryCenter regCenter;
-    
-    /**
-     * Add cloud job configuration.
-     * 
-     * @param cloudJobConfig cloud job configuration
-     */
-    public void add(final CloudJobConfigurationPOJO cloudJobConfig) {
-        regCenter.persist(
-                CloudJobConfigurationNode.getRootNodePath(cloudJobConfig.getJobName()), YamlEngine.marshal(cloudJobConfig));
-    }
-    
-    /**
-     * Update cloud job configuration.
-     *
-     * @param cloudJobConfig cloud job configuration
-     */
-    public void update(final CloudJobConfigurationPOJO cloudJobConfig) {
-        regCenter.update(
-                CloudJobConfigurationNode.getRootNodePath(cloudJobConfig.getJobName()), YamlEngine.marshal(cloudJobConfig));
-    }
-    
-    /**
-     * Load all registered cloud job configurations.
-     *
-     * @return collection of the registered cloud job configuration
-     */
-    public Collection<CloudJobConfigurationPOJO> loadAll() {
-        if (!regCenter.isExisted(CloudJobConfigurationNode.ROOT)) {
-            return Collections.emptyList();
-        }
-        List<String> jobNames = regCenter.getChildrenKeys(CloudJobConfigurationNode.ROOT);
-        Collection<CloudJobConfigurationPOJO> result = new ArrayList<>(jobNames.size());
-        for (String each : jobNames) {
-            load(each).ifPresent(result::add);
-        }
-        return result;
-    }
-    
-    /**
-     * Load cloud job configuration by job name.
-     *
-     * @param jobName job name
-     * @return cloud job configuration
-     */
-    public Optional<CloudJobConfigurationPOJO> load(final String jobName) {
-        String configContent = regCenter.get(CloudJobConfigurationNode.getRootNodePath(jobName));
-        return Strings.isNullOrEmpty(configContent) ? Optional.empty() : Optional.of(YamlEngine.unmarshal(configContent, CloudJobConfigurationPOJO.class));
-    }
-    
-    /**
-     * Remove cloud job configuration.
-     *
-     * @param jobName job name
-     */
-    public void remove(final String jobName) {
-        regCenter.remove(CloudJobConfigurationNode.getRootNodePath(jobName));
-    }
+
+	@Autowired
+	private CoordinatorRegistryCenter regCenter;
+
+	/**
+	 * Add cloud job configuration.
+	 *
+	 * @param cloudJobConfig cloud job configuration
+	 */
+	public void add(final CloudJobConfigurationPOJO cloudJobConfig) {
+		regCenter.persist(
+			CloudJobConfigurationNode.getRootNodePath(cloudJobConfig.getJobName()), YamlEngine.marshal(cloudJobConfig));
+	}
+
+	/**
+	 * Update cloud job configuration.
+	 *
+	 * @param cloudJobConfig cloud job configuration
+	 */
+	public void update(final CloudJobConfigurationPOJO cloudJobConfig) {
+		regCenter.update(
+			CloudJobConfigurationNode.getRootNodePath(cloudJobConfig.getJobName()), YamlEngine.marshal(cloudJobConfig));
+	}
+
+	/**
+	 * Load all registered cloud job configurations.
+	 *
+	 * @return collection of the registered cloud job configuration
+	 */
+	public Collection<CloudJobConfigurationPOJO> loadAll() {
+		if (!regCenter.isExisted(CloudJobConfigurationNode.ROOT)) {
+			return Collections.emptyList();
+		}
+		List<String> jobNames = regCenter.getChildrenKeys(CloudJobConfigurationNode.ROOT);
+		Collection<CloudJobConfigurationPOJO> result = new ArrayList<>(jobNames.size());
+		for (String each : jobNames) {
+			load(each).ifPresent(result::add);
+		}
+		return result;
+	}
+
+	/**
+	 * Load cloud job configuration by job name.
+	 *
+	 * @param jobName job name
+	 * @return cloud job configuration
+	 */
+	public Optional<CloudJobConfigurationPOJO> load(final String jobName) {
+		String configContent = regCenter.get(CloudJobConfigurationNode.getRootNodePath(jobName));
+		return Strings.isNullOrEmpty(configContent) ? Optional.empty() : Optional.of(YamlEngine.unmarshal(configContent, CloudJobConfigurationPOJO.class));
+	}
+
+	/**
+	 * Remove cloud job configuration.
+	 *
+	 * @param jobName job name
+	 */
+	public void remove(final String jobName) {
+		regCenter.remove(CloudJobConfigurationNode.getRootNodePath(jobName));
+	}
 }

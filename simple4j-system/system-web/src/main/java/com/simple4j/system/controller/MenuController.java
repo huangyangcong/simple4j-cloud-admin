@@ -1,6 +1,11 @@
 package com.simple4j.system.controller;
 
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.MenuAddOrUpdateRequest;
+import com.simple4j.system.request.MenuDetailRequest;
+import com.simple4j.system.request.MenuListRequest;
+import com.simple4j.system.request.MenuRemoveRequest;
+import com.simple4j.system.request.MenuRoutersRequest;
+import com.simple4j.system.request.RoleMenuKeyRequest;
 import com.simple4j.system.response.MenuDetailResponse;
 import com.simple4j.system.response.MenuRoutersResponse;
 import com.simple4j.system.response.RoleMenuKeyResponse;
@@ -76,7 +81,7 @@ public class MenuController {
 	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
 	public ApiResponse<List<MenuDetailResponse>> routes(@Valid @RequestBody MenuRoutersRequest menuRoutersRequest) {
 		List<MenuDetailResponse> list =
-				menuService.routes(menuRoutersRequest);
+			menuService.routes(menuRoutersRequest);
 		return ApiResponse.ok(list);
 	}
 

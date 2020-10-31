@@ -1,9 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -14,9 +10,6 @@ import com.simple4j.api.util.TreeUtil;
 import com.simple4j.autoconfigure.jwt.security.SecurityScope;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.system.common.constant.CommonConstant;
-import com.simple4j.system.service.IDeptService;
-import com.simple4j.system.service.IUserDeptService;
-import lombok.RequiredArgsConstructor;
 import com.simple4j.system.entity.Dept;
 import com.simple4j.system.mapper.DeptMapper;
 import com.simple4j.system.mapstruct.DeptMapStruct;
@@ -27,9 +20,15 @@ import com.simple4j.system.request.DeptPageRequest;
 import com.simple4j.system.request.DeptRemoveRequest;
 import com.simple4j.system.request.DeptUpdateRequest;
 import com.simple4j.system.response.DeptDetailResponse;
-
+import com.simple4j.system.service.IDeptService;
+import com.simple4j.system.service.IUserDeptService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -101,10 +100,10 @@ public class DeptServiceImpl implements IDeptService {
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		IPage<Dept> page = deptMapper.page(
 			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(deptPageRequest.getPageNo(), deptPageRequest.getPageSize()),
-				!CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId())  ? queryWrapper
+			!CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? queryWrapper
 				.eq(Dept::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		Page<Dept> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return deptMapStruct.toVo(pages);
 	}
 

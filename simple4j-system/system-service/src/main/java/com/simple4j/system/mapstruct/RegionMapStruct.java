@@ -1,13 +1,13 @@
 package com.simple4j.system.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 import com.simple4j.system.entity.Region;
 import com.simple4j.system.request.RegionAddRequest;
 import com.simple4j.system.response.RegionDetailResponse;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RegionMapStruct {

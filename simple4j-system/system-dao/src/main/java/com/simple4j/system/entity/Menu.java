@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @Data
 @TableName("simple4j_menu")
-public class Menu  extends BaseEntity {
+public class Menu extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

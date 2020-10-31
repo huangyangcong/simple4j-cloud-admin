@@ -1,25 +1,23 @@
 package com.simple4j.system.mapstruct;
 
 import com.simple4j.api.base.Page;
+import com.simple4j.system.entity.User;
+import com.simple4j.system.excel.UserExcelImport;
+import com.simple4j.system.request.UserAddRequest;
+import com.simple4j.system.response.UserDetailResponse;
+import com.simple4j.system.response.UserInfo;
+import com.simple4j.system.response.UserLoginResponse;
 import com.simple4j.system.service.IDictService;
 import com.simple4j.system.service.IUserDeptService;
 import com.simple4j.system.service.IUserPostService;
 import com.simple4j.system.service.IUserRoleService;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
-import com.simple4j.system.entity.User;
-import com.simple4j.system.response.UserInfo;
-import com.simple4j.system.excel.UserExcelImport;
-import com.simple4j.system.request.UserAddRequest;
-import com.simple4j.system.response.UserDetailResponse;
-import com.simple4j.system.response.UserLoginResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class UserMapStruct {

@@ -36,28 +36,28 @@ import java.util.stream.Collectors;
  */
 @Service
 public final class RunningService {
-    
-    @Autowired
-    private CoordinatorRegistryCenter regCenter;
-    
-    @Autowired
-    private CloudJobConfigurationService configurationService;
-    
-    /**
-     * Get all running tasks.
-     *
-     * @return collection of all the running tasks
-     */
-    public Map<String, Set<TaskContext>> getAllRunningTasks() {
-        Map<String, Set<TaskContext>> result = new HashMap<>();
-        List<String> jobKeys = regCenter.getChildrenKeys(RunningNode.ROOT);
-        for (String each : jobKeys) {
-            if (!configurationService.load(each).isPresent()) {
-                continue;
-            }
-            result.put(each, Sets.newCopyOnWriteArraySet(regCenter.getChildrenKeys(RunningNode.getRunningJobNodePath(each)).stream().map(
-                    input -> TaskContext.from(regCenter.get(RunningNode.getRunningTaskNodePath(MetaInfo.from(input).toString())))).collect(Collectors.toList())));
-        }
-        return result;
-    }
+
+	@Autowired
+	private CoordinatorRegistryCenter regCenter;
+
+	@Autowired
+	private CloudJobConfigurationService configurationService;
+
+	/**
+	 * Get all running tasks.
+	 *
+	 * @return collection of all the running tasks
+	 */
+	public Map<String, Set<TaskContext>> getAllRunningTasks() {
+		Map<String, Set<TaskContext>> result = new HashMap<>();
+		List<String> jobKeys = regCenter.getChildrenKeys(RunningNode.ROOT);
+		for (String each : jobKeys) {
+			if (!configurationService.load(each).isPresent()) {
+				continue;
+			}
+			result.put(each, Sets.newCopyOnWriteArraySet(regCenter.getChildrenKeys(RunningNode.getRunningJobNodePath(each)).stream().map(
+				input -> TaskContext.from(regCenter.get(RunningNode.getRunningTaskNodePath(MetaInfo.from(input).toString())))).collect(Collectors.toList())));
+		}
+		return result;
+	}
 }

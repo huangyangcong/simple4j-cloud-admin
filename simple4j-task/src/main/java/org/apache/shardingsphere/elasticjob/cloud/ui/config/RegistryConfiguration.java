@@ -27,18 +27,18 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "zk")
 @Setter
 public final class RegistryConfiguration {
-    
-    private String servers;
-    
-    private String namespace;
-    
-    private String digest;
-    
-    public ZookeeperConfiguration getZookeeperConfiguration() {
-        ZookeeperConfiguration result = new ZookeeperConfiguration(servers, namespace);
-        if (!Strings.isNullOrEmpty(digest)) {
-            result.setDigest(digest);
-        }
-        return result;
-    }
+
+	private String servers;
+
+	private String namespace;
+
+	private String digest;
+
+	public ZookeeperConfiguration getZookeeperConfiguration() {
+		ZookeeperConfiguration result = new ZookeeperConfiguration(servers, namespace);
+		if (!Strings.isNullOrEmpty(digest)) {
+			result.setDigest(digest);
+		}
+		return result;
+	}
 }

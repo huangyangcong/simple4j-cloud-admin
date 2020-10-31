@@ -65,7 +65,7 @@ public final class JobOperationController {
 	@GetMapping("/getAllJobsBriefInfo")
 	public ApiResponse<Collection<JobBriefInfo>> getAllJobsBriefInfo() {
 		Collection<JobBriefInfo> data = Objects.nonNull(SessionRegistryCenterConfiguration.getRegistryCenterConfiguration()) ?
-				jobAPIService.getJobStatisticsAPI().getAllJobsBriefInfo() : Collections.emptyList();
+			jobAPIService.getJobStatisticsAPI().getAllJobsBriefInfo() : Collections.emptyList();
 		return ApiResponse.ok(data);
 	}
 

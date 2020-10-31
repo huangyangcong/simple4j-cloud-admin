@@ -22,7 +22,15 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.ConstVal;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.IDbQuery;
+import com.baomidou.mybatisplus.generator.config.IKeyWordsHandler;
+import com.baomidou.mybatisplus.generator.config.INameConvert;
+import com.baomidou.mybatisplus.generator.config.PackageConfig;
+import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
@@ -34,7 +42,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -46,6 +60,10 @@ import java.util.stream.Collectors;
  */
 public class ConfigBuilder {
 
+	/**
+	 * 过滤正则
+	 */
+	private static final Pattern REGX = Pattern.compile("[~!/@#$%^&*()-_=+\\\\|[{}];:'\",<.>?]+");
 	/**
 	 * 模板路径配置信息
 	 */
@@ -102,10 +120,6 @@ public class ConfigBuilder {
 	 */
 	@Deprecated
 	private boolean commentSupported;
-	/**
-	 * 过滤正则
-	 */
-	private static final Pattern REGX = Pattern.compile("[~!/@#$%^&*()-_=+\\\\|[{}];:'\",<.>?]+");
 
 	/**
 	 * 在构造器中处理配置
@@ -117,7 +131,7 @@ public class ConfigBuilder {
 	 * @param globalConfig     全局配置
 	 */
 	public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig,
-			TemplateConfig template, GlobalConfig globalConfig) {
+						 TemplateConfig template, GlobalConfig globalConfig) {
 		// 全局配置
 		this.globalConfig = Optional.ofNullable(globalConfig).orElseGet(GlobalConfig::new);
 		// 模板配置
@@ -140,6 +154,10 @@ public class ConfigBuilder {
 
 	// ************************ 曝露方法 BEGIN*****************************
 
+	private static String getValueOrDefault(String value, String defaultValue) {
+		return StringUtils.isBlank(value) ? defaultValue : value;
+	}
+
 	/**
 	 * 所有包配置信息
 	 *
@@ -148,7 +166,6 @@ public class ConfigBuilder {
 	public Map<String, String> getPackageInfo() {
 		return packageInfo;
 	}
-
 
 	/**
 	 * 所有路径配置
@@ -159,16 +176,13 @@ public class ConfigBuilder {
 		return pathInfo;
 	}
 
-
 	public String getSuperEntityClass() {
 		return superEntityClass;
 	}
 
-
 	public String getSuperMapperClass() {
 		return superMapperClass;
 	}
-
 
 	/**
 	 * 获取超类定义
@@ -179,16 +193,13 @@ public class ConfigBuilder {
 		return superServiceClass;
 	}
 
-
 	public String getSuperServiceImplClass() {
 		return superServiceImplClass;
 	}
 
-
 	public String getSuperControllerClass() {
 		return superControllerClass;
 	}
-
 
 	/**
 	 * 表信息
@@ -204,6 +215,7 @@ public class ConfigBuilder {
 		return this;
 	}
 
+	// ****************************** 曝露方法 END**********************************
 
 	/**
 	 * 模板路径配置信息
@@ -213,8 +225,6 @@ public class ConfigBuilder {
 	public TemplateConfig getTemplate() {
 		return this.template;
 	}
-
-	// ****************************** 曝露方法 END**********************************
 
 	/**
 	 * 处理包配置
@@ -267,7 +277,6 @@ public class ConfigBuilder {
 		dbQuery = config.getDbQuery();
 	}
 
-
 	/**
 	 * 处理数据库表 加载数据库表、列、注释相关数据集
 	 *
@@ -277,7 +286,6 @@ public class ConfigBuilder {
 		processTypes(config);
 		tableInfoList = getTablesInfo(config);
 	}
-
 
 	/**
 	 * 处理superClassName,IdClassType,IdStrategy配置
@@ -290,10 +298,6 @@ public class ConfigBuilder {
 		this.superMapperClass = getValueOrDefault(config.getSuperMapperClass(), ConstVal.SUPER_MAPPER_CLASS);
 		superEntityClass = config.getSuperEntityClass();
 		superControllerClass = config.getSuperControllerClass();
-	}
-
-	private static String getValueOrDefault(String value, String defaultValue) {
-		return StringUtils.isBlank(value) ? defaultValue : value;
 	}
 
 	/**
@@ -393,7 +397,7 @@ public class ConfigBuilder {
 			tableInfo.getImportPackages().add(com.baomidou.mybatisplus.annotation.TableId.class.getCanonicalName());
 		}
 		if (StringUtils.isNotBlank(strategyConfig.getVersionFieldName())
-				&& CollectionUtils.isNotEmpty(tableInfo.getFields())) {
+			&& CollectionUtils.isNotEmpty(tableInfo.getFields())) {
 			tableInfo.getFields().forEach(f -> {
 				if (strategyConfig.getVersionFieldName().equals(f.getName())) {
 					tableInfo.getImportPackages().add(com.baomidou.mybatisplus.annotation.Version.class.getCanonicalName());
@@ -432,7 +436,7 @@ public class ConfigBuilder {
 				String schema = dataSourceConfig.getSchemaName();
 				if (schema == null) {
 					//pg 默认 schema=public
-					schema = "public";
+					schema = "public" ;
 					dataSourceConfig.setSchemaName(schema);
 				}
 				tablesSql = String.format(tablesSql, schema);
@@ -440,7 +444,7 @@ public class ConfigBuilder {
 				String schema = dataSourceConfig.getSchemaName();
 				if (schema == null) {
 					//kingbase 默认 schema=PUBLIC
-					schema = "PUBLIC";
+					schema = "PUBLIC" ;
 					dataSourceConfig.setSchemaName(schema);
 				}
 				tablesSql = String.format(tablesSql, schema);
@@ -448,7 +452,7 @@ public class ConfigBuilder {
 				String schema = dataSourceConfig.getSchemaName();
 				if (schema == null) {
 					//db2 默认 schema=current schema
-					schema = "current schema";
+					schema = "current schema" ;
 					dataSourceConfig.setSchemaName(schema);
 				}
 				tablesSql = String.format(tablesSql, schema);
@@ -472,15 +476,15 @@ public class ConfigBuilder {
 				}
 				if (isInclude) {
 					sql.append(" AND ").append(dbQuery.tableName()).append(" IN (")
-							.append(Arrays.stream(config.getInclude()).map(tb -> "'" + tb + "'").collect(Collectors.joining(","))).append(")");
+						.append(Arrays.stream(config.getInclude()).map(tb -> "'" + tb + "'").collect(Collectors.joining(","))).append(")");
 				} else if (isExclude) {
 					sql.append(" AND ").append(dbQuery.tableName()).append(" NOT IN (")
-							.append(Arrays.stream(config.getExclude()).map(tb -> "'" + tb + "'").collect(Collectors.joining(","))).append(")");
+						.append(Arrays.stream(config.getExclude()).map(tb -> "'" + tb + "'").collect(Collectors.joining(","))).append(")");
 				}
 			}
 			TableInfo tableInfo;
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-					ResultSet results = preparedStatement.executeQuery()) {
+				 ResultSet results = preparedStatement.executeQuery()) {
 				while (results.next()) {
 					final String tableName = results.getString(dbQuery.tableName());
 					if (StringUtils.isBlank(tableName)) {
@@ -561,7 +565,7 @@ public class ConfigBuilder {
 	 */
 	private boolean tableNameMatches(String setTableName, String dbTableName) {
 		return setTableName.equalsIgnoreCase(dbTableName)
-				|| StringUtils.matches(setTableName, dbTableName);
+			|| StringUtils.matches(setTableName, dbTableName);
 	}
 
 	/**
@@ -597,7 +601,7 @@ public class ConfigBuilder {
 				tableFieldsSql = String.format(tableFieldsSql, tableName);
 			} else if (DbType.H2 == dbType) {
 				try (PreparedStatement pkQueryStmt = connection.prepareStatement(String.format(H2Query.PK_QUERY_SQL, tableName));
-						ResultSet pkResults = pkQueryStmt.executeQuery()) {
+					 ResultSet pkResults = pkQueryStmt.executeQuery()) {
 					while (pkResults.next()) {
 						String primaryKey = pkResults.getString(dbQuery.fieldKey());
 						if (Boolean.parseBoolean(primaryKey)) {
@@ -610,8 +614,8 @@ public class ConfigBuilder {
 				tableFieldsSql = String.format(tableFieldsSql, tableName);
 			}
 			try (
-					PreparedStatement preparedStatement = connection.prepareStatement(tableFieldsSql);
-					ResultSet results = preparedStatement.executeQuery()) {
+				PreparedStatement preparedStatement = connection.prepareStatement(tableFieldsSql);
+				ResultSet results = preparedStatement.executeQuery()) {
 				while (results.next()) {
 					TableField field = new TableField();
 					String columnName = results.getString(dbQuery.fieldName());
@@ -675,7 +679,7 @@ public class ConfigBuilder {
 					if (null != tableFillList) {
 						// 忽略大写字段问题
 						tableFillList.stream().filter(tf -> tf.getFieldName().equalsIgnoreCase(field.getName()))
-								.findFirst().ifPresent(tf -> field.setFill(tf.getFieldFill().name()));
+							.findFirst().ifPresent(tf -> field.setFill(tf.getFieldFill().name()));
 					}
 					if (strategyConfig.includeSuperEntityColumns(field.getName())) {
 						// 跳过公共字段

@@ -1,12 +1,9 @@
 package com.simple4j.gen.request;
 
 
-import lombok.Data;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.simple4j.gen.request.CodeUpdateRequest;
+import lombok.Data;
+
 /**
  * 代码生成表新增请求实体类
  *

@@ -2,7 +2,6 @@ package com.simple4j.gen;
 
 
 import org.mybatis.spring.annotation.MapperScan;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import springfox.documentation.oas.annotations.EnableOpenApi;

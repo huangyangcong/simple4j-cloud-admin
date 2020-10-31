@@ -27,6 +27,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 public final class JobStateConfiguration {
-    
-    private int queueSize = 10000;
+
+	private int queueSize = 10000;
 }

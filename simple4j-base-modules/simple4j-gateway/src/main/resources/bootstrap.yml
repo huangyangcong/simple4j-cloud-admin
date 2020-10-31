@@ -1,67 +1,67 @@
 server:
-  port: 9999
+    port: 9999
 spring:
-  application:
-    name: gateway-service
-  cloud:
-    nacos:
-      server-addr: 122.51.133.124:30000
-      config:
-        file-extension: yml
-    loadbalancer:
-      ribbon:
-        enabled: false
-    gateway:
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            # 允许携带认证信息
-            # 允许跨域的源(网站域名/ip)，设置*为全部
-            # 允许跨域请求里的head字段，设置*为全部
-            # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
-            # 跨域允许的有效期
-            allow-credentials: true
-            allowed-origins: "*"
-            #              - "http://localhost:9999"
-            allowed-headers: "*"
-            allowed-methods: "*"
-            # - OPTIONS
-            # - GET
-            # - POST
-            # - DELETE
-            max-age: 3600
-            # 允许response的head信息
-            # 默认仅允许如下6个：
-            #     Cache-Control
-            #     Content-Language
-            #     Content-Type
-            #     Expires
-            #     Last-Modified
-            #     Pragma
-            #exposed-headers:
-      routes:
-        - id: system-service
-          uri: lb://system-service
-          predicates:
-            - Path=/system/**
-          filters:
-            - StripPrefix=1
-        - id: task-service
-          uri: lb://task-service
-          predicates:
-            - Path=/task/**
-          filters:
-            - StripPrefix=1
-        - id: flow-service
-          uri: lb://flow-service
-          predicates:
-            - Path=/flow/**
-          filters:
-            - StripPrefix=1
-            - AddRequestHeader=Forwarded,Authorization
-        - id: flow-service-static
-          uri: lb://flow-service
-          predicates:
-            - Path=/libs/**,/scripts/**,/i18n/**,/views/**,/styles/**,/fonts/**
-          filters:
-            - AddRequestHeader=Forwarded,Authorization
+    application:
+        name: gateway-service
+    cloud:
+        nacos:
+            server-addr: 122.51.133.124:30000
+            config:
+                file-extension: yml
+        loadbalancer:
+            ribbon:
+                enabled: false
+        gateway:
+            globalcors:
+                cors-configurations:
+                    '[/**]':
+                        # 允许携带认证信息
+                        # 允许跨域的源(网站域名/ip)，设置*为全部
+                        # 允许跨域请求里的head字段，设置*为全部
+                        # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
+                        # 跨域允许的有效期
+                        allow-credentials: true
+                        allowed-origins: "*"
+                        #              - "http://localhost:9999"
+                        allowed-headers: "*"
+                        allowed-methods: "*"
+                        # - OPTIONS
+                        # - GET
+                        # - POST
+                        # - DELETE
+                        max-age: 3600
+                        # 允许response的head信息
+                        # 默认仅允许如下6个：
+                        #     Cache-Control
+                        #     Content-Language
+                        #     Content-Type
+                        #     Expires
+                        #     Last-Modified
+                        #     Pragma
+                        #exposed-headers:
+            routes:
+                -   id: system-service
+                    uri: lb://system-service
+                    predicates:
+                        - Path=/system/**
+                    filters:
+                        - StripPrefix=1
+                -   id: task-service
+                    uri: lb://task-service
+                    predicates:
+                        - Path=/task/**
+                    filters:
+                        - StripPrefix=1
+                -   id: flow-service
+                    uri: lb://flow-service
+                    predicates:
+                        - Path=/flow/**
+                    filters:
+                        - StripPrefix=1
+                        - AddRequestHeader=Forwarded,Authorization
+                -   id: flow-service-static
+                    uri: lb://flow-service
+                    predicates:
+                        - Path=/libs/**,/scripts/**,/i18n/**,/views/**,/styles/**,/fonts/**
+                    filters:
+                        - AddRequestHeader=Forwarded,Authorization

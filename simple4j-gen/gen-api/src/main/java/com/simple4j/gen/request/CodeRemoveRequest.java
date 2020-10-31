@@ -1,14 +1,13 @@
 package com.simple4j.gen.request;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
-import java.util.List;
+import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 代码生成表删除请求实体类
@@ -29,4 +28,4 @@ public class CodeRemoveRequest implements Serializable {
 	@JsonProperty("ids")
 	@NotEmpty(message = "代码生成表编号标号不能为空")
 	private List<String> ids;
-	}
+}

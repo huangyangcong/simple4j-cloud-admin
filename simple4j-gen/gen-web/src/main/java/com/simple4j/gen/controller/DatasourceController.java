@@ -1,28 +1,26 @@
 package com.simple4j.gen.controller;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
+import com.simple4j.gen.request.DatasourceAddOrUpdateRequest;
+import com.simple4j.gen.request.DatasourceAddRequest;
+import com.simple4j.gen.request.DatasourceDetailRequest;
+import com.simple4j.gen.request.DatasourceListRequest;
+import com.simple4j.gen.request.DatasourcePageRequest;
+import com.simple4j.gen.request.DatasourceRemoveRequest;
+import com.simple4j.gen.request.DatasourceUpdateRequest;
+import com.simple4j.gen.response.DatasourceDetailResponse;
+import com.simple4j.gen.service.IDatasourceService;
+import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-
-import org.springframework.web.bind.annotation.*;
-
-import com.simple4j.gen.request.DatasourceAddRequest;
-import com.simple4j.gen.request.DatasourceUpdateRequest;
-import com.simple4j.gen.request.DatasourceAddOrUpdateRequest;
-import com.simple4j.gen.request.DatasourceDetailRequest;
-import com.simple4j.gen.request.DatasourceListRequest;
-import com.simple4j.gen.request.DatasourceRemoveRequest;
-import com.simple4j.gen.request.DatasourcePageRequest;
-import com.simple4j.gen.response.DatasourceDetailResponse;
-import com.simple4j.web.bean.ApiResponse;
-
-
-import com.simple4j.gen.service.IDatasourceService;
+import java.util.List;
 
 /**
  * 数据源配置表 控制器
@@ -36,15 +34,15 @@ import com.simple4j.gen.service.IDatasourceService;
 @Api(value = "数据源配置表", tags = "数据源配置表接口")
 public class DatasourceController {
 
-private IDatasourceService datasourceService;
+	private IDatasourceService datasourceService;
 
 	/**
 	 * 详情
 	 */
 	@PostMapping("/detail")
 	@ApiOperation(value = "详情")
-	public ApiResponse<DatasourceDetailResponse> detail(@Valid @RequestBody DatasourceDetailRequest datasourceDetailRequest){
-		DatasourceDetailResponse detail= datasourceService.detail(datasourceDetailRequest);
+	public ApiResponse<DatasourceDetailResponse> detail(@Valid @RequestBody DatasourceDetailRequest datasourceDetailRequest) {
+		DatasourceDetailResponse detail = datasourceService.detail(datasourceDetailRequest);
 		return ApiResponse.ok(detail);
 	}
 
@@ -53,8 +51,8 @@ private IDatasourceService datasourceService;
 	 */
 	@PostMapping("/list")
 	@ApiOperation(value = "列表")
-	public ApiResponse<List<DatasourceDetailResponse>>list(@Valid @RequestBody DatasourceListRequest datasourceListRequest){
-		List<DatasourceDetailResponse> pages= datasourceService.list(datasourceListRequest);
+	public ApiResponse<List<DatasourceDetailResponse>> list(@Valid @RequestBody DatasourceListRequest datasourceListRequest) {
+		List<DatasourceDetailResponse> pages = datasourceService.list(datasourceListRequest);
 		return ApiResponse.ok(pages);
 	}
 
@@ -63,8 +61,8 @@ private IDatasourceService datasourceService;
 	 */
 	@PostMapping("/page")
 	@ApiOperation(value = "分页")
-	public ApiResponse<Page<DatasourceDetailResponse>>page(@Valid @RequestBody DatasourcePageRequest datasourcePageRequest){
-		Page<DatasourceDetailResponse> pages= datasourceService.page( datasourcePageRequest);
+	public ApiResponse<Page<DatasourceDetailResponse>> page(@Valid @RequestBody DatasourcePageRequest datasourcePageRequest) {
+		Page<DatasourceDetailResponse> pages = datasourceService.page(datasourcePageRequest);
 		return ApiResponse.ok(pages);
 	}
 
@@ -73,7 +71,7 @@ private IDatasourceService datasourceService;
 	 */
 	@PostMapping("/add")
 	@ApiOperation(value = "新增")
-	public ApiResponse add(@Valid @RequestBody DatasourceAddRequest datasourceAddRequest){
+	public ApiResponse add(@Valid @RequestBody DatasourceAddRequest datasourceAddRequest) {
 		datasourceService.add(datasourceAddRequest);
 		return ApiResponse.ok();
 	}
@@ -83,7 +81,7 @@ private IDatasourceService datasourceService;
 	 */
 	@PostMapping("/update")
 	@ApiOperation(value = "修改")
-	public ApiResponse update(@Valid @RequestBody DatasourceUpdateRequest datasourceUpdateRequest){
+	public ApiResponse update(@Valid @RequestBody DatasourceUpdateRequest datasourceUpdateRequest) {
 		datasourceService.update(datasourceUpdateRequest);
 		return ApiResponse.ok();
 	}
@@ -93,7 +91,7 @@ private IDatasourceService datasourceService;
 	 */
 	@PostMapping("/submit")
 	@ApiOperation(value = "新增或修改")
-	public ApiResponse addOrUpdate(@Valid @RequestBody DatasourceAddOrUpdateRequest datasourceAddOrUpdateRequest){
+	public ApiResponse addOrUpdate(@Valid @RequestBody DatasourceAddOrUpdateRequest datasourceAddOrUpdateRequest) {
 		datasourceService.addOrUpdate(datasourceAddOrUpdateRequest);
 		return ApiResponse.ok();
 	}
@@ -104,7 +102,7 @@ private IDatasourceService datasourceService;
 	 */
 	@PostMapping("/remove")
 	@ApiOperation(value = "删除")
-	public ApiResponse remove(@Valid @RequestBody DatasourceRemoveRequest datasourceRemoveRequest){
+	public ApiResponse remove(@Valid @RequestBody DatasourceRemoveRequest datasourceRemoveRequest) {
 		datasourceService.remove(datasourceRemoveRequest);
 		return ApiResponse.ok();
 	}

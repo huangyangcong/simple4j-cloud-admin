@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "修改请求实体类", description = "修改请求实体类")
-public class NavbarMenuUpdateRequest extends NavbarMenuAddRequest{
+public class NavbarMenuUpdateRequest extends NavbarMenuAddRequest {
 
 	private static final long serialVersionUID = 1L;
 

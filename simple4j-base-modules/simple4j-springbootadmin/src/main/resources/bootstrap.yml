@@ -1,26 +1,26 @@
 spring:
-  application:
-    name: adminserver
-  profiles:
-    active: '@app.active@'
+    application:
+        name: adminserver
+    profiles:
+        active: '@app.active@'
 
 management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+    endpoint:
+        health:
+            show-details: always
+    info:
+        git:
+            mode: full
     health:
-      show-details: always
-  info:
-    git:
-      mode: full
-  health:
-    db:
-      enabled: false
-    redis:
-      enabled: false
-    mail:
-      enabled: false
-    ldap:
-      enabled: false
+        db:
+            enabled: false
+        redis:
+            enabled: false
+        mail:
+            enabled: false
+        ldap:
+            enabled: false

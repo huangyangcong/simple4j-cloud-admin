@@ -1,18 +1,22 @@
 package com.simple4j.system.service;
 
+import com.simple4j.api.base.Page;
+import com.simple4j.system.request.RoleAddOrUpdateRequest;
+import com.simple4j.system.request.RoleDetailRequest;
+import com.simple4j.system.request.RoleListRequest;
+import com.simple4j.system.request.RolePageRequest;
+import com.simple4j.system.request.RoleRemoveRequest;
+import com.simple4j.system.response.RoleDetailResponse;
+
 import java.util.List;
 import java.util.Set;
-
-import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
-import com.simple4j.system.response.RoleDetailResponse;
 
 /**
  * 服务类
  *
  * @author hyc
  */
-public interface IRoleService{
+public interface IRoleService {
 
 	/**
 	 * 自定义分页

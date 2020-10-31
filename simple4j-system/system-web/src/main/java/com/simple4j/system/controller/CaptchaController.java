@@ -1,18 +1,16 @@
 package com.simple4j.system.controller;
 
-import javax.annotation.security.PermitAll;
-
 import com.simple4j.system.response.CaptchaResponse;
 import com.simple4j.system.service.ICaptchaService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.security.PermitAll;
 
 @RestController
 @RequestMapping("/captcha")

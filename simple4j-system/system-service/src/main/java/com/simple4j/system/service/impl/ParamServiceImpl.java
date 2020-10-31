@@ -1,14 +1,10 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
-import com.simple4j.system.service.IParamService;
-import lombok.RequiredArgsConstructor;
 import com.simple4j.system.entity.Param;
 import com.simple4j.system.mapper.ParamMapper;
 import com.simple4j.system.mapstruct.ParamMapStruct;
@@ -20,8 +16,11 @@ import com.simple4j.system.request.ParamPageRequest;
 import com.simple4j.system.request.ParamRemoveRequest;
 import com.simple4j.system.request.ParamUpdateRequest;
 import com.simple4j.system.response.ParamDetailResponse;
-
+import com.simple4j.system.service.IParamService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 服务实现类
@@ -61,7 +60,7 @@ public class ParamServiceImpl implements IParamService {
 		IPage<Param> page = paramMapper.page(
 			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(paramPageRequest.getPageNo(), paramPageRequest.getPageSize()), queryWrapper);
 		Page<Param> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return paramMapStruct.toVo(pages);
 	}
 

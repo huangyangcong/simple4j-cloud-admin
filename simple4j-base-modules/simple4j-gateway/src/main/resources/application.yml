@@ -1,10 +1,10 @@
 spring:
-  main:
-    allow-bean-definition-overriding: true
+    main:
+        allow-bean-definition-overriding: true
 management:
-  health:
-    defaults:
-      enabled: false
+    health:
+        defaults:
+            enabled: false
 #eureka:
 #  client:
 #    service-url:
@@ -14,7 +14,7 @@ management:
 #    hostname: ${spring.cloud.client.ip-address}
 #    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 logging:
-  level:
-    root: info
-    com.alibaba.nacos.client.naming: error
+    level:
+        root: info
+        com.alibaba.nacos.client.naming: error
 debug: true

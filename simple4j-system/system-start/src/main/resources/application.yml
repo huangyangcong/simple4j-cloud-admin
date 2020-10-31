@@ -1,180 +1,180 @@
 logging:
-  level:
-    root: info
+    level:
+        root: info
 # Tomcat
 server:
-  tomcat:
-    uri-encoding: UTF-8
-    threads:
-      max: 2000
-      min-spare: 30
-  port: 8071
-  servlet:
-    context-path: /
+    tomcat:
+        uri-encoding: UTF-8
+        threads:
+            max: 2000
+            min-spare: 30
+    port: 8071
+    servlet:
+        context-path: /
 spring:
-  devtools:
-    restart:
-      enabled: true  #设置开启热部署
-  #出现错误时, 直接抛出异常(便于异常统一处理，否则捕获不到404)
-  mvc:
-    throw-exception-if-no-handler-found: true
-  #不要为我们工程中的资源文件建立映射
-  resources:
-    add-mappings: false
-  application:
-    version: 1.0
-    description: 通用框架
-  #redis
-  #配置数据源
-  datasource:
-    druid:
-      db-type: com.alibaba.druid.pool.DruidDataSource
-      driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://122.51.133.124:30002/blade?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
-      username: root
-      password: uY;:rs623ic&
-      # 初始连接数
-      initial-size: 5
-      # 最小连接数
-      min-idle: 10
-      # 最大连接数
-      max-active: 20
-      # 获取连接超时时间
-      max-wait: 5000
-      # 连接有效性检测时间
-      time-between-eviction-runs-millis: 60000
-      # 连接在池中最小生存的时间
-      min-evictable-idle-time-millis: 300000
-      # 连接在池中最大生存的时间
-      max-evictable-idle-time-millis: 900000
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      # 检测连接是否有效
-      validation-query: select 1
-      # 配置监控统计
-      webStatFilter:
-        enabled: true
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        reset-enable: false
-      filter:
-        stat:
-          enabled: true
-          # 记录慢SQL
-          log-slow-sql: true
-          slow-sql-millis: 1000
-          merge-sql: true
-        wall:
-          config:
-            multi-statement-allow: true
-  redis:
-    database: 0
-    host: 122.51.133.124
-    port: 30003
-    password: 123456
+    devtools:
+        restart:
+            enabled: true  #设置开启热部署
+    #出现错误时, 直接抛出异常(便于异常统一处理，否则捕获不到404)
+    mvc:
+        throw-exception-if-no-handler-found: true
+    #不要为我们工程中的资源文件建立映射
+    resources:
+        add-mappings: false
+    application:
+        version: 1.0
+        description: 通用框架
+    #redis
+    #配置数据源
+    datasource:
+        druid:
+            db-type: com.alibaba.druid.pool.DruidDataSource
+            driverClassName: com.mysql.jdbc.Driver
+            url: jdbc:mysql://122.51.133.124:30002/blade?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
+            username: root
+            password: uY;:rs623ic&
+            # 初始连接数
+            initial-size: 5
+            # 最小连接数
+            min-idle: 10
+            # 最大连接数
+            max-active: 20
+            # 获取连接超时时间
+            max-wait: 5000
+            # 连接有效性检测时间
+            time-between-eviction-runs-millis: 60000
+            # 连接在池中最小生存的时间
+            min-evictable-idle-time-millis: 300000
+            # 连接在池中最大生存的时间
+            max-evictable-idle-time-millis: 900000
+            test-while-idle: true
+            test-on-borrow: false
+            test-on-return: false
+            # 检测连接是否有效
+            validation-query: select 1
+            # 配置监控统计
+            webStatFilter:
+                enabled: true
+            stat-view-servlet:
+                enabled: true
+                url-pattern: /druid/*
+                reset-enable: false
+            filter:
+                stat:
+                    enabled: true
+                    # 记录慢SQL
+                    log-slow-sql: true
+                    slow-sql-millis: 1000
+                    merge-sql: true
+                wall:
+                    config:
+                        multi-statement-allow: true
+    redis:
+        database: 0
+        host: 122.51.133.124
+        port: 30003
+        password: 123456
 #mybatis
 mybatis-plus:
-  mapper-locations: classpath*:mapper/*.xml
-  #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.simple4j.system.entity
-  global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 0
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 2
-    #驼峰下划线转换
-    db-column-underline: true
-    #刷新mapper 调试神器
-    refresh-mapper: true
-    #数据库大写下划线转换
-    #capital-mode: true
-    # Sequence序列接口实现类配置
-    #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
-    #逻辑删除配置
-    logic-delete-value: 0
-    logic-not-delete-value: -1
-    #自定义填充策略接口实现
-#    meta-object-handler: com.baomidou.springboot.xxx
-    #自定义SQL注入器
-#    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: false
-    call-setters-on-nulls: true
+    mapper-locations: classpath*:mapper/*.xml
+    #实体扫描，多个package用逗号或者分号分隔
+    typeAliasesPackage: com.simple4j.system.entity
+    global-config:
+        #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+        id-type: 0
+        #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+        field-strategy: 2
+        #驼峰下划线转换
+        db-column-underline: true
+        #刷新mapper 调试神器
+        refresh-mapper: true
+        #数据库大写下划线转换
+        #capital-mode: true
+        # Sequence序列接口实现类配置
+        #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
+        #逻辑删除配置
+        logic-delete-value: 0
+        logic-not-delete-value: -1
+        #自定义填充策略接口实现
+        #    meta-object-handler: com.baomidou.springboot.xxx
+        #自定义SQL注入器
+    #    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    configuration:
+        map-underscore-to-camel-case: true
+        cache-enabled: false
+        call-setters-on-nulls: true
 # 登录相关配置
 login:
-  # 登录缓存
-  cache-enable: true
-  #  是否限制单用户登录
-  single: false
-  #  验证码
-  login-code:
-    #  验证码类型配置 查看 LoginProperties 类
-    code-type: arithmetic
-    #  登录图形验证码有效时间/分钟
-    expiration: 2
-    #  验证码高度
-    width: 111
-    #  验证码宽度
-    heigth: 36
-    # 内容长度
-    length: 2
+    # 登录缓存
+    cache-enable: true
+    #  是否限制单用户登录
+    single: false
+    #  验证码
+    login-code:
+        #  验证码类型配置 查看 LoginProperties 类
+        code-type: arithmetic
+        #  登录图形验证码有效时间/分钟
+        expiration: 2
+        #  验证码高度
+        width: 111
+        #  验证码宽度
+        heigth: 36
+        # 内容长度
+        length: 2
 
 #jwt
 jwt:
-  header: Authorization
-  # 令牌前缀
-  token-start-with: Bearer
-  # 必须使用最少88位的Base64对该令牌进行编码
-  base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
-  # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
-  token-validity-in-seconds: 14400000
-  # 在线用户key
-  online-key: online-token-
-  # 验证码
-  code-key: code-key-
-  # token 续期检查时间范围（默认30分钟，单位毫秒），在token即将过期的一段时间内用户操作了，则给用户的token续期
-  detect: 1800000
-  # 续期时间范围，默认1小时，单位毫秒
-  renew: 3600000
+    header: Authorization
+    # 令牌前缀
+    token-start-with: Bearer
+    # 必须使用最少88位的Base64对该令牌进行编码
+    base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+    # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
+    token-validity-in-seconds: 14400000
+    # 在线用户key
+    online-key: online-token-
+    # 验证码
+    code-key: code-key-
+    # token 续期检查时间范围（默认30分钟，单位毫秒），在token即将过期的一段时间内用户操作了，则给用户的token续期
+    detect: 1800000
+    # 续期时间范围，默认1小时，单位毫秒
+    renew: 3600000
 
 #是否允许生成代码，生产环境设置为false
 generator:
-  enabled: true
+    enabled: true
 
 #是否开启 swagger-ui
 swagger:
-  enabled: true
+    enabled: true
 
 # IP 本地解析
 ip:
-  local-parsing: true
+    local-parsing: true
 task:
-  pool:
-    # 核心线程池大小
-    core-pool-size: 10
-    # 最大线程数
-    max-pool-size: 30
-    # 活跃时间
-    keep-alive-seconds: 60
-    # 队列容量
-    queue-capacity: 50
+    pool:
+        # 核心线程池大小
+        core-pool-size: 10
+        # 最大线程数
+        max-pool-size: 30
+        # 活跃时间
+        keep-alive-seconds: 60
+        # 队列容量
+        queue-capacity: 50
 
 #七牛云
 qiniu:
-  # 文件大小 /M
-  max-size: 15
+    # 文件大小 /M
+    max-size: 15
 
 #邮箱验证码有效时间/秒
 code:
-  expiration: 300
+    expiration: 300
 
 #密码加密传输，前端公钥加密，后端私钥解密
 rsa:
-  private_key: MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEA0vfvyTdGJkdbHkB8mp0f3FE0GYP3AYPaJF7jUd1M0XxFSE2ceK3k2kw20YvQ09NJKk+OMjWQl9WitG9pB6tSCQIDAQABAkA2SimBrWC2/wvauBuYqjCFwLvYiRYqZKThUS3MZlebXJiLB+Ue/gUifAAKIg1avttUZsHBHrop4qfJCwAI0+YRAiEA+W3NK/RaXtnRqmoUUkb59zsZUBLpvZgQPfj1MhyHDz0CIQDYhsAhPJ3mgS64NbUZmGWuuNKp5coY2GIj/zYDMJp6vQIgUueLFXv/eZ1ekgz2Oi67MNCk5jeTF2BurZqNLR3MSmUCIFT3Q6uHMtsB9Eha4u7hS31tj1UWE+D+ADzp59MGnoftAiBeHT7gDMuqeJHPL4b+kC+gzV4FGTfhR9q3tTbklZkD2A==
+    private_key: MIIBUwIBADANBgkqhkiG9w0BAQEFAASCAT0wggE5AgEAAkEA0vfvyTdGJkdbHkB8mp0f3FE0GYP3AYPaJF7jUd1M0XxFSE2ceK3k2kw20YvQ09NJKk+OMjWQl9WitG9pB6tSCQIDAQABAkA2SimBrWC2/wvauBuYqjCFwLvYiRYqZKThUS3MZlebXJiLB+Ue/gUifAAKIg1avttUZsHBHrop4qfJCwAI0+YRAiEA+W3NK/RaXtnRqmoUUkb59zsZUBLpvZgQPfj1MhyHDz0CIQDYhsAhPJ3mgS64NbUZmGWuuNKp5coY2GIj/zYDMJp6vQIgUueLFXv/eZ1ekgz2Oi67MNCk5jeTF2BurZqNLR3MSmUCIFT3Q6uHMtsB9Eha4u7hS31tj1UWE+D+ADzp59MGnoftAiBeHT7gDMuqeJHPL4b+kC+gzV4FGTfhR9q3tTbklZkD2A==
 
 # sm.ms 图床的 token
 smms:
-  token: 1oOP3ykFDI0K6ifmtvU7c8Y1eTWZSlyl
+    token: 1oOP3ykFDI0K6ifmtvU7c8Y1eTWZSlyl

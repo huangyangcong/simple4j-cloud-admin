@@ -37,45 +37,45 @@ import java.util.Map;
 @Slf4j
 @Service
 public final class FailoverService {
-    
-    @Autowired
-    private CoordinatorRegistryCenter regCenter;
-    
-    /**
-     * Get all failover tasks.
-     *
-     * @return all failover tasks
-     */
-    public Map<String, Collection<FailoverTaskInfo>> getAllFailoverTasks() {
-        if (!regCenter.isExisted(FailoverNode.ROOT)) {
-            return Collections.emptyMap();
-        }
-        List<String> jobNames = regCenter.getChildrenKeys(FailoverNode.ROOT);
-        Map<String, Collection<FailoverTaskInfo>> result = new HashMap<>(jobNames.size(), 1);
-        for (String each : jobNames) {
-            Collection<FailoverTaskInfo> failoverTasks = getFailoverTasks(each);
-            if (!failoverTasks.isEmpty()) {
-                result.put(each, failoverTasks);
-            }
-        }
-        return result;
-    }
-    
-    /**
-     * Get failover tasks.
-     *
-     * @param jobName job name
-     * @return collection of failover tasks
-     */
-    private Collection<FailoverTaskInfo> getFailoverTasks(final String jobName) {
-        List<String> failOverTasks = regCenter.getChildrenKeys(FailoverNode.getFailoverJobNodePath(jobName));
-        List<FailoverTaskInfo> result = new ArrayList<>(failOverTasks.size());
-        for (String each : failOverTasks) {
-            String originalTaskId = regCenter.get(FailoverNode.getFailoverTaskNodePath(each));
-            if (!Strings.isNullOrEmpty(originalTaskId)) {
-                result.add(new FailoverTaskInfo(MetaInfo.from(each), originalTaskId));
-            }
-        }
-        return result;
-    }
+
+	@Autowired
+	private CoordinatorRegistryCenter regCenter;
+
+	/**
+	 * Get all failover tasks.
+	 *
+	 * @return all failover tasks
+	 */
+	public Map<String, Collection<FailoverTaskInfo>> getAllFailoverTasks() {
+		if (!regCenter.isExisted(FailoverNode.ROOT)) {
+			return Collections.emptyMap();
+		}
+		List<String> jobNames = regCenter.getChildrenKeys(FailoverNode.ROOT);
+		Map<String, Collection<FailoverTaskInfo>> result = new HashMap<>(jobNames.size(), 1);
+		for (String each : jobNames) {
+			Collection<FailoverTaskInfo> failoverTasks = getFailoverTasks(each);
+			if (!failoverTasks.isEmpty()) {
+				result.put(each, failoverTasks);
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Get failover tasks.
+	 *
+	 * @param jobName job name
+	 * @return collection of failover tasks
+	 */
+	private Collection<FailoverTaskInfo> getFailoverTasks(final String jobName) {
+		List<String> failOverTasks = regCenter.getChildrenKeys(FailoverNode.getFailoverJobNodePath(jobName));
+		List<FailoverTaskInfo> result = new ArrayList<>(failOverTasks.size());
+		for (String each : failOverTasks) {
+			String originalTaskId = regCenter.get(FailoverNode.getFailoverTaskNodePath(each));
+			if (!Strings.isNullOrEmpty(originalTaskId)) {
+				result.add(new FailoverTaskInfo(MetaInfo.from(each), originalTaskId));
+			}
+		}
+		return result;
+	}
 }

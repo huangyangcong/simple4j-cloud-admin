@@ -1,15 +1,13 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
 import com.simple4j.autoconfigure.jwt.security.SecurityScope;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
-import com.simple4j.system.mapper.NavbarMapper;
 import com.simple4j.system.entity.Navbar;
+import com.simple4j.system.mapper.NavbarMapper;
 import com.simple4j.system.mapstruct.NavbarMapStruct;
 import com.simple4j.system.request.NavbarAddOrUpdateRequest;
 import com.simple4j.system.request.NavbarAddRequest;
@@ -22,9 +20,10 @@ import com.simple4j.system.response.NavbarDetailResponse;
 import com.simple4j.system.service.INavbarMenuService;
 import com.simple4j.system.service.INavbarService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -44,7 +43,7 @@ public class NavbarServiceImpl implements INavbarService {
 	@Override
 	public NavbarDetailResponse detail(NavbarDetailRequest navbarDetailRequest) {
 		Navbar detail = navbarMapper.getOne(
-				Wrappers.<Navbar>lambdaQuery().eq(Navbar::getId, navbarDetailRequest.getId()));
+			Wrappers.<Navbar>lambdaQuery().eq(Navbar::getId, navbarDetailRequest.getId()));
 		return navbarMapStruct.toVo(detail);
 	}
 
@@ -52,8 +51,8 @@ public class NavbarServiceImpl implements INavbarService {
 	public List<NavbarDetailResponse> list(NavbarListRequest navbarListRequest) {
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		LambdaQueryWrapper<Navbar> queryWrapper = Wrappers.<Navbar>lambdaQuery()
-				.eq(Navbar::getTenantId,
-						securityScope.getTenantId());
+			.eq(Navbar::getTenantId,
+				securityScope.getTenantId());
 		List<Navbar> pages = navbarMapper.list(queryWrapper);
 		return navbarMapStruct.toVo(pages);
 	}
@@ -62,11 +61,11 @@ public class NavbarServiceImpl implements INavbarService {
 	public Page<NavbarDetailResponse> page(NavbarPageRequest navbarPageRequest) {
 		LambdaQueryWrapper<Navbar> queryWrapper = Wrappers.<Navbar>lambdaQuery();
 		IPage<Navbar> page = navbarMapper.page(
-				new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
-						navbarPageRequest.getPageNo(), navbarPageRequest.getPageSize()),
-				queryWrapper);
+			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
+				navbarPageRequest.getPageNo(), navbarPageRequest.getPageSize()),
+			queryWrapper);
 		Page<Navbar> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return navbarMapStruct.toVo(pages);
 	}
 

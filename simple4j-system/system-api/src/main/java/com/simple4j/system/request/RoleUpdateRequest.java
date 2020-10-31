@@ -21,8 +21,8 @@ public class RoleUpdateRequest extends RoleAddRequest {
 	/**
 	 * 角色表ID
 	 */
-		@ApiModelProperty(value = "角色表ID")
+	@ApiModelProperty(value = "角色表ID")
 	@NotNull(message = "角色表编号不能为空")
 	private String id;
 
-	}
+}

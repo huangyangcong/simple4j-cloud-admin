@@ -1,51 +1,51 @@
 spring:
-  application:
-    name: eurekaserver
+    application:
+        name: eurekaserver
 server:
-  tomcat:
-    uri-encoding: UTF-8
-    connection-timeout: 10000
-    threads:
-      max: 600
-      min-spare: 30
+    tomcat:
+        uri-encoding: UTF-8
+        connection-timeout: 10000
+        threads:
+            max: 600
+            min-spare: 30
 
 #启用监控
 management:
-  endpoints:
-    web:
-      exposure:
-        include:
-          - "*"  # 开放所有端点health，info，metrics，通过actuator/+端点名就可以获取相应的信息。默认打开health和info
-  endpoint:
-    health:
-      show-details: always  #未开启actuator/health时，我们获取到的信息是{"status":"UP"}，status的值还有可能是 DOWN。开启后打印详细信息
+    endpoints:
+        web:
+            exposure:
+                include:
+                    - "*"  # 开放所有端点health，info，metrics，通过actuator/+端点名就可以获取相应的信息。默认打开health和info
+    endpoint:
+        health:
+            show-details: always  #未开启actuator/health时，我们获取到的信息是{"status":"UP"}，status的值还有可能是 DOWN。开启后打印详细信息
 eureka:
-  server:
-    #    max-threads-for-peer-replication: 0
-    enable-self-preservation: false # 关闭自我保护模式（缺省为打开）
-  #    eviction-interval-timer-in-ms: 3000
-  #    eviction-interval-timer-in-ms: ${eureka.server.eviction-interval-timer-in-ms}       # 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）
-  instance:
-    prefer-ip-address: true
-    hostname: ${spring.cloud.client.ip-address}
-    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
-  client:
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8887/eureka/,http://127.0.0.1:8888/eureka/,http://127.0.0.1:8889/eureka/
+    server:
+        #    max-threads-for-peer-replication: 0
+        enable-self-preservation: false # 关闭自我保护模式（缺省为打开）
+    #    eviction-interval-timer-in-ms: 3000
+    #    eviction-interval-timer-in-ms: ${eureka.server.eviction-interval-timer-in-ms}       # 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）
+    instance:
+        prefer-ip-address: true
+        hostname: ${spring.cloud.client.ip-address}
+        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+    client:
+        serviceUrl:
+            defaultZone: http://127.0.0.1:8887/eureka/,http://127.0.0.1:8888/eureka/,http://127.0.0.1:8889/eureka/
 
 ---
 spring:
-  profiles: peer1
+    profiles: peer1
 server:
-  port: 8887
+    port: 8887
 
 ---
 spring:
-  profiles: peer2
+    profiles: peer2
 server:
-  port: 8888
+    port: 8888
 ---
 spring:
-  profiles: peer3
+    profiles: peer3
 server:
-  port: 8889
+    port: 8889

@@ -30,18 +30,18 @@ import lombok.ToString;
 @Getter
 @ToString
 public final class CloudAppConfiguration {
-    
-    private final String appName;
-    
-    private final String appURL;
-    
-    private final String bootstrapScript;
-    
-    private double cpuCount = 1d;
-    
-    private double memoryMB = 128d;
-    
-    private boolean appCacheEnable = true;
-    
-    private int eventTraceSamplingCount;
+
+	private final String appName;
+
+	private final String appURL;
+
+	private final String bootstrapScript;
+
+	private double cpuCount = 1d;
+
+	private double memoryMB = 128d;
+
+	private boolean appCacheEnable = true;
+
+	private int eventTraceSamplingCount;
 }

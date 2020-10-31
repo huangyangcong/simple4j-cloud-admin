@@ -25,12 +25,12 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CloudJobConfigurationNode {
-    
-    public static final String ROOT = "/config/job";
-    
-    private static final String JOB_CONFIG = ROOT + "/%s";
-    
-    static String getRootNodePath(final String jobName) {
-        return String.format(JOB_CONFIG, jobName);
-    }
+
+	public static final String ROOT = "/config/job" ;
+
+	private static final String JOB_CONFIG = ROOT + "/%s" ;
+
+	static String getRootNodePath(final String jobName) {
+		return String.format(JOB_CONFIG, jobName);
+	}
 }

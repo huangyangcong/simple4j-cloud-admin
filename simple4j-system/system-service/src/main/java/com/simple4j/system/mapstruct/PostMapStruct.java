@@ -1,14 +1,14 @@
 package com.simple4j.system.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 import com.simple4j.system.entity.Post;
 import com.simple4j.system.request.PostAddRequest;
 import com.simple4j.system.request.PostUpdateRequest;
 import com.simple4j.system.response.PostDetailResponse;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 岗位表数据转换类

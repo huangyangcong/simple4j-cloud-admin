@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author hyc
  */
-public interface IParamService{
+public interface IParamService {
 
 	/**
 	 * 详情

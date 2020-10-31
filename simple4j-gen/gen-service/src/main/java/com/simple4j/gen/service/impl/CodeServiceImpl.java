@@ -1,16 +1,12 @@
 package com.simple4j.gen.service.impl;
 
-import java.io.OutputStream;
-import java.util.Collection;
-import java.util.List;
-
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
-import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
+import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import com.simple4j.gen.entity.Code;
 import com.simple4j.gen.mapper.CodeMapper;
 import com.simple4j.gen.mapstruct.CodeMapStruct;
@@ -29,9 +25,12 @@ import com.simple4j.gen.service.ICodeService;
 import com.simple4j.gen.service.IDatasourceService;
 import com.simple4j.gen.util.CodeGenerator;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.OutputStream;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -51,7 +50,7 @@ public class CodeServiceImpl implements ICodeService {
 	@Override
 	public CodeDetailResponse detail(CodeDetailRequest codeDetailRequest) {
 		Code detail = codeMapper.getOne(
-				Wrappers.<Code>lambdaQuery().eq(Code::getId, codeDetailRequest.getId()));
+			Wrappers.<Code>lambdaQuery().eq(Code::getId, codeDetailRequest.getId()));
 		return codeMapStruct.toVo(detail);
 	}
 
@@ -65,16 +64,16 @@ public class CodeServiceImpl implements ICodeService {
 	@Override
 	public Page<CodeDetailResponse> page(CodePageRequest codePageRequest) {
 		LambdaQueryWrapper<Code> queryWrapper = Wrappers.<Code>lambdaQuery()
-				.like(StrUtil.isNotEmpty(codePageRequest.getCodeName()), Code::getCodeName,
-						codePageRequest.getCodeName())
-				.like(StrUtil.isNotEmpty(codePageRequest.getTableName()), Code::getTableName,
-						codePageRequest.getTableName());
+			.like(StrUtil.isNotEmpty(codePageRequest.getCodeName()), Code::getCodeName,
+				codePageRequest.getCodeName())
+			.like(StrUtil.isNotEmpty(codePageRequest.getTableName()), Code::getTableName,
+				codePageRequest.getTableName());
 		IPage<Code> page = codeMapper
-				.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
-								codePageRequest.getPageNo(), codePageRequest.getPageSize()),
-						queryWrapper);
+			.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
+					codePageRequest.getPageNo(), codePageRequest.getPageSize()),
+				queryWrapper);
 		Page<Code> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return codeMapStruct.toVo(pages);
 	}
 

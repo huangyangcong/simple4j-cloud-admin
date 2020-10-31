@@ -31,13 +31,13 @@ import java.util.List;
  */
 @Repository
 public interface TaskRunningStatisticsRepository extends JpaRepository<TaskRunningStatistics, Long> {
-    
-    /**
-     * Find task running statistics.
-     *
-     * @param fromTime from date to statistics
-     * @return Task running statistics
-     */
-    @Query("SELECT t FROM TaskRunningStatistics t where t.statisticsTime >= :fromTime")
-    List<TaskRunningStatistics> findTaskRunningStatistics(@Param("fromTime") Date fromTime);
+
+	/**
+	 * Find task running statistics.
+	 *
+	 * @param fromTime from date to statistics
+	 * @return Task running statistics
+	 */
+	@Query("SELECT t FROM TaskRunningStatistics t where t.statisticsTime >= :fromTime")
+	List<TaskRunningStatistics> findTaskRunningStatistics(@Param("fromTime") Date fromTime);
 }

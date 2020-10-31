@@ -27,8 +27,8 @@ import org.apache.shardingsphere.elasticjob.infra.context.TaskContext.MetaInfo;
 @RequiredArgsConstructor
 @Getter
 public final class FailoverTaskInfo {
-    
-    private final MetaInfo taskInfo;
-    
-    private final String originalTaskId;
+
+	private final MetaInfo taskInfo;
+
+	private final String originalTaskId;
 }

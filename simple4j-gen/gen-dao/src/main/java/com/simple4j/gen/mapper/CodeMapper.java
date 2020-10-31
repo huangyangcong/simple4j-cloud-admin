@@ -1,7 +1,7 @@
 package com.simple4j.gen.mapper;
 
-import com.simple4j.gen.entity.Code;
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
+import com.simple4j.gen.entity.Code;
 
 /**
  * 代码生成表 Mapper 接口

@@ -9,7 +9,7 @@ import lombok.Data;
  * @version 1.0.0
  */
 @Data
-public class UserRegisterGuestRequest extends UserAddRequest{
+public class UserRegisterGuestRequest extends UserAddRequest {
 
 	@ApiModelProperty(name = "oauth_id", value = "第三方id")
 	@JsonProperty("oauth_id")

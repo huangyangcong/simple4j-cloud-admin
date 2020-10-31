@@ -22,9 +22,9 @@ import org.apache.shardingsphere.elasticjob.lite.ui.config.DynamicDataSourceConf
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.DataSourceFactory;
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfiguration;
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfigurations;
+import org.apache.shardingsphere.elasticjob.lite.ui.service.EventTraceDataSourceConfigurationService;
 import org.apache.shardingsphere.elasticjob.repository.ConfigurationsXmlRepository;
 import org.apache.shardingsphere.elasticjob.repository.impl.ConfigurationsXmlRepositoryImpl;
-import org.apache.shardingsphere.elasticjob.lite.ui.service.EventTraceDataSourceConfigurationService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,102 +37,102 @@ import java.util.Optional;
  */
 @Service
 public final class EventTraceDataSourceConfigurationServiceImpl implements EventTraceDataSourceConfigurationService, InitializingBean {
-    
-    private ConfigurationsXmlRepository configurationsXmlRepository = new ConfigurationsXmlRepositoryImpl();
-    
-    @Autowired
-    private DynamicDataSourceConfig.DynamicDataSource dynamicDataSource;
-    
-    @Override
-    public EventTraceDataSourceConfigurations loadAll() {
-        return loadGlobal().getEventTraceDataSourceConfigurations();
-    }
-    
-    @Override
-    public EventTraceDataSourceConfiguration load(final String name) {
-        GlobalConfiguration configs = loadGlobal();
-        EventTraceDataSourceConfiguration result = find(name, configs.getEventTraceDataSourceConfigurations());
-        setActivated(configs, result);
-        // Activate the dataSource by data source name for spring boot
-        DynamicDataSourceConfig.DynamicDataSourceContextHolder.setDataSourceName(name);
-        return result;
-    }
-    
-    @Override
-    public EventTraceDataSourceConfiguration find(final String name, final EventTraceDataSourceConfigurations configs) {
-        for (EventTraceDataSourceConfiguration each : configs.getEventTraceDataSourceConfiguration()) {
-            if (name.equals(each.getName())) {
-                return each;
-            }
-        }
-        return null;
-    }
-    
-    private void setActivated(final GlobalConfiguration configs, final EventTraceDataSourceConfiguration toBeConnectedConfig) {
-        EventTraceDataSourceConfiguration activatedConfig = findActivatedDataSourceConfiguration(configs);
-        if (!toBeConnectedConfig.equals(activatedConfig)) {
-            if (null != activatedConfig) {
-                activatedConfig.setActivated(false);
-            }
-            toBeConnectedConfig.setActivated(true);
-            configurationsXmlRepository.save(configs);
-        }
-    }
-    
-    @Override
-    public Optional<EventTraceDataSourceConfiguration> loadActivated() {
-        return Optional.ofNullable(findActivatedDataSourceConfiguration(loadGlobal()));
-    }
-    
-    private EventTraceDataSourceConfiguration findActivatedDataSourceConfiguration(final GlobalConfiguration configs) {
-        for (EventTraceDataSourceConfiguration each : configs.getEventTraceDataSourceConfigurations().getEventTraceDataSourceConfiguration()) {
-            if (each.isActivated()) {
-                return each;
-            }
-        }
-        return null;
-    }
-    
-    @Override
-    public boolean add(final EventTraceDataSourceConfiguration config) {
-        GlobalConfiguration configs = loadGlobal();
-        boolean result = configs.getEventTraceDataSourceConfigurations().getEventTraceDataSourceConfiguration().add(config);
-        if (result) {
-            configurationsXmlRepository.save(configs);
-        }
-        DataSource dataSource = DataSourceFactory.createDataSource(config);
-        dynamicDataSource.addDataSource(config.getName(), dataSource);
-        return result;
-    }
-    
-    @Override
-    public void delete(final String name) {
-        GlobalConfiguration configs = loadGlobal();
-        EventTraceDataSourceConfiguration toBeRemovedConfig = find(name, configs.getEventTraceDataSourceConfigurations());
-        if (null != toBeRemovedConfig) {
-            configs.getEventTraceDataSourceConfigurations().getEventTraceDataSourceConfiguration().remove(toBeRemovedConfig);
-            configurationsXmlRepository.save(configs);
-        }
-    }
-    
-    private GlobalConfiguration loadGlobal() {
-        GlobalConfiguration result = configurationsXmlRepository.load();
-        if (null == result.getEventTraceDataSourceConfigurations()) {
-            result.setEventTraceDataSourceConfigurations(new EventTraceDataSourceConfigurations());
-        }
-        return result;
-    }
-    
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        loadGlobal().getEventTraceDataSourceConfigurations().getEventTraceDataSourceConfiguration().stream().forEach(each -> afterLoad(each));
-    }
-    
-    private void afterLoad(final EventTraceDataSourceConfiguration config) {
-        if (config.isActivated()) {
-            DataSource dataSource = DataSourceFactory.createDataSource(config);
-            dynamicDataSource.addDataSource(config.getName(), dataSource);
-            DynamicDataSourceConfig.DynamicDataSourceContextHolder.setDataSourceName(config.getName());
-        }
-    }
+
+	private ConfigurationsXmlRepository configurationsXmlRepository = new ConfigurationsXmlRepositoryImpl();
+
+	@Autowired
+	private DynamicDataSourceConfig.DynamicDataSource dynamicDataSource;
+
+	@Override
+	public EventTraceDataSourceConfigurations loadAll() {
+		return loadGlobal().getEventTraceDataSourceConfigurations();
+	}
+
+	@Override
+	public EventTraceDataSourceConfiguration load(final String name) {
+		GlobalConfiguration configs = loadGlobal();
+		EventTraceDataSourceConfiguration result = find(name, configs.getEventTraceDataSourceConfigurations());
+		setActivated(configs, result);
+		// Activate the dataSource by data source name for spring boot
+		DynamicDataSourceConfig.DynamicDataSourceContextHolder.setDataSourceName(name);
+		return result;
+	}
+
+	@Override
+	public EventTraceDataSourceConfiguration find(final String name, final EventTraceDataSourceConfigurations configs) {
+		for (EventTraceDataSourceConfiguration each : configs.getEventTraceDataSourceConfiguration()) {
+			if (name.equals(each.getName())) {
+				return each;
+			}
+		}
+		return null;
+	}
+
+	private void setActivated(final GlobalConfiguration configs, final EventTraceDataSourceConfiguration toBeConnectedConfig) {
+		EventTraceDataSourceConfiguration activatedConfig = findActivatedDataSourceConfiguration(configs);
+		if (!toBeConnectedConfig.equals(activatedConfig)) {
+			if (null != activatedConfig) {
+				activatedConfig.setActivated(false);
+			}
+			toBeConnectedConfig.setActivated(true);
+			configurationsXmlRepository.save(configs);
+		}
+	}
+
+	@Override
+	public Optional<EventTraceDataSourceConfiguration> loadActivated() {
+		return Optional.ofNullable(findActivatedDataSourceConfiguration(loadGlobal()));
+	}
+
+	private EventTraceDataSourceConfiguration findActivatedDataSourceConfiguration(final GlobalConfiguration configs) {
+		for (EventTraceDataSourceConfiguration each : configs.getEventTraceDataSourceConfigurations().getEventTraceDataSourceConfiguration()) {
+			if (each.isActivated()) {
+				return each;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean add(final EventTraceDataSourceConfiguration config) {
+		GlobalConfiguration configs = loadGlobal();
+		boolean result = configs.getEventTraceDataSourceConfigurations().getEventTraceDataSourceConfiguration().add(config);
+		if (result) {
+			configurationsXmlRepository.save(configs);
+		}
+		DataSource dataSource = DataSourceFactory.createDataSource(config);
+		dynamicDataSource.addDataSource(config.getName(), dataSource);
+		return result;
+	}
+
+	@Override
+	public void delete(final String name) {
+		GlobalConfiguration configs = loadGlobal();
+		EventTraceDataSourceConfiguration toBeRemovedConfig = find(name, configs.getEventTraceDataSourceConfigurations());
+		if (null != toBeRemovedConfig) {
+			configs.getEventTraceDataSourceConfigurations().getEventTraceDataSourceConfiguration().remove(toBeRemovedConfig);
+			configurationsXmlRepository.save(configs);
+		}
+	}
+
+	private GlobalConfiguration loadGlobal() {
+		GlobalConfiguration result = configurationsXmlRepository.load();
+		if (null == result.getEventTraceDataSourceConfigurations()) {
+			result.setEventTraceDataSourceConfigurations(new EventTraceDataSourceConfigurations());
+		}
+		return result;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		loadGlobal().getEventTraceDataSourceConfigurations().getEventTraceDataSourceConfiguration().stream().forEach(each -> afterLoad(each));
+	}
+
+	private void afterLoad(final EventTraceDataSourceConfiguration config) {
+		if (config.isActivated()) {
+			DataSource dataSource = DataSourceFactory.createDataSource(config);
+			dynamicDataSource.addDataSource(config.getName(), dataSource);
+			DynamicDataSourceConfig.DynamicDataSourceContextHolder.setDataSourceName(config.getName());
+		}
+	}
 }

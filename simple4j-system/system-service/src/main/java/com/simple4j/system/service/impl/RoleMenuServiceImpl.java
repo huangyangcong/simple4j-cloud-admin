@@ -23,12 +23,12 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class RoleMenuServiceImpl implements
-		IRoleMenuService {
+	IRoleMenuService {
 
 	private final RoleMenuMapper roleMenuMapper;
 
 	@Override
-	public Set<String>getPermission(Set<String> roleIds) {
+	public Set<String> getPermission(Set<String> roleIds) {
 		if (CollUtil.isEmpty(roleIds)) {
 			return Sets.newHashSet();
 		}
@@ -46,8 +46,8 @@ public class RoleMenuServiceImpl implements
 	public boolean grant(Set<String> menuIds, Set<String> roleIds) {
 		// 删除角色配置的菜单集合
 		roleMenuMapper
-				.physicsDelete(
-						Wrappers.<RoleMenu>update().lambda().in(RoleMenu::getRoleId, roleIds));
+			.physicsDelete(
+				Wrappers.<RoleMenu>update().lambda().in(RoleMenu::getRoleId, roleIds));
 		// 组装配置
 		List<RoleMenu> roleMenus = new ArrayList<>();
 		roleIds.forEach(roleId -> menuIds.forEach(menuId -> {
@@ -64,7 +64,7 @@ public class RoleMenuServiceImpl implements
 	public void removeByRoleIds(Set<String> roleIds) {
 		if (CollUtil.isNotEmpty(roleIds)) {
 			roleMenuMapper.physicsDelete(
-					Wrappers.<RoleMenu>lambdaQuery().in(RoleMenu::getRoleId, roleIds));
+				Wrappers.<RoleMenu>lambdaQuery().in(RoleMenu::getRoleId, roleIds));
 		}
 	}
 
@@ -72,7 +72,7 @@ public class RoleMenuServiceImpl implements
 	public void removeByMenuIds(Set<String> menuIds) {
 		if (CollUtil.isNotEmpty(menuIds)) {
 			roleMenuMapper.physicsDelete(
-					Wrappers.<RoleMenu>lambdaQuery().in(RoleMenu::getMenuId, menuIds));
+				Wrappers.<RoleMenu>lambdaQuery().in(RoleMenu::getMenuId, menuIds));
 		}
 	}
 }

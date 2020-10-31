@@ -41,84 +41,84 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/api/registry-center")
 public final class RegistryCenterController {
-    
-    public static final String REG_CENTER_CONFIG_KEY = "reg_center_config_key";
-    
-    private RegistryCenterConfigurationService regCenterService;
-    
-    @Autowired
-    public RegistryCenterController(final RegistryCenterConfigurationService regCenterService) {
-        this.regCenterService = regCenterService;
-    }
-    
-    /**
-     * Judge whether registry center is activated.
-     *
-     * @return registry center is activated or not
-     */
-    @GetMapping("/activated")
-    public ApiResponse<RegistryCenterConfiguration> activated() {
-        return ApiResponse.ok(regCenterService.loadActivated().orElse(null));
-    }
-    
-    /**
-     * Load configuration from registry center.
-     *
-     * @param request HTTP request
-     * @return registry center configurations
-     */
-    @GetMapping("/load")
-    public ApiResponse<Collection<RegistryCenterConfiguration>> load(final HttpServletRequest request) {
-        regCenterService.loadActivated().ifPresent(regCenterConfig -> setRegistryCenterNameToSession(regCenterConfig, request.getSession()));
-        return ApiResponse.ok(regCenterService.loadAll().getRegistryCenterConfiguration());
-    }
-    
-    /**
-     * Add registry center.
-     *
-     * @param config registry center configuration
-     * @return success to add or not
-     */
-    @PostMapping("/add")
-    public ApiResponse<Boolean> add(@RequestBody final RegistryCenterConfiguration config) {
-        return ApiResponse.ok(regCenterService.add(config));
-    }
-    
-    /**
-     * Delete registry center.
-     *
-     * @param config registry center configuration
-     */
-    @DeleteMapping
-    public ApiResponse delete(@RequestBody final RegistryCenterConfiguration config) {
-        regCenterService.delete(config.getName());
-        return ApiResponse.ok();
-    }
-    
-    /**
-     * Connect to registry center.
-     *
-     * @param config  config of registry center
-     * @param request HTTP request
-     * @return connected or not
-     */
-    @PostMapping(value = "/connect")
-    public ApiResponse<Boolean> connect(@RequestBody final RegistryCenterConfiguration config, final HttpServletRequest request) {
-        boolean isConnected = setRegistryCenterNameToSession(regCenterService.find(config.getName(), regCenterService.loadAll()), request.getSession());
-        if (isConnected) {
-            regCenterService.load(config.getName());
-        }
-        return ApiResponse.ok(isConnected);
-    }
-    
-    private boolean setRegistryCenterNameToSession(final RegistryCenterConfiguration regCenterConfig, final HttpSession session) {
-        session.setAttribute(REG_CENTER_CONFIG_KEY, regCenterConfig);
-        try {
-            RegistryCenterFactory.createCoordinatorRegistryCenter(regCenterConfig.getZkAddressList(), regCenterConfig.getNamespace(), regCenterConfig.getDigest());
-            SessionRegistryCenterConfiguration.setRegistryCenterConfiguration((RegistryCenterConfiguration) session.getAttribute(REG_CENTER_CONFIG_KEY));
-        } catch (final RegException ex) {
-            return false;
-        }
-        return true;
-    }
+
+	public static final String REG_CENTER_CONFIG_KEY = "reg_center_config_key" ;
+
+	private RegistryCenterConfigurationService regCenterService;
+
+	@Autowired
+	public RegistryCenterController(final RegistryCenterConfigurationService regCenterService) {
+		this.regCenterService = regCenterService;
+	}
+
+	/**
+	 * Judge whether registry center is activated.
+	 *
+	 * @return registry center is activated or not
+	 */
+	@GetMapping("/activated")
+	public ApiResponse<RegistryCenterConfiguration> activated() {
+		return ApiResponse.ok(regCenterService.loadActivated().orElse(null));
+	}
+
+	/**
+	 * Load configuration from registry center.
+	 *
+	 * @param request HTTP request
+	 * @return registry center configurations
+	 */
+	@GetMapping("/load")
+	public ApiResponse<Collection<RegistryCenterConfiguration>> load(final HttpServletRequest request) {
+		regCenterService.loadActivated().ifPresent(regCenterConfig -> setRegistryCenterNameToSession(regCenterConfig, request.getSession()));
+		return ApiResponse.ok(regCenterService.loadAll().getRegistryCenterConfiguration());
+	}
+
+	/**
+	 * Add registry center.
+	 *
+	 * @param config registry center configuration
+	 * @return success to add or not
+	 */
+	@PostMapping("/add")
+	public ApiResponse<Boolean> add(@RequestBody final RegistryCenterConfiguration config) {
+		return ApiResponse.ok(regCenterService.add(config));
+	}
+
+	/**
+	 * Delete registry center.
+	 *
+	 * @param config registry center configuration
+	 */
+	@DeleteMapping
+	public ApiResponse delete(@RequestBody final RegistryCenterConfiguration config) {
+		regCenterService.delete(config.getName());
+		return ApiResponse.ok();
+	}
+
+	/**
+	 * Connect to registry center.
+	 *
+	 * @param config  config of registry center
+	 * @param request HTTP request
+	 * @return connected or not
+	 */
+	@PostMapping(value = "/connect")
+	public ApiResponse<Boolean> connect(@RequestBody final RegistryCenterConfiguration config, final HttpServletRequest request) {
+		boolean isConnected = setRegistryCenterNameToSession(regCenterService.find(config.getName(), regCenterService.loadAll()), request.getSession());
+		if (isConnected) {
+			regCenterService.load(config.getName());
+		}
+		return ApiResponse.ok(isConnected);
+	}
+
+	private boolean setRegistryCenterNameToSession(final RegistryCenterConfiguration regCenterConfig, final HttpSession session) {
+		session.setAttribute(REG_CENTER_CONFIG_KEY, regCenterConfig);
+		try {
+			RegistryCenterFactory.createCoordinatorRegistryCenter(regCenterConfig.getZkAddressList(), regCenterConfig.getNamespace(), regCenterConfig.getDigest());
+			SessionRegistryCenterConfiguration.setRegistryCenterConfiguration((RegistryCenterConfiguration) session.getAttribute(REG_CENTER_CONFIG_KEY));
+		} catch (final RegException ex) {
+			return false;
+		}
+		return true;
+	}
 }

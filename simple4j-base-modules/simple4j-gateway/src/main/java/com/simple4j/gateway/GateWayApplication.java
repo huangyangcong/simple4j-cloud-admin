@@ -1,10 +1,9 @@
 package com.simple4j.gateway;
 
 
-import springfox.documentation.oas.annotations.EnableOpenApi;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @SpringCloudApplication
 @EnableOpenApi

@@ -1,15 +1,12 @@
 package com.simple4j.gen.request;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 
 /**
  * 代码生成表详情请求实体类
@@ -29,4 +26,4 @@ public class CodeDetailRequest implements Serializable {
 	@NotNull(message = "编号不能为空")
 	@JsonProperty("id")
 	private String id;
-	}
+}

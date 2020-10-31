@@ -26,12 +26,12 @@ import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.StateNode;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class DisableAppNode {
-    
-    static final String ROOT = StateNode.ROOT + "/disable/app";
-    
-    private static final String DISABLE_APP = ROOT + "/%s";
-    
-    static String getDisableAppNodePath(final String appName) {
-        return String.format(DISABLE_APP, appName);
-    }
+
+	static final String ROOT = StateNode.ROOT + "/disable/app" ;
+
+	private static final String DISABLE_APP = ROOT + "/%s" ;
+
+	static String getDisableAppNodePath(final String appName) {
+		return String.format(DISABLE_APP, appName);
+	}
 }

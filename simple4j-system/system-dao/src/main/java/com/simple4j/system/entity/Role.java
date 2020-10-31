@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @Data
 @TableName("simple4j_role")
-public class Role  extends BaseEntity {
+public class Role extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

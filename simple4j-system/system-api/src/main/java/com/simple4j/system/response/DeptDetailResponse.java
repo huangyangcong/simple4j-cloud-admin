@@ -28,14 +28,14 @@ public class DeptDetailResponse implements INode<DeptDetailResponse, String> {
 	 */
 	@ApiModelProperty(name = "id", value = "主键")
 	@JsonProperty("id")
-	@Getter(onMethod=@__({@JsonIgnore}))
+	@Getter(onMethod = @__({@JsonIgnore}))
 	private String id;
 	/**
 	 * 父主键
 	 */
 	@ApiModelProperty(name = "parent_id", value = "父主键")
 	@JsonProperty("parent_id")
-	@Getter(onMethod=@__({@JsonIgnore}))
+	@Getter(onMethod = @__({@JsonIgnore}))
 	private String parentId;
 	/**
 	 * 部门名

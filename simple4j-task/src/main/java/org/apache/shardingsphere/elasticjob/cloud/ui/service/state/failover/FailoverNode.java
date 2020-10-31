@@ -27,18 +27,18 @@ import org.apache.shardingsphere.elasticjob.infra.context.TaskContext.MetaInfo;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class FailoverNode {
-    
-    static final String ROOT = StateNode.ROOT + "/failover";
-    
-    private static final String FAILOVER_JOB = ROOT + "/%s";
-    
-    private static final String FAILOVER_TASK = FAILOVER_JOB + "/%s";
-    
-    static String getFailoverJobNodePath(final String jobName) {
-        return String.format(FAILOVER_JOB, jobName);
-    }
-    
-    static String getFailoverTaskNodePath(final String taskMetaInfo) {
-        return String.format(FAILOVER_TASK, MetaInfo.from(taskMetaInfo).getJobName(), taskMetaInfo);
-    }
+
+	static final String ROOT = StateNode.ROOT + "/failover" ;
+
+	private static final String FAILOVER_JOB = ROOT + "/%s" ;
+
+	private static final String FAILOVER_TASK = FAILOVER_JOB + "/%s" ;
+
+	static String getFailoverJobNodePath(final String jobName) {
+		return String.format(FAILOVER_JOB, jobName);
+	}
+
+	static String getFailoverTaskNodePath(final String taskMetaInfo) {
+		return String.format(FAILOVER_TASK, MetaInfo.from(taskMetaInfo).getJobName(), taskMetaInfo);
+	}
 }

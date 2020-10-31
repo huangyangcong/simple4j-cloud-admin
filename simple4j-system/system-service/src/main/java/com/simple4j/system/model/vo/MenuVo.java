@@ -15,14 +15,15 @@
  */
 package com.simple4j.system.model.vo;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * 构建前端路由时用到
+ *
  * @author hyc
  * @date 2018-12-20
  */
@@ -30,19 +31,19 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class MenuVo implements Serializable {
 
-    private String name;
+	private String name;
 
-    private String path;
+	private String path;
 
-    private Boolean hidden;
+	private Boolean hidden;
 
-    private String redirect;
+	private String redirect;
 
-    private String component;
+	private String component;
 
-    private Boolean alwaysShow;
+	private Boolean alwaysShow;
 
-    private MenuMetaVo meta;
+	private MenuMetaVo meta;
 
-    private List<MenuVo> children;
+	private List<MenuVo> children;
 }

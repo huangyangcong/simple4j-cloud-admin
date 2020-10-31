@@ -3,7 +3,6 @@ package com.simple4j.system.service;
 
 import com.simple4j.system.request.UserPostGrantRequest;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Set;
  *
  * @author hyc
  */
-public interface IUserPostService{
+public interface IUserPostService {
 
 
 	/**
@@ -43,6 +42,7 @@ public interface IUserPostService{
 
 	/**
 	 * 根据userIds删除
+	 *
 	 * @param userIds
 	 */
 	void removeByUserIds(Set<String> userIds);

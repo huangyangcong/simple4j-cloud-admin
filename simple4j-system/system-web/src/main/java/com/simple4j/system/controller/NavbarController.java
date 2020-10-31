@@ -1,7 +1,15 @@
 package com.simple4j.system.controller;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.NavbarAddOrUpdateRequest;
+import com.simple4j.system.request.NavbarAddRequest;
+import com.simple4j.system.request.NavbarDetailRequest;
+import com.simple4j.system.request.NavbarGrantRequest;
+import com.simple4j.system.request.NavbarListRequest;
+import com.simple4j.system.request.NavbarPageRequest;
+import com.simple4j.system.request.NavbarPermissionRequest;
+import com.simple4j.system.request.NavbarRemoveRequest;
+import com.simple4j.system.request.NavbarUpdateRequest;
 import com.simple4j.system.response.NavbarDetailResponse;
 import com.simple4j.system.response.NavbarPermissionResponse;
 import com.simple4j.system.service.INavbarMenuService;

@@ -1,7 +1,12 @@
 package com.simple4j.system.controller;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.ClientAddOrUpdateRequest;
+import com.simple4j.system.request.ClientAddRequest;
+import com.simple4j.system.request.ClientDetailRequest;
+import com.simple4j.system.request.ClientPageRequest;
+import com.simple4j.system.request.ClientRemoveRequest;
+import com.simple4j.system.request.ClientUpdateRequest;
 import com.simple4j.system.response.ClientDetailResponse;
 import com.simple4j.system.service.IAuthClientService;
 import com.simple4j.web.bean.ApiResponse;

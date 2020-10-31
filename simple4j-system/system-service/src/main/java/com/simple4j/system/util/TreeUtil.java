@@ -1,13 +1,13 @@
 package com.simple4j.system.util;
 
 
+import com.simple4j.api.base.INode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import com.simple4j.api.base.INode;
 
 /**
  * 树形工具类

@@ -1,8 +1,8 @@
 package com.simple4j.system.dto;
 
-import java.io.Serializable;
-
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 数据传输对象实体类

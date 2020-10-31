@@ -1,10 +1,9 @@
 package com.simple4j.gen.request;
 
-import lombok.Data;
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 数据源配置表列表请求实体类

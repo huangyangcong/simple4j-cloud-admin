@@ -1,12 +1,12 @@
 package com.simple4j.gen.request;
 
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
+import lombok.Data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 
 /**
  * 代码生成表新增请求实体类
@@ -20,7 +20,7 @@ public class CodeAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-		/**
+	/**
 	 * 数据源主键
 	 */
 	@ApiModelProperty(name = "datasource_id", value = "数据源主键")
@@ -86,6 +86,6 @@ public class CodeAddRequest implements Serializable {
 	@ApiModelProperty(name = "web_path", value = "前端路径")
 	@JsonProperty("web_path")
 	private String webPath;
-	
+
 
 }

@@ -1,7 +1,7 @@
 package $!{package.Mapper};
 
 import $!{package.Entity}.$!{entity};
-#set($voPackage=$package.Entity.replace("entity","vo"))
+    #set($voPackage=$package.Entity.replace("entity","vo"))
 import $!{superMapperClassPackage};
 
 /**
@@ -15,5 +15,5 @@ interface $!{table.mapperName} : $!{superMapperClass}<$!{entity}>
 #else
 public interface $!{table.mapperName} extends $!{superMapperClass}<$!{entity}> {
 
-}
+        }
 #end

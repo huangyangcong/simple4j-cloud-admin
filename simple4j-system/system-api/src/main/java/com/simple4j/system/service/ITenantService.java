@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author hyc
  */
-public interface ITenantService{
+public interface ITenantService {
 
 	/**
 	 * 根据租户编号获取实体

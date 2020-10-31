@@ -1,13 +1,13 @@
 #set($requestPackage=$package.Entity.replace("entity","request"))
 package $!{requestPackage};
 
-#if($!{entityLombokModel})
-import lombok.Data;
-#end
-#if($!{swagger2})
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-#end
+    #if($!{entityLombokModel})
+    import lombok.Data;
+    #end
+    #if($!{swagger2})
+    import io.swagger.annotations.ApiModel;
+    import io.swagger.annotations.ApiModelProperty;
+    #end
 import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
@@ -19,32 +19,32 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author $!{author}
  * @since $!{date}
  */
-#if($!{entityLombokModel})
-@Data
-#end
-#if($!{swagger2})
-@ApiModel(value = "$!{table.comment}详情请求实体类", description = "$!{table.comment}详情请求实体类")
-#end
+    #if($!{entityLombokModel})
+    @Data
+    #end
+    #if($!{swagger2})
+    @ApiModel(value = "$!{table.comment}详情请求实体类", description = "$!{table.comment}详情请求实体类")
+    #end
 public class $!{entity}DetailRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	/**
-	 * $!{table.comment}详情编号
-	 */
-	#if($!{swagger2})
-	@ApiModelProperty(value = "$!{table.comment}详情编号", name = "id", required = true)
-	#end
-	@NotNull(message = "编号不能为空")
-	@JsonProperty("id")
-	private String id;
-	## ----------  END 字段循环遍历  ----------
-	#if(!$!{entityLombokModel})
-	public Long getId() {
-		return id;
-	}
+    private static final long serialVersionUID = 1L;
+    /**
+     * $!{table.comment}详情编号
+     */
+        #if($!{swagger2})
+        @ApiModelProperty(value = "$!{table.comment}详情编号", name = "id", required = true)
+        #end
+    @NotNull(message = "编号不能为空")
+    @JsonProperty("id")
+    private String id;
+    ## ----------  END 字段循环遍历  ----------
+    #if(!$!{entityLombokModel})
+        public Long getId() {
+            return id;
+        }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-	#end
+        public void setId(Long id) {
+            this.id = id;
+        }
+    #end
 }

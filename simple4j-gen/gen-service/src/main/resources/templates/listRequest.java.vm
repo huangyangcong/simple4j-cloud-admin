@@ -1,14 +1,14 @@
 #set($requestPackage=$package.Entity.replace("entity","request"))
 package $!{requestPackage};
 
-#if($!{entityLombokModel})
-import lombok.Data;
-#end
+    #if($!{entityLombokModel})
+    import lombok.Data;
+    #end
 import java.io.Serializable;
-#if($!{swagger2})
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-#end
+    #if($!{swagger2})
+    import io.swagger.annotations.ApiModel;
+    import io.swagger.annotations.ApiModelProperty;
+    #end
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -17,14 +17,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author $!{author}
  * @since $!{date}
  */
-#if($!{entityLombokModel})
-@Data
-#end
-#if($!{swagger2})
-@ApiModel(value = "$!{table.comment}列表请求实体类", description = "$!{table.comment}列表请求实体类")
-#end
+    #if($!{entityLombokModel})
+    @Data
+    #end
+    #if($!{swagger2})
+    @ApiModel(value = "$!{table.comment}列表请求实体类", description = "$!{table.comment}列表请求实体类")
+    #end
 public class $!{entity}ListRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }

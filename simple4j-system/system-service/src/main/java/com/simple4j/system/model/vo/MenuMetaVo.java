@@ -15,10 +15,10 @@
  */
 package com.simple4j.system.model.vo;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author hyc
@@ -28,9 +28,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class MenuMetaVo implements Serializable {
 
-    private String title;
+	private String title;
 
-    private String icon;
+	private String icon;
 
-    private Boolean noCache;
+	private Boolean noCache;
 }

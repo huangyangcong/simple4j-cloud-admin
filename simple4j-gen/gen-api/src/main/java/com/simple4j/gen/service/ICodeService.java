@@ -1,16 +1,16 @@
 package com.simple4j.gen.service;
 
 import com.simple4j.api.base.BusinessException;
-import com.simple4j.gen.request.CodeAddRequest;
-import com.simple4j.gen.request.CodeGenRequest;
-import com.simple4j.gen.request.CodeUpdateRequest;
-import com.simple4j.gen.request.CodeAddOrUpdateRequest;
-import com.simple4j.gen.request.CodeDetailRequest;
-import com.simple4j.gen.request.CodeListRequest;
-import com.simple4j.gen.request.CodeRemoveRequest;
-import com.simple4j.gen.request.CodePageRequest;
-import com.simple4j.gen.response.CodeDetailResponse;
 import com.simple4j.api.base.Page;
+import com.simple4j.gen.request.CodeAddOrUpdateRequest;
+import com.simple4j.gen.request.CodeAddRequest;
+import com.simple4j.gen.request.CodeDetailRequest;
+import com.simple4j.gen.request.CodeGenRequest;
+import com.simple4j.gen.request.CodeListRequest;
+import com.simple4j.gen.request.CodePageRequest;
+import com.simple4j.gen.request.CodeRemoveRequest;
+import com.simple4j.gen.request.CodeUpdateRequest;
+import com.simple4j.gen.response.CodeDetailResponse;
 
 import java.io.OutputStream;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author hyc
  * @since 2020-09-19
  */
-public interface ICodeService{
+public interface ICodeService {
 
 	/**
 	 * 详情
@@ -62,6 +62,7 @@ public interface ICodeService{
 
 	/**
 	 * 代码生成
+	 *
 	 * @param codeGenRequest
 	 */
 	void codeGen(OutputStream outputStream, CodeGenRequest codeGenRequest) throws BusinessException;

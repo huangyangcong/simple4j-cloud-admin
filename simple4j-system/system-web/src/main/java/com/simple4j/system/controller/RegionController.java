@@ -1,7 +1,12 @@
 package com.simple4j.system.controller;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.RegionAddRequest;
+import com.simple4j.system.request.RegionDetailRequest;
+import com.simple4j.system.request.RegionLazyListRequest;
+import com.simple4j.system.request.RegionPageRequest;
+import com.simple4j.system.request.RegionRemoveRequest;
+import com.simple4j.system.request.RegionUpdateRequest;
 import com.simple4j.system.response.RegionDetailResponse;
 import com.simple4j.system.service.IRegionService;
 import com.simple4j.web.bean.ApiResponse;

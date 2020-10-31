@@ -66,7 +66,7 @@ public final class ServerOperationController {
 	@GetMapping("/getAllServersBriefInfo")
 	public ApiResponse<Collection<ServerBriefInfo>> getAllServersBriefInfo() {
 		Collection<ServerBriefInfo> data = Objects.nonNull(SessionRegistryCenterConfiguration.getRegistryCenterConfiguration()) ?
-				jobAPIService.getServerStatisticsAPI().getAllServersBriefInfo() : Collections.emptyList();
+			jobAPIService.getServerStatisticsAPI().getAllServersBriefInfo() : Collections.emptyList();
 		return ApiResponse.ok(data);
 	}
 

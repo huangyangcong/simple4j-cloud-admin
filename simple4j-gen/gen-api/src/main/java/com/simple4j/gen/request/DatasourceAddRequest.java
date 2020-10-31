@@ -1,13 +1,13 @@
 package com.simple4j.gen.request;
 
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * 数据源配置表新增请求实体类
@@ -21,7 +21,7 @@ public class DatasourceAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-		/**
+	/**
 	 * 名称
 	 */
 	@ApiModelProperty(name = "name", value = "名称")
@@ -87,6 +87,6 @@ public class DatasourceAddRequest implements Serializable {
 	@ApiModelProperty(name = "status", value = "状态")
 	@JsonProperty("status")
 	private Integer status;
-	
+
 
 }

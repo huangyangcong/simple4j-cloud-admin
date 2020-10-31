@@ -55,7 +55,7 @@
 		<if test="@cn.hutool.core.collection.CollUtil@isNotEmpty(roleIds)">
 			and id IN ( SELECT menu_id FROM simple4j_role_menu WHERE role_id IN
 			<foreach close=")" collection="roleIds" index="index" item="item" open="("
-				separator=",">
+					 separator=",">
 				#{item}
 			</foreach>
 			)

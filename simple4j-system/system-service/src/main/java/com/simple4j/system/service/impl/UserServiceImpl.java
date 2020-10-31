@@ -1,13 +1,6 @@
 package com.simple4j.system.service.impl;
 
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
@@ -58,7 +51,6 @@ import com.simple4j.system.service.IUserPostService;
 import com.simple4j.system.service.IUserRoleService;
 import com.simple4j.system.service.IUserService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -67,6 +59,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * 服务实现类
@@ -95,29 +94,29 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 
 	@Override
 	public Page<UserDetailResponse> page(
-			UserPageRequest userPageRequest) {
+		UserPageRequest userPageRequest) {
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		LambdaQueryWrapper<User> queryWrapper = Wrappers.<User>lambdaQuery()
-				.eq(StrUtil.isNotEmpty(userPageRequest.getAccount()), User::getAccount,
-						userPageRequest.getAccount())
-				.eq(StrUtil.isNotEmpty(userPageRequest.getRealName()), User::getRealName,
-						userPageRequest.getRealName());
+			.eq(StrUtil.isNotEmpty(userPageRequest.getAccount()), User::getAccount,
+				userPageRequest.getAccount())
+			.eq(StrUtil.isNotEmpty(userPageRequest.getRealName()), User::getRealName,
+				userPageRequest.getRealName());
 		IPage<User> page = userMapper
-				.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(userPageRequest.getPageNo(), userPageRequest.getPageSize()),
-						CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? queryWrapper
-								.eq(User::getTenantId, securityScope.getTenantId()) : queryWrapper);
+			.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(userPageRequest.getPageNo(), userPageRequest.getPageSize()),
+				CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? queryWrapper
+					.eq(User::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		Page<User> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return userMapStruct.toVo(pages);
 	}
 
 	@Override
 	public List<UserDetailResponse> list(UserListRequest userListRequest) {
 		LambdaQueryWrapper<User> queryWrapper = Wrappers.<User>lambdaQuery()
-				.eq(StrUtil.isNotEmpty(userListRequest.getAccount()), User::getAccount,
-						userListRequest.getAccount())
-				.eq(StrUtil.isNotEmpty(userListRequest.getRealName()), User::getRealName,
-						userListRequest.getRealName());
+			.eq(StrUtil.isNotEmpty(userListRequest.getAccount()), User::getAccount,
+				userListRequest.getAccount())
+			.eq(StrUtil.isNotEmpty(userListRequest.getRealName()), User::getRealName,
+				userListRequest.getRealName());
 		if (!CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId())) {
 			queryWrapper.eq(User::getTenantId, userListRequest.getTenantId());
 		}
@@ -130,7 +129,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public UserDetailResponse detail(UserDetailRequest userDetailRequest) {
 		User user = userMapper
-				.getOne(Wrappers.<User>lambdaQuery().eq(User::getId, userDetailRequest.getId()));
+			.getOne(Wrappers.<User>lambdaQuery().eq(User::getId, userDetailRequest.getId()));
 		if (user != null) {
 			return userMapStruct.toVo(user);
 		}
@@ -146,8 +145,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		}
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		Integer cnt = userMapper.selectCount(
-				Wrappers.<User>query().lambda().eq(User::getTenantId, securityScope.getTenantId())
-						.eq(User::getAccount, userAddRequest.getAccount()));
+			Wrappers.<User>query().lambda().eq(User::getTenantId, securityScope.getTenantId())
+				.eq(User::getAccount, userAddRequest.getAccount()));
 		if (cnt > 0) {
 			throw new BusinessException("当前用户已存在!");
 		}
@@ -164,8 +163,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		}
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		Integer cnt = userMapper.selectCount(
-				Wrappers.<User>query().lambda().eq(User::getTenantId, securityScope.getTenantId())
-						.eq(User::getAccount, userUpdateRequest.getAccount()));
+			Wrappers.<User>query().lambda().eq(User::getTenantId, securityScope.getTenantId())
+				.eq(User::getAccount, userUpdateRequest.getAccount()));
 		if (cnt == 0) {
 			throw new BusinessException("当前用户不存在!");
 		}
@@ -253,7 +252,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		User user = new User();
 		user.setPassword(passwordEncoder.encode(CommonConstant.DEFAULT_PASSWORD));
 		return userMapper.updateBool(user, Wrappers.<User>update().lambda()
-				.in(User::getId, userResetPasswordRequest.getUserIds()));
+			.in(User::getId, userResetPasswordRequest.getUserIds()));
 	}
 
 	@Override
@@ -269,7 +268,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			throw new BusinessException("原密码不正确!");
 		}
 		return userMapper.update(Wrappers.<User>update().lambda()
-				.set(User::getPassword, DigestUtil.sha256Hex(newPassword)).eq(User::getId, userId));
+			.set(User::getPassword, DigestUtil.sha256Hex(newPassword)).eq(User::getId, userId));
 	}
 
 	@Override
@@ -283,7 +282,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			throw new RuntimeException("请上传文件!");
 		}
 		if ((!StringUtils.endsWithIgnoreCase(filename, ".xls") && !StringUtils
-				.endsWithIgnoreCase(filename, ".xlsx"))) {
+			.endsWithIgnoreCase(filename, ".xlsx"))) {
 			throw new RuntimeException("请上传正确的excel文件!");
 		}
 		if (inputStream == null) {
@@ -295,52 +294,52 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 		List<UserExcelImport> list = new ArrayList<>();
 
 		ExcelReaderBuilder builder = EasyExcel.read(inputStream, UserExcelImport.class,
-				new AnalysisEventListener<UserExcelImport>() {
-					@Override
-					public void invoke(UserExcelImport data, AnalysisContext context) {
-						list.add(data);
-						// 达到BATCH_COUNT，则调用importer方法入库，防止数据几万条数据在内存，容易OOM
-						if (list.size() >= batchCount) {
-							// 调用importer方法
-							importUser(list);
-							// 存储完成清理list
-							list.clear();
-						}
-					}
-
-					@Override
-					public void doAfterAllAnalysed(AnalysisContext context) {
+			new AnalysisEventListener<UserExcelImport>() {
+				@Override
+				public void invoke(UserExcelImport data, AnalysisContext context) {
+					list.add(data);
+					// 达到BATCH_COUNT，则调用importer方法入库，防止数据几万条数据在内存，容易OOM
+					if (list.size() >= batchCount) {
 						// 调用importer方法
 						importUser(list);
 						// 存储完成清理list
 						list.clear();
 					}
+				}
 
-					public void importUser(List<UserExcelImport> data) {
-						data.forEach(userExcel -> {
-							User user = Objects.requireNonNull(userMapStruct.toPo(userExcel));
-							// 设置默认密码
-							user.setPassword(CommonConstant.DEFAULT_PASSWORD);
-							userMapper.saveOrUpdate(user);
+				@Override
+				public void doAfterAllAnalysed(AnalysisContext context) {
+					// 调用importer方法
+					importUser(list);
+					// 存储完成清理list
+					list.clear();
+				}
 
-							Set<String> userIds = Sets.newHashSet(user.getId());
-							// 设置部门ID
-							Set<String> deptIds = deptService
-									.getDeptIds(userExcel.getTenantId(), userExcel.getDeptName());
-							userDeptService.grant(userIds, deptIds);
+				public void importUser(List<UserExcelImport> data) {
+					data.forEach(userExcel -> {
+						User user = Objects.requireNonNull(userMapStruct.toPo(userExcel));
+						// 设置默认密码
+						user.setPassword(CommonConstant.DEFAULT_PASSWORD);
+						userMapper.saveOrUpdate(user);
 
-							// 设置岗位ID
-							Set<String> postIds = postService
-									.getPostIds(userExcel.getTenantId(), userExcel.getDeptName());
-							userPostService.grant(userIds, postIds);
+						Set<String> userIds = Sets.newHashSet(user.getId());
+						// 设置部门ID
+						Set<String> deptIds = deptService
+							.getDeptIds(userExcel.getTenantId(), userExcel.getDeptName());
+						userDeptService.grant(userIds, deptIds);
 
-							// 设置角色ID
-							Set<String> roleIds = roleService
-									.getRoleIds(userExcel.getTenantId(), userExcel.getDeptName());
-							userRoleService.grant(userIds, roleIds);
-						});
-					}
-				});
+						// 设置岗位ID
+						Set<String> postIds = postService
+							.getPostIds(userExcel.getTenantId(), userExcel.getDeptName());
+						userPostService.grant(userIds, postIds);
+
+						// 设置角色ID
+						Set<String> roleIds = roleService
+							.getRoleIds(userExcel.getTenantId(), userExcel.getDeptName());
+						userRoleService.grant(userIds, roleIds);
+					});
+				}
+			});
 		builder.doReadAll();
 	}
 
@@ -391,7 +390,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userMapper
-				.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAccount, username));
+			.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAccount, username));
 		if (ObjectUtil.isEmpty(user)) {
 			throw new UsernameNotFoundException("");
 		}
@@ -416,8 +415,8 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 			grantedAuthorities.add(SecurityUtils.createUserNameAuthority(user.getName()));
 		}
 		return org.springframework.security.core.userdetails.User.withUsername(user.getName())
-				.password(user.getPassword())
-				.authorities(grantedAuthorities).build();
+			.password(user.getPassword())
+			.authorities(grantedAuthorities).build();
 	}
 
 	@Override
@@ -432,7 +431,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
 //		captchaService.verify(captchaKey, userLoginRequest.getCaptchaCode());
 		//登录校验
 		String token = tokenService.login(userLoginRequest.getUsername(),
-				userLoginRequest.getPassword());
+			userLoginRequest.getPassword());
 		UserLoginResponse userLoginResponse = new UserLoginResponse();
 		userLoginResponse.setToken(token);
 		//删除验证码

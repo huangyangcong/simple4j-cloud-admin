@@ -26,20 +26,20 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class CloudAppConfiguration {
-    
-    private String appName;
-    
-    private String appURL;
-    
-    private String bootstrapScript;
-    
-    private double cpuCount = 1d;
-    
-    private double memoryMB = 128d;
-    
-    private boolean appCacheEnable = true;
-    
-    private int eventTraceSamplingCount;
-    
-    private boolean disabled;
+
+	private String appName;
+
+	private String appURL;
+
+	private String bootstrapScript;
+
+	private double cpuCount = 1d;
+
+	private double memoryMB = 128d;
+
+	private boolean appCacheEnable = true;
+
+	private int eventTraceSamplingCount;
+
+	private boolean disabled;
 }

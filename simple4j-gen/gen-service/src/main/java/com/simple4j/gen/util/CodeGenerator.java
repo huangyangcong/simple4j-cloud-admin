@@ -5,19 +5,6 @@ package com.simple4j.gen.util;
  * @version 1.0.0
  */
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.zip.ZipOutputStream;
-
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -45,10 +32,22 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.zip.ZipOutputStream;
 
 
 @Data
@@ -59,19 +58,19 @@ public class CodeGenerator {
 	/**
 	 * sword 系统名
 	 */
-	private static final String SWORD_NAME = "templates/sword";
+	private static final String SWORD_NAME = "templates/sword" ;
 	/**
 	 * saber 系统名
 	 */
-	private static final String SABER_NAME = "templates/saber";
+	private static final String SABER_NAME = "templates/saber" ;
 	/**
 	 * pom中gourpId
 	 */
-	private String groupId = "com.simple4j.admin";
+	private String groupId = "com.simple4j.admin" ;
 	/**
 	 * 项目名称
 	 */
-	private String projectName = "simple4j";
+	private String projectName = "simple4j" ;
 	/**
 	 * 代码所在系统
 	 */
@@ -83,7 +82,7 @@ public class CodeGenerator {
 	/**
 	 * 代码生成的包名
 	 */
-	private String packageName = "com.simple4j.admin";
+	private String packageName = "com.simple4j.admin" ;
 	/**
 	 * 需要去掉的表前缀
 	 */
@@ -103,7 +102,7 @@ public class CodeGenerator {
 	/**
 	 * 租户字段
 	 */
-	private String tenantColumn = "tenant_id";
+	private String tenantColumn = "tenant_id" ;
 	/**
 	 * 是否启用swagger
 	 */
@@ -139,7 +138,7 @@ public class CodeGenerator {
 	/**
 	 * 日期格式
 	 */
-	private String dateType = "ONLY_DATE";
+	private String dateType = "ONLY_DATE" ;
 
 	/**
 	 * 输出流
@@ -151,7 +150,7 @@ public class CodeGenerator {
 		// 设置数据源
 		generator.setDriverName("com.mysql.cj.jdbc.Driver");
 		generator.setUrl(
-				"jdbc:mysql://122.51.133.124:30002/flow?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&serverTimezone=GMT%2B8");
+			"jdbc:mysql://122.51.133.124:30002/flow?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&serverTimezone=GMT%2B8");
 		generator.setUsername("root");
 		generator.setPassword("uY;:rs623ic&");
 		// 设置基础配置
@@ -201,7 +200,7 @@ public class CodeGenerator {
 		mpg.setGlobalConfig(gc);
 		DataSourceConfig dsc = new DataSourceConfig();
 		String driverName = StrUtil.nullToDefault(this.driverName,
-				props.getProperty("spring.datasource.driver-class-name"));
+			props.getProperty("spring.datasource.driver-class-name"));
 		if (StrUtil.containsAny(driverName, DbType.MYSQL.getDb())) {
 			dsc.setDbType(DbType.MYSQL);
 			dsc.setTypeConvert(new MySqlTypeConvert());
@@ -215,11 +214,11 @@ public class CodeGenerator {
 		dsc.setDriverName(driverName);
 		dsc.setUrl(StrUtil.nullToDefault(this.url, props.getProperty("spring.datasource.url")));
 		dsc.setUsername(
-				StrUtil.nullToDefault(this.username,
-						props.getProperty("spring.datasource.username")));
+			StrUtil.nullToDefault(this.username,
+				props.getProperty("spring.datasource.username")));
 		dsc.setPassword(
-				StrUtil.nullToDefault(this.password,
-						props.getProperty("spring.datasource.password")));
+			StrUtil.nullToDefault(this.password,
+				props.getProperty("spring.datasource.password")));
 		mpg.setDataSource(dsc);
 		// 策略配置
 		StrategyConfig strategy = new StrategyConfig();
@@ -269,10 +268,10 @@ public class CodeGenerator {
 		mpg.execute();
 
 		try (ZipOutputStream zipOutputStream = outputStream == null ? new ZipOutputStream(
-				new FileOutputStream(
-						path + ".zip")) : new ZipOutputStream(outputStream)) {
+			new FileOutputStream(
+				path + ".zip")) : new ZipOutputStream(outputStream)) {
 			ZipUtil.zip(zipOutputStream, false, file -> true,
-					new File(path));
+				new File(path));
 		} catch (Exception e) {
 			throw new RuntimeException("压缩文件错误");
 		}
@@ -307,76 +306,76 @@ public class CodeGenerator {
 				map.put("viewMenuId", IdWorker.getId());
 				map.put("upperModuleName", upperModuleName);
 				return outputDir + "/sql/" + tableInfo
-						.getEntityName().toLowerCase() + ".menu.mysql";
+					.getEntityName().toLowerCase() + ".menu.mysql" ;
 			}
 		});
-		String javaSource = "/src/main/java";
-		String api = File.separator + moduleName + "-api";
-		String dao = File.separator + moduleName + "-dao";
-		String service = File.separator + moduleName + "-service";
-		String web = File.separator + moduleName + "-web";
-		String start = File.separator + moduleName + "-start";
-		String manager = File.separator + moduleName + "-manager";
+		String javaSource = "/src/main/java" ;
+		String api = File.separator + moduleName + "-api" ;
+		String dao = File.separator + moduleName + "-dao" ;
+		String service = File.separator + moduleName + "-service" ;
+		String web = File.separator + moduleName + "-web" ;
+		String start = File.separator + moduleName + "-start" ;
+		String manager = File.separator + moduleName + "-manager" ;
 
 		focList.add(new FileOutConfig("/templates/parentPom.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return outputDir + "/pom.xml";
+				return outputDir + "/pom.xml" ;
 			}
 		});
 
 		focList.add(new FileOutConfig("/templates/apiPom.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return outputDir + api + "/pom.xml";
+				return outputDir + api + "/pom.xml" ;
 			}
 		});
 
 		focList.add(new FileOutConfig("/templates/daoPom.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return outputDir + dao + "/pom.xml";
+				return outputDir + dao + "/pom.xml" ;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/servicePom.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return outputDir + service + "/pom.xml";
+				return outputDir + service + "/pom.xml" ;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/managerPom.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return outputDir + manager + "/pom.xml";
+				return outputDir + manager + "/pom.xml" ;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/startPom.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return outputDir + start + "/pom.xml";
+				return outputDir + start + "/pom.xml" ;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/webPom.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
-				return outputDir + web + "/pom.xml";
+				return outputDir + web + "/pom.xml" ;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/application.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + start + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + upperModuleName
-						+ "Application"
-						+ StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + upperModuleName
+					+ "Application"
+					+ StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/service.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "service" + "/" + tableInfo
-						.getServiceName() + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "service" + "/" + tableInfo
+					.getServiceName() + StringPool.DOT_JAVA;
 			}
 		});
 		if (tree) {
@@ -384,9 +383,9 @@ public class CodeGenerator {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return outputDir + api + javaSource + File.separator + servicePackage
-							.replace(".", File.separator) + File.separator + "request"
-							+ File.separator
-							+ tableInfo.getEntityName() + "TreeRequest" + StringPool.DOT_JAVA;
+						.replace(".", File.separator) + File.separator + "request"
+						+ File.separator
+						+ tableInfo.getEntityName() + "TreeRequest" + StringPool.DOT_JAVA;
 				}
 			});
 		}
@@ -394,172 +393,172 @@ public class CodeGenerator {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "request" + File.separator
-						+ tableInfo.getEntityName() + "AddRequest" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "request" + File.separator
+					+ tableInfo.getEntityName() + "AddRequest" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/detailRequest.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "request" + File.separator
-						+ tableInfo.getEntityName() + "DetailRequest" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "request" + File.separator
+					+ tableInfo.getEntityName() + "DetailRequest" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/listRequest.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "request" + File.separator
-						+ tableInfo.getEntityName() + "ListRequest" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "request" + File.separator
+					+ tableInfo.getEntityName() + "ListRequest" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/pageRequest.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "request" + File.separator
-						+ tableInfo.getEntityName() + "PageRequest" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "request" + File.separator
+					+ tableInfo.getEntityName() + "PageRequest" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/removeRequest.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "request" + File.separator
-						+ tableInfo.getEntityName() + "RemoveRequest" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "request" + File.separator
+					+ tableInfo.getEntityName() + "RemoveRequest" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/updateRequest.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "request" + File.separator
-						+ tableInfo.getEntityName() + "UpdateRequest" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "request" + File.separator
+					+ tableInfo.getEntityName() + "UpdateRequest" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/addOrUpdateRequest.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "request" + File.separator
-						+ tableInfo.getEntityName() + "AddOrUpdateRequest" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "request" + File.separator
+					+ tableInfo.getEntityName() + "AddOrUpdateRequest" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/detailResponse.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + api + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "response" + File.separator
-						+ tableInfo.getEntityName() + "DetailResponse" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "response" + File.separator
+					+ tableInfo.getEntityName() + "DetailResponse" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + File.separator + moduleName
-						+ "-dao/src/main/resources/mapper" + File.separator
-						+ File.separator + tableInfo.getXmlName() + ConstVal.XML_SUFFIX;
+					+ "-dao/src/main/resources/mapper" + File.separator
+					+ File.separator + tableInfo.getXmlName() + ConstVal.XML_SUFFIX;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/mapper.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + dao + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "mapper" + File.separator
-						+ tableInfo.getMapperName()
-						+ StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "mapper" + File.separator
+					+ tableInfo.getMapperName()
+					+ StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/entity.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + dao + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "entity" + File.separator
-						+ tableInfo.getEntityName() + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "entity" + File.separator
+					+ tableInfo.getEntityName() + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/mapStruct.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + service + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "mapstruct"
-						+ File.separator
-						+ tableInfo.getEntityName() + "MapStruct" + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "mapstruct"
+					+ File.separator
+					+ tableInfo.getEntityName() + "MapStruct" + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/serviceImpl.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + service + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "service/impl"
-						+ File.separator
-						+ tableInfo.getServiceImplName() + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "service/impl"
+					+ File.separator
+					+ tableInfo.getServiceImplName() + StringPool.DOT_JAVA;
 			}
 		});
 		focList.add(new FileOutConfig("/templates/controller.java.vm") {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				return outputDir + web + javaSource + File.separator + servicePackage
-						.replace(".", File.separator) + File.separator + "controller"
-						+ File.separator
-						+ tableInfo.getControllerName() + StringPool.DOT_JAVA;
+					.replace(".", File.separator) + File.separator + "controller"
+					+ File.separator
+					+ tableInfo.getControllerName() + StringPool.DOT_JAVA;
 			}
 		});
-		String front = outputDir + File.separator + "front";
+		String front = outputDir + File.separator + "front" ;
 		if (systemName.equals(SWORD_NAME)) {
 			focList.add(new FileOutConfig("/templates/sword/action.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
-					return front + "/actions" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
+					return front + "/actions" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js" ;
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/model.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
-					return front + "/models" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
+					return front + "/models" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js" ;
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/service.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
-					return front + "/services" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
+					return front + "/services" + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js" ;
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/list.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return front + "/pages" + File.separator + StrUtil
-							.upperFirst(servicePackage) + File.separator + tableInfo
-							.getEntityName()
-							+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
+						.upperFirst(servicePackage) + File.separator + tableInfo
+						.getEntityName()
+						+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js" ;
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/add.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return front + "/pages" + File.separator + StrUtil
-							.upperFirst(servicePackage) + File.separator + tableInfo
-							.getEntityName()
-							+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "Add.js";
+						.upperFirst(servicePackage) + File.separator + tableInfo
+						.getEntityName()
+						+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "Add.js" ;
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/edit.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return front + "/pages" + File.separator + StrUtil
-							.upperFirst(servicePackage) + File.separator + tableInfo
-							.getEntityName()
-							+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "Edit.js";
+						.upperFirst(servicePackage) + File.separator + tableInfo
+						.getEntityName()
+						+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "Edit.js" ;
 				}
 			});
 			focList.add(new FileOutConfig("/templates/sword/view.js.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return front + "/pages" + File.separator + StrUtil
-							.upperFirst(servicePackage) + File.separator + tableInfo
-							.getEntityName()
-							+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "View.js";
+						.upperFirst(servicePackage) + File.separator + tableInfo
+						.getEntityName()
+						+ File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + "View.js" ;
 				}
 			});
 		} else if (systemName.equals(SABER_NAME)) {
@@ -567,14 +566,14 @@ public class CodeGenerator {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return front + "/api" + File.separator + moduleName
-							.toLowerCase() + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js";
+						.toLowerCase() + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".js" ;
 				}
 			});
 			focList.add(new FileOutConfig("/templates/saber/crud.vue.vm") {
 				@Override
 				public String outputFile(TableInfo tableInfo) {
 					return front + "/views" + File.separator + moduleName
-							.toLowerCase() + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".vue";
+						.toLowerCase() + File.separator + StrUtil.lowerFirst(tableInfo.getEntityName()) + ".vue" ;
 				}
 			});
 		}
@@ -615,7 +614,7 @@ public class CodeGenerator {
 	 * 页面生成的文件名
 	 */
 	private String getGeneratorViewPath(String viewOutputDir, TableInfo tableInfo,
-			String suffixPath) {
+										String suffixPath) {
 		String name = StringUtils.firstToLowerCase(tableInfo.getEntityName());
 		String path = viewOutputDir + File.separator + name + File.separator + name + suffixPath;
 		File viewDir = new File(path).getParentFile();

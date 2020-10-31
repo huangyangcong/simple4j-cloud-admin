@@ -28,11 +28,11 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
-<!--			<dependency>-->
-<!--				<groupId>com.github.binarywang</groupId>-->
-<!--				<artifactId>weixin-java-pay</artifactId>-->
-<!--				<version>${wx.version}</version>-->
-<!--			</dependency>-->
+			<!--			<dependency>-->
+			<!--				<groupId>com.github.binarywang</groupId>-->
+			<!--				<artifactId>weixin-java-pay</artifactId>-->
+			<!--				<version>${wx.version}</version>-->
+			<!--			</dependency>-->
 		</dependencies>
 	</dependencyManagement>
 	<modules>
@@ -43,7 +43,7 @@
 		<module>simple4j-system</module>
 		<module>simple4j-gen</module>
 		<module>simple4j-base-modules</module>
-        <module>simple4j-flow</module>
+		<module>simple4j-flow</module>
 	</modules>
 	<reporting>
 		<plugins>
@@ -56,82 +56,82 @@
 	<build>
 		<plugins>
 			<!-- 用pmd校验阿里的p3c规范-->
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-pmd-plugin</artifactId>-->
-<!--				<version>3.12.0</version>-->
-<!--				<configuration>-->
-<!--					<printFailingErrors>true</printFailingErrors>-->
-<!--					<verbose>true</verbose>-->
-<!--					<rulesets>-->
-<!--						<ruleset>rulesets/java/ali-comment.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-concurrent.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-constant.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-exception.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-flowcontrol.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-naming.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-oop.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-orm.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-other.xml</ruleset>-->
-<!--						<ruleset>rulesets/java/ali-set.xml</ruleset>-->
-<!--					</rulesets>-->
-<!--					<excludes>-->
-<!--						<exclude>com/alibaba/excel/event/AnalysisEventListener.java</exclude>-->
-<!--					</excludes>-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					&lt;!&ndash; 绑定pmd:check到verify生命周期 &ndash;&gt;-->
-<!--					<execution>-->
-<!--						<id>pmd-check-verify</id>-->
-<!--						<phase>validate</phase>-->
-<!--						<goals>-->
-<!--							<goal>check</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--				<dependencies>-->
-<!--					<dependency>-->
-<!--						<groupId>com.alibaba.p3c</groupId>-->
-<!--						<artifactId>p3c-pmd</artifactId>-->
-<!--						<version>2.0.0</version>-->
-<!--					</dependency>-->
-<!--				</dependencies>-->
-<!--			</plugin>-->
-<!--			<plugin>-->
-<!--				<groupId>org.codehaus.mojo</groupId>-->
-<!--				<artifactId>flatten-maven-plugin</artifactId>-->
-<!--				<inherited>false</inherited>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						&lt;!&ndash; Flatten and simplify our own POM for install/deploy &ndash;&gt;-->
-<!--						<id>flatten</id>-->
-<!--						<phase>process-resources</phase>-->
-<!--						<goals>-->
-<!--							<goal>flatten</goal>-->
-<!--						</goals>-->
-<!--						<configuration>-->
-<!--							<updatePomFile>true</updatePomFile>-->
-<!--							<pomElements>-->
-<!--								<parent>expand</parent>-->
-<!--								<name>keep</name>-->
-<!--								<description>keep</description>-->
-<!--								<url>expand</url>-->
-<!--								<properties>keep</properties>-->
-<!--								<pluginManagement>keep</pluginManagement>-->
-<!--								<dependencyManagement>keep</dependencyManagement>-->
-<!--								<build>keep</build>-->
-<!--							</pomElements>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--					<execution>-->
-<!--						<id>flatten-clean</id>-->
-<!--						<phase>clean</phase>-->
-<!--						<goals>-->
-<!--							<goal>clean</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
+			<!--			<plugin>-->
+			<!--				<groupId>org.apache.maven.plugins</groupId>-->
+			<!--				<artifactId>maven-pmd-plugin</artifactId>-->
+			<!--				<version>3.12.0</version>-->
+			<!--				<configuration>-->
+			<!--					<printFailingErrors>true</printFailingErrors>-->
+			<!--					<verbose>true</verbose>-->
+			<!--					<rulesets>-->
+			<!--						<ruleset>rulesets/java/ali-comment.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-concurrent.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-constant.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-exception.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-flowcontrol.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-naming.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-oop.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-orm.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-other.xml</ruleset>-->
+			<!--						<ruleset>rulesets/java/ali-set.xml</ruleset>-->
+			<!--					</rulesets>-->
+			<!--					<excludes>-->
+			<!--						<exclude>com/alibaba/excel/event/AnalysisEventListener.java</exclude>-->
+			<!--					</excludes>-->
+			<!--				</configuration>-->
+			<!--				<executions>-->
+			<!--					&lt;!&ndash; 绑定pmd:check到verify生命周期 &ndash;&gt;-->
+			<!--					<execution>-->
+			<!--						<id>pmd-check-verify</id>-->
+			<!--						<phase>validate</phase>-->
+			<!--						<goals>-->
+			<!--							<goal>check</goal>-->
+			<!--						</goals>-->
+			<!--					</execution>-->
+			<!--				</executions>-->
+			<!--				<dependencies>-->
+			<!--					<dependency>-->
+			<!--						<groupId>com.alibaba.p3c</groupId>-->
+			<!--						<artifactId>p3c-pmd</artifactId>-->
+			<!--						<version>2.0.0</version>-->
+			<!--					</dependency>-->
+			<!--				</dependencies>-->
+			<!--			</plugin>-->
+			<!--			<plugin>-->
+			<!--				<groupId>org.codehaus.mojo</groupId>-->
+			<!--				<artifactId>flatten-maven-plugin</artifactId>-->
+			<!--				<inherited>false</inherited>-->
+			<!--				<executions>-->
+			<!--					<execution>-->
+			<!--						&lt;!&ndash; Flatten and simplify our own POM for install/deploy &ndash;&gt;-->
+			<!--						<id>flatten</id>-->
+			<!--						<phase>process-resources</phase>-->
+			<!--						<goals>-->
+			<!--							<goal>flatten</goal>-->
+			<!--						</goals>-->
+			<!--						<configuration>-->
+			<!--							<updatePomFile>true</updatePomFile>-->
+			<!--							<pomElements>-->
+			<!--								<parent>expand</parent>-->
+			<!--								<name>keep</name>-->
+			<!--								<description>keep</description>-->
+			<!--								<url>expand</url>-->
+			<!--								<properties>keep</properties>-->
+			<!--								<pluginManagement>keep</pluginManagement>-->
+			<!--								<dependencyManagement>keep</dependencyManagement>-->
+			<!--								<build>keep</build>-->
+			<!--							</pomElements>-->
+			<!--						</configuration>-->
+			<!--					</execution>-->
+			<!--					<execution>-->
+			<!--						<id>flatten-clean</id>-->
+			<!--						<phase>clean</phase>-->
+			<!--						<goals>-->
+			<!--							<goal>clean</goal>-->
+			<!--						</goals>-->
+			<!--					</execution>-->
+			<!--				</executions>-->
+			<!--			</plugin>-->
 
 		</plugins>
 		<pluginManagement>

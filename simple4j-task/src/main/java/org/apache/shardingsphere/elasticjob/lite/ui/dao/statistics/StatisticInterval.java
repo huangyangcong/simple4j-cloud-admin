@@ -26,12 +26,12 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum StatisticInterval {
-    
-    MINUTE("0 * * * * ?"),
-    
-    HOUR("0 0 * * * ?"), 
-    
-    DAY("0 0 0 * * ?");
-    
-    private final String cron;
+
+	MINUTE("0 * * * * ?"),
+
+	HOUR("0 0 * * * ?"),
+
+	DAY("0 0 0 * * ?");
+
+	private final String cron;
 }

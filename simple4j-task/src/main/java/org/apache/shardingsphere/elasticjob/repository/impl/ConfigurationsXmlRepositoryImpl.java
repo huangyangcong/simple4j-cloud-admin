@@ -24,8 +24,8 @@ import org.apache.shardingsphere.elasticjob.repository.ConfigurationsXmlReposito
  * Configurations XML repository implementation.
  */
 public final class ConfigurationsXmlRepositoryImpl extends AbstractXmlRepositoryImpl<GlobalConfiguration> implements ConfigurationsXmlRepository {
-    
-    public ConfigurationsXmlRepositoryImpl() {
-        super("Configurations.xml", GlobalConfiguration.class);
-    }
+
+	public ConfigurationsXmlRepositoryImpl() {
+		super("Configurations.xml", GlobalConfiguration.class);
+	}
 }

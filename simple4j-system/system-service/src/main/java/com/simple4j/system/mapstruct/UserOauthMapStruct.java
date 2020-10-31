@@ -1,15 +1,15 @@
 package com.simple4j.system.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.UserOauth;
-import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
 import com.simple4j.system.request.UserOauthAddRequest;
 import com.simple4j.system.request.UserOauthUpdateRequest;
+import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
 import com.simple4j.system.response.UserOauthDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 用户第三方认证表数据转换类
@@ -39,32 +39,33 @@ public interface UserOauthMapStruct {
 	/**
 	 * VO转PO
 	 *
-	 * @vo vo
 	 * @return
+	 * @vo vo
 	 */
 	UserOauth toPo(UserOauthUpdateRequest vo);
 
 	/**
-	* PO转VO
-	*
-	* @param po
-	* @return
-	*/
+	 * PO转VO
+	 *
+	 * @param po
+	 * @return
+	 */
 	UserOauthDetailResponse toVo(UserOauth po);
 
 	/**
-	* PO转VO
-	*
-	* @param po
-	* @return
-	*/
+	 * PO转VO
+	 *
+	 * @param po
+	 * @return
+	 */
 	List<UserOauthDetailResponse> toVo(List<UserOauth> po);
 
 
 	/**
-	* 分页转换PO转VO
-	* @param po
-	* @return
-	*/
+	 * 分页转换PO转VO
+	 *
+	 * @param po
+	 * @return
+	 */
 	Page<UserOauthDetailResponse> toVo(Page<UserOauth> po);
 }

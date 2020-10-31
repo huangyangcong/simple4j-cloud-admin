@@ -1,22 +1,26 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.BusinessException;
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
-import com.simple4j.system.service.IRegionService;
-import lombok.RequiredArgsConstructor;
 import com.simple4j.system.entity.Region;
 import com.simple4j.system.mapper.RegionMapper;
 import com.simple4j.system.mapstruct.RegionMapStruct;
+import com.simple4j.system.request.RegionAddRequest;
+import com.simple4j.system.request.RegionDetailRequest;
+import com.simple4j.system.request.RegionLazyListRequest;
+import com.simple4j.system.request.RegionPageRequest;
+import com.simple4j.system.request.RegionRemoveRequest;
+import com.simple4j.system.request.RegionUpdateRequest;
 import com.simple4j.system.response.RegionDetailResponse;
-
+import com.simple4j.system.service.IRegionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 行政区划表 服务实现类
@@ -112,11 +116,11 @@ public class RegionServiceImpl implements IRegionService {
 	@Override
 	public Page<RegionDetailResponse> page(RegionPageRequest regionPageRequest) {
 		IPage<Region> page = regionMapper
-				.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(regionPageRequest.getPageNo(),
-								regionPageRequest.getPageSize()),
-						Wrappers.<Region>lambdaQuery().eq(Region::getCode, regionPageRequest.getCode()));
+			.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(regionPageRequest.getPageNo(),
+					regionPageRequest.getPageSize()),
+				Wrappers.<Region>lambdaQuery().eq(Region::getCode, regionPageRequest.getCode()));
 		Page<Region> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return regionMapStruct.toVo(pages);
 	}
 }

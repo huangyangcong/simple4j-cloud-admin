@@ -26,12 +26,12 @@ import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.StateNode;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class ReadyNode {
-    
-    static final String ROOT = StateNode.ROOT + "/ready";
-    
-    private static final String READY_JOB = ROOT + "/%s";
-    
-    static String getReadyJobNodePath(final String jobName) {
-        return String.format(READY_JOB, jobName);
-    }
+
+	static final String ROOT = StateNode.ROOT + "/ready" ;
+
+	private static final String READY_JOB = ROOT + "/%s" ;
+
+	static String getReadyJobNodePath(final String jobName) {
+		return String.format(READY_JOB, jobName);
+	}
 }

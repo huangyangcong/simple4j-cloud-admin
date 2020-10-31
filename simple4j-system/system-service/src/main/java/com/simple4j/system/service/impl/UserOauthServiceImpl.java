@@ -7,7 +7,12 @@ import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.UserOauth;
 import com.simple4j.system.mapper.UserOauthMapper;
 import com.simple4j.system.mapstruct.UserOauthMapStruct;
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.UserOauthAddRequest;
+import com.simple4j.system.request.UserOauthDetailRequest;
+import com.simple4j.system.request.UserOauthListRequest;
+import com.simple4j.system.request.UserOauthPageRequest;
+import com.simple4j.system.request.UserOauthRemoveRequest;
+import com.simple4j.system.request.UserOauthUpdateRequest;
 import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
 import com.simple4j.system.response.UserOauthDetailResponse;
 import com.simple4j.system.service.IUserOauthService;
@@ -34,7 +39,7 @@ public class UserOauthServiceImpl implements IUserOauthService {
 	@Override
 	public UserOauthDetailResponse detail(UserOauthDetailRequest userOauthDetailRequest) {
 		UserOauth detail = userOauthMapper.getOne(
-				Wrappers.<UserOauth>lambdaQuery().eq(UserOauth::getId, userOauthDetailRequest.getId()));
+			Wrappers.<UserOauth>lambdaQuery().eq(UserOauth::getId, userOauthDetailRequest.getId()));
 		return userOauthMapStruct.toVo(detail);
 	}
 

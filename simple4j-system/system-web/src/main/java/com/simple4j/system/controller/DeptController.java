@@ -1,13 +1,15 @@
 package com.simple4j.system.controller;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.DeptAddRequest;
+import com.simple4j.system.request.DeptDetailRequest;
+import com.simple4j.system.request.DeptPageRequest;
+import com.simple4j.system.request.DeptRemoveRequest;
+import com.simple4j.system.request.DeptUpdateRequest;
 import com.simple4j.system.response.DeptDetailResponse;
 import com.simple4j.system.service.IDeptService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

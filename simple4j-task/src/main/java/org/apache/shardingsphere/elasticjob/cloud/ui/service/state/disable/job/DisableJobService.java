@@ -29,45 +29,45 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class DisableJobService {
-    
-    @Autowired
-    private CoordinatorRegistryCenter regCenter;
-    
-    @Autowired
-    private JobStateConfiguration jobStateConfiguration;
-    
-    /**
-     * Add job to the disable queue.
-     *
-     * @param jobName job name
-     */
-    public void add(final String jobName) {
-        if (regCenter.getNumChildren(DisableJobNode.ROOT) > jobStateConfiguration.getQueueSize()) {
-            log.warn("Cannot add disable job, caused by read state queue size is larger than {}.", jobStateConfiguration.getQueueSize());
-            return;
-        }
-        String disableJobNodePath = DisableJobNode.getDisableJobNodePath(jobName);
-        if (!regCenter.isExisted(disableJobNodePath)) {
-            regCenter.persist(disableJobNodePath, jobName);
-        }
-    }
-    
-    /**
-     * Remove the job from the disable queue.
-     *
-     * @param jobName job name
-     */
-    public void remove(final String jobName) {
-        regCenter.remove(DisableJobNode.getDisableJobNodePath(jobName));
-    }
-    
-    /**
-     * Determine whether the job is in the disable queue or not.
-     *
-     * @param jobName job name
-     * @return true is in the disable queue, otherwise not
-     */
-    public boolean isDisabled(final String jobName) {
-        return regCenter.isExisted(DisableJobNode.getDisableJobNodePath(jobName));
-    }
+
+	@Autowired
+	private CoordinatorRegistryCenter regCenter;
+
+	@Autowired
+	private JobStateConfiguration jobStateConfiguration;
+
+	/**
+	 * Add job to the disable queue.
+	 *
+	 * @param jobName job name
+	 */
+	public void add(final String jobName) {
+		if (regCenter.getNumChildren(DisableJobNode.ROOT) > jobStateConfiguration.getQueueSize()) {
+			log.warn("Cannot add disable job, caused by read state queue size is larger than {}.", jobStateConfiguration.getQueueSize());
+			return;
+		}
+		String disableJobNodePath = DisableJobNode.getDisableJobNodePath(jobName);
+		if (!regCenter.isExisted(disableJobNodePath)) {
+			regCenter.persist(disableJobNodePath, jobName);
+		}
+	}
+
+	/**
+	 * Remove the job from the disable queue.
+	 *
+	 * @param jobName job name
+	 */
+	public void remove(final String jobName) {
+		regCenter.remove(DisableJobNode.getDisableJobNodePath(jobName));
+	}
+
+	/**
+	 * Determine whether the job is in the disable queue or not.
+	 *
+	 * @param jobName job name
+	 * @return true is in the disable queue, otherwise not
+	 */
+	public boolean isDisabled(final String jobName) {
+		return regCenter.isExisted(DisableJobNode.getDisableJobNodePath(jobName));
+	}
 }

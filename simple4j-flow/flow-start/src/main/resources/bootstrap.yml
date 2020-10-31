@@ -1,10 +1,10 @@
 server:
-  port: 8082
+    port: 8082
 spring:
-  application:
-    name: flow-service
-  cloud:
-    nacos:
-      server-addr: 122.51.133.124:30000
-      config:
-        file-extension: yml
+    application:
+        name: flow-service
+    cloud:
+        nacos:
+            server-addr: 122.51.133.124:30000
+            config:
+                file-extension: yml

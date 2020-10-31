@@ -31,25 +31,25 @@ import java.util.List;
  */
 @Repository
 public interface TaskResultStatisticsRepository extends JpaRepository<TaskResultStatistics, Long> {
-    
-    /**
-     * Find task result statistics.
-     *
-     * @param fromTime from date to statistics
-     * @param statisticInterval statistic interval
-     * @return task result statistics
-     */
-    @Query("SELECT t FROM TaskResultStatistics t WHERE t.statisticInterval = :statisticInterval AND t.statisticsTime >= :fromTime ORDER BY t.id ASC")
-    List<TaskResultStatistics> findTaskResultStatistics(@Param("fromTime") Date fromTime, @Param("statisticInterval") String statisticInterval);
-    
-    /**
-     * Get summed task result statistics.
-     *
-     * @param fromTime from date to statistics
-     * @param statisticInterval statistic interval
-     * @return summed task result statistics
-     */
-    @Query("SELECT new TaskResultStatistics(SUM(t.successCount), SUM(t.failedCount)) FROM TaskResultStatistics t WHERE "
-        + "t.statisticInterval = :statisticInterval AND t.statisticsTime >= :fromTime")
-    TaskResultStatistics getSummedTaskResultStatistics(@Param("fromTime") Date fromTime, @Param("statisticInterval") String statisticInterval);
+
+	/**
+	 * Find task result statistics.
+	 *
+	 * @param fromTime          from date to statistics
+	 * @param statisticInterval statistic interval
+	 * @return task result statistics
+	 */
+	@Query("SELECT t FROM TaskResultStatistics t WHERE t.statisticInterval = :statisticInterval AND t.statisticsTime >= :fromTime ORDER BY t.id ASC")
+	List<TaskResultStatistics> findTaskResultStatistics(@Param("fromTime") Date fromTime, @Param("statisticInterval") String statisticInterval);
+
+	/**
+	 * Get summed task result statistics.
+	 *
+	 * @param fromTime          from date to statistics
+	 * @param statisticInterval statistic interval
+	 * @return summed task result statistics
+	 */
+	@Query("SELECT new TaskResultStatistics(SUM(t.successCount), SUM(t.failedCount)) FROM TaskResultStatistics t WHERE "
+		+ "t.statisticInterval = :statisticInterval AND t.statisticsTime >= :fromTime")
+	TaskResultStatistics getSummedTaskResultStatistics(@Param("fromTime") Date fromTime, @Param("statisticInterval") String statisticInterval);
 }

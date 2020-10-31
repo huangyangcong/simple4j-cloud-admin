@@ -1,14 +1,10 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.api.base.Page;
-import com.simple4j.system.service.IAuthClientService;
-import lombok.RequiredArgsConstructor;
 import com.simple4j.system.entity.AuthClient;
 import com.simple4j.system.mapper.AuthClientMapper;
 import com.simple4j.system.mapstruct.ClientMapStruct;
@@ -20,8 +16,11 @@ import com.simple4j.system.request.ClientPageRequest;
 import com.simple4j.system.request.ClientRemoveRequest;
 import com.simple4j.system.request.ClientUpdateRequest;
 import com.simple4j.system.response.ClientDetailResponse;
-
+import com.simple4j.system.service.IAuthClientService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 服务实现类
@@ -52,17 +51,17 @@ public class AuthClientServiceImpl implements IAuthClientService {
 	@Override
 	public Page<ClientDetailResponse> page(ClientPageRequest clientPageRequest) {
 		IPage<AuthClient> page = authClientMapper.page(
-				new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
-						clientPageRequest.getPageNo(), clientPageRequest.getPageSize()),
-				Wrappers.<AuthClient>lambdaQuery()
-						.eq(StrUtil.isNotEmpty(clientPageRequest.getClientId()),
-								AuthClient::getClientId,
-								clientPageRequest.getClientId())
-						.eq(StrUtil.isNotEmpty(clientPageRequest.getClientSecret()),
-								AuthClient::getClientSecret,
-								clientPageRequest.getClientSecret()));
+			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
+				clientPageRequest.getPageNo(), clientPageRequest.getPageSize()),
+			Wrappers.<AuthClient>lambdaQuery()
+				.eq(StrUtil.isNotEmpty(clientPageRequest.getClientId()),
+					AuthClient::getClientId,
+					clientPageRequest.getClientId())
+				.eq(StrUtil.isNotEmpty(clientPageRequest.getClientSecret()),
+					AuthClient::getClientSecret,
+					clientPageRequest.getClientSecret()));
 		Page<AuthClient> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return clientMapStruct.toVo(pages);
 	}
 

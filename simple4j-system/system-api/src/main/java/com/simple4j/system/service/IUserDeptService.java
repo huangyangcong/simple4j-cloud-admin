@@ -3,7 +3,6 @@ package com.simple4j.system.service;
 
 import com.simple4j.system.request.UserDeptGrantRequest;
 
-import java.util.List;
 import java.util.Set;
 
 /**

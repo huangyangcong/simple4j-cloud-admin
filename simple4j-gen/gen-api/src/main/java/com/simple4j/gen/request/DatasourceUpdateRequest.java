@@ -1,12 +1,10 @@
 package com.simple4j.gen.request;
 
-import lombok.Data;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotNull;
-import com.simple4j.gen.request.DatasourceAddOrUpdateRequest;
+import lombok.Data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.constraints.NotNull;
 
 /**
  * 数据源配置表修改请求实体类
@@ -23,8 +21,8 @@ public class DatasourceUpdateRequest extends DatasourceAddRequest {
 	/**
 	 * 数据源配置表ID
 	 */
-		@ApiModelProperty(value = "数据源配置表ID")
+	@ApiModelProperty(value = "数据源配置表ID")
 	@NotNull(message = "数据源配置表编号不能为空")
 	private String id;
 
-	}
+}

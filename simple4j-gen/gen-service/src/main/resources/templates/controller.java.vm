@@ -48,84 +48,84 @@ public class $!{table.controllerName} {
 
 private $!{table.serviceName} $!{table.entityPath}Service;
 
-	/**
-	 * 详情
-	 */
-	@PostMapping("/detail")
-	@ApiOperation(value = "详情")
-	public ApiResponse<$!{entity}DetailResponse> detail(@Valid @RequestBody $!{entity}DetailRequest $!{table.entityPath}DetailRequest){
-		$!{entity}DetailResponse detail= $!{table.entityPath}Service.detail($!{table.entityPath}DetailRequest);
-		return ApiResponse.ok(detail);
-	}
+/**
+ * 详情
+ */
+@PostMapping("/detail")
+@ApiOperation(value = "详情")
+public ApiResponse<$!{entity}DetailResponse> detail(@Valid @RequestBody $!{entity}DetailRequest $!{table.entityPath}DetailRequest){
+    $!{entity}DetailResponse detail= $!{table.entityPath}Service.detail($!{table.entityPath}DetailRequest);
+        return ApiResponse.ok(detail);
+        }
 
-	/**
-	 * 列表 $!{table.comment}
-	 */
-	@PostMapping("/list")
-	@ApiOperation(value = "列表")
-	public ApiResponse<List<$!{entity}DetailResponse>>list(@Valid @RequestBody $!{entity}ListRequest $!{table.entityPath}ListRequest){
-		List<$!{entity}DetailResponse> list= $!{table.entityPath}Service.list($!{table.entityPath}ListRequest);
-		return ApiResponse.ok(list);
-	}
+/**
+ * 列表 $!{table.comment}
+ */
+@PostMapping("/list")
+@ApiOperation(value = "列表")
+public ApiResponse<List<$!{entity}DetailResponse>>list(@Valid @RequestBody $!{entity}ListRequest $!{table.entityPath}ListRequest){
+        List<$!{entity}DetailResponse> list= $!{table.entityPath}Service.list($!{table.entityPath}ListRequest);
+        return ApiResponse.ok(list);
+        }
 
-	/**
-	 * 自定义分页 $!{table.comment}
-	 */
-	@PostMapping("/page")
-	@ApiOperation(value = "分页")
-	public ApiResponse<Page<$!{entity}DetailResponse>>page(@Valid @RequestBody $!{entity}PageRequest $!{table.entityPath}PageRequest){
-		Page<$!{entity}DetailResponse> pages= $!{table.entityPath}Service.page( $!{table.entityPath}PageRequest);
-		return ApiResponse.ok(pages);
-	}
+/**
+ * 自定义分页 $!{table.comment}
+ */
+@PostMapping("/page")
+@ApiOperation(value = "分页")
+public ApiResponse<Page<$!{entity}DetailResponse>>page(@Valid @RequestBody $!{entity}PageRequest $!{table.entityPath}PageRequest){
+        Page<$!{entity}DetailResponse> pages= $!{table.entityPath}Service.page( $!{table.entityPath}PageRequest);
+        return ApiResponse.ok(pages);
+        }
 
-	/**
-	 * 新增 $!{table.comment}
-	 */
-	@PostMapping("/add")
-	@ApiOperation(value = "新增")
-	public ApiResponse add(@Valid @RequestBody $!{entity}AddRequest $!{table.entityPath}AddRequest){
-		$!{table.entityPath}Service.add($!{table.entityPath}AddRequest);
-		return ApiResponse.ok();
-	}
+/**
+ * 新增 $!{table.comment}
+ */
+@PostMapping("/add")
+@ApiOperation(value = "新增")
+public ApiResponse add(@Valid @RequestBody $!{entity}AddRequest $!{table.entityPath}AddRequest){
+    $!{table.entityPath}Service.add($!{table.entityPath}AddRequest);
+        return ApiResponse.ok();
+        }
 
-	/**
-	 * 修改 $!{table.comment}
-	 */
-	@PostMapping("/update")
-	@ApiOperation(value = "修改")
-	public ApiResponse update(@Valid @RequestBody $!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
-		$!{table.entityPath}Service.update($!{table.entityPath}UpdateRequest);
-		return ApiResponse.ok();
-	}
+/**
+ * 修改 $!{table.comment}
+ */
+@PostMapping("/update")
+@ApiOperation(value = "修改")
+public ApiResponse update(@Valid @RequestBody $!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
+    $!{table.entityPath}Service.update($!{table.entityPath}UpdateRequest);
+        return ApiResponse.ok();
+        }
 
-	/**
-	 * 新增或修改 $!{table.comment}
-	 */
-	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改")
-	public ApiResponse addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
-		$!{table.entityPath}Service.addOrUpdate($!{table.entityPath}AddOrUpdateRequest);
-		return ApiResponse.ok();
-	}
+/**
+ * 新增或修改 $!{table.comment}
+ */
+@PostMapping("/submit")
+@ApiOperation(value = "新增或修改")
+public ApiResponse addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
+    $!{table.entityPath}Service.addOrUpdate($!{table.entityPath}AddOrUpdateRequest);
+        return ApiResponse.ok();
+        }
 
-	#if($!{cfg.tree})
-	/**
-	 * 树形 $!{table.comment}
-	 */
-	@PostMapping("/tree")
-	@ApiOperation(value = "树形")
-	public ApiResponse<List<$!{entity}DetailResponse>>tree(@Valid @RequestBody $!{entity}TreeRequest $!{table.entityPath}TreeRequest){
-		return ApiResponse.ok($!{table.entityPath}Service.tree($!{table.entityPath}TreeRequest));
-	}
-	#end
+#if($!{cfg.tree})
+/**
+ * 树形 $!{table.comment}
+ */
+@PostMapping("/tree")
+@ApiOperation(value = "树形")
+public ApiResponse<List<$!{entity}DetailResponse>>tree(@Valid @RequestBody $!{entity}TreeRequest $!{table.entityPath}TreeRequest){
+        return ApiResponse.ok($!{table.entityPath}Service.tree($!{table.entityPath}TreeRequest));
+        }
+#end
 
-	/**
-	 * 删除 $!{table.comment}
-	 */
-	@PostMapping("/remove")
-	@ApiOperation(value = "删除")
-	public ApiResponse remove(@Valid @RequestBody $!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
-		$!{table.entityPath}Service.remove($!{table.entityPath}RemoveRequest);
-		return ApiResponse.ok();
-	}
-}
+/**
+ * 删除 $!{table.comment}
+ */
+@PostMapping("/remove")
+@ApiOperation(value = "删除")
+public ApiResponse remove(@Valid @RequestBody $!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
+    $!{table.entityPath}Service.remove($!{table.entityPath}RemoveRequest);
+        return ApiResponse.ok();
+        }
+        }

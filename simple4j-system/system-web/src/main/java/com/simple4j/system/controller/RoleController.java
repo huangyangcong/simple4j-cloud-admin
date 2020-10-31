@@ -1,6 +1,10 @@
 package com.simple4j.system.controller;
 
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.MenuGrantRequest;
+import com.simple4j.system.request.RoleAddOrUpdateRequest;
+import com.simple4j.system.request.RoleDetailRequest;
+import com.simple4j.system.request.RoleListRequest;
+import com.simple4j.system.request.RoleRemoveRequest;
 import com.simple4j.system.response.RoleDetailResponse;
 import com.simple4j.system.service.IRoleMenuService;
 import com.simple4j.system.service.IRoleService;

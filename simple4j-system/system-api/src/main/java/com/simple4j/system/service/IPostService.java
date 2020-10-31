@@ -1,8 +1,5 @@
 package com.simple4j.system.service;
 
-import java.util.List;
-import java.util.Set;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.system.request.PostAddRequest;
 import com.simple4j.system.request.PostDetailRequest;
@@ -11,6 +8,9 @@ import com.simple4j.system.request.PostPageRequest;
 import com.simple4j.system.request.PostRemoveRequest;
 import com.simple4j.system.request.PostUpdateRequest;
 import com.simple4j.system.response.PostDetailResponse;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * 岗位表 服务类

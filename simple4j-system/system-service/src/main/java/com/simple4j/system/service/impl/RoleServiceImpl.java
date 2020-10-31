@@ -1,9 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -14,18 +10,25 @@ import com.simple4j.api.util.TreeUtil;
 import com.simple4j.autoconfigure.jwt.security.SecurityScope;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.system.common.constant.CommonConstant;
-import com.simple4j.system.request.*;
-import com.simple4j.system.mapper.RoleMapper;
 import com.simple4j.system.entity.Role;
+import com.simple4j.system.mapper.RoleMapper;
 import com.simple4j.system.mapstruct.RoleMapStruct;
+import com.simple4j.system.request.RoleAddOrUpdateRequest;
+import com.simple4j.system.request.RoleDetailRequest;
+import com.simple4j.system.request.RoleListRequest;
+import com.simple4j.system.request.RolePageRequest;
+import com.simple4j.system.request.RoleRemoveRequest;
 import com.simple4j.system.response.RoleDetailResponse;
 import com.simple4j.system.service.IRoleMenuService;
 import com.simple4j.system.service.IRoleService;
 import lombok.AllArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 服务实现类
@@ -62,7 +65,7 @@ public class RoleServiceImpl implements IRoleService {
 		IPage<Role> page = roleMapper.page(
 			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(rolePageRequest.getPageNo(), rolePageRequest.getPageSize()), queryWrapper);
 		Page<Role> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return roleMapStruct.toVo(pages);
 	}
 
@@ -70,7 +73,7 @@ public class RoleServiceImpl implements IRoleService {
 	public List<RoleDetailResponse> tree(String tenantId) {
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		return TreeUtil.buildTree(roleMapStruct.toVo(roleMapper.tree(StrUtil.nullToDefault(tenantId,
-				securityScope.getTenantId()), null)));
+			securityScope.getTenantId()), null)));
 	}
 
 	@Override
@@ -82,7 +85,7 @@ public class RoleServiceImpl implements IRoleService {
 				roleListRequest.getRoleAlias());
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		List<Role> pages = roleMapper.list(
-				CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? queryWrapper
+			CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? queryWrapper
 				.eq(Role::getTenantId, securityScope.getTenantId()) : queryWrapper);
 		return roleMapStruct.toVo(pages);
 	}
@@ -99,9 +102,9 @@ public class RoleServiceImpl implements IRoleService {
 		return null;
 	}
 
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean addOrUpdate(RoleAddOrUpdateRequest roleAddOrUpdateRequest){
+	public boolean addOrUpdate(RoleAddOrUpdateRequest roleAddOrUpdateRequest) {
 		Role role = roleMapStruct.toPo(roleAddOrUpdateRequest);
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		role.setTenantId(securityScope.getTenantId());

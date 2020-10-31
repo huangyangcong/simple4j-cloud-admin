@@ -3,9 +3,9 @@ package com.simple4j.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

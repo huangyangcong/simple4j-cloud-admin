@@ -36,21 +36,21 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @NoArgsConstructor
 public final class RegistryCenterConfiguration implements Serializable {
-    
-    private static final long serialVersionUID = -5996257770767863699L;
-    
-    @XmlAttribute(required = true)
-    private String name;
-    
-    @XmlAttribute(required = true)
-    private String zkAddressList;
-    
-    @XmlAttribute
-    private String namespace;
-    
-    @XmlAttribute
-    private String digest;
-    
-    @XmlAttribute
-    private boolean activated;
+
+	private static final long serialVersionUID = -5996257770767863699L;
+
+	@XmlAttribute(required = true)
+	private String name;
+
+	@XmlAttribute(required = true)
+	private String zkAddressList;
+
+	@XmlAttribute
+	private String namespace;
+
+	@XmlAttribute
+	private String digest;
+
+	@XmlAttribute
+	private boolean activated;
 }

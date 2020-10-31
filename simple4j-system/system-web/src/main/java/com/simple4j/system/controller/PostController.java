@@ -1,7 +1,12 @@
 package com.simple4j.system.controller;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.PostAddRequest;
+import com.simple4j.system.request.PostDetailRequest;
+import com.simple4j.system.request.PostListRequest;
+import com.simple4j.system.request.PostPageRequest;
+import com.simple4j.system.request.PostRemoveRequest;
+import com.simple4j.system.request.PostUpdateRequest;
 import com.simple4j.system.response.PostDetailResponse;
 import com.simple4j.system.service.IPostService;
 import com.simple4j.web.bean.ApiResponse;

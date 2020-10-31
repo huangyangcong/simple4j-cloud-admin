@@ -19,7 +19,7 @@ public class RoleAddRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-		/**
+	/**
 	 * 父主键
 	 */
 	@ApiModelProperty(name = "parent_id", value = "父主键")
@@ -43,6 +43,6 @@ public class RoleAddRequest implements Serializable {
 	@ApiModelProperty(name = "role_alias", value = "角色别名")
 	@JsonProperty("role_alias")
 	private String roleAlias;
-	
+
 
 }

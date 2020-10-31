@@ -43,12 +43,12 @@ public class PostServiceImpl implements IPostService {
 
 	@Override
 	public PostDetailResponse detail(
-			PostDetailRequest postDetailRequest) {
+		PostDetailRequest postDetailRequest) {
 		Post detail = postMapper.getOne(
-				Wrappers.<Post>lambdaQuery().eq(Post::getId, postDetailRequest.getId()));
+			Wrappers.<Post>lambdaQuery().eq(Post::getId, postDetailRequest.getId()));
 		PostDetailResponse postDetailResponse = postMapStruct.toVo(detail);
 		String categoryName = dictService
-				.getValue("post_category", postDetailResponse.getCategory());
+			.getValue("post_category", postDetailResponse.getCategory());
 		postDetailResponse.setCategoryName(categoryName);
 		return postDetailResponse;
 	}
@@ -56,11 +56,11 @@ public class PostServiceImpl implements IPostService {
 	@Override
 	public Set<String> getPostIds(String tenantId, List<String> postNames) {
 		List<Post> postList = postMapper.selectList(
-				Wrappers.<Post>query().lambda().eq(Post::getTenantId, tenantId)
-						.in(Post::getPostName, postNames));
+			Wrappers.<Post>query().lambda().eq(Post::getTenantId, tenantId)
+				.in(Post::getPostName, postNames));
 		if (CollUtil.isNotEmpty(postList)) {
 			return postList.stream().map(Post::getId)
-					.collect(Collectors.toSet());
+				.collect(Collectors.toSet());
 		}
 		return null;
 	}
@@ -73,12 +73,12 @@ public class PostServiceImpl implements IPostService {
 	@Override
 	public List<PostDetailResponse> list(PostListRequest postListRequest) {
 		List<Post> pages = postMapper.list(Wrappers.<Post>lambdaQuery()
-				.eq(StrUtil.isNotEmpty(postListRequest.getCode()), Post::getPostCode,
-						postListRequest.getCode())
-				.eq(StrUtil.isNotEmpty(postListRequest.getName()), Post::getPostName,
-						postListRequest.getName())
-				.eq(StrUtil.isNotEmpty(postListRequest.getTenantId()), Post::getTenantId,
-						postListRequest.getTenantId())
+			.eq(StrUtil.isNotEmpty(postListRequest.getCode()), Post::getPostCode,
+				postListRequest.getCode())
+			.eq(StrUtil.isNotEmpty(postListRequest.getName()), Post::getPostName,
+				postListRequest.getName())
+			.eq(StrUtil.isNotEmpty(postListRequest.getTenantId()), Post::getTenantId,
+				postListRequest.getTenantId())
 		);
 		return postMapStruct.toVo(pages);
 	}
@@ -87,10 +87,10 @@ public class PostServiceImpl implements IPostService {
 	public Page<PostDetailResponse> page(PostPageRequest postPageRequest) {
 		LambdaQueryWrapper<Post> queryWrapper = Wrappers.<Post>lambdaQuery();
 		IPage<Post> page = postMapper.page(
-				new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
-						postPageRequest.getPageNo(), postPageRequest.getPageSize()), queryWrapper);
+			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
+				postPageRequest.getPageNo(), postPageRequest.getPageSize()), queryWrapper);
 		Page<Post> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return postMapStruct.toVo(pages);
 	}
 

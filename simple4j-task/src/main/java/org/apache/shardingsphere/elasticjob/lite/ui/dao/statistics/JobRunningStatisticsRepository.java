@@ -31,13 +31,13 @@ import java.util.List;
  */
 @Repository
 public interface JobRunningStatisticsRepository extends JpaRepository<JobRunningStatistics, Long> {
-    
-    /**
-     * Find job running statistics.
-     *
-     * @param fromTime from date to statistics
-     * @return job running statistics
-     */
-    @Query("SELECT t FROM JobRunningStatistics t WHERE t.statisticsTime >= :fromTime")
-    List<JobRunningStatistics> findJobRunningStatistics(@Param("fromTime") Date fromTime);
+
+	/**
+	 * Find job running statistics.
+	 *
+	 * @param fromTime from date to statistics
+	 * @return job running statistics
+	 */
+	@Query("SELECT t FROM JobRunningStatistics t WHERE t.statisticsTime >= :fromTime")
+	List<JobRunningStatistics> findJobRunningStatistics(@Param("fromTime") Date fromTime);
 }

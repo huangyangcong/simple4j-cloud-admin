@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 @TableName("simple4j_user_oauth")
-public class UserOauth  extends BaseEntity {
+public class UserOauth extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

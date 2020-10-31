@@ -1,7 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -11,8 +9,8 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.simple4j.api.base.Page;
 import com.simple4j.system.common.constant.CacheNames;
-import com.simple4j.system.mapper.DictMapper;
 import com.simple4j.system.entity.Dict;
+import com.simple4j.system.mapper.DictMapper;
 import com.simple4j.system.mapstruct.DictMapStruct;
 import com.simple4j.system.request.DictAddOrUpdateRequest;
 import com.simple4j.system.request.DictDetailRequest;
@@ -23,10 +21,11 @@ import com.simple4j.system.response.DictDetailResponse;
 import com.simple4j.system.service.IDictService;
 import com.simple4j.system.util.TreeUtil;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -100,7 +99,7 @@ public class DictServiceImpl implements IDictService {
 		IPage<Dict> page = dictMapper.page(
 			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(dictPageRequest.getPageNo(), dictPageRequest.getPageSize()), queryWrapper);
 		Page<Dict> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-				page.getRecords());
+			page.getRecords());
 		return dictMapStruct.toVo(pages);
 	}
 

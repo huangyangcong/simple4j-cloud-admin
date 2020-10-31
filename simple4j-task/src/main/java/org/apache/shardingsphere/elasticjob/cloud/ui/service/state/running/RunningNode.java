@@ -27,18 +27,18 @@ import org.apache.shardingsphere.elasticjob.infra.context.TaskContext.MetaInfo;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class RunningNode {
-    
-    static final String ROOT = StateNode.ROOT + "/running";
-    
-    private static final String RUNNING_JOB = ROOT + "/%s";
-    
-    private static final String RUNNING_TASK = RUNNING_JOB + "/%s";
-    
-    static String getRunningJobNodePath(final String jobName) {
-        return String.format(RUNNING_JOB, jobName);
-    }
-    
-    static String getRunningTaskNodePath(final String taskMetaInfo) {
-        return String.format(RUNNING_TASK, MetaInfo.from(taskMetaInfo).getJobName(), taskMetaInfo);
-    }
+
+	static final String ROOT = StateNode.ROOT + "/running" ;
+
+	private static final String RUNNING_JOB = ROOT + "/%s" ;
+
+	private static final String RUNNING_TASK = RUNNING_JOB + "/%s" ;
+
+	static String getRunningJobNodePath(final String jobName) {
+		return String.format(RUNNING_JOB, jobName);
+	}
+
+	static String getRunningTaskNodePath(final String taskMetaInfo) {
+		return String.format(RUNNING_TASK, MetaInfo.from(taskMetaInfo).getJobName(), taskMetaInfo);
+	}
 }

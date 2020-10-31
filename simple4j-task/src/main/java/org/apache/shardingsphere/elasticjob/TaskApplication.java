@@ -25,15 +25,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class TaskApplication {
-    
-    /**
-     * Startup RESTful server.
-     *
-     * @param args arguments
-     */
-    //CHECKSTYLE:OFF
-    public static void main(final String[] args) {
-    //CHECKSTYLE:ON
-        SpringApplication.run(TaskApplication.class, args);
-    }
+
+	/**
+	 * Startup RESTful server.
+	 *
+	 * @param args arguments
+	 */
+	//CHECKSTYLE:OFF
+	public static void main(final String[] args) {
+		//CHECKSTYLE:ON
+		SpringApplication.run(TaskApplication.class, args);
+	}
 }

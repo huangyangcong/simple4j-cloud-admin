@@ -1,11 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -14,23 +8,33 @@ import com.simple4j.api.util.TreeUtil;
 import com.simple4j.autoconfigure.jwt.security.SecurityScope;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.system.common.constant.CommonConstant;
-import com.simple4j.system.mapper.RoleMenuMapper;
-import com.simple4j.system.request.*;
-import com.simple4j.system.service.IDictService;
-import com.simple4j.system.service.IMenuService;
-import com.simple4j.system.service.IRoleMenuService;
-import lombok.AllArgsConstructor;
 import com.simple4j.system.dto.MenuDTO;
 import com.simple4j.system.entity.Menu;
 import com.simple4j.system.entity.RoleMenu;
 import com.simple4j.system.mapper.MenuMapper;
+import com.simple4j.system.mapper.RoleMenuMapper;
 import com.simple4j.system.mapstruct.MenuMapStruct;
+import com.simple4j.system.request.MenuAddOrUpdateRequest;
+import com.simple4j.system.request.MenuDetailRequest;
+import com.simple4j.system.request.MenuListRequest;
+import com.simple4j.system.request.MenuRemoveRequest;
+import com.simple4j.system.request.MenuRoutersRequest;
+import com.simple4j.system.request.RoleMenuKeyRequest;
 import com.simple4j.system.response.MenuDetailResponse;
 import com.simple4j.system.response.MenuRoutersResponse;
 import com.simple4j.system.response.RoleMenuKeyResponse;
-
+import com.simple4j.system.service.IDictService;
+import com.simple4j.system.service.IMenuService;
+import com.simple4j.system.service.IRoleMenuService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -83,7 +87,7 @@ public class MenuServiceImpl implements IMenuService {
 		SecurityScope securityScope = SecurityUtils.getCurrentSecurityScope();
 		Long navbarId = menuRoutersRequest.getNavbarId();
 		Set<String> roleIds = CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ? null :
-				securityScope.getRoleIds();
+			securityScope.getRoleIds();
 		List<Menu> menus = menuMapper.routes(navbarId, roleIds);
 		return TreeUtil.buildTree(menuMapStruct.toVo(menus));
 	}
@@ -122,7 +126,7 @@ public class MenuServiceImpl implements IMenuService {
 	public List<MenuDetailResponse> grantTree() {
 		return TreeUtil
 			.buildTree(menuMapStruct.toVo(CommonConstant.ADMIN_TENANT_ID.equals(SecurityUtils.getCurrentTenantId()) ?
-					menuMapper.grantTree()
+				menuMapper.grantTree()
 				: menuMapper.grantTreeByRole(SecurityUtils.getCurrentRoleIds())));
 	}
 
@@ -133,11 +137,11 @@ public class MenuServiceImpl implements IMenuService {
 			return roleMenuKeyResponse;
 		}
 		List<RoleMenu> roleMenus = roleMenuMapper
-				.list(Wrappers.<RoleMenu>query().lambda()
-						.in(RoleMenu::getRoleId, roleMenuKeyRequest.getRoles()));
+			.list(Wrappers.<RoleMenu>query().lambda()
+				.in(RoleMenu::getRoleId, roleMenuKeyRequest.getRoles()));
 
 		roleMenuKeyResponse.setMenus(roleMenus.stream().map(RoleMenu::getMenuId)
-				.collect(Collectors.toSet()));
+			.collect(Collectors.toSet()));
 		return roleMenuKeyResponse;
 	}
 
@@ -173,9 +177,9 @@ public class MenuServiceImpl implements IMenuService {
 		return true;
 	}
 
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean addOrUpdate(MenuAddOrUpdateRequest menuAddOrUpdateRequest){
+	public boolean addOrUpdate(MenuAddOrUpdateRequest menuAddOrUpdateRequest) {
 		return menuMapper.saveOrUpdate(menuMapStruct.toPo(menuAddOrUpdateRequest));
 	}
 }

@@ -84,7 +84,8 @@ public class UserController {
 	 */
 	@ApiOperation(value = "查看详情", notes = "传入id")
 	@PostMapping("/detail")
-	public ApiResponse<UserDetailResponse> detail(@Valid @RequestBody UserDetailRequest userDetailRequest) {
+	public ApiResponse<UserDetailResponse> detail(
+		@Valid @RequestBody UserDetailRequest userDetailRequest) {
 		UserDetailResponse userDetailResponse = userService.detail(userDetailRequest);
 		return ApiResponse.ok(userDetailResponse);
 	}
@@ -103,7 +104,8 @@ public class UserController {
 	 */
 	@PostMapping("/page")
 	@ApiOperation(value = "列表", notes = "传入account和realName")
-	public ApiResponse<Page<UserDetailResponse>> page(@Valid @RequestBody UserPageRequest userPageRequest) {
+	public ApiResponse<Page<UserDetailResponse>> page(
+		@Valid @RequestBody UserPageRequest userPageRequest) {
 		return ApiResponse.ok(userService.page(userPageRequest));
 	}
 
@@ -162,12 +164,13 @@ public class UserController {
 	 */
 	@PostMapping("/update-password")
 	@ApiOperation(value = "修改密码", notes = "传入密码")
-	public ApiResponse updatePassword(@ApiParam(value = "旧密码", required = true) @RequestParam String oldPassword,
-									  @ApiParam(value = "新密码", required = true) @RequestParam String newPassword,
-									  @ApiParam(value = "新密码", required = true) @RequestParam String newPassword1) {
+	public ApiResponse updatePassword(
+		@ApiParam(value = "旧密码", required = true) @RequestParam String oldPassword,
+		@ApiParam(value = "新密码", required = true) @RequestParam String newPassword,
+		@ApiParam(value = "新密码", required = true) @RequestParam String newPassword1) {
 		boolean temp = userService
-				.updatePassword(oldPassword, newPassword,
-						newPassword1);
+			.updatePassword(oldPassword, newPassword,
+				newPassword1);
 		return ApiResponse.ok();
 	}
 
@@ -195,7 +198,7 @@ public class UserController {
 	@PostMapping("export-user")
 	@ApiOperation(value = "导出用户", notes = "传入user")
 	public void exportUser(@ApiIgnore UserListRequest userListRequest,
-						   HttpServletResponse response) {
+		HttpServletResponse response) {
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		String fileName = URLEncoder.encode("用户数据导出", StandardCharsets.UTF_8.name());
@@ -222,7 +225,8 @@ public class UserController {
 	 */
 	@PostMapping("/register-guest")
 	@ApiOperation(value = "第三方注册用户", notes = "传入user")
-	public ApiResponse registerGuest(@Valid @RequestBody UserRegisterGuestRequest userRegisterGuestRequest) {
+	public ApiResponse registerGuest(
+		@Valid @RequestBody UserRegisterGuestRequest userRegisterGuestRequest) {
 		userService.registerGuest(userRegisterGuestRequest);
 		return ApiResponse.ok();
 	}

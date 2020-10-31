@@ -1,6 +1,6 @@
 logging:
     level:
-      root: debug
+        root: debug
 spring:
     devtools:
         restart:
@@ -12,5 +12,5 @@ spring:
     resources:
         add-mappings: false
     application:
-      version: 1.0
-      description: 通用框架
+        version: 1.0
+        description: 通用框架

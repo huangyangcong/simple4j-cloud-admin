@@ -1,10 +1,10 @@
 package com.simple4j.system.mapper;
 
-import java.util.List;
-
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
-import org.apache.ibatis.annotations.Param;
 import com.simple4j.system.entity.Region;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 行政区划表 Mapper 接口
@@ -22,7 +22,7 @@ public interface RegionMapper extends ExtendMapper<Region> {
 	 * @return
 	 */
 	List<Region> lazyList(@Param("parentCode") String parentCode, @Param("code") String code,
-		@Param("name") String name);
+						  @Param("name") String name);
 
 
 	/**

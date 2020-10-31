@@ -1,7 +1,11 @@
 package com.simple4j.system.controller;
 
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.*;
+import com.simple4j.system.request.TenantAddOrUpdateRequest;
+import com.simple4j.system.request.TenantDetailRequest;
+import com.simple4j.system.request.TenantListRequest;
+import com.simple4j.system.request.TenantPageRequest;
+import com.simple4j.system.request.TenantRemoveRequest;
 import com.simple4j.system.response.TenantDetailResponse;
 import com.simple4j.system.service.ITenantService;
 import com.simple4j.web.bean.ApiResponse;

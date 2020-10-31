@@ -15,7 +15,7 @@ import lombok.Data;
  */
 @Data
 @TableName("simple4j_dict")
-public class Dict  extends BaseEntity {
+public class Dict extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 

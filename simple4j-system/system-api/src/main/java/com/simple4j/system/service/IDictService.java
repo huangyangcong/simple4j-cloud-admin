@@ -1,7 +1,5 @@
 package com.simple4j.system.service;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.system.request.DictAddOrUpdateRequest;
 import com.simple4j.system.request.DictDetailRequest;
@@ -9,6 +7,8 @@ import com.simple4j.system.request.DictListRequest;
 import com.simple4j.system.request.DictPageRequest;
 import com.simple4j.system.request.DictRemoveRequest;
 import com.simple4j.system.response.DictDetailResponse;
+
+import java.util.List;
 
 /**
  * 服务类

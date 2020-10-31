@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter;
 
 /**
  * @author hyc
@@ -18,16 +17,16 @@ public class SecurityConfiguration {
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
 		return http
-				.authorizeExchange()
-				.anyExchange()
-				.permitAll()
-				// 禁用 CSRF
-				.and()
-				.csrf().disable()
-				.headers()
-				.frameOptions().disable()
-				.and()
-				.build();
+			.authorizeExchange()
+			.anyExchange()
+			.permitAll()
+			// 禁用 CSRF
+			.and()
+			.csrf().disable()
+			.headers()
+			.frameOptions().disable()
+			.and()
+			.build();
 	}
 
 }

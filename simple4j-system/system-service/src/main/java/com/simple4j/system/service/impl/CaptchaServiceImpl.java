@@ -32,25 +32,27 @@ public class CaptchaServiceImpl implements ICaptchaService {
 		String key = UUID.randomUUID().toString();
 		// 存入redis并设置过期时间为30分钟
 		redisTemplate.opsForValue()
-				.set(CacheNames.CAPTCHA_KEY + key, verCode, 30L, TimeUnit.MINUTES);
+			.set(CacheNames.CAPTCHA_KEY + key, verCode, 30L, TimeUnit.MINUTES);
 		// 将key和base64返回给前端
 		CaptchaResponse captchaResponse = new CaptchaResponse();
 		captchaResponse.setKey(key);
 		captchaResponse.setImage("data:image/jpg;base64," + imageBase64);
 		return captchaResponse;
 	}
+
 	@Override
 	public void verify(String captchaKey, String captchaCode) {
 		String redisCode = String
-				.valueOf(redisTemplate.opsForValue().get(CacheNames.CAPTCHA_KEY + captchaKey));
+			.valueOf(redisTemplate.opsForValue().get(CacheNames.CAPTCHA_KEY + captchaKey));
 		// 判断验证码
 		if (captchaCode == null || !StrUtil.equalsIgnoreCase(redisCode, captchaCode)) {
 			throw new BusinessException("验证码错误");
 		}
 	}
+
 	@Override
 	public void deleteCaptcha(String captchaKey) {
 		// 删除验证码
-		 redisTemplate.delete(CacheNames.CAPTCHA_KEY + captchaKey);
+		redisTemplate.delete(CacheNames.CAPTCHA_KEY + captchaKey);
 	}
 }
