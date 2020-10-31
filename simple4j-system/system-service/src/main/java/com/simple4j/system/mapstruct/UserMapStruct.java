@@ -22,39 +22,35 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class UserMapStruct {
 
-	@Autowired
-	private IUserRoleService userRoleService;
-	@Autowired
-	private IUserDeptService userDeptService;
-	@Autowired
-	private IUserPostService userPostService;
-	@Autowired
-	private IDictService dictService;
+  @Autowired private IUserRoleService userRoleService;
+  @Autowired private IUserDeptService userDeptService;
+  @Autowired private IUserPostService userPostService;
+  @Autowired private IDictService dictService;
 
-	@AfterMapping
-	protected void fillUser(User user, @MappingTarget UserDetailResponse userDetailResponse) {
-		String userId = user.getId();
-		Integer sex = user.getSex();
-		userDetailResponse.setRoles(userRoleService.getRoleIds(userId));
-		userDetailResponse.setDepts(userDeptService.getDeptIds(userId));
-		userDetailResponse.setPosts(userPostService.getPostIds(userId));
-		String sexName = dictService.getValue("sex", sex);
-		userDetailResponse.setSexName(sexName);
-	}
+  @AfterMapping
+  protected void fillUser(User user, @MappingTarget UserDetailResponse userDetailResponse) {
+    String userId = user.getId();
+    Integer sex = user.getSex();
+    userDetailResponse.setRoles(userRoleService.getRoleIds(userId));
+    userDetailResponse.setDepts(userDeptService.getDeptIds(userId));
+    userDetailResponse.setPosts(userPostService.getPostIds(userId));
+    String sexName = dictService.getValue("sex", sex);
+    userDetailResponse.setSexName(sexName);
+  }
 
-	public abstract UserLoginResponse toVo(UserInfo userInfo);
+  public abstract UserLoginResponse toVo(UserInfo userInfo);
 
-	public abstract UserDetailResponse toVo(User user);
+  public abstract UserDetailResponse toVo(User user);
 
-	public abstract Page<UserDetailResponse> toVo(Page<User> user);
+  public abstract Page<UserDetailResponse> toVo(Page<User> user);
 
-	public abstract List<UserDetailResponse> toVo(List<User> user);
+  public abstract List<UserDetailResponse> toVo(List<User> user);
 
-	public abstract User toPo(UserExcelImport userExcel);
+  public abstract User toPo(UserExcelImport userExcel);
 
-	public abstract UserInfo toUserInfo(User user);
+  public abstract UserInfo toUserInfo(User user);
 
-	public abstract User toPo(UserAddRequest userAddRequest);
+  public abstract User toPo(UserAddRequest userAddRequest);
 
-	public abstract List<UserExcelImport> toExcel(List<UserDetailResponse> users);
+  public abstract List<UserExcelImport> toExcel(List<UserDetailResponse> users);
 }

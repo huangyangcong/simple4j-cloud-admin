@@ -18,12 +18,12 @@ import javax.annotation.security.PermitAll;
 @RequiredArgsConstructor
 public class CaptchaController {
 
-	private final ICaptchaService iCaptchaService;
+  private final ICaptchaService iCaptchaService;
 
-	@PostMapping("")
-	@ApiOperation(value = "获取验证码")
-	@PermitAll()
-	public ApiResponse<CaptchaResponse> captcha() {
-		return ApiResponse.ok(iCaptchaService.captcha());
-	}
+  @PostMapping("")
+  @ApiOperation(value = "获取验证码")
+  @PermitAll()
+  public ApiResponse<CaptchaResponse> captcha() {
+    return ApiResponse.ok(iCaptchaService.captcha());
+  }
 }

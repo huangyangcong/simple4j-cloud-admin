@@ -83,7 +83,7 @@ public ApiResponse<Page<$!{entity}DetailResponse>>page(@Valid @RequestBody $!{en
  */
 @PostMapping("/add")
 @ApiOperation(value = "新增")
-public ApiResponse add(@Valid @RequestBody $!{entity}AddRequest $!{table.entityPath}AddRequest){
+public ApiResponse<Void> add(@Valid @RequestBody $!{entity}AddRequest $!{table.entityPath}AddRequest){
     $!{table.entityPath}Service.add($!{table.entityPath}AddRequest);
         return ApiResponse.ok();
         }
@@ -93,7 +93,7 @@ public ApiResponse add(@Valid @RequestBody $!{entity}AddRequest $!{table.entityP
  */
 @PostMapping("/update")
 @ApiOperation(value = "修改")
-public ApiResponse update(@Valid @RequestBody $!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
+public ApiResponse<Void> update(@Valid @RequestBody $!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
     $!{table.entityPath}Service.update($!{table.entityPath}UpdateRequest);
         return ApiResponse.ok();
         }
@@ -103,7 +103,7 @@ public ApiResponse update(@Valid @RequestBody $!{entity}UpdateRequest $!{table.e
  */
 @PostMapping("/submit")
 @ApiOperation(value = "新增或修改")
-public ApiResponse addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
+public ApiResponse<Void> addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
     $!{table.entityPath}Service.addOrUpdate($!{table.entityPath}AddOrUpdateRequest);
         return ApiResponse.ok();
         }
@@ -124,7 +124,7 @@ public ApiResponse<List<$!{entity}DetailResponse>>tree(@Valid @RequestBody $!{en
  */
 @PostMapping("/remove")
 @ApiOperation(value = "删除")
-public ApiResponse remove(@Valid @RequestBody $!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
+public ApiResponse<Void> remove(@Valid @RequestBody $!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
     $!{table.entityPath}Service.remove($!{table.entityPath}RemoveRequest);
         return ApiResponse.ok();
         }

@@ -8,7 +8,4 @@ import com.simple4j.system.entity.Tenant;
  *
  * @author hyc
  */
-public interface TenantMapper extends ExtendMapper<Tenant> {
-
-
-}
+public interface TenantMapper extends ExtendMapper<Tenant> {}

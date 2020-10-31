@@ -9,6 +9,4 @@ import com.simple4j.system.entity.NavbarMenu;
  * @author hyc
  * @since 2020-08-26
  */
-public interface NavbarMenuMapper extends ExtendMapper<NavbarMenu> {
-
-}
+public interface NavbarMenuMapper extends ExtendMapper<NavbarMenu> {}

@@ -21,14 +21,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.shardingsphere.elasticjob.infra.context.TaskContext.MetaInfo;
 
-/**
- * Failover task info.
- */
+/** Failover task info. */
 @RequiredArgsConstructor
 @Getter
 public final class FailoverTaskInfo {
 
-	private final MetaInfo taskInfo;
+  private final MetaInfo taskInfo;
 
-	private final String originalTaskId;
+  private final String originalTaskId;
 }

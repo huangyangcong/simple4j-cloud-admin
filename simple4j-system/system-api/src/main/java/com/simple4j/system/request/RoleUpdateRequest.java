@@ -16,13 +16,10 @@ import javax.validation.constraints.NotNull;
 @ApiModel(value = "角色表修改请求实体类", description = "角色表修改请求实体类")
 public class RoleUpdateRequest extends RoleAddRequest {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * 角色表ID
-	 */
-	@ApiModelProperty(value = "角色表ID")
-	@NotNull(message = "角色表编号不能为空")
-	private String id;
-
+  /** 角色表ID */
+  @ApiModelProperty(value = "角色表ID")
+  @NotNull(message = "角色表编号不能为空")
+  private String id;
 }

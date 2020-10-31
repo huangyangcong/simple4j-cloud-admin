@@ -22,21 +22,24 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 
 import javax.sql.DataSource;
 
-/**
- * Dynamic data source factory.
- */
+/** Dynamic data source factory. */
 public final class DataSourceFactory {
 
-	/**
-	 * Create a DataSource.
-	 *
-	 * @param config event trace data source config
-	 * @return data source
-	 */
-	public static DataSource createDataSource(final EventTraceDataSourceConfiguration config) {
-		// Determine whether the data source is valid.
-		new EventTraceDataSource(config).init();
-		return DataSourceBuilder.create().type(BasicDataSource.class).driverClassName(config.getDriver()).url(config.getUrl())
-			.username(config.getUsername()).password(config.getPassword()).build();
-	}
+  /**
+   * Create a DataSource.
+   *
+   * @param config event trace data source config
+   * @return data source
+   */
+  public static DataSource createDataSource(final EventTraceDataSourceConfiguration config) {
+    // Determine whether the data source is valid.
+    new EventTraceDataSource(config).init();
+    return DataSourceBuilder.create()
+        .type(BasicDataSource.class)
+        .driverClassName(config.getDriver())
+        .url(config.getUrl())
+        .username(config.getUsername())
+        .password(config.getPassword())
+        .build();
+  }
 }

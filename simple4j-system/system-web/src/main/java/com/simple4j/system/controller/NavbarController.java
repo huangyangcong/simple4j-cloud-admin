@@ -38,92 +38,80 @@ import java.util.List;
 @Api(value = "", tags = "接口")
 public class NavbarController {
 
-	private INavbarService navbarService;
-	private INavbarMenuService navbarMenuService;
+  private INavbarService navbarService;
+  private INavbarMenuService navbarMenuService;
 
+  /** 详情 */
+  @PostMapping("/detail")
+  @ApiOperation(value = "详情")
+  public ApiResponse<NavbarDetailResponse> detail(
+      @Valid @RequestBody NavbarDetailRequest navbarDetailRequest) {
+    NavbarDetailResponse detail = navbarService.detail(navbarDetailRequest);
+    return ApiResponse.ok(detail);
+  }
 
-	/**
-	 * 详情
-	 */
-	@PostMapping("/detail")
-	@ApiOperation(value = "详情")
-	public ApiResponse<NavbarDetailResponse> detail(@Valid @RequestBody NavbarDetailRequest navbarDetailRequest) {
-		NavbarDetailResponse detail = navbarService.detail(navbarDetailRequest);
-		return ApiResponse.ok(detail);
-	}
+  /** 列表 */
+  @PostMapping("/list")
+  @ApiOperation(value = "列表")
+  public ApiResponse<List<NavbarDetailResponse>> list(
+      @Valid @RequestBody NavbarListRequest navbarListRequest) {
+    List<NavbarDetailResponse> pages = navbarService.list(navbarListRequest);
+    return ApiResponse.ok(pages);
+  }
 
-	/**
-	 * 列表
-	 */
-	@PostMapping("/list")
-	@ApiOperation(value = "列表")
-	public ApiResponse<List<NavbarDetailResponse>> list(@Valid @RequestBody NavbarListRequest navbarListRequest) {
-		List<NavbarDetailResponse> pages = navbarService.list(navbarListRequest);
-		return ApiResponse.ok(pages);
-	}
+  /** 自定义分页 */
+  @PostMapping("/page")
+  @ApiOperation(value = "分页")
+  public ApiResponse<Page<NavbarDetailResponse>> page(
+      @Valid @RequestBody NavbarPageRequest navbarPageRequest) {
+    return ApiResponse.ok(navbarService.page(navbarPageRequest));
+  }
 
+  /** 新增 */
+  @PostMapping("/add")
+  @ApiOperation(value = "新增")
+  public ApiResponse<Void> add(@Valid @RequestBody NavbarAddRequest navbarAddRequest) {
+    navbarService.add(navbarAddRequest);
+    return ApiResponse.ok();
+  }
 
-	/**
-	 * 自定义分页
-	 */
-	@PostMapping("/page")
-	@ApiOperation(value = "分页")
-	public ApiResponse<Page<NavbarDetailResponse>> page(@Valid @RequestBody NavbarPageRequest navbarPageRequest) {
-		return ApiResponse.ok(navbarService.page(navbarPageRequest));
-	}
+  /** 修改 */
+  @PostMapping("/update")
+  @ApiOperation(value = "修改")
+  public ApiResponse<Void> update(@Valid @RequestBody NavbarUpdateRequest navbarUpdateRequest) {
+    navbarService.update(navbarUpdateRequest);
+    return ApiResponse.ok();
+  }
 
-	/**
-	 * 新增
-	 */
-	@PostMapping("/add")
-	@ApiOperation(value = "新增")
-	public ApiResponse add(@Valid @RequestBody NavbarAddRequest navbarAddRequest) {
-		navbarService.add(navbarAddRequest);
-		return ApiResponse.ok();
-	}
+  /** 新增或修改 */
+  @PostMapping("/submit")
+  @ApiOperation(value = "新增或修改")
+  public ApiResponse<Void> addOrUpdate(
+      @Valid @RequestBody NavbarAddOrUpdateRequest navbarAddOrUpdateRequest) {
+    navbarService.addOrUpdate(navbarAddOrUpdateRequest);
+    return ApiResponse.ok();
+  }
 
-	/**
-	 * 修改
-	 */
-	@PostMapping("/update")
-	@ApiOperation(value = "修改")
-	public ApiResponse update(@Valid @RequestBody NavbarUpdateRequest navbarUpdateRequest) {
-		navbarService.update(navbarUpdateRequest);
-		return ApiResponse.ok();
-	}
+  /** 删除 */
+  @PostMapping("/remove")
+  @ApiOperation(value = "删除")
+  public ApiResponse<Void> remove(@Valid @RequestBody NavbarRemoveRequest navbarRemoveRequest) {
+    navbarService.remove(navbarRemoveRequest);
+    return ApiResponse.ok();
+  }
 
-	/**
-	 * 新增或修改
-	 */
-	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改")
-	public ApiResponse addOrUpdate(@Valid @RequestBody NavbarAddOrUpdateRequest navbarAddOrUpdateRequest) {
-		navbarService.addOrUpdate(navbarAddOrUpdateRequest);
-		return ApiResponse.ok();
-	}
+  @PostMapping("/permission")
+  @ApiOperation(value = "顶部菜单权限")
+  public ApiResponse<NavbarPermissionResponse> permission(
+      @Valid @RequestBody NavbarPermissionRequest navbarPermissionRequest) {
+    NavbarPermissionResponse detail = navbarMenuService.permission(navbarPermissionRequest);
+    return ApiResponse.ok(detail);
+  }
 
-
-	/**
-	 * 删除
-	 */
-	@PostMapping("/remove")
-	@ApiOperation(value = "删除")
-	public ApiResponse remove(@Valid @RequestBody NavbarRemoveRequest navbarRemoveRequest) {
-		navbarService.remove(navbarRemoveRequest);
-		return ApiResponse.ok();
-	}
-
-	@PostMapping("/permission")
-	@ApiOperation(value = "顶部菜单权限")
-	public ApiResponse<NavbarPermissionResponse> permission(@Valid @RequestBody NavbarPermissionRequest navbarPermissionRequest) {
-		NavbarPermissionResponse detail = navbarMenuService.permission(navbarPermissionRequest);
-		return ApiResponse.ok(detail);
-	}
-
-	@PostMapping("/grant")
-	@ApiOperation(value = "顶部菜单分配")
-	public ApiResponse grant(@Valid @RequestBody NavbarGrantRequest navbarGrantRequest) {
-		navbarMenuService.grant(navbarGrantRequest);
-		return ApiResponse.ok();
-	}
+  @PostMapping("/grant")
+  @ApiOperation(value = "顶部菜单分配")
+  public ApiResponse<Void> grant(@Valid @RequestBody NavbarGrantRequest navbarGrantRequest) {
+    navbarMenuService.grant(navbarGrantRequest);
+    return ApiResponse.ok();
+  }
 }

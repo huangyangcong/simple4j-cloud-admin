@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class UserRegisterGuestRequest extends UserAddRequest {
 
-	@ApiModelProperty(name = "oauth_id", value = "第三方id")
-	@JsonProperty("oauth_id")
-	private String oauthId;
+  @ApiModelProperty(name = "oauth_id", value = "第三方id")
+  @JsonProperty("oauth_id")
+  private String oauthId;
 }

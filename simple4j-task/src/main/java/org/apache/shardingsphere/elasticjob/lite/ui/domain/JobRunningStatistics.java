@@ -29,9 +29,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-/**
- * Job running statistics.
- */
+/** Job running statistics. */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -39,21 +37,21 @@ import java.util.Date;
 @Table(name = "JOB_RUNNING_STATISTICS")
 public class JobRunningStatistics {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private String id;
 
-	@Column(name = "running_count", length = 11)
-	private Integer runningCount;
+  @Column(name = "running_count", length = 11)
+  private Integer runningCount;
 
-	@Column(name = "statistics_time", nullable = false)
-	private Date statisticsTime;
+  @Column(name = "statistics_time", nullable = false)
+  private Date statisticsTime;
 
-	@Column(name = "creation_time", nullable = false)
-	private Date creationTime = new Date();
+  @Column(name = "creation_time", nullable = false)
+  private Date creationTime = new Date();
 
-	public JobRunningStatistics(final Integer runningCount, final Date statisticsTime) {
-		this.runningCount = runningCount;
-		this.statisticsTime = statisticsTime;
-	}
+  public JobRunningStatistics(final Integer runningCount, final Date statisticsTime) {
+    this.runningCount = runningCount;
+    this.statisticsTime = statisticsTime;
+  }
 }

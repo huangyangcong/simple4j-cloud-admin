@@ -20,52 +20,51 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CodeMapStruct {
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	Code toPo(CodeAddRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  Code toPo(CodeAddRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	Code toPo(CodeAddOrUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  Code toPo(CodeAddOrUpdateRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @return
-	 * @vo vo
-	 */
-	Code toPo(CodeUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @return
+   * @vo vo
+   */
+  Code toPo(CodeUpdateRequest vo);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	CodeDetailResponse toVo(Code po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  CodeDetailResponse toVo(Code po);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	List<CodeDetailResponse> toVo(List<Code> po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  List<CodeDetailResponse> toVo(List<Code> po);
 
-
-	/**
-	 * 分页转换PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	Page<CodeDetailResponse> toVo(Page<Code> po);
+  /**
+   * 分页转换PO转VO
+   *
+   * @param po
+   * @return
+   */
+  Page<CodeDetailResponse> toVo(Page<Code> po);
 }

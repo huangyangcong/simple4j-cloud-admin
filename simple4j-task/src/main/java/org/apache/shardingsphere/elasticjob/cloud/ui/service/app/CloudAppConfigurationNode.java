@@ -20,17 +20,15 @@ package org.apache.shardingsphere.elasticjob.cloud.ui.service.app;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-/**
- * Cloud app configuration node.
- */
+/** Cloud app configuration node. */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CloudAppConfigurationNode {
 
-	public static final String ROOT = "/config/app" ;
+  public static final String ROOT = "/config/app";
 
-	private static final String APP_CONFIG = ROOT + "/%s" ;
+  private static final String APP_CONFIG = ROOT + "/%s";
 
-	static String getRootNodePath(final String appName) {
-		return String.format(APP_CONFIG, appName);
-	}
+  static String getRootNodePath(final String appName) {
+    return String.format(APP_CONFIG, appName);
+  }
 }

@@ -25,26 +25,27 @@ import lombok.extern.slf4j.Slf4j;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Event tracing data source.
- */
+/** Event tracing data source. */
 @RequiredArgsConstructor
 @Getter(AccessLevel.PROTECTED)
 @Slf4j
 public final class EventTraceDataSource {
 
-	private final EventTraceDataSourceConfiguration eventTraceDataSourceConfiguration;
+  private final EventTraceDataSourceConfiguration eventTraceDataSourceConfiguration;
 
-	/**
-	 * Initialize data source.
-	 */
-	public void init() {
-		log.debug("ElasticJob: data source init, connection url is: {}.", eventTraceDataSourceConfiguration.getUrl());
-		try {
-			Class.forName(eventTraceDataSourceConfiguration.getDriver());
-			DriverManager.getConnection(eventTraceDataSourceConfiguration.getUrl(), eventTraceDataSourceConfiguration.getUsername(), eventTraceDataSourceConfiguration.getPassword());
-		} catch (final ClassNotFoundException | SQLException ex) {
-			throw new RuntimeException(ex);
-		}
-	}
+  /** Initialize data source. */
+  public void init() {
+    log.debug(
+        "ElasticJob: data source init, connection url is: {}.",
+        eventTraceDataSourceConfiguration.getUrl());
+    try {
+      Class.forName(eventTraceDataSourceConfiguration.getDriver());
+      DriverManager.getConnection(
+          eventTraceDataSourceConfiguration.getUrl(),
+          eventTraceDataSourceConfiguration.getUsername(),
+          eventTraceDataSourceConfiguration.getPassword());
+    } catch (final ClassNotFoundException | SQLException ex) {
+      throw new RuntimeException(ex);
+    }
+  }
 }

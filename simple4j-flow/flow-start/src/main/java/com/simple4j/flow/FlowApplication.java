@@ -1,6 +1,5 @@
 package com.simple4j.flow;
 
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -19,7 +18,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @MapperScan("com.simple4j.flow.mapper")
 public class FlowApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FlowApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(FlowApplication.class, args);
+  }
 }

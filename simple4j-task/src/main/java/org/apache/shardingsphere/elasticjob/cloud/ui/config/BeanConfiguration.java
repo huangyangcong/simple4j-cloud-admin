@@ -34,28 +34,33 @@ import java.util.Optional;
 @Slf4j
 public class BeanConfiguration {
 
-	@Autowired
-	private EventTraceConfiguration traceConfiguration;
+  @Autowired private EventTraceConfiguration traceConfiguration;
 
-	@Autowired
-	private RegistryConfiguration registryConfiguration;
+  @Autowired private RegistryConfiguration registryConfiguration;
 
-	@Bean
-	public CoordinatorRegistryCenter regCenter() {
-		CoordinatorRegistryCenter registryCenter = new ZookeeperRegistryCenter(registryConfiguration.getZookeeperConfiguration());
-		registryCenter.init();
-		return registryCenter;
-	}
+  @Bean
+  public CoordinatorRegistryCenter regCenter() {
+    CoordinatorRegistryCenter registryCenter =
+        new ZookeeperRegistryCenter(registryConfiguration.getZookeeperConfiguration());
+    registryCenter.init();
+    return registryCenter;
+  }
 
-	@Bean
-	public StatisticRdbRepository rdbRepository() {
-		Optional<TracingConfiguration> tracingConfiguration = traceConfiguration.getTracingConfiguration();
-		return tracingConfiguration.map(each -> new StatisticRdbRepository((DataSource) each.getStorage(), true)).orElse(new StatisticRdbRepository(null, false));
-	}
+  @Bean
+  public StatisticRdbRepository rdbRepository() {
+    Optional<TracingConfiguration> tracingConfiguration =
+        traceConfiguration.getTracingConfiguration();
+    return tracingConfiguration
+        .map(each -> new StatisticRdbRepository((DataSource) each.getStorage(), true))
+        .orElse(new StatisticRdbRepository(null, false));
+  }
 
-	@Bean
-	public JobEventRdbSearch jobEventRdbSearch() {
-		Optional<TracingConfiguration> tracingConfiguration = traceConfiguration.getTracingConfiguration();
-		return tracingConfiguration.map(each -> new JobEventRdbSearch((DataSource) each.getStorage(), true)).orElse(new JobEventRdbSearch(null, false));
-	}
+  @Bean
+  public JobEventRdbSearch jobEventRdbSearch() {
+    Optional<TracingConfiguration> tracingConfiguration =
+        traceConfiguration.getTracingConfiguration();
+    return tracingConfiguration
+        .map(each -> new JobEventRdbSearch((DataSource) each.getStorage(), true))
+        .orElse(new JobEventRdbSearch(null, false));
+  }
 }

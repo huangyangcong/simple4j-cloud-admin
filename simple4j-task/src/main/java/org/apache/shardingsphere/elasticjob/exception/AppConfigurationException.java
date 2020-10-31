@@ -17,14 +17,12 @@
 
 package org.apache.shardingsphere.elasticjob.exception;
 
-/**
- * Application configuration exception.
- */
+/** Application configuration exception. */
 public final class AppConfigurationException extends RuntimeException {
 
-	private static final long serialVersionUID = -1466479389299512371L;
+  private static final long serialVersionUID = -1466479389299512371L;
 
-	public AppConfigurationException(final String errorMessage, final Object... args) {
-		super(String.format(errorMessage, args));
-	}
+  public AppConfigurationException(final String errorMessage, final Object... args) {
+    super(String.format(errorMessage, args));
+  }
 }

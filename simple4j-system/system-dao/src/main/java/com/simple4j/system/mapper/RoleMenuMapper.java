@@ -13,11 +13,11 @@ import java.util.Set;
  */
 public interface RoleMenuMapper extends ExtendMapper<RoleMenu> {
 
-	/**
-	 * 获取菜单别名（权限）
-	 *
-	 * @param roleIds
-	 * @return
-	 */
-	Set<String> permissions(@Param("roleIds") Set<String> roleIds);
+  /**
+   * 获取菜单别名（权限）
+   *
+   * @param roleIds
+   * @return
+   */
+  Set<String> permissions(@Param("roleIds") Set<String> roleIds);
 }

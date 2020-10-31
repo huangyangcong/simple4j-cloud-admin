@@ -21,5 +21,5 @@ import org.apache.shardingsphere.elasticjob.lite.ui.domain.JobStatusTraceLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface JobStatusTraceLogRepository extends JpaRepository<JobStatusTraceLog, String>, JpaSpecificationExecutor<JobStatusTraceLog> {
-}
+public interface JobStatusTraceLogRepository
+    extends JpaRepository<JobStatusTraceLog, String>, JpaSpecificationExecutor<JobStatusTraceLog> {}

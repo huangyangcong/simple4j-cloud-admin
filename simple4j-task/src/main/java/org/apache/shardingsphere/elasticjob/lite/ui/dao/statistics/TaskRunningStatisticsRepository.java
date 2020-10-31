@@ -26,18 +26,17 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Task running statistics repository.
- */
+/** Task running statistics repository. */
 @Repository
-public interface TaskRunningStatisticsRepository extends JpaRepository<TaskRunningStatistics, Long> {
+public interface TaskRunningStatisticsRepository
+    extends JpaRepository<TaskRunningStatistics, Long> {
 
-	/**
-	 * Find task running statistics.
-	 *
-	 * @param fromTime from date to statistics
-	 * @return Task running statistics
-	 */
-	@Query("SELECT t FROM TaskRunningStatistics t where t.statisticsTime >= :fromTime")
-	List<TaskRunningStatistics> findTaskRunningStatistics(@Param("fromTime") Date fromTime);
+  /**
+   * Find task running statistics.
+   *
+   * @param fromTime from date to statistics
+   * @return Task running statistics
+   */
+  @Query("SELECT t FROM TaskRunningStatistics t where t.statisticsTime >= :fromTime")
+  List<TaskRunningStatistics> findTaskRunningStatistics(@Param("fromTime") Date fromTime);
 }

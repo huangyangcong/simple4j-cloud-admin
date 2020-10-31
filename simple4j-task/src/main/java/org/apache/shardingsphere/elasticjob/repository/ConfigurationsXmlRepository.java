@@ -17,11 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.repository;
 
-
 import org.apache.shardingsphere.elasticjob.domain.GlobalConfiguration;
 
-/**
- * Configurations XML repository.
- */
-public interface ConfigurationsXmlRepository extends XmlRepository<GlobalConfiguration> {
-}
+/** Configurations XML repository. */
+public interface ConfigurationsXmlRepository extends XmlRepository<GlobalConfiguration> {}

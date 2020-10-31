@@ -21,29 +21,28 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.domain.RegistryCenterConfiguration;
 
-/**
- * Registry center configuration configuration.
- */
+/** Registry center configuration configuration. */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SessionRegistryCenterConfiguration {
 
-	private static RegistryCenterConfiguration regCenterConfig;
+  private static RegistryCenterConfiguration regCenterConfig;
 
-	/**
-	 * Get registry center configuration.
-	 *
-	 * @return registry center configuration
-	 */
-	public static RegistryCenterConfiguration getRegistryCenterConfiguration() {
-		return regCenterConfig;
-	}
+  /**
+   * Get registry center configuration.
+   *
+   * @return registry center configuration
+   */
+  public static RegistryCenterConfiguration getRegistryCenterConfiguration() {
+    return regCenterConfig;
+  }
 
-	/**
-	 * Set registry center configuration.
-	 *
-	 * @param regCenterConfig registry center configuration
-	 */
-	public static void setRegistryCenterConfiguration(final RegistryCenterConfiguration regCenterConfig) {
-		SessionRegistryCenterConfiguration.regCenterConfig = regCenterConfig;
-	}
+  /**
+   * Set registry center configuration.
+   *
+   * @param regCenterConfig registry center configuration
+   */
+  public static void setRegistryCenterConfiguration(
+      final RegistryCenterConfiguration regCenterConfig) {
+    SessionRegistryCenterConfiguration.regCenterConfig = regCenterConfig;
+  }
 }

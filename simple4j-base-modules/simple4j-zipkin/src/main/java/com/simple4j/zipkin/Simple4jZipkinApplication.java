@@ -10,8 +10,7 @@ import zipkin2.server.internal.EnableZipkinServer;
 @EnableZipkinServer
 public class Simple4jZipkinApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Simple4jZipkinApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(Simple4jZipkinApplication.class, args);
+  }
 }

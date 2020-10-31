@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 /**
  * 服务实现类
  *
@@ -36,66 +35,67 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NavbarServiceImpl implements INavbarService {
 
-	private final NavbarMapper navbarMapper;
-	private final NavbarMapStruct navbarMapStruct;
-	private final INavbarMenuService navbarMenuService;
+  private final NavbarMapper navbarMapper;
+  private final NavbarMapStruct navbarMapStruct;
+  private final INavbarMenuService navbarMenuService;
 
-	@Override
-	public NavbarDetailResponse detail(NavbarDetailRequest navbarDetailRequest) {
-		Navbar detail = navbarMapper.getOne(
-			Wrappers.<Navbar>lambdaQuery().eq(Navbar::getId, navbarDetailRequest.getId()));
-		return navbarMapStruct.toVo(detail);
-	}
+  @Override
+  public NavbarDetailResponse detail(NavbarDetailRequest navbarDetailRequest) {
+    Navbar detail =
+        navbarMapper.getOne(
+            Wrappers.<Navbar>lambdaQuery().eq(Navbar::getId, navbarDetailRequest.getId()));
+    return navbarMapStruct.toVo(detail);
+  }
 
-	@Override
-	public List<NavbarDetailResponse> list(NavbarListRequest navbarListRequest) {
-		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		LambdaQueryWrapper<Navbar> queryWrapper = Wrappers.<Navbar>lambdaQuery()
-			.eq(Navbar::getTenantId,
-				securityScope.getTenantId());
-		List<Navbar> pages = navbarMapper.list(queryWrapper);
-		return navbarMapStruct.toVo(pages);
-	}
+  @Override
+  public List<NavbarDetailResponse> list(NavbarListRequest navbarListRequest) {
+    SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
+    LambdaQueryWrapper<Navbar> queryWrapper =
+        Wrappers.<Navbar>lambdaQuery().eq(Navbar::getTenantId, securityScope.getTenantId());
+    List<Navbar> pages = navbarMapper.list(queryWrapper);
+    return navbarMapStruct.toVo(pages);
+  }
 
-	@Override
-	public Page<NavbarDetailResponse> page(NavbarPageRequest navbarPageRequest) {
-		LambdaQueryWrapper<Navbar> queryWrapper = Wrappers.<Navbar>lambdaQuery();
-		IPage<Navbar> page = navbarMapper.page(
-			new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
-				navbarPageRequest.getPageNo(), navbarPageRequest.getPageSize()),
-			queryWrapper);
-		Page<Navbar> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-			page.getRecords());
-		return navbarMapStruct.toVo(pages);
-	}
+  @Override
+  public Page<NavbarDetailResponse> page(NavbarPageRequest navbarPageRequest) {
+    LambdaQueryWrapper<Navbar> queryWrapper = Wrappers.<Navbar>lambdaQuery();
+    IPage<Navbar> page =
+        navbarMapper.page(
+            new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
+                navbarPageRequest.getPageNo(), navbarPageRequest.getPageSize()),
+            queryWrapper);
+    Page<Navbar> pages =
+        new Page<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getRecords());
+    return navbarMapStruct.toVo(pages);
+  }
 
-	@Override
-	public boolean add(NavbarAddRequest navbarAddRequest) {
-		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		Navbar navbar = navbarMapStruct.toPo(navbarAddRequest);
-		navbar.setTenantId(securityScope.getTenantId());
-		return navbarMapper.save(navbar);
-	}
+  @Override
+  public boolean add(NavbarAddRequest navbarAddRequest) {
+    SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
+    Navbar navbar = navbarMapStruct.toPo(navbarAddRequest);
+    navbar.setTenantId(securityScope.getTenantId());
+    return navbarMapper.save(navbar);
+  }
 
-	@Override
-	public boolean update(NavbarUpdateRequest navbarUpdateRequest) {
-		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		Navbar navbar = navbarMapStruct.toPo(navbarUpdateRequest);
-		navbar.setTenantId(securityScope.getTenantId());
-		return navbarMapper.updateByIdBool(navbar);
-	}
+  @Override
+  public boolean update(NavbarUpdateRequest navbarUpdateRequest) {
+    SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
+    Navbar navbar = navbarMapStruct.toPo(navbarUpdateRequest);
+    navbar.setTenantId(securityScope.getTenantId());
+    return navbarMapper.updateByIdBool(navbar);
+  }
 
-	@Override
-	public boolean addOrUpdate(NavbarAddOrUpdateRequest navbarAddOrUpdateRequest) {
-		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		Navbar navbar = navbarMapStruct.toPo(navbarAddOrUpdateRequest);
-		navbar.setTenantId(securityScope.getTenantId());
-		return navbarMapper.saveOrUpdate(navbar);
-	}
+  @Override
+  public boolean addOrUpdate(NavbarAddOrUpdateRequest navbarAddOrUpdateRequest) {
+    SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
+    Navbar navbar = navbarMapStruct.toPo(navbarAddOrUpdateRequest);
+    navbar.setTenantId(securityScope.getTenantId());
+    return navbarMapper.saveOrUpdate(navbar);
+  }
 
-	@Transactional(rollbackFor = Exception.class)
-	@Override
-	public boolean remove(NavbarRemoveRequest navbarRemoveRequest) {
-		return navbarMapper.removeByIds(navbarRemoveRequest.getIds());
-	}
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public boolean remove(NavbarRemoveRequest navbarRemoveRequest) {
+    return navbarMapper.removeByIds(navbarRemoveRequest.getIds());
+  }
 }

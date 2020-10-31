@@ -7,26 +7,26 @@ import com.simple4j.system.response.CaptchaResponse;
  * @version 1.0.0
  */
 public interface ICaptchaService {
-	/**
-	 * 生成图形验证码
-	 *
-	 * @return
-	 */
-	CaptchaResponse captcha();
+  /**
+   * 生成图形验证码
+   *
+   * @return
+   */
+  CaptchaResponse captcha();
 
-	/**
-	 * 校验验证码
-	 *
-	 * @param captchaKey
-	 * @param captchaCode
-	 * @return
-	 */
-	void verify(String captchaKey, String captchaCode);
+  /**
+   * 校验验证码
+   *
+   * @param captchaKey
+   * @param captchaCode
+   * @return
+   */
+  void verify(String captchaKey, String captchaCode);
 
-	/**
-	 * 删除验证码
-	 *
-	 * @param captchaKey
-	 */
-	void deleteCaptcha(String captchaKey);
+  /**
+   * 删除验证码
+   *
+   * @param captchaKey
+   */
+  void deleteCaptcha(String captchaKey);
 }

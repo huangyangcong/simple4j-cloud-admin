@@ -11,6 +11,4 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "菜单表新增请求实体类", description = "菜单表新增请求实体类")
-public class MenuAddOrUpdateRequest extends MenuUpdateRequest {
-
-}
+public class MenuAddOrUpdateRequest extends MenuUpdateRequest {}

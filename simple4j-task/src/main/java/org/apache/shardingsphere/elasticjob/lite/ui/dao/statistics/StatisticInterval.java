@@ -20,18 +20,15 @@ package org.apache.shardingsphere.elasticjob.lite.ui.dao.statistics;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Statistic interval.
- */
+/** Statistic interval. */
 @Getter
 @RequiredArgsConstructor
 public enum StatisticInterval {
+  MINUTE("0 * * * * ?"),
 
-	MINUTE("0 * * * * ?"),
+  HOUR("0 0 * * * ?"),
 
-	HOUR("0 0 * * * ?"),
+  DAY("0 0 0 * * ?");
 
-	DAY("0 0 0 * * ?");
-
-	private final String cron;
+  private final String cron;
 }

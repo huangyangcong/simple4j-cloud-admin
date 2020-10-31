@@ -32,24 +32,26 @@ import java.util.Optional;
 @Setter
 public final class EventTraceConfiguration {
 
-	private String rdbDriver;
+  private String rdbDriver;
 
-	private String rdbUrl;
+  private String rdbUrl;
 
-	private String rdbUsername;
+  private String rdbUsername;
 
-	private String rdbPassword;
+  private String rdbPassword;
 
-	public Optional<TracingConfiguration> getTracingConfiguration() {
+  public Optional<TracingConfiguration> getTracingConfiguration() {
 
-		if (!Strings.isNullOrEmpty(rdbDriver) && !Strings.isNullOrEmpty(rdbUrl) && !Strings.isNullOrEmpty(rdbUsername)) {
-			BasicDataSource dataSource = new BasicDataSource();
-			dataSource.setDriverClassName(rdbDriver);
-			dataSource.setUrl(rdbUrl);
-			dataSource.setUsername(rdbUsername);
-			dataSource.setPassword(rdbPassword);
-			return Optional.of(new TracingConfiguration<DataSource>("RDB", dataSource));
-		}
-		return Optional.empty();
-	}
+    if (!Strings.isNullOrEmpty(rdbDriver)
+        && !Strings.isNullOrEmpty(rdbUrl)
+        && !Strings.isNullOrEmpty(rdbUsername)) {
+      BasicDataSource dataSource = new BasicDataSource();
+      dataSource.setDriverClassName(rdbDriver);
+      dataSource.setUrl(rdbUrl);
+      dataSource.setUsername(rdbUsername);
+      dataSource.setPassword(rdbPassword);
+      return Optional.of(new TracingConfiguration<DataSource>("RDB", dataSource));
+    }
+    return Optional.empty();
+  }
 }

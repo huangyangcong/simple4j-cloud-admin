@@ -20,52 +20,51 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ParamMapStruct {
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	Param toPo(ParamAddRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  Param toPo(ParamAddRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	Param toPo(ParamAddOrUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  Param toPo(ParamAddOrUpdateRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @return
-	 * @vo vo
-	 */
-	Param toPo(ParamUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @return
+   * @vo vo
+   */
+  Param toPo(ParamUpdateRequest vo);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	ParamDetailResponse toVo(Param po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  ParamDetailResponse toVo(Param po);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	List<ParamDetailResponse> toVo(List<Param> po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  List<ParamDetailResponse> toVo(List<Param> po);
 
-
-	/**
-	 * 分页转换PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	Page<ParamDetailResponse> toVo(Page<Param> po);
+  /**
+   * 分页转换PO转VO
+   *
+   * @param po
+   * @return
+   */
+  Page<ParamDetailResponse> toVo(Page<Param> po);
 }

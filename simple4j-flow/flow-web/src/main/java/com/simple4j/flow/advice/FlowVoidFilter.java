@@ -15,16 +15,16 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 public class FlowVoidFilter implements Filter {
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		chain.doFilter(request, response);
-		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-		if (HttpStatus.NO_CONTENT.value() == httpServletResponse.getStatus()) {
-			httpServletResponse.setStatus(HttpStatus.OK.value());
-			response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-			PrintWriter writer = httpServletResponse.getWriter();
-			writer.write(JSONUtil.toJsonStr(ApiResponse.ok()));
-		}
-	}
-
+  @Override
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+      throws IOException, ServletException {
+    chain.doFilter(request, response);
+    HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+    if (HttpStatus.NO_CONTENT.value() == httpServletResponse.getStatus()) {
+      httpServletResponse.setStatus(HttpStatus.OK.value());
+      response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+      PrintWriter writer = httpServletResponse.getWriter();
+      writer.write(JSONUtil.toJsonStr(ApiResponse.ok()));
+    }
+  }
 }

@@ -16,10 +16,8 @@ import java.io.Serializable;
 @ApiModel(value = "部门表详情请求实体类", description = "部门表详情请求实体类")
 public class DeptDetailRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	/**
-	 * 部门表详情编号
-	 */
-	@ApiModelProperty(value = "部门表详情编号", name = "id")
-	private String id;
+  private static final long serialVersionUID = 1L;
+  /** 部门表详情编号 */
+  @ApiModelProperty(value = "部门表详情编号", name = "id")
+  private String id;
 }

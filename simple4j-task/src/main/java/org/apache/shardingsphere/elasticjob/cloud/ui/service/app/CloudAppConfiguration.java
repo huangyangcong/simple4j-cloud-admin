@@ -22,26 +22,24 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-/**
- * Cloud app configuration.
- */
+/** Cloud app configuration. */
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @ToString
 public final class CloudAppConfiguration {
 
-	private final String appName;
+  private final String appName;
 
-	private final String appURL;
+  private final String appURL;
 
-	private final String bootstrapScript;
+  private final String bootstrapScript;
 
-	private double cpuCount = 1d;
+  private double cpuCount = 1d;
 
-	private double memoryMB = 128d;
+  private double memoryMB = 128d;
 
-	private boolean appCacheEnable = true;
+  private boolean appCacheEnable = true;
 
-	private int eventTraceSamplingCount;
+  private int eventTraceSamplingCount;
 }

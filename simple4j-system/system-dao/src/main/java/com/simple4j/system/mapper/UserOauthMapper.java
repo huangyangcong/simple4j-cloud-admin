@@ -9,6 +9,4 @@ import com.simple4j.system.entity.UserOauth;
  * @author hyc
  * @since 2020-09-16
  */
-public interface UserOauthMapper extends ExtendMapper<UserOauth> {
-
-}
+public interface UserOauthMapper extends ExtendMapper<UserOauth> {}

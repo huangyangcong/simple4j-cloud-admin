@@ -26,38 +26,42 @@ import lombok.Setter;
 
 import java.util.Date;
 
-/**
- * Request object of uri '/event-trace/status'.
- */
+/** Request object of uri '/event-trace/status'. */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class FindJobStatusTraceEventsRequest extends BasePageRequest {
 
-	private String jobName;
+  private String jobName;
 
-	private String source;
+  private String source;
 
-	private String executionType;
+  private String executionType;
 
-	private String state;
+  private String state;
 
-	@JsonProperty("startTime")
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date start;
+  @JsonProperty("startTime")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private Date start;
 
-	@JsonProperty("endTime")
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date end;
+  @JsonProperty("endTime")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  private Date end;
 
-	public FindJobStatusTraceEventsRequest(final Integer pageSize, final Integer pageNumber) {
-		super(pageSize, pageNumber, null, null);
-	}
+  public FindJobStatusTraceEventsRequest(final Integer pageSize, final Integer pageNumber) {
+    super(pageSize, pageNumber, null, null);
+  }
 
-	public FindJobStatusTraceEventsRequest(final Integer pageSize, final Integer pageNumber, final String sortBy, final String orderType, final Date startTime, final Date endTime) {
-		super(pageSize, pageNumber, sortBy, orderType);
-		this.start = startTime;
-		this.end = endTime;
-	}
+  public FindJobStatusTraceEventsRequest(
+      final Integer pageSize,
+      final Integer pageNumber,
+      final String sortBy,
+      final String orderType,
+      final Date startTime,
+      final Date endTime) {
+    super(pageSize, pageNumber, sortBy, orderType);
+    this.start = startTime;
+    this.end = endTime;
+  }
 }

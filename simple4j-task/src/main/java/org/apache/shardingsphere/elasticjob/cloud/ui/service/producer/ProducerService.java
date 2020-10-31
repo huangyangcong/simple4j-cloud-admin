@@ -30,65 +30,66 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-/**
- * Producer manager.
- */
+/** Producer manager. */
 @Slf4j
 @Service
 public final class ProducerService {
 
-	@Autowired
-	private CloudAppConfigurationService appConfigService;
+  @Autowired private CloudAppConfigurationService appConfigService;
 
-	@Autowired
-	private CloudJobConfigurationService configService;
+  @Autowired private CloudJobConfigurationService configService;
 
-	@Autowired
-	private DisableJobService disableJobService;
+  @Autowired private DisableJobService disableJobService;
 
-	/**
-	 * Register the job.
-	 *
-	 * @param cloudJobConfig cloud job configuration
-	 */
-	public void register(final CloudJobConfigurationPOJO cloudJobConfig) {
-		if (disableJobService.isDisabled(cloudJobConfig.getJobName())) {
-			throw new JobConfigurationException("Job '%s' has been disable.", cloudJobConfig.getJobName());
-		}
-		Optional<CloudAppConfigurationPOJO> appConfigFromZk = appConfigService.load(cloudJobConfig.getAppName());
-		if (!appConfigFromZk.isPresent()) {
-			throw new AppConfigurationException("Register app '%s' firstly.", cloudJobConfig.getAppName());
-		}
-		Optional<CloudJobConfigurationPOJO> jobConfigFromZk = configService.load(cloudJobConfig.getJobName());
-		if (jobConfigFromZk.isPresent()) {
-			throw new JobConfigurationException("Job '%s' already existed.", cloudJobConfig.getJobName());
-		}
-		configService.add(cloudJobConfig);
-	}
+  /**
+   * Register the job.
+   *
+   * @param cloudJobConfig cloud job configuration
+   */
+  public void register(final CloudJobConfigurationPOJO cloudJobConfig) {
+    if (disableJobService.isDisabled(cloudJobConfig.getJobName())) {
+      throw new JobConfigurationException(
+          "Job '%s' has been disable.", cloudJobConfig.getJobName());
+    }
+    Optional<CloudAppConfigurationPOJO> appConfigFromZk =
+        appConfigService.load(cloudJobConfig.getAppName());
+    if (!appConfigFromZk.isPresent()) {
+      throw new AppConfigurationException(
+          "Register app '%s' firstly.", cloudJobConfig.getAppName());
+    }
+    Optional<CloudJobConfigurationPOJO> jobConfigFromZk =
+        configService.load(cloudJobConfig.getJobName());
+    if (jobConfigFromZk.isPresent()) {
+      throw new JobConfigurationException("Job '%s' already existed.", cloudJobConfig.getJobName());
+    }
+    configService.add(cloudJobConfig);
+  }
 
-	/**
-	 * Update the job.
-	 *
-	 * @param cloudJobConfig cloud job configuration
-	 */
-	public void update(final CloudJobConfigurationPOJO cloudJobConfig) {
-		Optional<CloudJobConfigurationPOJO> jobConfigFromZk = configService.load(cloudJobConfig.getJobName());
-		if (!jobConfigFromZk.isPresent()) {
-			throw new JobConfigurationException("Cannot found job '%s', please register first.", cloudJobConfig.getJobName());
-		}
-		configService.update(cloudJobConfig);
-	}
+  /**
+   * Update the job.
+   *
+   * @param cloudJobConfig cloud job configuration
+   */
+  public void update(final CloudJobConfigurationPOJO cloudJobConfig) {
+    Optional<CloudJobConfigurationPOJO> jobConfigFromZk =
+        configService.load(cloudJobConfig.getJobName());
+    if (!jobConfigFromZk.isPresent()) {
+      throw new JobConfigurationException(
+          "Cannot found job '%s', please register first.", cloudJobConfig.getJobName());
+    }
+    configService.update(cloudJobConfig);
+  }
 
-	/**
-	 * Deregister the job.
-	 *
-	 * @param jobName job name
-	 */
-	public void deregister(final String jobName) {
-		Optional<CloudJobConfigurationPOJO> jobConfig = configService.load(jobName);
-		if (jobConfig.isPresent()) {
-			disableJobService.remove(jobName);
-			configService.remove(jobName);
-		}
-	}
+  /**
+   * Deregister the job.
+   *
+   * @param jobName job name
+   */
+  public void deregister(final String jobName) {
+    Optional<CloudJobConfigurationPOJO> jobConfig = configService.load(jobName);
+    if (jobConfig.isPresent()) {
+      disableJobService.remove(jobName);
+      configService.remove(jobName);
+    }
+  }
 }

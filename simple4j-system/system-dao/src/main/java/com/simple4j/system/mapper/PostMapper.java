@@ -13,12 +13,11 @@ import java.util.List;
  */
 public interface PostMapper extends ExtendMapper<Post> {
 
-	/**
-	 * 获取岗位名
-	 *
-	 * @param userId
-	 * @return
-	 */
-	List<String> getPostNames(@Param("userId") String userId);
-
+  /**
+   * 获取岗位名
+   *
+   * @param userId
+   * @return
+   */
+  List<String> getPostNames(@Param("userId") String userId);
 }

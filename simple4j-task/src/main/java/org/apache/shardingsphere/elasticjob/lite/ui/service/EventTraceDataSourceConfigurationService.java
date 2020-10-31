@@ -22,54 +22,52 @@ import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceC
 
 import java.util.Optional;
 
-/**
- * Event trace data source configuration service.
- */
+/** Event trace data source configuration service. */
 public interface EventTraceDataSourceConfigurationService {
 
-	/**
-	 * Load all event trace data source configurations.
-	 *
-	 * @return all event trace data source configuration
-	 */
-	EventTraceDataSourceConfigurations loadAll();
+  /**
+   * Load all event trace data source configurations.
+   *
+   * @return all event trace data source configuration
+   */
+  EventTraceDataSourceConfigurations loadAll();
 
-	/**
-	 * Load event trace data source configuration.
-	 *
-	 * @param name name of event trace data source configuration
-	 * @return event trace data source configuration
-	 */
-	EventTraceDataSourceConfiguration load(String name);
+  /**
+   * Load event trace data source configuration.
+   *
+   * @param name name of event trace data source configuration
+   * @return event trace data source configuration
+   */
+  EventTraceDataSourceConfiguration load(String name);
 
-	/**
-	 * Find event trace data source configuration.
-	 *
-	 * @param name    name of event trace data source configuration
-	 * @param configs event trace data source configurations
-	 * @return event trace data source configuration
-	 */
-	EventTraceDataSourceConfiguration find(String name, EventTraceDataSourceConfigurations configs);
+  /**
+   * Find event trace data source configuration.
+   *
+   * @param name name of event trace data source configuration
+   * @param configs event trace data source configurations
+   * @return event trace data source configuration
+   */
+  EventTraceDataSourceConfiguration find(String name, EventTraceDataSourceConfigurations configs);
 
-	/**
-	 * Load activated event trace data source configuration.
-	 *
-	 * @return activated event trace data source configuration
-	 */
-	Optional<EventTraceDataSourceConfiguration> loadActivated();
+  /**
+   * Load activated event trace data source configuration.
+   *
+   * @return activated event trace data source configuration
+   */
+  Optional<EventTraceDataSourceConfiguration> loadActivated();
 
-	/**
-	 * Add event trace data source configuration.
-	 *
-	 * @param config event trace data source configuration
-	 * @return success to add or not
-	 */
-	boolean add(EventTraceDataSourceConfiguration config);
+  /**
+   * Add event trace data source configuration.
+   *
+   * @param config event trace data source configuration
+   * @return success to add or not
+   */
+  boolean add(EventTraceDataSourceConfiguration config);
 
-	/**
-	 * Delete event trace data source configuration.
-	 *
-	 * @param name name of event trace data source configuration
-	 */
-	void delete(String name);
+  /**
+   * Delete event trace data source configuration.
+   *
+   * @param name name of event trace data source configuration
+   */
+  void delete(String name);
 }

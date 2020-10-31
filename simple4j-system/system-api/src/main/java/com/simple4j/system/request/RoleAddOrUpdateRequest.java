@@ -11,6 +11,4 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "角色表新增请求实体类", description = "角色表新增请求实体类")
-public class RoleAddOrUpdateRequest extends RoleUpdateRequest {
-
-}
+public class RoleAddOrUpdateRequest extends RoleUpdateRequest {}

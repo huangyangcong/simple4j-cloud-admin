@@ -17,13 +17,9 @@ import java.util.List;
 @ApiModel(value = "角色菜单权限请求实体类", description = "角色菜单权限请求实体类")
 public class RoleMenuKeyRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * 角色
-	 */
-	@ApiModelProperty(name = "roles", value = "角色")
-	private List<Long> roles;
-
-
+  /** 角色 */
+  @ApiModelProperty(name = "roles", value = "角色")
+  private List<Long> roles;
 }

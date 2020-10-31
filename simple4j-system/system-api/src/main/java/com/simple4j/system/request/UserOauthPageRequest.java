@@ -7,7 +7,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-
 /**
  * 用户第三方认证表分页请求实体类
  *
@@ -18,19 +17,15 @@ import java.io.Serializable;
 @ApiModel(value = "用户第三方认证表分页请求实体类", description = "用户第三方认证表分页请求实体类")
 public class UserOauthPageRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * 页码
-	 */
-	@ApiModelProperty(name = "page_no", value = "页码")
-	@JsonProperty("page_no")
-	private int pageNo;
+  /** 页码 */
+  @ApiModelProperty(name = "page_no", value = "页码")
+  @JsonProperty("page_no")
+  private int pageNo;
 
-	/**
-	 * 分页数
-	 */
-	@ApiModelProperty(name = "pageSize", value = "分页数")
-	@JsonProperty("page_size")
-	private int pageSize;
+  /** 分页数 */
+  @ApiModelProperty(name = "pageSize", value = "分页数")
+  @JsonProperty("page_size")
+  private int pageSize;
 }

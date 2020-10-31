@@ -18,88 +18,56 @@ import java.util.Set;
 @ApiModel(description = "用户信息")
 public class UserInfo implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键id
-	 */
-	@ApiModelProperty(value = "用户id")
-	private String id;
+  /** 主键id */
+  @ApiModelProperty(value = "用户id")
+  private String id;
 
-	/**
-	 * 租户ID
-	 */
-	@ApiModelProperty(value = "租户ID")
-	private String tenantId;
-	/**
-	 * 编号
-	 */
-	@ApiModelProperty(value = "code")
-	private String code;
-	/**
-	 * 账号
-	 */
-	@ApiModelProperty(value = "账号")
-	private String account;
-	/**
-	 * 密码
-	 */
-	@ApiModelProperty(value = "密码")
-	private String password;
-	/**
-	 * 昵称
-	 */
-	@ApiModelProperty(value = "昵称")
-	private String name;
-	/**
-	 * 真名
-	 */
-	@ApiModelProperty(value = "avatar")
-	@JsonProperty("real_name")
-	private String realName;
-	/**
-	 * 头像
-	 */
-	@ApiModelProperty(value = "avatar")
-	private String avatar;
-	/**
-	 * 邮箱
-	 */
-	@ApiModelProperty(value = "email")
-	private String email;
-	/**
-	 * 手机
-	 */
-	@ApiModelProperty(value = "phone")
-	private String phone;
-	/**
-	 * 生日
-	 */
-	@ApiModelProperty(value = "生日")
-	private Date birthday;
-	/**
-	 * 性别
-	 */
-	@ApiModelProperty(value = "性别")
-	private Integer sex;
+  /** 租户ID */
+  @ApiModelProperty(value = "租户ID")
+  private String tenantId;
+  /** 编号 */
+  @ApiModelProperty(value = "code")
+  private String code;
+  /** 账号 */
+  @ApiModelProperty(value = "账号")
+  private String account;
+  /** 密码 */
+  @ApiModelProperty(value = "密码")
+  private String password;
+  /** 昵称 */
+  @ApiModelProperty(value = "昵称")
+  private String name;
+  /** 真名 */
+  @ApiModelProperty(value = "avatar")
+  @JsonProperty("real_name")
+  private String realName;
+  /** 头像 */
+  @ApiModelProperty(value = "avatar")
+  private String avatar;
+  /** 邮箱 */
+  @ApiModelProperty(value = "email")
+  private String email;
+  /** 手机 */
+  @ApiModelProperty(value = "phone")
+  private String phone;
+  /** 生日 */
+  @ApiModelProperty(value = "生日")
+  private Date birthday;
+  /** 性别 */
+  @ApiModelProperty(value = "性别")
+  private Integer sex;
 
-	/**
-	 * 第三方授权id
-	 */
-	@ApiModelProperty(value = "第三方授权id")
-	private String oauthId;
+  /** 第三方授权id */
+  @ApiModelProperty(value = "第三方授权id")
+  private String oauthId;
 
+  /** 权限标识集合 */
+  @ApiModelProperty(value = "权限集合")
+  private Set<String> permissions;
 
-	/**
-	 * 权限标识集合
-	 */
-	@ApiModelProperty(value = "权限集合")
-	private Set<String> permissions;
-
-	/**
-	 * 角色标识集合
-	 */
-	@ApiModelProperty(value = "角色集合")
-	private Set<String> roles;
-
+  /** 角色标识集合 */
+  @ApiModelProperty(value = "角色集合")
+  private Set<String> roles;
 }

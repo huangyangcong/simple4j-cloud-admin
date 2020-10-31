@@ -17,34 +17,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Tenant extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键id
-	 */
-	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+  /** 主键id */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
-	/**
-	 * 租户ID
-	 */
-	private String tenantId;
-	/**
-	 * 租户名称
-	 */
-	private String tenantName;
-	/**
-	 * 联系人
-	 */
-	private String linkman;
-	/**
-	 * 联系电话
-	 */
-	private String contactNumber;
-	/**
-	 * 联系地址
-	 */
-	private String address;
-
-
+  /** 租户ID */
+  private String tenantId;
+  /** 租户名称 */
+  private String tenantName;
+  /** 联系人 */
+  private String linkman;
+  /** 联系电话 */
+  private String contactNumber;
+  /** 联系地址 */
+  private String address;
 }

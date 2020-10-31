@@ -11,6 +11,4 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "新增请求实体类", description = "新增请求实体类")
-public class NavbarAddOrUpdateRequest extends NavbarUpdateRequest {
-
-}
+public class NavbarAddOrUpdateRequest extends NavbarUpdateRequest {}

@@ -20,20 +20,18 @@ package org.apache.shardingsphere.elasticjob;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * Console bootstrap.
- */
+/** Console bootstrap. */
 @SpringBootApplication
 public class TaskApplication {
 
-	/**
-	 * Startup RESTful server.
-	 *
-	 * @param args arguments
-	 */
-	//CHECKSTYLE:OFF
-	public static void main(final String[] args) {
-		//CHECKSTYLE:ON
-		SpringApplication.run(TaskApplication.class, args);
-	}
+  /**
+   * Startup RESTful server.
+   *
+   * @param args arguments
+   */
+  // CHECKSTYLE:OFF
+  public static void main(final String[] args) {
+    // CHECKSTYLE:ON
+    SpringApplication.run(TaskApplication.class, args);
+  }
 }

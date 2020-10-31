@@ -19,61 +19,46 @@ import java.util.Set;
  */
 public interface IDeptService {
 
-	/**
-	 * 树形结构
-	 *
-	 * @param tenantId
-	 * @return
-	 */
-	List<DeptDetailResponse> tree(String tenantId);
+  /**
+   * 树形结构
+   *
+   * @param tenantId
+   * @return
+   */
+  List<DeptDetailResponse> tree(String tenantId);
 
-	/**
-	 * 获取部门ID
-	 *
-	 * @param tenantId
-	 * @param deptNames
-	 * @return
-	 */
-	Set<String> getDeptIds(String tenantId, List<String> deptNames);
+  /**
+   * 获取部门ID
+   *
+   * @param tenantId
+   * @param deptNames
+   * @return
+   */
+  Set<String> getDeptIds(String tenantId, List<String> deptNames);
 
-	/**
-	 * 获取部门名
-	 *
-	 * @param userId
-	 * @return
-	 */
-	List<String> getDeptNames(String userId);
+  /**
+   * 获取部门名
+   *
+   * @param userId
+   * @return
+   */
+  List<String> getDeptNames(String userId);
 
+  /** 详情 */
+  DeptDetailResponse detail(DeptDetailRequest deptDetailRequest);
 
-	/**
-	 * 详情
-	 */
-	DeptDetailResponse detail(DeptDetailRequest deptDetailRequest);
+  /** 列表 部门表 */
+  List<DeptDetailResponse> list(DeptListRequest deptListRequest);
 
-	/**
-	 * 列表 部门表
-	 */
-	List<DeptDetailResponse> list(DeptListRequest deptListRequest);
+  /** 自定义分页 部门表 */
+  Page<DeptDetailResponse> page(DeptPageRequest deptPageRequest);
 
-	/**
-	 * 自定义分页 部门表
-	 */
-	Page<DeptDetailResponse> page(DeptPageRequest deptPageRequest);
+  /** 新增 部门表 */
+  boolean add(DeptAddRequest deptAddRequest);
 
-	/**
-	 * 新增 部门表
-	 */
-	boolean add(DeptAddRequest deptAddRequest);
+  /** 修改 部门表 */
+  boolean update(DeptUpdateRequest deptUpdateRequest);
 
-	/**
-	 * 修改 部门表
-	 */
-	boolean update(DeptUpdateRequest deptUpdateRequest);
-
-	/**
-	 * 删除 部门表
-	 */
-	boolean remove(DeptRemoveRequest deptRemoveRequest);
-
-
+  /** 删除 部门表 */
+  boolean remove(DeptRemoveRequest deptRemoveRequest);
 }

@@ -15,6 +15,5 @@ import java.io.Serializable;
 @ApiModel(value = "列表请求实体类", description = "列表请求实体类")
 public class NavbarListRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
+  private static final long serialVersionUID = 1L;
 }

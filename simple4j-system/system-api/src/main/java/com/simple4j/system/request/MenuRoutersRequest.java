@@ -11,10 +11,8 @@ import lombok.Data;
 @Data
 public class MenuRoutersRequest {
 
-	/**
-	 * 顶部菜单编号
-	 */
-	@ApiModelProperty(name = "navbar_id", value = "顶部菜单编号")
-	@JsonProperty("navbar_id")
-	private Long navbarId;
+  /** 顶部菜单编号 */
+  @ApiModelProperty(name = "navbar_id", value = "顶部菜单编号")
+  @JsonProperty("navbar_id")
+  private Long navbarId;
 }

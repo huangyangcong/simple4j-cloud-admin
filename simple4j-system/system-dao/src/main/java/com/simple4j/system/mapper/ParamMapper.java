@@ -8,6 +8,4 @@ import com.simple4j.system.entity.Param;
  *
  * @author hyc
  */
-public interface ParamMapper extends ExtendMapper<Param> {
-
-}
+public interface ParamMapper extends ExtendMapper<Param> {}

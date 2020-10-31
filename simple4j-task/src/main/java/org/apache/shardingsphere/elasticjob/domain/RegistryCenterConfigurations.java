@@ -25,13 +25,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * Registry center configurations.
- */
+/** Registry center configurations. */
 @Getter
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class RegistryCenterConfigurations {
 
-	private Set<RegistryCenterConfiguration> registryCenterConfiguration = new LinkedHashSet<>();
+  private Set<RegistryCenterConfiguration> registryCenterConfiguration = new LinkedHashSet<>();
 }

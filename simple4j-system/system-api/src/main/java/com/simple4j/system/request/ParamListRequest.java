@@ -15,6 +15,5 @@ import java.io.Serializable;
 @ApiModel(value = "参数表列表请求实体类", description = "参数表列表请求实体类")
 public class ParamListRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
+  private static final long serialVersionUID = 1L;
 }

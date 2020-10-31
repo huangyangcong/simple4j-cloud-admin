@@ -8,21 +8,24 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.stereotype.Component;
 
-/**
- * @author hyc
- */
+/** @author hyc */
 @Component
 public class DynamicSecurityServiceImpl implements DynamicSecurityService {
 
+  @Override
+  public void loadDataSource(
+      ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry,
+      DefaultWebSecurityExpressionHandler expressionHandler) {
+    registry
+        .mvcMatchers(HttpMethod.POST, "/user/api/v1/info")
+        .permitAll()
+        .anyRequest()
+        .authenticated();
+  }
 
-	@Override
-	public void loadDataSource(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry,
-							   DefaultWebSecurityExpressionHandler expressionHandler) {
-		registry.mvcMatchers(HttpMethod.POST, "/user/api/v1/info").permitAll().anyRequest().authenticated();
-	}
-
-	@Override
-	public void ignoreUrls(IgnoreAbstractRequestMatcherRegistry ignoreAbstractRequestMatcherRegistry) {
-		ignoreAbstractRequestMatcherRegistry.mvcMatchers("/aaaa");
-	}
+  @Override
+  public void ignoreUrls(
+      IgnoreAbstractRequestMatcherRegistry ignoreAbstractRequestMatcherRegistry) {
+    ignoreAbstractRequestMatcherRegistry.mvcMatchers("/aaaa");
+  }
 }

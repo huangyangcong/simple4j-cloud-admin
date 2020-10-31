@@ -32,7 +32,6 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.List;
 
-
 /**
  * 代码生成表 服务实现类
  *
@@ -43,89 +42,96 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CodeServiceImpl implements ICodeService {
 
-	private final CodeMapStruct codeMapStruct;
-	private final CodeMapper codeMapper;
-	private final IDatasourceService datasourceService;
+  private final CodeMapStruct codeMapStruct;
+  private final CodeMapper codeMapper;
+  private final IDatasourceService datasourceService;
 
-	@Override
-	public CodeDetailResponse detail(CodeDetailRequest codeDetailRequest) {
-		Code detail = codeMapper.getOne(
-			Wrappers.<Code>lambdaQuery().eq(Code::getId, codeDetailRequest.getId()));
-		return codeMapStruct.toVo(detail);
-	}
+  @Override
+  public CodeDetailResponse detail(CodeDetailRequest codeDetailRequest) {
+    Code detail =
+        codeMapper.getOne(Wrappers.<Code>lambdaQuery().eq(Code::getId, codeDetailRequest.getId()));
+    return codeMapStruct.toVo(detail);
+  }
 
-	@Override
-	public List<CodeDetailResponse> list(CodeListRequest codeListRequest) {
-		LambdaQueryWrapper<Code> queryWrapper = Wrappers.<Code>lambdaQuery();
-		List<Code> list = codeMapper.list(queryWrapper);
-		return codeMapStruct.toVo(list);
-	}
+  @Override
+  public List<CodeDetailResponse> list(CodeListRequest codeListRequest) {
+    LambdaQueryWrapper<Code> queryWrapper = Wrappers.<Code>lambdaQuery();
+    List<Code> list = codeMapper.list(queryWrapper);
+    return codeMapStruct.toVo(list);
+  }
 
-	@Override
-	public Page<CodeDetailResponse> page(CodePageRequest codePageRequest) {
-		LambdaQueryWrapper<Code> queryWrapper = Wrappers.<Code>lambdaQuery()
-			.like(StrUtil.isNotEmpty(codePageRequest.getCodeName()), Code::getCodeName,
-				codePageRequest.getCodeName())
-			.like(StrUtil.isNotEmpty(codePageRequest.getTableName()), Code::getTableName,
-				codePageRequest.getTableName());
-		IPage<Code> page = codeMapper
-			.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
-					codePageRequest.getPageNo(), codePageRequest.getPageSize()),
-				queryWrapper);
-		Page<Code> pages = new Page<>(page.getCurrent(), page.getSize(), page.getTotal(),
-			page.getRecords());
-		return codeMapStruct.toVo(pages);
-	}
+  @Override
+  public Page<CodeDetailResponse> page(CodePageRequest codePageRequest) {
+    LambdaQueryWrapper<Code> queryWrapper =
+        Wrappers.<Code>lambdaQuery()
+            .like(
+                StrUtil.isNotEmpty(codePageRequest.getCodeName()),
+                Code::getCodeName,
+                codePageRequest.getCodeName())
+            .like(
+                StrUtil.isNotEmpty(codePageRequest.getTableName()),
+                Code::getTableName,
+                codePageRequest.getTableName());
+    IPage<Code> page =
+        codeMapper.page(
+            new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(
+                codePageRequest.getPageNo(), codePageRequest.getPageSize()),
+            queryWrapper);
+    Page<Code> pages =
+        new Page<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getRecords());
+    return codeMapStruct.toVo(pages);
+  }
 
-	@Transactional(rollbackFor = Exception.class)
-	@Override
-	public boolean add(CodeAddRequest codeAddRequest) {
-		return codeMapper.save(codeMapStruct.toPo(codeAddRequest));
-	}
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public boolean add(CodeAddRequest codeAddRequest) {
+    return codeMapper.save(codeMapStruct.toPo(codeAddRequest));
+  }
 
-	@Transactional(rollbackFor = Exception.class)
-	@Override
-	public boolean update(CodeUpdateRequest codeUpdateRequest) {
-		return codeMapper.updateByIdBool(codeMapStruct.toPo(codeUpdateRequest));
-	}
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public boolean update(CodeUpdateRequest codeUpdateRequest) {
+    return codeMapper.updateByIdBool(codeMapStruct.toPo(codeUpdateRequest));
+  }
 
-	@Transactional(rollbackFor = Exception.class)
-	@Override
-	public boolean addOrUpdate(CodeAddOrUpdateRequest codeAddOrUpdateRequest) {
-		return codeMapper.saveOrUpdate(codeMapStruct.toPo(codeAddOrUpdateRequest));
-	}
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public boolean addOrUpdate(CodeAddOrUpdateRequest codeAddOrUpdateRequest) {
+    return codeMapper.saveOrUpdate(codeMapStruct.toPo(codeAddOrUpdateRequest));
+  }
 
-	@Transactional(rollbackFor = Exception.class)
-	@Override
-	public boolean remove(CodeRemoveRequest codeRemoveRequest) {
-		return codeMapper.physicsDeleteBatchByIdsBool(codeRemoveRequest.getIds());
-	}
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public boolean remove(CodeRemoveRequest codeRemoveRequest) {
+    return codeMapper.physicsDeleteBatchByIdsBool(codeRemoveRequest.getIds());
+  }
 
-	@Override
-	public void codeGen(OutputStream outputStream, CodeGenRequest codeGenRequest) {
-		Collection<Code> codes = codeMapper.listByIds(codeGenRequest.getIds());
-		codes.forEach(code -> {
-			CodeGenerator generator = new CodeGenerator();
-			// 设置数据源
-			DatasourceDetailRequest datasourceDetailRequest = new DatasourceDetailRequest();
-			datasourceDetailRequest.setId(code.getDatasourceId());
-			DatasourceDetailResponse datasource = datasourceService.detail(datasourceDetailRequest);
-			generator.setDriverName(datasource.getDriverClass());
-			generator.setUrl(datasource.getUrl());
-			generator.setUsername(datasource.getUsername());
-			generator.setPassword(datasource.getPassword());
-			generator.setOutputStream(outputStream);
-			// 设置基础配置
-			generator.setSystemName(codeGenRequest.getSystem());
-			generator.setGroupId(codeGenRequest.getGroupId());
-			generator.setProjectName(codeGenRequest.getProjectName());
-			generator.setModuleName(codeGenRequest.getModuleName());
-			generator.setSuperEntityClass(BaseEntity.class);
-			generator.setSuperMapperClass(ExtendMapper.class.getCanonicalName());
-			generator.setPackageName(code.getPackageName());
-			generator.setTablePrefix(StrUtil.split(code.getTablePrefix(), ","));
-			generator.setIncludeTables(StrUtil.split(code.getTableName(), ","));
-			generator.run();
-		});
-	}
+  @Override
+  public void codeGen(OutputStream outputStream, CodeGenRequest codeGenRequest) {
+    Collection<Code> codes = codeMapper.listByIds(codeGenRequest.getIds());
+    codes.forEach(
+        code -> {
+          CodeGenerator generator = new CodeGenerator();
+          // 设置数据源
+          DatasourceDetailRequest datasourceDetailRequest = new DatasourceDetailRequest();
+          datasourceDetailRequest.setId(code.getDatasourceId());
+          DatasourceDetailResponse datasource = datasourceService.detail(datasourceDetailRequest);
+          generator.setDriverName(datasource.getDriverClass());
+          generator.setUrl(datasource.getUrl());
+          generator.setUsername(datasource.getUsername());
+          generator.setPassword(datasource.getPassword());
+          generator.setOutputStream(outputStream);
+          // 设置基础配置
+          generator.setSystemName(codeGenRequest.getSystem());
+          generator.setGroupId(codeGenRequest.getGroupId());
+          generator.setProjectName(codeGenRequest.getProjectName());
+          generator.setModuleName(codeGenRequest.getModuleName());
+          generator.setSuperEntityClass(BaseEntity.class);
+          generator.setSuperMapperClass(ExtendMapper.class.getCanonicalName());
+          generator.setPackageName(code.getPackageName());
+          generator.setTablePrefix(StrUtil.split(code.getTablePrefix(), ","));
+          generator.setIncludeTables(StrUtil.split(code.getTableName(), ","));
+          generator.run();
+        });
+  }
 }

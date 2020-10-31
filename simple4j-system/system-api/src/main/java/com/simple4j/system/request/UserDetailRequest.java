@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class UserDetailRequest {
 
-	@ApiModelProperty("用户编号")
-	private String id;
+  @ApiModelProperty("用户编号")
+  private String id;
 }

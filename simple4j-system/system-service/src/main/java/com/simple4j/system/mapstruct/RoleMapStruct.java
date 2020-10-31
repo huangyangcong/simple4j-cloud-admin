@@ -12,12 +12,11 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RoleMapStruct {
 
-	RoleDetailResponse toVo(Role detail);
+  RoleDetailResponse toVo(Role detail);
 
-	Role toPo(RoleAddOrUpdateRequest vo);
+  Role toPo(RoleAddOrUpdateRequest vo);
 
-	Page<RoleDetailResponse> toVo(Page<Role> page);
+  Page<RoleDetailResponse> toVo(Page<Role> page);
 
-	List<RoleDetailResponse> toVo(List<Role> list);
-
+  List<RoleDetailResponse> toVo(List<Role> list);
 }

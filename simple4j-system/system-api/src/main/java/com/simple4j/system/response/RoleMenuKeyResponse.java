@@ -12,9 +12,7 @@ import java.util.Set;
 @Data
 public class RoleMenuKeyResponse {
 
-	/**
-	 * 菜单编号列表
-	 */
-	@ApiModelProperty(value = "菜单编号列表", name = "menus")
-	Set<String> menus;
+  /** 菜单编号列表 */
+  @ApiModelProperty(value = "菜单编号列表", name = "menus")
+  Set<String> menus;
 }

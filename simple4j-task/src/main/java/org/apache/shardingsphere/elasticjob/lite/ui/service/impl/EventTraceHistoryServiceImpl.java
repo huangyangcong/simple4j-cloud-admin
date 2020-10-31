@@ -49,84 +49,108 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Event trace history service implementation.
- */
+/** Event trace history service implementation. */
 @Slf4j
 @Component
 public final class EventTraceHistoryServiceImpl implements EventTraceHistoryService {
 
-	@Autowired
-	private JobExecutionLogRepository jobExecutionLogRepository;
+  @Autowired private JobExecutionLogRepository jobExecutionLogRepository;
 
-	@Autowired
-	private JobStatusTraceLogRepository jobStatusTraceLogRepository;
+  @Autowired private JobStatusTraceLogRepository jobStatusTraceLogRepository;
 
-	@Override
-	public Page<JobExecutionEvent> findJobExecutionEvents(final FindJobExecutionEventsRequest findJobExecutionEventsRequest) {
-		Example<JobExecutionLog> jobExecutionLogExample = getExample(findJobExecutionEventsRequest, JobExecutionLog.class);
-		Specification<JobExecutionLog> specification = getSpecWithExampleAndDate(jobExecutionLogExample, findJobExecutionEventsRequest.getStart(),
-			findJobExecutionEventsRequest.getEnd(), "startTime");
+  @Override
+  public Page<JobExecutionEvent> findJobExecutionEvents(
+      final FindJobExecutionEventsRequest findJobExecutionEventsRequest) {
+    Example<JobExecutionLog> jobExecutionLogExample =
+        getExample(findJobExecutionEventsRequest, JobExecutionLog.class);
+    Specification<JobExecutionLog> specification =
+        getSpecWithExampleAndDate(
+            jobExecutionLogExample,
+            findJobExecutionEventsRequest.getStart(),
+            findJobExecutionEventsRequest.getEnd(),
+            "startTime");
 
-		Page<JobExecutionLog> page = jobExecutionLogRepository.findAll(specification, getPageable(findJobExecutionEventsRequest, JobExecutionLog.class));
-		return new PageImpl<>(page.getContent().stream().map(JobExecutionLog::toJobExecutionEvent).collect(Collectors.toList()), page.getPageable(), page.getTotalElements());
-	}
+    Page<JobExecutionLog> page =
+        jobExecutionLogRepository.findAll(
+            specification, getPageable(findJobExecutionEventsRequest, JobExecutionLog.class));
+    return new PageImpl<>(
+        page.getContent().stream()
+            .map(JobExecutionLog::toJobExecutionEvent)
+            .collect(Collectors.toList()),
+        page.getPageable(),
+        page.getTotalElements());
+  }
 
-	@Override
-	public Page<JobStatusTraceEvent> findJobStatusTraceEvents(final FindJobStatusTraceEventsRequest findJobStatusTraceEventsRequest) {
-		Example<JobStatusTraceLog> jobStatusTraceLogExample = getExample(findJobStatusTraceEventsRequest, JobStatusTraceLog.class);
-		Specification<JobStatusTraceLog> specification = getSpecWithExampleAndDate(jobStatusTraceLogExample, findJobStatusTraceEventsRequest.getStart(),
-			findJobStatusTraceEventsRequest.getEnd(), "creationTime");
-		Page<JobStatusTraceLog> page = jobStatusTraceLogRepository.findAll(specification, getPageable(findJobStatusTraceEventsRequest, JobStatusTraceLog.class));
-		return new PageImpl<>(page.getContent().stream().map(JobStatusTraceLog::toJobStatusTraceEvent).collect(Collectors.toList()), page.getPageable(), page.getTotalElements());
-	}
+  @Override
+  public Page<JobStatusTraceEvent> findJobStatusTraceEvents(
+      final FindJobStatusTraceEventsRequest findJobStatusTraceEventsRequest) {
+    Example<JobStatusTraceLog> jobStatusTraceLogExample =
+        getExample(findJobStatusTraceEventsRequest, JobStatusTraceLog.class);
+    Specification<JobStatusTraceLog> specification =
+        getSpecWithExampleAndDate(
+            jobStatusTraceLogExample,
+            findJobStatusTraceEventsRequest.getStart(),
+            findJobStatusTraceEventsRequest.getEnd(),
+            "creationTime");
+    Page<JobStatusTraceLog> page =
+        jobStatusTraceLogRepository.findAll(
+            specification, getPageable(findJobStatusTraceEventsRequest, JobStatusTraceLog.class));
+    return new PageImpl<>(
+        page.getContent().stream()
+            .map(JobStatusTraceLog::toJobStatusTraceEvent)
+            .collect(Collectors.toList()),
+        page.getPageable(),
+        page.getTotalElements());
+  }
 
-	private <T> Pageable getPageable(final BasePageRequest pageRequest, final Class<T> clazz) {
-		int page = 0;
-		int perPage = BasePageRequest.DEFAULT_PAGE_SIZE;
-		if (pageRequest.getPageNumber() > 0 && pageRequest.getPageSize() > 0) {
-			page = pageRequest.getPageNumber() - 1;
-			perPage = pageRequest.getPageSize();
-		}
-		return PageRequest.of(page, perPage, getSort(pageRequest, clazz));
-	}
+  private <T> Pageable getPageable(final BasePageRequest pageRequest, final Class<T> clazz) {
+    int page = 0;
+    int perPage = BasePageRequest.DEFAULT_PAGE_SIZE;
+    if (pageRequest.getPageNumber() > 0 && pageRequest.getPageSize() > 0) {
+      page = pageRequest.getPageNumber() - 1;
+      perPage = pageRequest.getPageSize();
+    }
+    return PageRequest.of(page, perPage, getSort(pageRequest, clazz));
+  }
 
-	private <T> Sort getSort(final BasePageRequest pageRequest, final Class<T> clazz) {
-		Sort sort = Sort.unsorted();
-		boolean sortFieldIsPresent = Arrays.stream(clazz.getDeclaredFields())
-			.map(Field::getName)
-			.anyMatch(e -> e.equals(pageRequest.getSortBy()));
-		if (!sortFieldIsPresent) {
-			return sort;
-		}
-		if (!Strings.isNullOrEmpty(pageRequest.getSortBy())) {
-			Sort.Direction order = Sort.Direction.ASC;
-			try {
-				order = Sort.Direction.valueOf(pageRequest.getOrderType());
-			} catch (IllegalArgumentException ignored) {
-			}
-			sort = Sort.by(order, pageRequest.getSortBy());
-		}
-		return sort;
-	}
+  private <T> Sort getSort(final BasePageRequest pageRequest, final Class<T> clazz) {
+    Sort sort = Sort.unsorted();
+    boolean sortFieldIsPresent =
+        Arrays.stream(clazz.getDeclaredFields())
+            .map(Field::getName)
+            .anyMatch(e -> e.equals(pageRequest.getSortBy()));
+    if (!sortFieldIsPresent) {
+      return sort;
+    }
+    if (!Strings.isNullOrEmpty(pageRequest.getSortBy())) {
+      Sort.Direction order = Sort.Direction.ASC;
+      try {
+        order = Sort.Direction.valueOf(pageRequest.getOrderType());
+      } catch (IllegalArgumentException ignored) {
+      }
+      sort = Sort.by(order, pageRequest.getSortBy());
+    }
+    return sort;
+  }
 
-	private <T> Specification<T> getSpecWithExampleAndDate(final Example<T> example, final Date from, final Date to, final String field) {
-		return (root, query, builder) -> {
-			final List<Predicate> predicates = new ArrayList<>();
-			if (from != null) {
-				predicates.add(builder.greaterThan(root.get(field), from));
-			}
-			if (to != null) {
-				predicates.add(builder.lessThan(root.get(field), to));
-			}
-			predicates.add(QueryByExamplePredicateBuilder.getPredicate(root, builder, example));
-			return builder.and(predicates.toArray(new Predicate[0]));
-		};
-	}
+  private <T> Specification<T> getSpecWithExampleAndDate(
+      final Example<T> example, final Date from, final Date to, final String field) {
+    return (root, query, builder) -> {
+      final List<Predicate> predicates = new ArrayList<>();
+      if (from != null) {
+        predicates.add(builder.greaterThan(root.get(field), from));
+      }
+      if (to != null) {
+        predicates.add(builder.lessThan(root.get(field), to));
+      }
+      predicates.add(QueryByExamplePredicateBuilder.getPredicate(root, builder, example));
+      return builder.and(predicates.toArray(new Predicate[0]));
+    };
+  }
 
-	private <T> Example<T> getExample(final Object source, final Class<T> clazz) {
-		T instance = BeanUtils.newInstance(clazz);
-		BeanUtils.copyProperties(source, instance);
-		return Example.of(instance);
-	}
+  private <T> Example<T> getExample(final Object source, final Class<T> clazz) {
+    T instance = BeanUtils.newInstance(clazz);
+    BeanUtils.copyProperties(source, instance);
+    return Example.of(instance);
+  }
 }

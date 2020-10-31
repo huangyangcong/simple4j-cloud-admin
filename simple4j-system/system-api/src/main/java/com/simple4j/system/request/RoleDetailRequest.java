@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class RoleDetailRequest {
 
-	@ApiModelProperty("角色编号")
-	private String id;
+  @ApiModelProperty("角色编号")
+  private String id;
 }

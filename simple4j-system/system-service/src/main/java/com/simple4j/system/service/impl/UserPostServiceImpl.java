@@ -1,6 +1,5 @@
 package com.simple4j.system.service.impl;
 
-
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.system.entity.UserPost;
@@ -23,53 +22,53 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class UserPostServiceImpl implements IUserPostService {
-	private final UserPostMapper userPostMapper;
+  private final UserPostMapper userPostMapper;
 
-	@Override
-	public Set<String> getPostIds(String userId) {
-		return userPostMapper.getPostIds(userId);
-	}
+  @Override
+  public Set<String> getPostIds(String userId) {
+    return userPostMapper.getPostIds(userId);
+  }
 
-	@Transactional(rollbackFor = Exception.class)
-	@Override
-	public void grant(UserPostGrantRequest userPostGrantRequest) {
-		grant(userPostGrantRequest.getUserIds(), userPostGrantRequest.getPostIds());
-	}
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public void grant(UserPostGrantRequest userPostGrantRequest) {
+    grant(userPostGrantRequest.getUserIds(), userPostGrantRequest.getPostIds());
+  }
 
-	@Transactional(rollbackFor = Exception.class)
-	@Override
-	public void grant(Set<String> userIds, Set<String> postIds) {
-		if (CollUtil.isNotEmpty(userIds)) {
-			userPostMapper
-				.physicsDelete(Wrappers.<UserPost>lambdaQuery().in(UserPost::getUserId, userIds));
-			if (CollUtil.isNotEmpty(postIds)) {
-				List<UserPost> userPosts = new ArrayList<>();
-				for (String userId : userIds) {
-					for (String pstId : postIds) {
-						UserPost userPost = new UserPost();
-						userPost.setUserId(userId);
-						userPost.setPostId(pstId);
-						userPosts.add(userPost);
-					}
-				}
-				userPostMapper.saveBatch(userPosts);
-			}
-		}
-	}
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public void grant(Set<String> userIds, Set<String> postIds) {
+    if (CollUtil.isNotEmpty(userIds)) {
+      userPostMapper.physicsDelete(
+          Wrappers.<UserPost>lambdaQuery().in(UserPost::getUserId, userIds));
+      if (CollUtil.isNotEmpty(postIds)) {
+        List<UserPost> userPosts = new ArrayList<>();
+        for (String userId : userIds) {
+          for (String pstId : postIds) {
+            UserPost userPost = new UserPost();
+            userPost.setUserId(userId);
+            userPost.setPostId(pstId);
+            userPosts.add(userPost);
+          }
+        }
+        userPostMapper.saveBatch(userPosts);
+      }
+    }
+  }
 
-	@Override
-	public void removeByPostIds(Set<String> postIds) {
-		if (CollUtil.isNotEmpty(postIds)) {
-			userPostMapper.physicsDelete(
-				Wrappers.<UserPost>lambdaQuery().in(UserPost::getPostId, postIds));
-		}
-	}
+  @Override
+  public void removeByPostIds(Set<String> postIds) {
+    if (CollUtil.isNotEmpty(postIds)) {
+      userPostMapper.physicsDelete(
+          Wrappers.<UserPost>lambdaQuery().in(UserPost::getPostId, postIds));
+    }
+  }
 
-	@Override
-	public void removeByUserIds(Set<String> userIds) {
-		if (CollUtil.isNotEmpty(userIds)) {
-			userPostMapper.physicsDelete(
-				Wrappers.<UserPost>lambdaQuery().in(UserPost::getUserId, userIds));
-		}
-	}
+  @Override
+  public void removeByUserIds(Set<String> userIds) {
+    if (CollUtil.isNotEmpty(userIds)) {
+      userPostMapper.physicsDelete(
+          Wrappers.<UserPost>lambdaQuery().in(UserPost::getUserId, userIds));
+    }
+  }
 }

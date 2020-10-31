@@ -8,19 +8,16 @@ import lombok.Data;
 @Data
 public class UserListRequest {
 
-	@ApiModelProperty(name = "account", value = "帐号")
-	@JsonProperty("account")
-	private String account;
+  @ApiModelProperty(name = "account", value = "帐号")
+  @JsonProperty("account")
+  private String account;
 
-	@ApiModelProperty(name = "real_name", value = "姓名")
-	@JsonProperty("real_name")
-	private String realName;
+  @ApiModelProperty(name = "real_name", value = "姓名")
+  @JsonProperty("real_name")
+  private String realName;
 
-	/**
-	 * 租户ID
-	 */
-	@ApiModelProperty(hidden = true, value = "租户ID")
-	@JsonIgnore
-	private String tenantId;
-
+  /** 租户ID */
+  @ApiModelProperty(hidden = true, value = "租户ID")
+  @JsonIgnore
+  private String tenantId;
 }

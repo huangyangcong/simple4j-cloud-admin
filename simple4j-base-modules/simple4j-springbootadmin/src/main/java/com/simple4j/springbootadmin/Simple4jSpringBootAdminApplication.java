@@ -12,8 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableAdminServer
 public class Simple4jSpringBootAdminApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Simple4jSpringBootAdminApplication.class, args);
-	}
-
+  public static void main(String[] args) {
+    SpringApplication.run(Simple4jSpringBootAdminApplication.class, args);
+  }
 }

@@ -21,17 +21,15 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.StateNode;
 
-/**
- * Disable app node.
- */
+/** Disable app node. */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class DisableAppNode {
 
-	static final String ROOT = StateNode.ROOT + "/disable/app" ;
+  static final String ROOT = StateNode.ROOT + "/disable/app";
 
-	private static final String DISABLE_APP = ROOT + "/%s" ;
+  private static final String DISABLE_APP = ROOT + "/%s";
 
-	static String getDisableAppNodePath(final String appName) {
-		return String.format(DISABLE_APP, appName);
-	}
+  static String getDisableAppNodePath(final String appName) {
+    return String.format(DISABLE_APP, appName);
+  }
 }

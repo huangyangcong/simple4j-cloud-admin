@@ -12,19 +12,12 @@ import lombok.EqualsAndHashCode;
 @TableName("simple4j_user_post")
 public class UserPost extends BaseEntity {
 
+  /** 主键id */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private String id;
 
-	/**
-	 * 主键id
-	 */
-	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private String id;
-
-	/**
-	 * 用户编号
-	 */
-	private String userId;
-	/**
-	 * 角色编号
-	 */
-	private String postId;
+  /** 用户编号 */
+  private String userId;
+  /** 角色编号 */
+  private String postId;
 }

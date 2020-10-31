@@ -29,9 +29,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-/**
- * Job register statistics.
- */
+/** Job register statistics. */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -39,21 +37,21 @@ import java.util.Date;
 @Table(name = "JOB_REGISTER_STATISTICS")
 public class JobRegisterStatistics {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private String id;
 
-	@Column(name = "registered_count", length = 11)
-	private Integer registeredCount;
+  @Column(name = "registered_count", length = 11)
+  private Integer registeredCount;
 
-	@Column(name = "statistics_time", nullable = false)
-	private Date statisticsTime;
+  @Column(name = "statistics_time", nullable = false)
+  private Date statisticsTime;
 
-	@Column(name = "creation_time", nullable = false)
-	private Date creationTime = new Date();
+  @Column(name = "creation_time", nullable = false)
+  private Date creationTime = new Date();
 
-	public JobRegisterStatistics(final Integer registeredCount, final Date statisticsTime) {
-		this.registeredCount = registeredCount;
-		this.statisticsTime = statisticsTime;
-	}
+  public JobRegisterStatistics(final Integer registeredCount, final Date statisticsTime) {
+    this.registeredCount = registeredCount;
+    this.statisticsTime = statisticsTime;
+  }
 }

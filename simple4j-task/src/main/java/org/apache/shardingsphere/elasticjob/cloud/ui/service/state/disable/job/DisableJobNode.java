@@ -21,17 +21,15 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.StateNode;
 
-/**
- * Disable job node.
- */
+/** Disable job node. */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class DisableJobNode {
 
-	static final String ROOT = StateNode.ROOT + "/disable/job" ;
+  static final String ROOT = StateNode.ROOT + "/disable/job";
 
-	private static final String DISABLE_JOB = ROOT + "/%s" ;
+  private static final String DISABLE_JOB = ROOT + "/%s";
 
-	static String getDisableJobNodePath(final String jobName) {
-		return String.format(DISABLE_JOB, jobName);
-	}
+  static String getDisableJobNodePath(final String jobName) {
+    return String.format(DISABLE_JOB, jobName);
+  }
 }

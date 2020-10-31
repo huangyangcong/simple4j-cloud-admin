@@ -13,7 +13,5 @@ import lombok.Data;
 @ApiModel(value = "新增请求实体类", description = "新增请求实体类")
 public class NavbarMenuAddOrUpdateRequest extends NavbarMenuUpdateRequest {
 
-	private static final long serialVersionUID = 1L;
-
-
+  private static final long serialVersionUID = 1L;
 }

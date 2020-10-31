@@ -20,12 +20,11 @@ package org.apache.shardingsphere.elasticjob.repository.impl;
 import org.apache.shardingsphere.elasticjob.domain.GlobalConfiguration;
 import org.apache.shardingsphere.elasticjob.repository.ConfigurationsXmlRepository;
 
-/**
- * Configurations XML repository implementation.
- */
-public final class ConfigurationsXmlRepositoryImpl extends AbstractXmlRepositoryImpl<GlobalConfiguration> implements ConfigurationsXmlRepository {
+/** Configurations XML repository implementation. */
+public final class ConfigurationsXmlRepositoryImpl
+    extends AbstractXmlRepositoryImpl<GlobalConfiguration> implements ConfigurationsXmlRepository {
 
-	public ConfigurationsXmlRepositoryImpl() {
-		super("Configurations.xml", GlobalConfiguration.class);
-	}
+  public ConfigurationsXmlRepositoryImpl() {
+    super("Configurations.xml", GlobalConfiguration.class);
+  }
 }

@@ -21,17 +21,15 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.StateNode;
 
-/**
- * Ready node.
- */
+/** Ready node. */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 final class ReadyNode {
 
-	static final String ROOT = StateNode.ROOT + "/ready" ;
+  static final String ROOT = StateNode.ROOT + "/ready";
 
-	private static final String READY_JOB = ROOT + "/%s" ;
+  private static final String READY_JOB = ROOT + "/%s";
 
-	static String getReadyJobNodePath(final String jobName) {
-		return String.format(READY_JOB, jobName);
-	}
+  static String getReadyJobNodePath(final String jobName) {
+    return String.format(READY_JOB, jobName);
+  }
 }

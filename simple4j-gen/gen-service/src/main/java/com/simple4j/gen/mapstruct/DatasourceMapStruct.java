@@ -20,52 +20,51 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DatasourceMapStruct {
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	Datasource toPo(DatasourceAddRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  Datasource toPo(DatasourceAddRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	Datasource toPo(DatasourceAddOrUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  Datasource toPo(DatasourceAddOrUpdateRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @return
-	 * @vo vo
-	 */
-	Datasource toPo(DatasourceUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @return
+   * @vo vo
+   */
+  Datasource toPo(DatasourceUpdateRequest vo);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	DatasourceDetailResponse toVo(Datasource po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  DatasourceDetailResponse toVo(Datasource po);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	List<DatasourceDetailResponse> toVo(List<Datasource> po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  List<DatasourceDetailResponse> toVo(List<Datasource> po);
 
-
-	/**
-	 * 分页转换PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	Page<DatasourceDetailResponse> toVo(Page<Datasource> po);
+  /**
+   * 分页转换PO转VO
+   *
+   * @param po
+   * @return
+   */
+  Page<DatasourceDetailResponse> toVo(Page<Datasource> po);
 }

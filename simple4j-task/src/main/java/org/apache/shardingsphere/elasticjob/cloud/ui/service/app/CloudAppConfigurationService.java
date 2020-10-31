@@ -30,68 +30,71 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Cloud app configuration service.
- */
+/** Cloud app configuration service. */
 @Service("appConfigService")
 public final class CloudAppConfigurationService {
 
-	@Autowired
-	private CoordinatorRegistryCenter regCenter;
+  @Autowired private CoordinatorRegistryCenter regCenter;
 
-	/**
-	 * Add cloud app configuration.
-	 *
-	 * @param appConfig cloud app configuration
-	 */
-	public void add(final CloudAppConfigurationPOJO appConfig) {
-		regCenter.persist(CloudAppConfigurationNode.getRootNodePath(appConfig.getAppName()), YamlEngine.marshal(appConfig));
-	}
+  /**
+   * Add cloud app configuration.
+   *
+   * @param appConfig cloud app configuration
+   */
+  public void add(final CloudAppConfigurationPOJO appConfig) {
+    regCenter.persist(
+        CloudAppConfigurationNode.getRootNodePath(appConfig.getAppName()),
+        YamlEngine.marshal(appConfig));
+  }
 
-	/**
-	 * Update cloud app configuration.
-	 *
-	 * @param appConfig cloud app configuration
-	 */
-	public void update(final CloudAppConfigurationPOJO appConfig) {
-		regCenter.update(CloudAppConfigurationNode.getRootNodePath(appConfig.getAppName()), YamlEngine.marshal(appConfig));
-	}
+  /**
+   * Update cloud app configuration.
+   *
+   * @param appConfig cloud app configuration
+   */
+  public void update(final CloudAppConfigurationPOJO appConfig) {
+    regCenter.update(
+        CloudAppConfigurationNode.getRootNodePath(appConfig.getAppName()),
+        YamlEngine.marshal(appConfig));
+  }
 
-	/**
-	 * Load app configuration by app name.
-	 *
-	 * @param appName application name
-	 * @return cloud app configuration
-	 */
-	public Optional<CloudAppConfigurationPOJO> load(final String appName) {
-		String configContent = regCenter.get(CloudAppConfigurationNode.getRootNodePath(appName));
-		return Strings.isNullOrEmpty(configContent) ? Optional.empty() : Optional.of(YamlEngine.unmarshal(configContent, CloudAppConfigurationPOJO.class));
-	}
+  /**
+   * Load app configuration by app name.
+   *
+   * @param appName application name
+   * @return cloud app configuration
+   */
+  public Optional<CloudAppConfigurationPOJO> load(final String appName) {
+    String configContent = regCenter.get(CloudAppConfigurationNode.getRootNodePath(appName));
+    return Strings.isNullOrEmpty(configContent)
+        ? Optional.empty()
+        : Optional.of(YamlEngine.unmarshal(configContent, CloudAppConfigurationPOJO.class));
+  }
 
-	/**
-	 * Load all registered cloud app configurations.
-	 *
-	 * @return collection of the registered cloud app configuration
-	 */
-	public Collection<CloudAppConfigurationPOJO> loadAll() {
-		if (!regCenter.isExisted(CloudAppConfigurationNode.ROOT)) {
-			return Collections.emptyList();
-		}
-		List<String> appNames = regCenter.getChildrenKeys(CloudAppConfigurationNode.ROOT);
-		Collection<CloudAppConfigurationPOJO> result = new ArrayList<>(appNames.size());
-		for (String each : appNames) {
-			Optional<CloudAppConfigurationPOJO> config = load(each);
-			config.ifPresent(result::add);
-		}
-		return result;
-	}
+  /**
+   * Load all registered cloud app configurations.
+   *
+   * @return collection of the registered cloud app configuration
+   */
+  public Collection<CloudAppConfigurationPOJO> loadAll() {
+    if (!regCenter.isExisted(CloudAppConfigurationNode.ROOT)) {
+      return Collections.emptyList();
+    }
+    List<String> appNames = regCenter.getChildrenKeys(CloudAppConfigurationNode.ROOT);
+    Collection<CloudAppConfigurationPOJO> result = new ArrayList<>(appNames.size());
+    for (String each : appNames) {
+      Optional<CloudAppConfigurationPOJO> config = load(each);
+      config.ifPresent(result::add);
+    }
+    return result;
+  }
 
-	/**
-	 * Remove cloud app configuration by app name.
-	 *
-	 * @param appName to be removed application name
-	 */
-	public void remove(final String appName) {
-		regCenter.remove(CloudAppConfigurationNode.getRootNodePath(appName));
-	}
+  /**
+   * Remove cloud app configuration by app name.
+   *
+   * @param appName to be removed application name
+   */
+  public void remove(final String appName) {
+    regCenter.remove(CloudAppConfigurationNode.getRootNodePath(appName));
+  }
 }

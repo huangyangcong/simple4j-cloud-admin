@@ -13,23 +13,24 @@ import java.util.List;
  */
 public interface RegionMapper extends ExtendMapper<Region> {
 
-	/**
-	 * 懒加载列表
-	 *
-	 * @param parentCode
-	 * @param code
-	 * @param name
-	 * @return
-	 */
-	List<Region> lazyList(@Param("parentCode") String parentCode, @Param("code") String code,
-						  @Param("name") String name);
+  /**
+   * 懒加载列表
+   *
+   * @param parentCode
+   * @param code
+   * @param name
+   * @return
+   */
+  List<Region> lazyList(
+      @Param("parentCode") String parentCode,
+      @Param("code") String code,
+      @Param("name") String name);
 
-
-	/**
-	 * 查询详情
-	 *
-	 * @param code
-	 * @return
-	 */
-	Region detail(@Param("code") String code);
+  /**
+   * 查询详情
+   *
+   * @param code
+   * @return
+   */
+  Region detail(@Param("code") String code);
 }

@@ -27,9 +27,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-/**
- * Registry center configuration.
- */
+/** Registry center configuration. */
 @Getter
 @Setter
 @XmlRootElement
@@ -37,20 +35,17 @@ import java.io.Serializable;
 @NoArgsConstructor
 public final class RegistryCenterConfiguration implements Serializable {
 
-	private static final long serialVersionUID = -5996257770767863699L;
+  private static final long serialVersionUID = -5996257770767863699L;
 
-	@XmlAttribute(required = true)
-	private String name;
+  @XmlAttribute(required = true)
+  private String name;
 
-	@XmlAttribute(required = true)
-	private String zkAddressList;
+  @XmlAttribute(required = true)
+  private String zkAddressList;
 
-	@XmlAttribute
-	private String namespace;
+  @XmlAttribute private String namespace;
 
-	@XmlAttribute
-	private String digest;
+  @XmlAttribute private String digest;
 
-	@XmlAttribute
-	private boolean activated;
+  @XmlAttribute private boolean activated;
 }

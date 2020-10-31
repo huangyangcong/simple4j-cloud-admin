@@ -13,12 +13,11 @@ import java.util.Set;
  */
 public interface UserRoleMapper extends ExtendMapper<UserRole> {
 
-
-	/**
-	 * 获取用户角色id
-	 *
-	 * @param userId
-	 * @return
-	 */
-	Set<String> getRoleIds(@Param("userId") String userId);
+  /**
+   * 获取用户角色id
+   *
+   * @param userId
+   * @return
+   */
+  Set<String> getRoleIds(@Param("userId") String userId);
 }

@@ -28,17 +28,17 @@ import org.springframework.stereotype.Component;
 @Setter
 public final class RegistryConfiguration {
 
-	private String servers;
+  private String servers;
 
-	private String namespace;
+  private String namespace;
 
-	private String digest;
+  private String digest;
 
-	public ZookeeperConfiguration getZookeeperConfiguration() {
-		ZookeeperConfiguration result = new ZookeeperConfiguration(servers, namespace);
-		if (!Strings.isNullOrEmpty(digest)) {
-			result.setDigest(digest);
-		}
-		return result;
-	}
+  public ZookeeperConfiguration getZookeeperConfiguration() {
+    ZookeeperConfiguration result = new ZookeeperConfiguration(servers, namespace);
+    if (!Strings.isNullOrEmpty(digest)) {
+      result.setDigest(digest);
+    }
+    return result;
+  }
 }

@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class MenuDetailRequest {
 
-	@ApiModelProperty("菜单编号")
-	private String id;
+  @ApiModelProperty("菜单编号")
+  private String id;
 }

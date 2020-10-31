@@ -14,12 +14,9 @@ import lombok.Data;
 @ApiModel(value = "租户表修改请求实体类", description = "租户表修改请求实体类")
 public class TenantUpdateRequest extends TenantAddOrUpdateRequest {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * 租户表ID
-	 */
-	@ApiModelProperty(value = "租户表ID")
-	private String id;
-
+  /** 租户表ID */
+  @ApiModelProperty(value = "租户表ID")
+  private String id;
 }

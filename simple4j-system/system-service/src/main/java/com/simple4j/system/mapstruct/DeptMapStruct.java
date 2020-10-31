@@ -19,44 +19,43 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DeptMapStruct {
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	Dept toPo(DeptAddRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  Dept toPo(DeptAddRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @return
-	 * @vo vo
-	 */
-	Dept toPo(DeptUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @return
+   * @vo vo
+   */
+  Dept toPo(DeptUpdateRequest vo);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	DeptDetailResponse toVo(Dept po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  DeptDetailResponse toVo(Dept po);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	List<DeptDetailResponse> toVo(List<Dept> po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  List<DeptDetailResponse> toVo(List<Dept> po);
 
-
-	/**
-	 * 分页转换PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	Page<DeptDetailResponse> toVo(Page<Dept> po);
+  /**
+   * 分页转换PO转VO
+   *
+   * @param po
+   * @return
+   */
+  Page<DeptDetailResponse> toVo(Page<Dept> po);
 }

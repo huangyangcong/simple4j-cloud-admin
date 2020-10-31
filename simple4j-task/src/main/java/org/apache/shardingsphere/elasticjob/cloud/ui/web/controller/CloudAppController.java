@@ -40,141 +40,139 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * Cloud app controller.
- */
+/** Cloud app controller. */
 @RestController
 @RequestMapping("/api/app")
 public final class CloudAppController {
 
-	@Autowired
-	private ProducerService producerManager;
+  @Autowired private ProducerService producerManager;
 
-	@Autowired
-	private CloudAppConfigurationService appConfigService;
+  @Autowired private CloudAppConfigurationService appConfigService;
 
-	@Autowired
-	private DisableAppService disableAppService;
+  @Autowired private DisableAppService disableAppService;
 
-	@Autowired
-	private CloudJobConfigurationService jobConfigService;
+  @Autowired private CloudJobConfigurationService jobConfigService;
 
-	/**
-	 * Register app config.
-	 *
-	 * @param appConfig cloud app config
-	 */
-	@PostMapping("/register")
-	public ApiResponse register(@RequestBody final CloudAppConfigurationPOJO appConfig) {
-		Optional<CloudAppConfigurationPOJO> appConfigFromZk = appConfigService.load(appConfig.getAppName());
-		if (appConfigFromZk.isPresent()) {
-			throw new AppConfigurationException("app '%s' already existed.", appConfig.getAppName());
-		}
-		appConfigService.add(appConfig);
-		return ApiResponse.ok();
-	}
+  /**
+   * Register app config.
+   *
+   * @param appConfig cloud app config
+   */
+  @PostMapping("/register")
+  public ApiResponse<Void> register(@RequestBody final CloudAppConfigurationPOJO appConfig) {
+    Optional<CloudAppConfigurationPOJO> appConfigFromZk =
+        appConfigService.load(appConfig.getAppName());
+    if (appConfigFromZk.isPresent()) {
+      throw new AppConfigurationException("app '%s' already existed.", appConfig.getAppName());
+    }
+    appConfigService.add(appConfig);
+    return ApiResponse.ok();
+  }
 
-	/**
-	 * Update app config.
-	 *
-	 * @param appConfig cloud app config
-	 */
-	@PostMapping("/update")
-	public ApiResponse update(@RequestBody final CloudAppConfigurationPOJO appConfig) {
-		appConfigService.update(appConfig);
-		return ApiResponse.ok();
-	}
+  /**
+   * Update app config.
+   *
+   * @param appConfig cloud app config
+   */
+  @PostMapping("/update")
+  public ApiResponse<Void> update(@RequestBody final CloudAppConfigurationPOJO appConfig) {
+    appConfigService.update(appConfig);
+    return ApiResponse.ok();
+  }
 
-	/**
-	 * Query app config.
-	 *
-	 * @param appName app name
-	 * @return cloud app config
-	 */
-	@GetMapping("/{appName}")
-	public ApiResponse<CloudAppConfigurationPOJO> detail(@PathVariable("appName") final String appName) {
-		Optional<CloudAppConfigurationPOJO> appConfig = appConfigService.load(appName);
-		return ApiResponse.ok(appConfig.orElse(null));
-	}
+  /**
+   * Query app config.
+   *
+   * @param appName app name
+   * @return cloud app config
+   */
+  @GetMapping("/{appName}")
+  public ApiResponse<CloudAppConfigurationPOJO> detail(
+      @PathVariable("appName") final String appName) {
+    Optional<CloudAppConfigurationPOJO> appConfig = appConfigService.load(appName);
+    return ApiResponse.ok(appConfig.orElse(null));
+  }
 
-	/**
-	 * Find all registered app configs.
-	 *
-	 * @return collection of registered app configs
-	 */
-	@GetMapping("/list")
-	public ApiResponse<Collection<CloudAppConfiguration>> findAllApps() {
-		return ApiResponse.ok(build(appConfigService.loadAll()));
-	}
+  /**
+   * Find all registered app configs.
+   *
+   * @return collection of registered app configs
+   */
+  @GetMapping("/list")
+  public ApiResponse<Collection<CloudAppConfiguration>> findAllApps() {
+    return ApiResponse.ok(build(appConfigService.loadAll()));
+  }
 
-	/**
-	 * Query the app is disabled or not.
-	 *
-	 * @param appName app name
-	 * @return true is disabled, otherwise not
-	 */
-	@GetMapping("/{appName}/disable")
-	public boolean isDisabled(@PathVariable("appName") final String appName) {
-		return disableAppService.isDisabled(appName);
-	}
+  /**
+   * Query the app is disabled or not.
+   *
+   * @param appName app name
+   * @return true is disabled, otherwise not
+   */
+  @GetMapping("/{appName}/disable")
+  public boolean isDisabled(@PathVariable("appName") final String appName) {
+    return disableAppService.isDisabled(appName);
+  }
 
-	/**
-	 * Disable app config.
-	 *
-	 * @param appName app name
-	 */
-	@PostMapping("/{appName}/disable")
-	public ApiResponse disable(@PathVariable("appName") final String appName) {
-		if (appConfigService.load(appName).isPresent()) {
-			disableAppService.add(appName);
-		}
-		return ApiResponse.ok();
-	}
+  /**
+   * Disable app config.
+   *
+   * @param appName app name
+   */
+  @PostMapping("/{appName}/disable")
+  public ApiResponse<Void> disable(@PathVariable("appName") final String appName) {
+    if (appConfigService.load(appName).isPresent()) {
+      disableAppService.add(appName);
+    }
+    return ApiResponse.ok();
+  }
 
-	/**
-	 * Enable app.
-	 *
-	 * @param appName app name
-	 */
-	@PostMapping("/{appName}/enable")
-	public ApiResponse enable(@PathVariable("appName") final String appName) {
-		if (appConfigService.load(appName).isPresent()) {
-			disableAppService.remove(appName);
-		}
-		return ApiResponse.ok();
-	}
+  /**
+   * Enable app.
+   *
+   * @param appName app name
+   */
+  @PostMapping("/{appName}/enable")
+  public ApiResponse<Void> enable(@PathVariable("appName") final String appName) {
+    if (appConfigService.load(appName).isPresent()) {
+      disableAppService.remove(appName);
+    }
+    return ApiResponse.ok();
+  }
 
-	/**
-	 * Deregister app.
-	 *
-	 * @param appName app name
-	 */
-	@DeleteMapping("/{appName}")
-	public ApiResponse deregister(@PathVariable("appName") final String appName) {
-		if (appConfigService.load(appName).isPresent()) {
-			removeAppAndJobConfigurations(appName);
-		}
-		return ApiResponse.ok();
-	}
+  /**
+   * Deregister app.
+   *
+   * @param appName app name
+   */
+  @DeleteMapping("/{appName}")
+  public ApiResponse<Void> deregister(@PathVariable("appName") final String appName) {
+    if (appConfigService.load(appName).isPresent()) {
+      removeAppAndJobConfigurations(appName);
+    }
+    return ApiResponse.ok();
+  }
 
-	private void removeAppAndJobConfigurations(final String appName) {
-		for (CloudJobConfigurationPOJO each : jobConfigService.loadAll()) {
-			if (appName.equals(each.getAppName())) {
-				producerManager.deregister(each.getJobName());
-			}
-		}
-		disableAppService.remove(appName);
-		appConfigService.remove(appName);
-	}
+  private void removeAppAndJobConfigurations(final String appName) {
+    for (CloudJobConfigurationPOJO each : jobConfigService.loadAll()) {
+      if (appName.equals(each.getAppName())) {
+        producerManager.deregister(each.getJobName());
+      }
+    }
+    disableAppService.remove(appName);
+    appConfigService.remove(appName);
+  }
 
-	private Collection<CloudAppConfiguration> build(final Collection<CloudAppConfigurationPOJO> cloudAppConfigurationPOJOS) {
-		return cloudAppConfigurationPOJOS.stream().map(this::convert).collect(Collectors.toList());
-	}
+  private Collection<CloudAppConfiguration> build(
+      final Collection<CloudAppConfigurationPOJO> cloudAppConfigurationPOJOS) {
+    return cloudAppConfigurationPOJOS.stream().map(this::convert).collect(Collectors.toList());
+  }
 
-	private CloudAppConfiguration convert(final CloudAppConfigurationPOJO cloudAppConfigurationPOJO) {
-		CloudAppConfiguration cloudAppConfiguration = new CloudAppConfiguration();
-		BeanUtils.copyProperties(cloudAppConfigurationPOJO, cloudAppConfiguration);
-		cloudAppConfiguration.setDisabled(disableAppService.isDisabled(cloudAppConfigurationPOJO.getAppName()));
-		return cloudAppConfiguration;
-	}
+  private CloudAppConfiguration convert(final CloudAppConfigurationPOJO cloudAppConfigurationPOJO) {
+    CloudAppConfiguration cloudAppConfiguration = new CloudAppConfiguration();
+    BeanUtils.copyProperties(cloudAppConfigurationPOJO, cloudAppConfiguration);
+    cloudAppConfiguration.setDisabled(
+        disableAppService.isDisabled(cloudAppConfigurationPOJO.getAppName()));
+    return cloudAppConfiguration;
+  }
 }

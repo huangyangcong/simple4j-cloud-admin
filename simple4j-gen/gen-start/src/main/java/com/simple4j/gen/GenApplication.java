@@ -1,6 +1,5 @@
 package com.simple4j.gen;
 
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -17,7 +16,7 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 @MapperScan("com.simple4j.gen.mapper")
 public class GenApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(GenApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(GenApplication.class, args);
+  }
 }

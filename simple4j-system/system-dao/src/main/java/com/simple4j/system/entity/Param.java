@@ -17,33 +17,21 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Param extends BaseEntity {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键id
-	 */
-	@TableId(value = "id", type = IdType.ASSIGN_ID)
-	private Long id;
+  /** 主键id */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
-	/**
-	 * 参数名
-	 */
-	private String paramName;
+  /** 参数名 */
+  private String paramName;
 
-	/**
-	 * 参数键
-	 */
-	private String paramKey;
+  /** 参数键 */
+  private String paramKey;
 
-	/**
-	 * 参数值
-	 */
-	private String paramValue;
+  /** 参数值 */
+  private String paramValue;
 
-	/**
-	 * 备注
-	 */
-	private String remark;
-
-
+  /** 备注 */
+  private String remark;
 }

@@ -7,10 +7,8 @@ import lombok.Data;
 @Data
 public class NavbarPermissionRequest {
 
-	/**
-	 * 顶部菜单id
-	 */
-	@ApiModelProperty(name = "id", value = "顶部菜单id")
-	@JsonProperty("id")
-	private String id;
+  /** 顶部菜单id */
+  @ApiModelProperty(name = "id", value = "顶部菜单id")
+  @JsonProperty("id")
+  private String id;
 }

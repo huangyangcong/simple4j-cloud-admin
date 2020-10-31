@@ -18,37 +18,35 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DictMapStruct {
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	Dict toPo(DictAddOrUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  Dict toPo(DictAddOrUpdateRequest vo);
 
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  DictDetailResponse toVo(Dict po);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	DictDetailResponse toVo(Dict po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  List<DictDetailResponse> toVo(List<Dict> po);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	List<DictDetailResponse> toVo(List<Dict> po);
-
-
-	/**
-	 * 分页转换PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	Page<DictDetailResponse> toVo(Page<Dict> po);
+  /**
+   * 分页转换PO转VO
+   *
+   * @param po
+   * @return
+   */
+  Page<DictDetailResponse> toVo(Page<Dict> po);
 }

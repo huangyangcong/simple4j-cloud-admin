@@ -17,15 +17,13 @@ import java.io.Serializable;
 @ApiModel(value = "字典表列表请求实体类", description = "字典表列表请求实体类")
 public class DictListRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
+  @ApiModelProperty(value = "字典编号", name = "code")
+  @JsonProperty("code")
+  private String code;
 
-	@ApiModelProperty(value = "字典编号", name = "code")
-	@JsonProperty("code")
-	private String code;
-
-	@ApiModelProperty(value = "字典名称", name = "dict_value")
-	@JsonProperty("dict_value")
-	private String dictValue;
-
+  @ApiModelProperty(value = "字典名称", name = "dict_value")
+  @JsonProperty("dict_value")
+  private String dictValue;
 }

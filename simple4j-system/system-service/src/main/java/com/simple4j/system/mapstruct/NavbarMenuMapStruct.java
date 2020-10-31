@@ -20,52 +20,51 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface NavbarMenuMapStruct {
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	NavbarMenu toPo(NavbarMenuAddRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  NavbarMenu toPo(NavbarMenuAddRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	NavbarMenu toPo(NavbarMenuAddOrUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  NavbarMenu toPo(NavbarMenuAddOrUpdateRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @return
-	 * @vo vo
-	 */
-	NavbarMenu toPo(NavbarMenuUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @return
+   * @vo vo
+   */
+  NavbarMenu toPo(NavbarMenuUpdateRequest vo);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	NavbarMenuDetailResponse toVo(NavbarMenu po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  NavbarMenuDetailResponse toVo(NavbarMenu po);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	List<NavbarMenuDetailResponse> toVo(List<NavbarMenu> po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  List<NavbarMenuDetailResponse> toVo(List<NavbarMenu> po);
 
-
-	/**
-	 * 分页转换PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	Page<NavbarMenuDetailResponse> toVo(Page<NavbarMenu> po);
+  /**
+   * 分页转换PO转VO
+   *
+   * @param po
+   * @return
+   */
+  Page<NavbarMenuDetailResponse> toVo(Page<NavbarMenu> po);
 }

@@ -12,27 +12,27 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RegionMapStruct {
 
-	/**
-	 * @param regions
-	 * @return
-	 */
-	List<RegionDetailResponse> toVo(List<Region> regions);
+  /**
+   * @param regions
+   * @return
+   */
+  List<RegionDetailResponse> toVo(List<Region> regions);
 
-	/**
-	 * @param regions
-	 * @return
-	 */
-	RegionDetailResponse toVo(Region region);
+  /**
+   * @param regions
+   * @return
+   */
+  RegionDetailResponse toVo(Region region);
 
-	/**
-	 * @param regions
-	 * @return
-	 */
-	Page<RegionDetailResponse> toVo(Page<Region> region);
+  /**
+   * @param regions
+   * @return
+   */
+  Page<RegionDetailResponse> toVo(Page<Region> region);
 
-	/**
-	 * @param regionAddRequest
-	 * @return
-	 */
-	Region toPo(RegionAddRequest regionAddRequest);
+  /**
+   * @param regionAddRequest
+   * @return
+   */
+  Region toPo(RegionAddRequest regionAddRequest);
 }

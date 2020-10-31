@@ -16,17 +16,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Slf4j
 public class CustomerConfiguration implements WebMvcConfigurer {
 
+  @Bean
+  public JavaTimeModule javaTimeModule() {
+    return new JavaTimeModule();
+  }
 
-	@Bean
-	public JavaTimeModule javaTimeModule() {
-		return new JavaTimeModule();
-	}
-
-	@Bean
-	public SimpleModule simpleModule() {
-		SimpleModule simpleModule = new SimpleModule();
-		simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
-		simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
-		return simpleModule;
-	}
+  @Bean
+  public SimpleModule simpleModule() {
+    SimpleModule simpleModule = new SimpleModule();
+    simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+    simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+    return simpleModule;
+  }
 }

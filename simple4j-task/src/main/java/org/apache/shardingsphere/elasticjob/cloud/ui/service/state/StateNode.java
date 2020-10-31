@@ -20,14 +20,10 @@ package org.apache.shardingsphere.elasticjob.cloud.ui.service.state;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-/**
- * State node.
- */
+/** State node. */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StateNode {
 
-	/**
-	 * Root state node.
-	 */
-	public static final String ROOT = "/state" ;
+  /** Root state node. */
+  public static final String ROOT = "/state";
 }

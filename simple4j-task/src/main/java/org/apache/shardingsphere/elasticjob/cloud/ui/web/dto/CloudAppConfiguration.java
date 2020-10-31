@@ -20,26 +20,24 @@ package org.apache.shardingsphere.elasticjob.cloud.ui.web.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Cloud app configuration.
- */
+/** Cloud app configuration. */
 @Getter
 @Setter
 public final class CloudAppConfiguration {
 
-	private String appName;
+  private String appName;
 
-	private String appURL;
+  private String appURL;
 
-	private String bootstrapScript;
+  private String bootstrapScript;
 
-	private double cpuCount = 1d;
+  private double cpuCount = 1d;
 
-	private double memoryMB = 128d;
+  private double memoryMB = 128d;
 
-	private boolean appCacheEnable = true;
+  private boolean appCacheEnable = true;
 
-	private int eventTraceSamplingCount;
+  private int eventTraceSamplingCount;
 
-	private boolean disabled;
+  private boolean disabled;
 }

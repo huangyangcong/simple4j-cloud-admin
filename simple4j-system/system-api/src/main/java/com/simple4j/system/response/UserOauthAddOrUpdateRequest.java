@@ -12,6 +12,4 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "用户第三方认证表新增请求实体类", description = "用户第三方认证表新增请求实体类")
-public class UserOauthAddOrUpdateRequest extends UserOauthUpdateRequest {
-
-}
+public class UserOauthAddOrUpdateRequest extends UserOauthUpdateRequest {}

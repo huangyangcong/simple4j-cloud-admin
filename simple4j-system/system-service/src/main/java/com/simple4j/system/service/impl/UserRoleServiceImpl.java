@@ -1,6 +1,5 @@
 package com.simple4j.system.service.impl;
 
-
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.system.entity.UserRole;
@@ -22,40 +21,38 @@ import java.util.Set;
  */
 @Service
 @RequiredArgsConstructor
-public class UserRoleServiceImpl implements
-	IUserRoleService {
+public class UserRoleServiceImpl implements IUserRoleService {
 
-	private final UserRoleMapper userRoleMapper;
+  private final UserRoleMapper userRoleMapper;
 
-	@Override
-	public Set<String> getRoleIds(String userId) {
-		return userRoleMapper.getRoleIds(userId);
-	}
+  @Override
+  public Set<String> getRoleIds(String userId) {
+    return userRoleMapper.getRoleIds(userId);
+  }
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void grant(UserRoleGrantRequest userRoleGrantRequest) {
-		grant(userRoleGrantRequest.getUserIds(), userRoleGrantRequest.getRoleIds());
-	}
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void grant(UserRoleGrantRequest userRoleGrantRequest) {
+    grant(userRoleGrantRequest.getUserIds(), userRoleGrantRequest.getRoleIds());
+  }
 
-	@Override
-	public void grant(Set<String> userIds, Set<String> roleIds) {
-		if (CollUtil.isNotEmpty(userIds)) {
-			userRoleMapper
-				.physicsDelete(
-					Wrappers.<UserRole>lambdaQuery().in(UserRole::getUserId, userIds));
-			if (CollUtil.isNotEmpty(roleIds)) {
-				List<UserRole> userRoles = new ArrayList<>();
-				for (String userId : userIds) {
-					for (String roleId : roleIds) {
-						UserRole userRole = new UserRole();
-						userRole.setUserId(userId);
-						userRole.setRoleId(roleId);
-						userRoles.add(userRole);
-					}
-				}
-				userRoleMapper.saveBatch(userRoles);
-			}
-		}
-	}
+  @Override
+  public void grant(Set<String> userIds, Set<String> roleIds) {
+    if (CollUtil.isNotEmpty(userIds)) {
+      userRoleMapper.physicsDelete(
+          Wrappers.<UserRole>lambdaQuery().in(UserRole::getUserId, userIds));
+      if (CollUtil.isNotEmpty(roleIds)) {
+        List<UserRole> userRoles = new ArrayList<>();
+        for (String userId : userIds) {
+          for (String roleId : roleIds) {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(userId);
+            userRole.setRoleId(roleId);
+            userRoles.add(userRole);
+          }
+        }
+        userRoleMapper.saveBatch(userRoles);
+      }
+    }
+  }
 }

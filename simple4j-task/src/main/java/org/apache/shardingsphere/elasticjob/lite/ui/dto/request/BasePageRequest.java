@@ -23,36 +23,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Pageable request base request.
- */
+/** Pageable request base request. */
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class BasePageRequest {
 
-	public static final int DEFAULT_PAGE_SIZE = 10;
+  public static final int DEFAULT_PAGE_SIZE = 10;
 
-	/**
-	 * Page size of request.
-	 */
-	private Integer pageSize = DEFAULT_PAGE_SIZE;
+  /** Page size of request. */
+  private Integer pageSize = DEFAULT_PAGE_SIZE;
 
-	/**
-	 * Page number of request.
-	 */
-	private Integer pageNumber = 1;
+  /** Page number of request. */
+  private Integer pageNumber = 1;
 
-	/**
-	 * The field name for sort by.
-	 */
-	@JsonProperty("sort")
-	private String sortBy;
+  /** The field name for sort by. */
+  @JsonProperty("sort")
+  private String sortBy;
 
-	/**
-	 * Order type, asc or desc.
-	 */
-	@JsonProperty("order")
-	private String orderType;
+  /** Order type, asc or desc. */
+  @JsonProperty("order")
+  private String orderType;
 }

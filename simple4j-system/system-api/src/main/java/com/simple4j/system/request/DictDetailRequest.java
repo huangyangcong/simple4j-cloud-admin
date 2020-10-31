@@ -16,10 +16,8 @@ import java.io.Serializable;
 @ApiModel(value = "字典表详情请求实体类", description = "字典表详情请求实体类")
 public class DictDetailRequest implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	/**
-	 * 字典表详情编号
-	 */
-	@ApiModelProperty(value = "字典表详情编号", name = "id")
-	private String id;
+  private static final long serialVersionUID = 1L;
+  /** 字典表详情编号 */
+  @ApiModelProperty(value = "字典表详情编号", name = "id")
+  private String id;
 }

@@ -20,52 +20,51 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ClientMapStruct {
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	AuthClient toPo(ClientAddRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  AuthClient toPo(ClientAddRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @param vo
-	 * @return
-	 */
-	AuthClient toPo(ClientAddOrUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+  AuthClient toPo(ClientAddOrUpdateRequest vo);
 
-	/**
-	 * VO转PO
-	 *
-	 * @return
-	 * @vo vo
-	 */
-	AuthClient toPo(ClientUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @return
+   * @vo vo
+   */
+  AuthClient toPo(ClientUpdateRequest vo);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	ClientDetailResponse toVo(AuthClient po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  ClientDetailResponse toVo(AuthClient po);
 
-	/**
-	 * PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	List<ClientDetailResponse> toVo(List<AuthClient> po);
+  /**
+   * PO转VO
+   *
+   * @param po
+   * @return
+   */
+  List<ClientDetailResponse> toVo(List<AuthClient> po);
 
-
-	/**
-	 * 分页转换PO转VO
-	 *
-	 * @param po
-	 * @return
-	 */
-	Page<ClientDetailResponse> toVo(Page<AuthClient> po);
+  /**
+   * 分页转换PO转VO
+   *
+   * @param po
+   * @return
+   */
+  Page<ClientDetailResponse> toVo(Page<AuthClient> po);
 }

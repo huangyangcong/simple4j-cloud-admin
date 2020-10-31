@@ -25,13 +25,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * Event trace data source configurations.
- */
+/** Event trace data source configurations. */
 @Getter
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class EventTraceDataSourceConfigurations {
 
-	private Set<EventTraceDataSourceConfiguration> eventTraceDataSourceConfiguration = new LinkedHashSet<>();
+  private Set<EventTraceDataSourceConfiguration> eventTraceDataSourceConfiguration =
+      new LinkedHashSet<>();
 }

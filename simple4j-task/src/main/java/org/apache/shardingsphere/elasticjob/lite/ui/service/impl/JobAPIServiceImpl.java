@@ -29,45 +29,67 @@ import org.apache.shardingsphere.elasticjob.lite.ui.service.JobAPIService;
 import org.apache.shardingsphere.elasticjob.util.SessionRegistryCenterConfiguration;
 import org.springframework.stereotype.Service;
 
-/**
- * Job API service implementation.
- */
+/** Job API service implementation. */
 @Service
 public final class JobAPIServiceImpl implements JobAPIService {
 
-	@Override
-	public JobConfigurationAPI getJobConfigurationAPI() {
-		RegistryCenterConfiguration regCenterConfig = SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
-		return JobAPIFactory.createJobConfigurationAPI(regCenterConfig.getZkAddressList(), regCenterConfig.getNamespace(), regCenterConfig.getDigest());
-	}
+  @Override
+  public JobConfigurationAPI getJobConfigurationAPI() {
+    RegistryCenterConfiguration regCenterConfig =
+        SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
+    return JobAPIFactory.createJobConfigurationAPI(
+        regCenterConfig.getZkAddressList(),
+        regCenterConfig.getNamespace(),
+        regCenterConfig.getDigest());
+  }
 
-	@Override
-	public JobOperateAPI getJobOperatorAPI() {
-		RegistryCenterConfiguration regCenterConfig = SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
-		return JobAPIFactory.createJobOperateAPI(regCenterConfig.getZkAddressList(), regCenterConfig.getNamespace(), regCenterConfig.getDigest());
-	}
+  @Override
+  public JobOperateAPI getJobOperatorAPI() {
+    RegistryCenterConfiguration regCenterConfig =
+        SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
+    return JobAPIFactory.createJobOperateAPI(
+        regCenterConfig.getZkAddressList(),
+        regCenterConfig.getNamespace(),
+        regCenterConfig.getDigest());
+  }
 
-	@Override
-	public ShardingOperateAPI getShardingOperateAPI() {
-		RegistryCenterConfiguration regCenterConfig = SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
-		return JobAPIFactory.createShardingOperateAPI(regCenterConfig.getZkAddressList(), regCenterConfig.getNamespace(), regCenterConfig.getDigest());
-	}
+  @Override
+  public ShardingOperateAPI getShardingOperateAPI() {
+    RegistryCenterConfiguration regCenterConfig =
+        SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
+    return JobAPIFactory.createShardingOperateAPI(
+        regCenterConfig.getZkAddressList(),
+        regCenterConfig.getNamespace(),
+        regCenterConfig.getDigest());
+  }
 
-	@Override
-	public JobStatisticsAPI getJobStatisticsAPI() {
-		RegistryCenterConfiguration regCenterConfig = SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
-		return JobAPIFactory.createJobStatisticsAPI(regCenterConfig.getZkAddressList(), regCenterConfig.getNamespace(), regCenterConfig.getDigest());
-	}
+  @Override
+  public JobStatisticsAPI getJobStatisticsAPI() {
+    RegistryCenterConfiguration regCenterConfig =
+        SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
+    return JobAPIFactory.createJobStatisticsAPI(
+        regCenterConfig.getZkAddressList(),
+        regCenterConfig.getNamespace(),
+        regCenterConfig.getDigest());
+  }
 
-	@Override
-	public ServerStatisticsAPI getServerStatisticsAPI() {
-		RegistryCenterConfiguration regCenterConfig = SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
-		return JobAPIFactory.createServerStatisticsAPI(regCenterConfig.getZkAddressList(), regCenterConfig.getNamespace(), regCenterConfig.getDigest());
-	}
+  @Override
+  public ServerStatisticsAPI getServerStatisticsAPI() {
+    RegistryCenterConfiguration regCenterConfig =
+        SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
+    return JobAPIFactory.createServerStatisticsAPI(
+        regCenterConfig.getZkAddressList(),
+        regCenterConfig.getNamespace(),
+        regCenterConfig.getDigest());
+  }
 
-	@Override
-	public ShardingStatisticsAPI getShardingStatisticsAPI() {
-		RegistryCenterConfiguration regCenterConfig = SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
-		return JobAPIFactory.createShardingStatisticsAPI(regCenterConfig.getZkAddressList(), regCenterConfig.getNamespace(), regCenterConfig.getDigest());
-	}
+  @Override
+  public ShardingStatisticsAPI getShardingStatisticsAPI() {
+    RegistryCenterConfiguration regCenterConfig =
+        SessionRegistryCenterConfiguration.getRegistryCenterConfiguration();
+    return JobAPIFactory.createShardingStatisticsAPI(
+        regCenterConfig.getZkAddressList(),
+        regCenterConfig.getNamespace(),
+        regCenterConfig.getDigest());
+  }
 }

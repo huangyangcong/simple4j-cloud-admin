@@ -9,10 +9,8 @@ import java.util.List;
 @AllArgsConstructor
 public class MenuRoutersResponse {
 
-	/**
-	 *
-	 */
-	private String path;
+  /** */
+  private String path;
 
-	private List<String> authorities;
+  private List<String> authorities;
 }

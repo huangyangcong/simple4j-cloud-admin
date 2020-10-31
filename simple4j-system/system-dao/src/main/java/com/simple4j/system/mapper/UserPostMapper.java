@@ -12,12 +12,11 @@ import java.util.Set;
  */
 public interface UserPostMapper extends ExtendMapper<UserPost> {
 
-
-	/**
-	 * 获取用户岗位id
-	 *
-	 * @param userId
-	 * @return
-	 */
-	Set<String> getPostIds(String userId);
+  /**
+   * 获取用户岗位id
+   *
+   * @param userId
+   * @return
+   */
+  Set<String> getPostIds(String userId);
 }

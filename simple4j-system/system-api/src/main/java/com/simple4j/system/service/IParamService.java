@@ -19,38 +19,24 @@ import java.util.List;
  */
 public interface IParamService {
 
-	/**
-	 * 详情
-	 */
-	ParamDetailResponse detail(ParamDetailRequest paramDetailRequest);
+  /** 详情 */
+  ParamDetailResponse detail(ParamDetailRequest paramDetailRequest);
 
-	/**
-	 * 列表 参数表
-	 */
-	List<ParamDetailResponse> list(ParamListRequest paramListRequest);
+  /** 列表 参数表 */
+  List<ParamDetailResponse> list(ParamListRequest paramListRequest);
 
-	/**
-	 * 自定义分页 参数表
-	 */
-	Page<ParamDetailResponse> page(ParamPageRequest paramPageRequest);
+  /** 自定义分页 参数表 */
+  Page<ParamDetailResponse> page(ParamPageRequest paramPageRequest);
 
-	/**
-	 * 新增 参数表
-	 */
-	boolean add(ParamAddRequest paramAddRequest);
+  /** 新增 参数表 */
+  boolean add(ParamAddRequest paramAddRequest);
 
-	/**
-	 * 修改 参数表
-	 */
-	boolean update(ParamUpdateRequest paramUpdateRequest);
+  /** 修改 参数表 */
+  boolean update(ParamUpdateRequest paramUpdateRequest);
 
-	/**
-	 * 新增或修改 参数表
-	 */
-	boolean addOrUpdate(ParamAddOrUpdateRequest paramAddOrUpdateRequest);
+  /** 新增或修改 参数表 */
+  boolean addOrUpdate(ParamAddOrUpdateRequest paramAddOrUpdateRequest);
 
-	/**
-	 * 删除 参数表
-	 */
-	boolean remove(ParamRemoveRequest paramRemoveRequest);
+  /** 删除 参数表 */
+  boolean remove(ParamRemoveRequest paramRemoveRequest);
 }
