@@ -54,7 +54,6 @@ public class UserController {
   private final IUserService userService;
   private final IUserRoleService userRoleService;
 
-  /** 用户登录 */
   @ApiOperation(value = "登录")
   @PostMapping("/login")
   @PermitAll()
@@ -63,7 +62,6 @@ public class UserController {
     return ApiResponse.ok(userLoginResponse);
   }
 
-  /** 登出 */
   @ApiOperation(value = "登出")
   @PostMapping("/logout")
   @PreAuthorize("permitAll()")
@@ -72,7 +70,6 @@ public class UserController {
     return ApiResponse.ok();
   }
 
-  /** 查询单条 */
   @ApiOperation(value = "查看详情", notes = "传入id")
   @PostMapping("/detail")
   public ApiResponse<UserDetailResponse> detail(
@@ -81,14 +78,12 @@ public class UserController {
     return ApiResponse.ok(userDetailResponse);
   }
 
-  /** 查询单条 */
   @ApiOperation(value = "查看详情", notes = "传入id")
   @PostMapping("/info")
   public ApiResponse<UserInfo> info() {
     return ApiResponse.ok(userService.currentUserInfo());
   }
 
-  /** 用户列表 */
   @PostMapping("/page")
   @ApiOperation(value = "列表", notes = "传入account和realName")
   public ApiResponse<Page<UserDetailResponse>> page(
@@ -96,7 +91,6 @@ public class UserController {
     return ApiResponse.ok(userService.page(userPageRequest));
   }
 
-  /** 新增或修改 */
   @PostMapping("/submit")
   @ApiOperation(value = "新增或修改", notes = "传入User")
   public ApiResponse<Void> submit(@Valid @RequestBody UserAddRequest userAddRequest) {
@@ -104,7 +98,6 @@ public class UserController {
     return ApiResponse.ok();
   }
 
-  /** 修改 */
   @PostMapping("/update")
   @ApiOperation(value = "修改", notes = "传入User")
   public ApiResponse<Void> update(@Valid @RequestBody UserUpdateRequest userUpdateRequest) {
@@ -112,7 +105,6 @@ public class UserController {
     return ApiResponse.ok();
   }
 
-  /** 删除 */
   @PostMapping("/remove")
   @ApiOperation(value = "删除", notes = "传入地基和")
   public ApiResponse<Void> remove(@Valid @RequestBody UserRemoveRequest userRemoveRequest) {
@@ -134,21 +126,13 @@ public class UserController {
     return ApiResponse.ok();
   }
 
-  /**
-   * 修改密码
-   *
-   * @param oldPassword
-   * @param newPassword
-   * @param newPassword1
-   * @return
-   */
   @PostMapping("/update-password")
   @ApiOperation(value = "修改密码", notes = "传入密码")
   public ApiResponse<Void> updatePassword(
       @ApiParam(value = "旧密码", required = true) @RequestParam String oldPassword,
       @ApiParam(value = "新密码", required = true) @RequestParam String newPassword,
       @ApiParam(value = "新密码", required = true) @RequestParam String newPassword1) {
-    boolean temp = userService.updatePassword(oldPassword, newPassword, newPassword1);
+    userService.updatePassword(oldPassword, newPassword, newPassword1);
     return ApiResponse.ok();
   }
 
