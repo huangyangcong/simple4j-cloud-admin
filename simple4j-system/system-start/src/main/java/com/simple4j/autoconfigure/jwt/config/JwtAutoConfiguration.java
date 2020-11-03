@@ -179,7 +179,8 @@ public class JwtAutoConfiguration {
           .and()
           .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	      .and().oauth2Client()
+	      .and().oauth2Login()
+	  	.and().oauth2Client()
 	  ;
       // 有动态权限配置时添加动态权限校验过滤器
       if (dynamicSecurityService != null) {

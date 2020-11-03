@@ -80,11 +80,13 @@ spring:
                 registration:
                     messaging-client-auth-code:
                         provider: gitee
-                        client-id: messaging-client
-                        client-secret: secret
+                        client-authentication-method: post
+                        client-id: 44616dddc4ff3be8389a54d5c1c50ee0d3ce0314bd16fd720c9f1bf9764fdcbc
+                        client-secret: bb2a38a0fa130895c8577b2a4a44fefd21894c84b06ded0a118676e65582ae1e
                         authorization-grant-type: authorization_code
-                        redirect-uri: "{baseUrl}/authorized"
-                        scope: message.read,message.write
+                        redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+                        scope: user_info
+
                 provider:
                     gitee:
                         authorization-uri: https://gitee.com/oauth/authorize
