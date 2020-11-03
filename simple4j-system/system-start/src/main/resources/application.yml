@@ -78,7 +78,7 @@ spring:
         oauth2:
             client:
                 registration:
-                    messaging-client-auth-code:
+                    gitee-client-auth-code:
                         provider: gitee
                         client-authentication-method: post
                         client-id: 44616dddc4ff3be8389a54d5c1c50ee0d3ce0314bd16fd720c9f1bf9764fdcbc
@@ -86,12 +86,25 @@ spring:
                         authorization-grant-type: authorization_code
                         redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
                         scope: user_info
-
+                    baidu-client-auth-code:
+                        provider: baidu
+                        client-authentication-method: post
+                        client-id: ReZHBLVuCV92fluIpT6pTK32
+                        client-secret: jUyWEpKGaAMKqmo2o5AxfyL8eQ30NCyg
+                        authorization-grant-type: authorization_code
+                        redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+                        scope: basic
                 provider:
                     gitee:
                         authorization-uri: https://gitee.com/oauth/authorize
                         token-uri: https://gitee.com/oauth/token
                         user-info-uri: https://gitee.com/api/v5/user
+                    baidu:
+                        authorization-uri: https://openapi.baidu.com/oauth/2.0/authorize?display=popup
+                        token-uri: https://openapi.baidu.com/oauth/2.0/token
+                        user-info-uri: https://openapi.baidu.com/rest/2.0/passport/users/getInfo
+                        user-name-attribute: username
+                        user-info-authentication-method: form
 #mybatis
 mybatis-plus:
     mapper-locations: classpath*:mapper/*.xml

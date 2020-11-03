@@ -102,9 +102,6 @@ public class JwtAutoConfiguration {
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;
 
-    @Value("${jwt.exclude-auth-paths:}")
-    private List<String> paths;
-
     @Lazy
     @Autowired
     private ServletTokenResolve servletTokenResolve;
