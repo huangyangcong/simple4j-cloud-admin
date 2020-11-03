@@ -74,25 +74,22 @@ spring:
         host: 122.51.133.124
         port: 30003
         password: 123456
-
     security:
         oauth2:
             client:
-                provider:
-                    qq:
-                        client-id: user-client
-                        client-secret: user-secret-8888
-                        user-authorization-uri: http://localhost:6001/oauth/authorize
-                        access-token-uri: http://localhost:6001/oauth/token
                 registration:
-                    qq:
-
-            resourceserver:
-                jwt:
-                    issuer-uri:
-                    jwk-set-uri:
-                    jws-algorithm:
-                    public-key-location:
+                    messaging-client-auth-code:
+                        provider: gitee
+                        client-id: messaging-client
+                        client-secret: secret
+                        authorization-grant-type: authorization_code
+                        redirect-uri: "{baseUrl}/authorized"
+                        scope: message.read,message.write
+                provider:
+                    gitee:
+                        authorization-uri: https://gitee.com/oauth/authorize
+                        token-uri: https://gitee.com/oauth/token
+                        user-info-uri: https://gitee.com/api/v5/user
 #mybatis
 mybatis-plus:
     mapper-locations: classpath*:mapper/*.xml
@@ -198,3 +195,4 @@ rsa:
 # sm.ms 图床的 token
 smms:
     token: 1oOP3ykFDI0K6ifmtvU7c8Y1eTWZSlyl
+

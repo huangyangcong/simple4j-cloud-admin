@@ -13,6 +13,11 @@ import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,6 +84,13 @@ public class AuthClientController {
   @ApiOperation(value = "逻辑删除", notes = "传入ids")
   public ApiResponse<Void> remove(@Valid @RequestBody ClientRemoveRequest clientRemoveRequest) {
     clientService.remove(clientRemoveRequest);
+    return ApiResponse.ok();
+  }
+  /** 删除 */
+  @GetMapping("/test")
+  @ApiOperation(value = "逻辑删除", notes = "传入ids")
+  public ApiResponse<Void> auth(@RegisteredOAuth2AuthorizedClient("messaging-client-auth-code") OAuth2AuthorizedClient authorizedClient,
+								  @AuthenticationPrincipal OAuth2User oauth2User) {
     return ApiResponse.ok();
   }
 }
