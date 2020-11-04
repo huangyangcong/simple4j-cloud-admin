@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -45,6 +46,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.JdbcOAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -52,7 +56,6 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * jwt auto configuration.
@@ -86,6 +89,12 @@ public class JwtAutoConfiguration {
   }
 
   @Bean
+  public OAuth2AuthorizedClientService oAuth2AuthorizedClientService(
+      JdbcTemplate jdbcTemplate, ClientRegistrationRepository clientRegistrationRepository) {
+    return new JdbcOAuth2AuthorizedClientService(jdbcTemplate, clientRegistrationRepository);
+  }
+
+  @Bean
   public GrantedAuthorityDefaults grantedAuthorityDefaults() {
     // 去除 ROLE_ 前缀
     return new GrantedAuthorityDefaults("");
@@ -102,21 +111,18 @@ public class JwtAutoConfiguration {
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;
 
-    @Lazy
-    @Autowired
-    private ServletTokenResolve servletTokenResolve;
+    @Lazy @Autowired private ServletTokenResolve servletTokenResolve;
 
-    @Lazy
-    @Autowired
-    private DynamicRequestMatcher dynamicRequestMatcher;
+    @Lazy @Autowired private DynamicRequestMatcher dynamicRequestMatcher;
 
     @Lazy
     @Autowired(required = false)
     private DynamicFilterInvocationSecurityMetadataSource
         dynamicFilterInvocationSecurityMetadataSource;
 
-    @Autowired
-    private TokenService tokenService;
+    @Autowired private TokenService tokenService;
+
+    @Autowired private JdbcTemplate jdbcTemplate;
 
     @Value("${server.error.path:${error.path:/error}}")
     private String serverErrorPath;
@@ -176,9 +182,10 @@ public class JwtAutoConfiguration {
           .and()
           .sessionManagement()
           .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	      .and().oauth2Login()
-	  	.and().oauth2Client()
-	  ;
+          .and()
+          .oauth2Login()
+          .and()
+          .oauth2Client();
       // 有动态权限配置时添加动态权限校验过滤器
       if (dynamicSecurityService != null) {
         httpSecurity
@@ -203,13 +210,9 @@ public class JwtAutoConfiguration {
   @ConditionalOnClass({SessionCreationPolicy.class})
   @AutoConfigureAfter({WebMvcAutoConfiguration.class})
   public static class ReactorJwtAutoConfig {
-    @Lazy
-    @Autowired
-    private ReactiveTokenResolve reactiveTokenResolve;
+    @Lazy @Autowired private ReactiveTokenResolve reactiveTokenResolve;
 
-    @Lazy
-    @Autowired
-    private TokenService tokenService;
+    @Lazy @Autowired private TokenService tokenService;
 
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;

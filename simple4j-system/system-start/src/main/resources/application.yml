@@ -103,7 +103,7 @@ spring:
                         authorization-uri: https://openapi.baidu.com/oauth/2.0/authorize?display=popup
                         token-uri: https://openapi.baidu.com/oauth/2.0/token
                         user-info-uri: https://openapi.baidu.com/rest/2.0/passport/users/getInfo
-                        user-name-attribute: username
+                        user-name-attribute: openid
                         user-info-authentication-method: form
 #mybatis
 mybatis-plus:
