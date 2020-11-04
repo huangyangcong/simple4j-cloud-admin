@@ -160,16 +160,16 @@ public class JwtAutoConfiguration {
           // 禁用 CSRF
           .csrf()
           .disable()
-          .addFilterBefore(
-              (request, response, chain) -> {
-                String token = servletTokenResolve.resolveToken((HttpServletRequest) request);
-                if (!StringUtils.isEmpty(token)) {
-                  SecurityContextHolder.getContext().setAuthentication(new JwtToken(token));
-                }
-                chain.doFilter(request, response);
-              },
-              UsernamePasswordAuthenticationFilter.class)
-          .authenticationProvider(new JwtAuthenticationProvider(tokenService))
+          //.addFilterBefore(
+          //    (request, response, chain) -> {
+          //      String token = servletTokenResolve.resolveToken((HttpServletRequest) request);
+          //      if (!StringUtils.isEmpty(token)) {
+          //        SecurityContextHolder.getContext().setAuthentication(new JwtToken(token));
+          //      }
+          //      chain.doFilter(request, response);
+          //    },
+          //    UsernamePasswordAuthenticationFilter.class)
+          //.authenticationProvider(new JwtAuthenticationProvider(tokenService))
           // 授权异常
           //.exceptionHandling()
           //.disable()
