@@ -1,5 +1,7 @@
 package com.simple4j.autoconfigure.jwt.config;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicFilterInvocationSecurityMetadataSource;
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicRequestMatcher;
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicSecurityService;
@@ -16,6 +18,7 @@ import com.simple4j.autoconfigure.jwt.security.server.ReactiveTokenResolve;
 import com.simple4j.autoconfigure.jwt.security.servlet.DefaultServletTokenResolve;
 import com.simple4j.autoconfigure.jwt.security.servlet.JwtAuthenticationProvider;
 import com.simple4j.autoconfigure.jwt.security.servlet.ServletTokenResolve;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -54,8 +57,6 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.util.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * jwt auto configuration.
@@ -170,8 +171,8 @@ public class JwtAutoConfiguration {
               UsernamePasswordAuthenticationFilter.class)
           .authenticationProvider(new JwtAuthenticationProvider(tokenService))
           // 授权异常
-          .exceptionHandling()
-          .disable()
+          //.exceptionHandling()
+          //.disable()
           // 防止iframe 造成跨域
           .headers()
           .xssProtection()
@@ -181,11 +182,13 @@ public class JwtAutoConfiguration {
           // 不创建会话
           .and()
           .sessionManagement()
-          .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
           .and()
           .oauth2Login()
+		  //.authenticationDetailsSource((AuthenticationDetailsSource<HttpServletRequest, Authentication>) context ->
+			//  SecurityContextHolder.getContext().getAuthentication())
           .and()
-          .oauth2Client();
+          .oauth2Client()
+	  ;
       // 有动态权限配置时添加动态权限校验过滤器
       if (dynamicSecurityService != null) {
         httpSecurity

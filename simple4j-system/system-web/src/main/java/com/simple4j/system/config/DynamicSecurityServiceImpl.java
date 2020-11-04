@@ -20,6 +20,7 @@ public class DynamicSecurityServiceImpl implements DynamicSecurityService {
         .mvcMatchers(HttpMethod.POST, "/user/api/v1/info").permitAll()
         .mvcMatchers(HttpMethod.GET, "/login/oauth2/code/{registrationId}").permitAll()
         .mvcMatchers(HttpMethod.GET, "/client/test").permitAll()
+        .mvcMatchers(HttpMethod.POST, "/user/api/v1/login").permitAll()
         .anyRequest()
         .authenticated();
   }
@@ -28,5 +29,6 @@ public class DynamicSecurityServiceImpl implements DynamicSecurityService {
   public void ignoreUrls(
       IgnoreAbstractRequestMatcherRegistry ignoreAbstractRequestMatcherRegistry) {
     ignoreAbstractRequestMatcherRegistry.mvcMatchers("/aaaa");
+    ignoreAbstractRequestMatcherRegistry.mvcMatchers("/user/api/v1/login");
   }
 }

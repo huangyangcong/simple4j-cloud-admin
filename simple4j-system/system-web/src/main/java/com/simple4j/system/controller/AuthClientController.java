@@ -89,7 +89,7 @@ public class AuthClientController {
   /** 删除 */
   @GetMapping("/test")
   @ApiOperation(value = "逻辑删除", notes = "传入ids")
-  public ApiResponse<Void> auth(@RegisteredOAuth2AuthorizedClient("messaging-client-auth-code") OAuth2AuthorizedClient authorizedClient,
+  public ApiResponse<Void> auth(@RegisteredOAuth2AuthorizedClient("baidu-client-auth-code") OAuth2AuthorizedClient authorizedClient,
 								  @AuthenticationPrincipal OAuth2User oauth2User) {
     return ApiResponse.ok();
   }
