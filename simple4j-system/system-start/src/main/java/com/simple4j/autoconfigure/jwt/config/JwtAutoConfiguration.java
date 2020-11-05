@@ -1,14 +1,11 @@
 package com.simple4j.autoconfigure.jwt.config;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicFilterInvocationSecurityMetadataSource;
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicRequestMatcher;
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicSecurityService;
 import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
 import com.simple4j.autoconfigure.jwt.security.DefaultTokenProvider;
 import com.simple4j.autoconfigure.jwt.security.DefaultTokenServiceImpl;
-import com.simple4j.autoconfigure.jwt.security.JwtToken;
 import com.simple4j.autoconfigure.jwt.security.RedisTokenStore;
 import com.simple4j.autoconfigure.jwt.security.TokenProvider;
 import com.simple4j.autoconfigure.jwt.security.TokenService;
@@ -16,9 +13,7 @@ import com.simple4j.autoconfigure.jwt.security.TokenStore;
 import com.simple4j.autoconfigure.jwt.security.server.JwtServerAuthenticationWebFilter;
 import com.simple4j.autoconfigure.jwt.security.server.ReactiveTokenResolve;
 import com.simple4j.autoconfigure.jwt.security.servlet.DefaultServletTokenResolve;
-import com.simple4j.autoconfigure.jwt.security.servlet.JwtAuthenticationProvider;
 import com.simple4j.autoconfigure.jwt.security.servlet.ServletTokenResolve;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -48,15 +43,12 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.JdbcOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.util.StringUtils;
 
 /**
  * jwt auto configuration.
@@ -160,7 +152,7 @@ public class JwtAutoConfiguration {
           // 禁用 CSRF
           .csrf()
           .disable()
-          //.addFilterBefore(
+          // .addFilterBefore(
           //    (request, response, chain) -> {
           //      String token = servletTokenResolve.resolveToken((HttpServletRequest) request);
           //      if (!StringUtils.isEmpty(token)) {
@@ -169,11 +161,19 @@ public class JwtAutoConfiguration {
           //      chain.doFilter(request, response);
           //    },
           //    UsernamePasswordAuthenticationFilter.class)
-          //.authenticationProvider(new JwtAuthenticationProvider(tokenService))
+          // .authenticationProvider(new JwtAuthenticationProvider(tokenService))
           // 授权异常
-          //.exceptionHandling()
-          //.disable()
+          .exceptionHandling()
+          .accessDeniedHandler(
+              (request, response, accessDeniedException) -> {
+                throw accessDeniedException;
+              })
+          .authenticationEntryPoint(
+			  (request, response, authException) -> {
+				throw authException;
+			  })
           // 防止iframe 造成跨域
+		  .and()
           .headers()
           .xssProtection()
           .and()
@@ -183,12 +183,12 @@ public class JwtAutoConfiguration {
           .and()
           .sessionManagement()
           .and()
-          .oauth2Login()
-		  //.authenticationDetailsSource((AuthenticationDetailsSource<HttpServletRequest, Authentication>) context ->
-			//  SecurityContextHolder.getContext().getAuthentication())
-          .and()
-          .oauth2Client()
-	  ;
+          //          .oauth2Login()
+          // .authenticationDetailsSource((AuthenticationDetailsSource<HttpServletRequest,
+          // Authentication>) context ->
+          //  SecurityContextHolder.getContext().getAuthentication())
+          //          .and()
+          .oauth2Client();
       // 有动态权限配置时添加动态权限校验过滤器
       if (dynamicSecurityService != null) {
         httpSecurity
@@ -203,6 +203,7 @@ public class JwtAutoConfiguration {
                   }
                 });
       }
+      //
     }
   }
 
