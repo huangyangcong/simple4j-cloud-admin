@@ -72,6 +72,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.JdbcOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -92,6 +93,10 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableConfigurationProperties(JwtProperties.class)
 public class JwtAutoConfiguration {
 
+
+	@Autowired
+	private UserDetailsService userDetailsService;
+
 	@Bean
 	@ConditionalOnMissingBean(TokenProvider.class)
 	public TokenProvider tokenProvider(JwtProperties properties) {
@@ -104,8 +109,9 @@ public class JwtAutoConfiguration {
 		TokenStore tokenStore,
 		TokenProvider tokenProvider,
 		AuthenticationManagerBuilder authenticationManagerBuilder) {
-		return new DefaultTokenServiceImpl(tokenStore, tokenProvider, authenticationManagerBuilder);
+		return new DefaultTokenServiceImpl(tokenStore, tokenProvider, userDetailsService, authenticationManagerBuilder);
 	}
+
 
 	@Bean
 	@ConditionalOnMissingBean(TokenStore.class)
