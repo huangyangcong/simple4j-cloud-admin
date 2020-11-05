@@ -1,5 +1,12 @@
 package com.simple4j.system.service.impl;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
@@ -51,24 +58,10 @@ import com.simple4j.system.service.IUserRoleService;
 import com.simple4j.system.service.IUserService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * 服务实现类
@@ -77,7 +70,7 @@ import java.util.Set;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements IUserService, UserDetailsService {
+public class UserServiceImpl implements IUserService {
 
   private final UserMapStruct userMapStruct;
 
@@ -415,38 +408,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     userOauth.setTenantId(user.getTenantId());
     boolean oauthTemp = userOauthService.update(userOauth);
     return (userTemp && oauthTemp);
-  }
-
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAccount, username));
-    if (ObjectUtil.isEmpty(user)) {
-      throw new UsernameNotFoundException("");
-    }
-    List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
-    Set<String> roleIds = userRoleService.getRoleIds(user.getId());
-    for (String role : roleIds) {
-      grantedAuthorities.add(SecurityUtils.createRoleAuthority(role));
-    }
-    Set<String> permissions = roleMenuService.getPermission(roleIds);
-    for (String permission : permissions) {
-      grantedAuthorities.add(SecurityUtils.createPermissionAuthority(permission));
-    }
-
-    if (StrUtil.isNotBlank(user.getTenantId())) {
-      grantedAuthorities.add(SecurityUtils.createTenantAuthority(user.getTenantId()));
-    }
-    if (StrUtil.isNotBlank(user.getId())) {
-      grantedAuthorities.add(SecurityUtils.createUserIdAuthority(user.getId()));
-    }
-    if (StrUtil.isNotBlank(user.getName())) {
-      grantedAuthorities.add(SecurityUtils.createUserNameAuthority(user.getName()));
-    }
-    return org.springframework.security.core.userdetails.User.withUsername(user.getName())
-        .password(user.getPassword())
-        .authorities(grantedAuthorities)
-        .build();
   }
 
   @Override
