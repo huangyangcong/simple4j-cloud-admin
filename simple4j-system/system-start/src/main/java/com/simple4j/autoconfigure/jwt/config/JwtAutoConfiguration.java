@@ -1,7 +1,12 @@
 package com.simple4j.autoconfigure.jwt.config;
 
+import java.io.IOException;
 import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.interfaces.RSAPrivateKey;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JWEAlgorithm;
@@ -66,6 +71,7 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.JdbcOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -73,6 +79,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 /**
@@ -247,11 +254,17 @@ public class JwtAutoConfiguration {
 				.and()
 				.sessionManagement()
 				.and()
-				//          .oauth2Login()
+				          .oauth2Login()
 				// .authenticationDetailsSource((AuthenticationDetailsSource<HttpServletRequest,
 				// Authentication>) context ->
 				//  SecurityContextHolder.getContext().getAuthentication())
-				//          .and()
+				.successHandler(new AuthenticationSuccessHandler() {
+					@Override
+					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+						System.out.println();
+					}
+				})
+				          .and()
 				.oauth2Client()
 				.and()
 				.oauth2ResourceServer().jwt()
