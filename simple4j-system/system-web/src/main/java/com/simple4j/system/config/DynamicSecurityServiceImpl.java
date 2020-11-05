@@ -20,7 +20,10 @@ public class DynamicSecurityServiceImpl implements DynamicSecurityService {
         .mvcMatchers(HttpMethod.POST, "/user/api/v1/info").permitAll()
         .mvcMatchers(HttpMethod.GET, "/login/oauth2/code/{registrationId}").permitAll()
         .mvcMatchers(HttpMethod.GET, "/client/test").permitAll()
-        .mvcMatchers(HttpMethod.POST, "/user/api/v1/login").permitAll()
+        .mvcMatchers(HttpMethod.GET, "/user/api/v1/login2").permitAll()
+        .antMatchers(HttpMethod.GET, "/login/oauth2/code/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/authorize/oauth2/code/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/authorize/oauth2/code/**").permitAll()
         .anyRequest()
         .authenticated();
   }

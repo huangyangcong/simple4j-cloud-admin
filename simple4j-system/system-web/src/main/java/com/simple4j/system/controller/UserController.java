@@ -192,8 +192,8 @@ public class UserController {
 
 	/** 删除 */
 	@GetMapping("/login2")
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
-	public ApiResponse<Void> auth(@RegisteredOAuth2AuthorizedClient("baidu-client-auth-code") OAuth2AuthorizedClient authorizedClient,
+	@ApiOperation(value = "登录")
+	public ApiResponse<Void> auth(@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient authorizedClient,
 								  @AuthenticationPrincipal OAuth2User oauth2User) {
 
 		return ApiResponse.ok();

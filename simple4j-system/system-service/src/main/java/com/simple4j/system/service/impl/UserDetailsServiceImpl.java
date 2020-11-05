@@ -30,6 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private final UserMapper userMapper;
 	private final IUserRoleService userRoleService;
 	private final IRoleMenuService roleMenuService;
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAccount, username));

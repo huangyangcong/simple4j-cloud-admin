@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.json.JSONUtil;
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.JWSAlgorithm;
@@ -33,6 +34,7 @@ import com.simple4j.autoconfigure.jwt.dynamic.DynamicSecurityService;
 import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
 import com.simple4j.autoconfigure.jwt.security.DefaultTokenProvider;
 import com.simple4j.autoconfigure.jwt.security.DefaultTokenServiceImpl;
+import com.simple4j.autoconfigure.jwt.security.JwtToken;
 import com.simple4j.autoconfigure.jwt.security.RedisTokenStore;
 import com.simple4j.autoconfigure.jwt.security.TokenProvider;
 import com.simple4j.autoconfigure.jwt.security.TokenService;
@@ -40,7 +42,9 @@ import com.simple4j.autoconfigure.jwt.security.TokenStore;
 import com.simple4j.autoconfigure.jwt.security.server.JwtServerAuthenticationWebFilter;
 import com.simple4j.autoconfigure.jwt.security.server.ReactiveTokenResolve;
 import com.simple4j.autoconfigure.jwt.security.servlet.DefaultServletTokenResolve;
+import com.simple4j.autoconfigure.jwt.security.servlet.JwtAuthenticationProvider;
 import com.simple4j.autoconfigure.jwt.security.servlet.ServletTokenResolve;
+import com.simple4j.web.bean.ApiResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,6 +76,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.JdbcOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -81,7 +86,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.util.StringUtils;
 
 /**
  * jwt auto configuration.
@@ -229,16 +236,16 @@ public class JwtAutoConfiguration {
 				// 禁用 CSRF
 				.csrf()
 				.disable()
-				//.addFilterBefore(
-				//   (request, response, chain) -> {
-				//     String token = servletTokenResolve.resolveToken((HttpServletRequest) request);
-				//     if (!StringUtils.isEmpty(token)) {
-				//       SecurityContextHolder.getContext().setAuthentication(new JwtToken(token));
-				//     }
-				//     chain.doFilter(request, response);
-				//   },
-				//   UsernamePasswordAuthenticationFilter.class)
-				//.authenticationProvider(new JwtAuthenticationProvider(tokenService))
+				.addFilterBefore(
+				   (request, response, chain) -> {
+				     String token = servletTokenResolve.resolveToken((HttpServletRequest) request);
+				     if (!StringUtils.isEmpty(token)) {
+				       SecurityContextHolder.getContext().setAuthentication(new JwtToken(token));
+				     }
+				     chain.doFilter(request, response);
+				   },
+				   UsernamePasswordAuthenticationFilter.class)
+				.authenticationProvider(new JwtAuthenticationProvider(tokenService))
 				// 授权异常
 				.exceptionHandling()
 				.accessDeniedHandler(
@@ -264,12 +271,13 @@ public class JwtAutoConfiguration {
 				// .authenticationDetailsSource((AuthenticationDetailsSource<HttpServletRequest,
 				// Authentication>) context ->
 				//  SecurityContextHolder.getContext().getAuthentication())
-				.successHandler(new AuthenticationSuccessHandler() {
-					@Override
-					public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-						System.out.println();
-					}
-				})
+				//.successHandler(new AuthenticationSuccessHandler() {
+				//	@Override
+				//	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+				//		String token = tokenService.thirdLoginSuccess("admin");
+				//		JSONUtil.toJsonStr(ApiResponse.ok(token), response.getWriter());
+				//	}
+				//})
 				          .and()
 				.oauth2Client()
 				.and()

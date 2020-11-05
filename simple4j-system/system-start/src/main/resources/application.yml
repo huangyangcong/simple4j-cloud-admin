@@ -97,6 +97,7 @@ spring:
                     github:
                         client-id: 3ec75ce76e63300c2b6b
                         client-secret: 038936d7c882ce952923385fec03a5f33a4f4c27
+                        redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
                 provider:
                     gitee:
                         authorization-uri: https://gitee.com/oauth/authorize
@@ -162,7 +163,7 @@ login:
 
 #jwt
 jwt:
-    header: Authorization
+    header: Token
     # 令牌前缀
     token-start-with: Bearer
     # 必须使用最少88位的Base64对该令牌进行编码
