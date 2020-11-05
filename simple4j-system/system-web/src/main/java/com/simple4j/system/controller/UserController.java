@@ -1,6 +1,7 @@
 package com.simple4j.system.controller;
 
 import com.simple4j.api.base.Page;
+import com.simple4j.autoconfigure.jwt.security.TokenService;
 import com.simple4j.system.request.UserAddRequest;
 import com.simple4j.system.request.UserDetailRequest;
 import com.simple4j.system.request.UserListRequest;
@@ -59,6 +60,7 @@ public class UserController {
 
   private final IUserService userService;
   private final IUserRoleService userRoleService;
+  private final TokenService tokenService;
 
   @ApiOperation(value = "登录")
   @PostMapping("/login")
@@ -193,9 +195,10 @@ public class UserController {
 	/** 删除 */
 	@GetMapping("/login2")
 	@ApiOperation(value = "登录")
-	public ApiResponse<Void> auth(@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient authorizedClient,
+	public ApiResponse<String> auth(@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient authorizedClient,
 								  @AuthenticationPrincipal OAuth2User oauth2User) {
-
-		return ApiResponse.ok();
+		String token = tokenService.thirdLoginSuccess("admin");
+		//		JSONUtil.toJsonStr(ApiResponse.ok(token), response.getWriter());
+		return ApiResponse.ok(token);
 	}
 }
