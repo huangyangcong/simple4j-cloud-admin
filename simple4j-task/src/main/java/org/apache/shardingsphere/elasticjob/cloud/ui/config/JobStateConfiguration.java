@@ -19,6 +19,7 @@ package org.apache.shardingsphere.elasticjob.cloud.ui.config;
 
 import lombok.Getter;
 import lombok.Setter;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -28,5 +29,5 @@ import org.springframework.stereotype.Component;
 @Setter
 public final class JobStateConfiguration {
 
-  private int queueSize = 10000;
+	private int queueSize = 10000;
 }

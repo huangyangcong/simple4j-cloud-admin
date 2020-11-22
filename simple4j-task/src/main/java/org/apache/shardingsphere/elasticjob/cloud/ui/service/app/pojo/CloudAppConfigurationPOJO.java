@@ -21,57 +21,59 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.app.CloudAppConfiguration;
 
-/** Cloud app configuration POJO. */
+/**
+ * Cloud app configuration POJO.
+ */
 @Getter
 @Setter
 public final class CloudAppConfigurationPOJO {
 
-  private String appName;
+	private String appName;
 
-  private String appURL;
+	private String appURL;
 
-  private String bootstrapScript;
+	private String bootstrapScript;
 
-  private double cpuCount = 1d;
+	private double cpuCount = 1d;
 
-  private double memoryMB = 128d;
+	private double memoryMB = 128d;
 
-  private boolean appCacheEnable = true;
+	private boolean appCacheEnable = true;
 
-  private int eventTraceSamplingCount;
+	private int eventTraceSamplingCount;
 
-  /**
-   * Convert from cloud app configuration.
-   *
-   * @param cloudAppConfig cloud job configuration
-   * @return cloud app configuration POJO
-   */
-  public static CloudAppConfigurationPOJO fromCloudAppConfiguration(
-      final CloudAppConfiguration cloudAppConfig) {
-    CloudAppConfigurationPOJO result = new CloudAppConfigurationPOJO();
-    result.setAppName(cloudAppConfig.getAppName());
-    result.setAppURL(cloudAppConfig.getAppURL());
-    result.setBootstrapScript(cloudAppConfig.getBootstrapScript());
-    result.setCpuCount(cloudAppConfig.getCpuCount());
-    result.setMemoryMB(cloudAppConfig.getMemoryMB());
-    result.setAppCacheEnable(cloudAppConfig.isAppCacheEnable());
-    result.setEventTraceSamplingCount(cloudAppConfig.getEventTraceSamplingCount());
-    return result;
-  }
+	/**
+	 * Convert from cloud app configuration.
+	 *
+	 * @param cloudAppConfig cloud job configuration
+	 * @return cloud app configuration POJO
+	 */
+	public static CloudAppConfigurationPOJO fromCloudAppConfiguration(
+		final CloudAppConfiguration cloudAppConfig) {
+		CloudAppConfigurationPOJO result = new CloudAppConfigurationPOJO();
+		result.setAppName(cloudAppConfig.getAppName());
+		result.setAppURL(cloudAppConfig.getAppURL());
+		result.setBootstrapScript(cloudAppConfig.getBootstrapScript());
+		result.setCpuCount(cloudAppConfig.getCpuCount());
+		result.setMemoryMB(cloudAppConfig.getMemoryMB());
+		result.setAppCacheEnable(cloudAppConfig.isAppCacheEnable());
+		result.setEventTraceSamplingCount(cloudAppConfig.getEventTraceSamplingCount());
+		return result;
+	}
 
-  /**
-   * Convert to cloud app configuration.
-   *
-   * @return cloud app configuration
-   */
-  public CloudAppConfiguration toCloudAppConfiguration() {
-    return new CloudAppConfiguration(
-        appName,
-        appURL,
-        bootstrapScript,
-        cpuCount,
-        memoryMB,
-        appCacheEnable,
-        eventTraceSamplingCount);
-  }
+	/**
+	 * Convert to cloud app configuration.
+	 *
+	 * @return cloud app configuration
+	 */
+	public CloudAppConfiguration toCloudAppConfiguration() {
+		return new CloudAppConfiguration(
+			appName,
+			appURL,
+			bootstrapScript,
+			cpuCount,
+			memoryMB,
+			appCacheEnable,
+			eventTraceSamplingCount);
+	}
 }

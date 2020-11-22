@@ -17,9 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +25,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
-/** Task running statistics. */
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/**
+ * Task running statistics.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -37,21 +40,21 @@ import java.util.Date;
 @Table(name = "TASK_RUNNING_STATISTICS")
 public class TaskRunningStatistics {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
 
-  @Column(name = "running_count", length = 11)
-  private Integer runningCount;
+	@Column(name = "running_count", length = 11)
+	private Integer runningCount;
 
-  @Column(name = "statistics_time", nullable = false)
-  private Date statisticsTime;
+	@Column(name = "statistics_time", nullable = false)
+	private Date statisticsTime;
 
-  @Column(name = "creation_time", nullable = false)
-  private Date creationTime = new Date();
+	@Column(name = "creation_time", nullable = false)
+	private Date creationTime = new Date();
 
-  public TaskRunningStatistics(final Integer runningCount, final Date statisticsTime) {
-    this.runningCount = runningCount;
-    this.statisticsTime = statisticsTime;
-  }
+	public TaskRunningStatistics(final Integer runningCount, final Date statisticsTime) {
+		this.runningCount = runningCount;
+		this.statisticsTime = statisticsTime;
+	}
 }

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<artifactId>simple4j-admin</artifactId>
-		<groupId>com.simple4j.admin</groupId>
-		<version>1.0-SNAPSHOT</version>
-		<relativePath>../</relativePath>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<artifactId>simple4j-pay</artifactId>
-	<packaging>pom</packaging>
+	<dependencies>
+		<dependency>
+			<artifactId>alipay-sdk-java</artifactId>
+			<groupId>com.alipay.sdk</groupId>
+			<version>4.8.62.ALL</version>
+		</dependency>
+	</dependencies>
+
+	<modelVersion>4.0.0</modelVersion>
 	<modules>
 		<module>simple4j-pay-api</module>
 		<module>simple4j-pay-service</module>
 	</modules>
+	<packaging>pom</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.alipay.sdk</groupId>
-			<artifactId>alipay-sdk-java</artifactId>
-			<version>4.8.62.ALL</version>
-		</dependency>
-	</dependencies>
+	<parent>
+		<artifactId>simple4j-admin</artifactId>
+		<groupId>com.simple4j.admin</groupId>
+		<relativePath>../</relativePath>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 </project>

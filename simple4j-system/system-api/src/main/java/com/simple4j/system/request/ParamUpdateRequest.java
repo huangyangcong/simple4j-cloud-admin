@@ -14,9 +14,11 @@ import lombok.Data;
 @ApiModel(value = "参数表修改请求实体类", description = "参数表修改请求实体类")
 public class ParamUpdateRequest extends ParamAddRequest {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 参数表ID */
-  @ApiModelProperty(value = "参数表ID")
-  private String id;
+	/**
+	 * 参数表ID
+	 */
+	@ApiModelProperty(value = "参数表ID")
+	private String id;
 }

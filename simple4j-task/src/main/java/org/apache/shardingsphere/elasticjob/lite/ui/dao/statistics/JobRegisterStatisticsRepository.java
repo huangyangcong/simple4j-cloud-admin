@@ -17,26 +17,29 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.dao.statistics;
 
+import java.util.Date;
+import java.util.List;
+
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.JobRegisterStatistics;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
-
-/** Job register statistics repository. */
+/**
+ * Job register statistics repository.
+ */
 @Repository
 public interface JobRegisterStatisticsRepository
-    extends JpaRepository<JobRegisterStatistics, Long> {
+	extends JpaRepository<JobRegisterStatistics, Long> {
 
-  /**
-   * Find job register statistics.
-   *
-   * @param fromTime from date to statistics
-   * @return job register statistics
-   */
-  @Query("SELECT t FROM JobRegisterStatistics t WHERE t.statisticsTime >= :fromTime")
-  List<JobRegisterStatistics> findJobRegisterStatistics(@Param("fromTime") Date fromTime);
+	/**
+	 * Find job register statistics.
+	 *
+	 * @param fromTime from date to statistics
+	 * @return job register statistics
+	 */
+	@Query("SELECT t FROM JobRegisterStatistics t WHERE t.statisticsTime >= :fromTime")
+	List<JobRegisterStatistics> findJobRegisterStatistics(@Param("fromTime") Date fromTime);
 }

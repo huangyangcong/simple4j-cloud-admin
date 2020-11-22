@@ -21,26 +21,29 @@ import org.apache.shardingsphere.elasticjob.lite.ui.dto.request.FindJobExecution
 import org.apache.shardingsphere.elasticjob.lite.ui.dto.request.FindJobStatusTraceEventsRequest;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobExecutionEvent;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobStatusTraceEvent;
+
 import org.springframework.data.domain.Page;
 
-/** Event trace history service. */
+/**
+ * Event trace history service.
+ */
 public interface EventTraceHistoryService {
 
-  /**
-   * Find job execution events.
-   *
-   * @param findJobExecutionEventsRequest query params
-   * @return job execution events
-   */
-  Page<JobExecutionEvent> findJobExecutionEvents(
-      FindJobExecutionEventsRequest findJobExecutionEventsRequest);
+	/**
+	 * Find job execution events.
+	 *
+	 * @param findJobExecutionEventsRequest query params
+	 * @return job execution events
+	 */
+	Page<JobExecutionEvent> findJobExecutionEvents(
+		FindJobExecutionEventsRequest findJobExecutionEventsRequest);
 
-  /**
-   * Find job status trace events.
-   *
-   * @param findJobStatusTraceEventsRequest query params
-   * @return job status trace events
-   */
-  Page<JobStatusTraceEvent> findJobStatusTraceEvents(
-      FindJobStatusTraceEventsRequest findJobStatusTraceEventsRequest);
+	/**
+	 * Find job status trace events.
+	 *
+	 * @param findJobStatusTraceEventsRequest query params
+	 * @return job status trace events
+	 */
+	Page<JobStatusTraceEvent> findJobStatusTraceEvents(
+		FindJobStatusTraceEventsRequest findJobStatusTraceEventsRequest);
 }

@@ -16,30 +16,47 @@ import lombok.Data;
 @TableName("simple4j_dept")
 public class Dept extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 主键 */
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
-  private String id;
+	/**
+	 * 主键
+	 */
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	private String id;
 
-  /** 租户ID */
-  private String tenantId;
+	/**
+	 * 租户ID
+	 */
+	private String tenantId;
 
-  /** 父主键 */
-  private Long parentId;
+	/**
+	 * 父主键
+	 */
+	private Long parentId;
 
-  /** 部门名 */
-  private String deptName;
+	/**
+	 * 部门名
+	 */
+	private String deptName;
 
-  /** 部门全称 */
-  private String fullName;
+	/**
+	 * 部门全称
+	 */
+	private String fullName;
 
-  /** 排序 */
-  private Integer sort;
+	/**
+	 * 排序
+	 */
+	private Integer sort;
 
-  /** 备注 */
-  private String remark;
+	/**
+	 * 备注
+	 */
+	private String remark;
 
-  /** 是否已删除 */
-  @TableLogic private Integer isDeleted;
+	/**
+	 * 是否已删除
+	 */
+	@TableLogic
+	private Integer isDeleted;
 }

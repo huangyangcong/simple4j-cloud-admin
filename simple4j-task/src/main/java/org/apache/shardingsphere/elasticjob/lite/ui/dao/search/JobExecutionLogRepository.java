@@ -18,8 +18,11 @@
 package org.apache.shardingsphere.elasticjob.lite.ui.dao.search;
 
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.JobExecutionLog;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface JobExecutionLogRepository
-    extends JpaRepository<JobExecutionLog, String>, JpaSpecificationExecutor<JobExecutionLog> {}
+	extends JpaRepository<JobExecutionLog, String>, JpaSpecificationExecutor<JobExecutionLog> {
+
+}

@@ -14,9 +14,11 @@ import lombok.Data;
 @ApiModel(value = "客户端表修改请求实体类", description = "客户端表修改请求实体类")
 public class ClientUpdateRequest extends ClientAddRequest {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 客户端表ID */
-  @ApiModelProperty(value = "客户端表ID")
-  private String id;
+	/**
+	 * 客户端表ID
+	 */
+	@ApiModelProperty(value = "客户端表ID")
+	private String id;
 }

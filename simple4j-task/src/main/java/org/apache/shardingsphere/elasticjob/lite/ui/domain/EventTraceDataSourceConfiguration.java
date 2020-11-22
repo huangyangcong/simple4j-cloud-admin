@@ -17,17 +17,20 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 
-/** Event trace data source configuration. */
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+/**
+ * Event trace data source configuration.
+ */
 @NoArgsConstructor
 @Getter
 @Setter
@@ -35,27 +38,31 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class EventTraceDataSourceConfiguration implements Serializable {
 
-  private static final long serialVersionUID = -5996257770767863699L;
+	private static final long serialVersionUID = -5996257770767863699L;
 
-  @XmlAttribute(required = true)
-  private String name;
+	@XmlAttribute(required = true)
+	private String name;
 
-  @XmlAttribute(required = true)
-  private String driver;
+	@XmlAttribute(required = true)
+	private String driver;
 
-  @XmlAttribute private String url;
+	@XmlAttribute
+	private String url;
 
-  @XmlAttribute private String username;
+	@XmlAttribute
+	private String username;
 
-  @XmlAttribute private String password;
+	@XmlAttribute
+	private String password;
 
-  @XmlAttribute private boolean activated;
+	@XmlAttribute
+	private boolean activated;
 
-  public EventTraceDataSourceConfiguration(
-      final String driver, final String url, final String username, final String password) {
-    this.driver = driver;
-    this.url = url;
-    this.username = username;
-    this.password = password;
-  }
+	public EventTraceDataSourceConfiguration(
+		final String driver, final String url, final String username, final String password) {
+		this.driver = driver;
+		this.url = url;
+		this.username = username;
+		this.password = password;
+	}
 }

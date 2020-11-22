@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<parent>
-		<artifactId>simple4j-system</artifactId>
-		<groupId>com.simple4j.admin</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<artifactId>system-api</artifactId>
 	<build>
 		<plugins>
@@ -14,12 +9,7 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<executions>
 					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
 						<configuration>
-							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>
@@ -30,10 +20,21 @@
 									</excludes>
 								</filter>
 							</filters>
+							<promoteTransitiveDependencies>true</promoteTransitiveDependencies>
 						</configuration>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<phase>package</phase>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>simple4j-system</artifactId>
+		<groupId>com.simple4j.admin</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 </project>

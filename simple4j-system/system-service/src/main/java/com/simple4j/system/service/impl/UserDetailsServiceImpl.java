@@ -33,7 +33,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAccount, username));
+		User user = userMapper
+			.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAccount, username));
 		if (ObjectUtil.isEmpty(user)) {
 			throw new UsernameNotFoundException("");
 		}

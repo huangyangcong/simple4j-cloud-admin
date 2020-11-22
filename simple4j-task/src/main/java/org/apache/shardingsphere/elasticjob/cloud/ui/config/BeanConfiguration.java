@@ -17,50 +17,54 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.config;
 
+import java.util.Optional;
+
+import javax.sql.DataSource;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.cloud.ui.repository.StatisticRdbRepository;
 import org.apache.shardingsphere.elasticjob.cloud.ui.web.controller.search.JobEventRdbSearch;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCenter;
 import org.apache.shardingsphere.elasticjob.tracing.api.TracingConfiguration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
-import java.util.Optional;
 
 @Configuration
 @Slf4j
 public class BeanConfiguration {
 
-  @Autowired private EventTraceConfiguration traceConfiguration;
+	@Autowired
+	private EventTraceConfiguration traceConfiguration;
 
-  @Autowired private RegistryConfiguration registryConfiguration;
+	@Autowired
+	private RegistryConfiguration registryConfiguration;
 
-  @Bean
-  public CoordinatorRegistryCenter regCenter() {
-    CoordinatorRegistryCenter registryCenter =
-        new ZookeeperRegistryCenter(registryConfiguration.getZookeeperConfiguration());
-    registryCenter.init();
-    return registryCenter;
-  }
+	@Bean
+	public CoordinatorRegistryCenter regCenter() {
+		CoordinatorRegistryCenter registryCenter =
+			new ZookeeperRegistryCenter(registryConfiguration.getZookeeperConfiguration());
+		registryCenter.init();
+		return registryCenter;
+	}
 
-  @Bean
-  public StatisticRdbRepository rdbRepository() {
-    Optional<TracingConfiguration> tracingConfiguration =
-        traceConfiguration.getTracingConfiguration();
-    return tracingConfiguration
-        .map(each -> new StatisticRdbRepository((DataSource) each.getStorage(), true))
-        .orElse(new StatisticRdbRepository(null, false));
-  }
+	@Bean
+	public StatisticRdbRepository rdbRepository() {
+		Optional<TracingConfiguration> tracingConfiguration =
+			traceConfiguration.getTracingConfiguration();
+		return tracingConfiguration
+			.map(each -> new StatisticRdbRepository((DataSource) each.getStorage(), true))
+			.orElse(new StatisticRdbRepository(null, false));
+	}
 
-  @Bean
-  public JobEventRdbSearch jobEventRdbSearch() {
-    Optional<TracingConfiguration> tracingConfiguration =
-        traceConfiguration.getTracingConfiguration();
-    return tracingConfiguration
-        .map(each -> new JobEventRdbSearch((DataSource) each.getStorage(), true))
-        .orElse(new JobEventRdbSearch(null, false));
-  }
+	@Bean
+	public JobEventRdbSearch jobEventRdbSearch() {
+		Optional<TracingConfiguration> tracingConfiguration =
+			traceConfiguration.getTracingConfiguration();
+		return tracingConfiguration
+			.map(each -> new JobEventRdbSearch((DataSource) each.getStorage(), true))
+			.orElse(new JobEventRdbSearch(null, false));
+	}
 }

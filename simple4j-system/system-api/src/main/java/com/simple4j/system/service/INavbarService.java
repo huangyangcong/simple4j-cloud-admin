@@ -1,5 +1,7 @@
 package com.simple4j.system.service;
 
+import java.util.List;
+
 import com.simple4j.api.base.Page;
 import com.simple4j.system.request.NavbarAddOrUpdateRequest;
 import com.simple4j.system.request.NavbarAddRequest;
@@ -10,8 +12,6 @@ import com.simple4j.system.request.NavbarRemoveRequest;
 import com.simple4j.system.request.NavbarUpdateRequest;
 import com.simple4j.system.response.NavbarDetailResponse;
 
-import java.util.List;
-
 /**
  * 服务类
  *
@@ -20,24 +20,38 @@ import java.util.List;
  */
 public interface INavbarService {
 
-  /** 详情 */
-  NavbarDetailResponse detail(NavbarDetailRequest navbarDetailRequest);
+	/**
+	 * 详情
+	 */
+	NavbarDetailResponse detail(NavbarDetailRequest navbarDetailRequest);
 
-  /** 列表 */
-  List<NavbarDetailResponse> list(NavbarListRequest navbarListRequest);
+	/**
+	 * 列表
+	 */
+	List<NavbarDetailResponse> list(NavbarListRequest navbarListRequest);
 
-  /** 自定义分页 */
-  Page<NavbarDetailResponse> page(NavbarPageRequest navbarPageRequest);
+	/**
+	 * 自定义分页
+	 */
+	Page<NavbarDetailResponse> page(NavbarPageRequest navbarPageRequest);
 
-  /** 新增 */
-  boolean add(NavbarAddRequest navbarAddRequest);
+	/**
+	 * 新增
+	 */
+	boolean add(NavbarAddRequest navbarAddRequest);
 
-  /** 修改 */
-  boolean update(NavbarUpdateRequest navbarUpdateRequest);
+	/**
+	 * 修改
+	 */
+	boolean update(NavbarUpdateRequest navbarUpdateRequest);
 
-  /** 新增或修改 */
-  boolean addOrUpdate(NavbarAddOrUpdateRequest navbarAddOrUpdateRequest);
+	/**
+	 * 新增或修改
+	 */
+	boolean addOrUpdate(NavbarAddOrUpdateRequest navbarAddOrUpdateRequest);
 
-  /** 删除 */
-  boolean remove(NavbarRemoveRequest navbarRemoveRequest);
+	/**
+	 * 删除
+	 */
+	boolean remove(NavbarRemoveRequest navbarRemoveRequest);
 }

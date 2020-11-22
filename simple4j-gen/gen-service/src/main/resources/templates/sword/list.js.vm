@@ -9,74 +9,76 @@ import Grid from '../../../components/Sword/Grid';
 const FormItem = Form.Item;
 
 @connect(({ $!{table.entityPath}, loading}) => ({
-$!{table.entityPath},
-loading: loading.models.$!{table.entityPath},
+    $!{table.entityPath},
+    loading: loading.models.$!{table.entityPath},
 }))
 @Form.create() class $!{entity} extends PureComponent {
 // ============ 查询 ===============
-handleSearch = params =
+  handleSearch = params =
 > {
-const {
-dispatch
+  const {
+  dispatch
 } = this.props;
 dispatch($!{upperEntityPath}_LIST(params));
 };
 
 // ============ 查询表单 ===============
 renderSearchForm = onReset => {
-const {form} = this.props;
-const {getFieldDecorator} = form;
+  const {form} = this.props;
+  const {getFieldDecorator} = form;
 
-return (
-<Row gutter={{md: 8, lg: 24, xl: 48}}>
-    <Col md={6} sm={24}>
-    <FormItem label="查询名称">
-        {getFieldDecorator('name')( < Input placeholder="查询名称"/>)}
-    </FormItem>
-    </Col>
-    <Col>
-    <div style={{float:
-    'right'}}>
-    <Button type="primary" htmlType="submit">
-        查询
-    </Button>
-    <Button style={{marginLeft: 8}} onClick={onReset}>
-        重置
-    </Button>
-    </div>
-    </Col>
-</Row>
-);
+  return (
+      <Row gutter={{md: 8, lg: 24, xl: 48}}>
+        <Col md={6} sm={24}>
+          <FormItem label="查询名称">
+            {getFieldDecorator('name')( < Input placeholder="查询名称"/>)}
+          </FormItem>
+        </Col>
+        <Col>
+          <div style={{
+            float:
+                'right'
+          }}>
+            <Button type="primary" htmlType="submit">
+              查询
+            </Button>
+            <Button style={{marginLeft: 8}} onClick={onReset}>
+              重置
+            </Button>
+          </div>
+        </Col>
+      </Row>
+  );
 };
 
 render() {
-const code = '$!{table.entityPath}';
+  const code = '$!{table.entityPath}';
 
-const {
-form,
-loading,
-$!{table.entityPath}:
-{
-data
-}
+  const {
+    form,
+    loading,
+    $!{table.entityPath}:
+  {
+    data
+  }
 ,
 }
-= this.props;
+  = this.props;
 
-const columns = [
-#foreach($field in $!{table.fields})
-    #if($!{field.name}!=$!{cfg.tenantColumn})
-    {
-    title: '$!{field.comment}',
-    dataIndex: '$!{field.propertyName}',
-    },
-    #end
-#end
-];
+  const columns = [
+      #foreach($field in $!{table.fields})
+          #if($!{field.name}!=$!{cfg.tenantColumn})
+            {
+              title: '$!{field.comment}',
+              dataIndex: '$!{field.propertyName}',
+            },
+          #end
+      #end
+  ];
 
-return (
-<Panel>
-    <Grid
+  return (
+      <Panel>
+        <Grid
             code={code}
             form={form}
             onSearch={this.handleSearch}
@@ -84,9 +86,9 @@ return (
             loading={loading}
             data={data}
             columns={columns}
-    />
-</Panel>
-);
+        />
+      </Panel>
+  );
 }
 }
 export default $!{entity};

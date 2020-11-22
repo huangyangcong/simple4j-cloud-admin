@@ -1,34 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<artifactId>simple4j-flow</artifactId>
-		<groupId>com.simple4j.admin</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-	<modelVersion>4.0.0</modelVersion>
-
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<artifactId>flow-dao</artifactId>
-	<dependencies>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.simple4j.boot</groupId>
-			<artifactId>simple4j-dao</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.simple4j.boot</groupId>
-			<artifactId>simple4j-springboot-starter-mybatis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
 	<build>
 		<resources>
 			<resource>
@@ -42,4 +16,30 @@
 			</resource>
 		</resources>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<artifactId>mysql-connector-java</artifactId>
+			<groupId>mysql</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-dao</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-mybatis</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>lombok</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>simple4j-flow</artifactId>
+		<groupId>com.simple4j.admin</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 </project>

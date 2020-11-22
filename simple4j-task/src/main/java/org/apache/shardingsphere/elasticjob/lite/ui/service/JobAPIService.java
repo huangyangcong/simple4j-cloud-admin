@@ -26,45 +26,45 @@ import org.apache.shardingsphere.elasticjob.lite.lifecycle.api.ShardingStatistic
 
 public interface JobAPIService {
 
-  /**
-   * Job configuration API.
-   *
-   * @return job configuration API
-   */
-  JobConfigurationAPI getJobConfigurationAPI();
+	/**
+	 * Job configuration API.
+	 *
+	 * @return job configuration API
+	 */
+	JobConfigurationAPI getJobConfigurationAPI();
 
-  /**
-   * Job operate API.
-   *
-   * @return Job operate API
-   */
-  JobOperateAPI getJobOperatorAPI();
+	/**
+	 * Job operate API.
+	 *
+	 * @return Job operate API
+	 */
+	JobOperateAPI getJobOperatorAPI();
 
-  /**
-   * Sharding operate API.
-   *
-   * @return sharding operate API
-   */
-  ShardingOperateAPI getShardingOperateAPI();
+	/**
+	 * Sharding operate API.
+	 *
+	 * @return sharding operate API
+	 */
+	ShardingOperateAPI getShardingOperateAPI();
 
-  /**
-   * Job statistics API.
-   *
-   * @return job statistics API
-   */
-  JobStatisticsAPI getJobStatisticsAPI();
+	/**
+	 * Job statistics API.
+	 *
+	 * @return job statistics API
+	 */
+	JobStatisticsAPI getJobStatisticsAPI();
 
-  /**
-   * Servers statistics API.
-   *
-   * @return server statistics API
-   */
-  ServerStatisticsAPI getServerStatisticsAPI();
+	/**
+	 * Servers statistics API.
+	 *
+	 * @return server statistics API
+	 */
+	ServerStatisticsAPI getServerStatisticsAPI();
 
-  /**
-   * Sharding statistics API.
-   *
-   * @return sharding statistics API
-   */
-  ShardingStatisticsAPI getShardingStatisticsAPI();
+	/**
+	 * Sharding statistics API.
+	 *
+	 * @return sharding statistics API
+	 */
+	ShardingStatisticsAPI getShardingStatisticsAPI();
 }

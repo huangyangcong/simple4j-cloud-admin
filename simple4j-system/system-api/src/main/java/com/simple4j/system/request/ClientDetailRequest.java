@@ -1,10 +1,10 @@
 package com.simple4j.system.request;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * 客户端表详情请求实体类
@@ -16,8 +16,10 @@ import java.io.Serializable;
 @ApiModel(value = "客户端表详情请求实体类", description = "客户端表详情请求实体类")
 public class ClientDetailRequest implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  /** 客户端表详情编号 */
-  @ApiModelProperty(value = "客户端表详情编号", name = "id")
-  private String id;
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 客户端表详情编号
+	 */
+	@ApiModelProperty(value = "客户端表详情编号", name = "id")
+	private String id;
 }

@@ -34,13 +34,13 @@ import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
     #end
     #if($!{cfg.tree})
     public class $!{entity}DetailResponse extends $!{entity}AddOrUpdateRequest implements
-            INode<$!{entity}DetailResponse,
-                    Long> {
+        INode<$!{entity}DetailResponse,
+            Long> {
     #else
     public class $!{entity}DetailResponse extends $!{entity}AddOrUpdateRequest implements
-            Serializable {
+        Serializable {
 
-        private static final long serialVersionUID = 1L;
+      private static final long serialVersionUID = 1L;
     #end
 
     ## ----------  BEGIN 字段循环遍历  ----------
@@ -51,9 +51,9 @@ import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
                 #set($keyPropertyName=$!{field.propertyName})
             #end
             #if("$!field.comment" != "")
-                /**
-                 * $!{field.comment}
-                 */
+              /**
+               * $!{field.comment}
+               */
                 #if($!{swagger2})
                 @ApiModelProperty(name = "$!{field.name}", value = "$!{field.comment}")
                 #end
@@ -74,19 +74,19 @@ import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
                 #set($getprefix="get")
             #end
 
-            public $!{field.propertyType} $!{getprefix}$!{field.capitalName}() {
-            return $!{field.propertyName};
+          public $!{field.propertyType} $!{getprefix}$!{field.capitalName}() {
+          return $!{field.propertyName};
         }
 
             #if($!{entityBuilderModel})
             public $!{entity} set$!{field.capitalName}($!{field.propertyType} $!{field.propertyName}) {
             #else
-                public void set$!{field.capitalName}
-                ($!{field.propertyType} $!{field.propertyName}) {
+              public void set$!{field.capitalName}
+              ($!{field.propertyType} $!{field.propertyName}) {
             #end
-            this.$!{field.propertyName} = $!{field.propertyName};
+          this.$!{field.propertyName} = $!{field.propertyName};
             #if($!{entityBuilderModel})
-                return this;
+              return this;
             #end
         }
         #end
@@ -94,39 +94,39 @@ import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
 
 
     #if($!{cfg.tree})
-        /**
-     * 子孙节点
-     */
-        private List<$!{entity}DetailResponse> children;
+      /**
+   * 子孙节点
+   */
+      private List<$!{entity}DetailResponse> children;
 
-        @Override
-        public void addChildren($!{entity}DetailResponse children) {
-        if (this.children == null) {
-            this.children = new ArrayList<>();
-        }
-        this.children.add(children);
+      @Override
+      public void addChildren($!{entity}DetailResponse children) {
+      if (this.children == null) {
+        this.children = new ArrayList<>();
+      }
+      this.children.add(children);
     }
-        @JsonIgnore
-        @Override
-        public Long getTid() {
-        return getId();
-    }
-
-        @JsonIgnore
-        @Override
-        public Long getTParentId() {
-        return getParentId();
+      @JsonIgnore
+      @Override
+      public Long getTid() {
+      return getId();
     }
 
-        @Override
-        public int compareTo($!{entity}DetailResponse o) {
-        if (o.getSort().equals(this.getSort())) {
-            return 0;
-        } else if (o.getSort() > this.getSort()) {
-            return -1;
-        } else {
-            return 1;
-        }
+      @JsonIgnore
+      @Override
+      public Long getTParentId() {
+      return getParentId();
+    }
+
+      @Override
+      public int compareTo($!{entity}DetailResponse o) {
+      if (o.getSort().equals(this.getSort())) {
+        return 0;
+      } else if (o.getSort() > this.getSort()) {
+        return -1;
+      } else {
+        return 1;
+      }
     }
     #end
 }

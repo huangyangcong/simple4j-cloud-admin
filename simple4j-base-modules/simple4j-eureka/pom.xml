@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<artifactId>simple4j-eureka</artifactId>
+	<build>
+		<plugins>
+			<!-- docker plugin -->
+			<plugin>
+				<artifactId>docker-maven-plugin</artifactId>
+				<configuration>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<!-- Dockerfile的地址 -->
+					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+					<resources>
+						<resource>
+							<directory>${project.build.directory}</directory>
+							<include>run.sh</include>
+							<targetPath>/</targetPath>
+						</resource>
+						<resource>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+							<targetPath>/</targetPath>
+						</resource>
+					</resources>
+				</configuration>
+				<groupId>com.spotify</groupId>
+			</plugin>
+			<plugin>
+				<artifactId>fabric8-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>resource</goal>
+						</goals>
+						<id>fmp</id>
+					</execution>
+				</executions>
+				<groupId>io.fabric8</groupId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+		</dependency>
+	</dependencies>
+
+	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>simple4j-base-modules</artifactId>
 		<groupId>com.simple4j.admin</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
-
-	<artifactId>simple4j-eureka</artifactId>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-		</dependency>
-	</dependencies>
-	<build>
-		<plugins>
-			<!-- docker plugin -->
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<configuration>
-					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-					<!-- Dockerfile的地址 -->
-					<dockerDirectory>src/main/docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>run.sh</include>
-						</resource>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>fabric8-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>fmp</id>
-						<goals>
-							<goal>resource</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 </project>

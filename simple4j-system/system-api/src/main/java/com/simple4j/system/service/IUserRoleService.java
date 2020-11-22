@@ -1,8 +1,8 @@
 package com.simple4j.system.service;
 
-import com.simple4j.system.request.UserRoleGrantRequest;
-
 import java.util.Set;
+
+import com.simple4j.system.request.UserRoleGrantRequest;
 
 /**
  * 服务类
@@ -11,22 +11,24 @@ import java.util.Set;
  */
 public interface IUserRoleService {
 
-  /**
-   * 获取角色
-   *
-   * @param userId
-   * @return
-   */
-  Set<String> getRoleIds(String userId);
+	/**
+	 * 获取角色
+	 *
+	 * @param userId
+	 * @return
+	 */
+	Set<String> getRoleIds(String userId);
 
-  /**
-   * 授权角色
-   *
-   * @param userRoleGrantRequest
-   * @return
-   */
-  void grant(UserRoleGrantRequest userRoleGrantRequest);
+	/**
+	 * 授权角色
+	 *
+	 * @param userRoleGrantRequest
+	 * @return
+	 */
+	void grant(UserRoleGrantRequest userRoleGrantRequest);
 
-  /** 授权角色 */
-  void grant(Set<String> userIds, Set<String> roleIds);
+	/**
+	 * 授权角色
+	 */
+	void grant(Set<String> userIds, Set<String> roleIds);
 }

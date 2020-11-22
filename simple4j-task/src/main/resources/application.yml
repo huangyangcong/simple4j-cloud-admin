@@ -19,9 +19,9 @@ job:
 event:
     trace:
         rdb_driver: com.mysql.jdbc.Driver
-        rdb_url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
+        rdb_url: jdbc:mysql://localhost:30002/simple4j?useUnicode=true&useSSL=true
         rdb_username: root
-        rdb_password: uY;:rs623ic&
+        rdb_password:
 spring:
     jpa:
         show-sql: true
@@ -30,9 +30,9 @@ spring:
     datasource:
         default:
             driver-class-name: com.mysql.cj.jdbc.Driver
-            url: jdbc:mysql://122.51.133.124:30002/blade?useUnicode=true&useSSL=true
+            url: jdbc:mysql://localhost:3306/simple4j?useUnicode=true&useSSL=true
             username: root
-            password: uY;:rs623ic&
+            password:
 logging:
     file:
         path:

@@ -17,12 +17,12 @@
 	<!-- 通用查询结果列 -->
 	<select id="tree" resultType="com.simple4j.system.entity.Dept">
 		select
-		<include refid="baseColumnList"/>
-		from simple4j_dept
-		where is_deleted = 0
 		<if test="tenantId!=null">
 			and tenant_id = #{tenantId}
 		</if>
+		from simple4j_dept
+		where is_deleted = 0
+		<include refid="baseColumnList"/>
 	</select>
 
 	<select id="getDeptNames" resultType="java.lang.String">

@@ -15,22 +15,36 @@ import lombok.Data;
 @TableName("simple4j_post")
 public class Post extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 主键id */
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
-  private String id;
+	/**
+	 * 主键id
+	 */
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	private String id;
 
-  /** 租户ID */
-  private String tenantId;
-  /** 类型 */
-  private Integer category;
-  /** 岗位编号 */
-  private String postCode;
-  /** 岗位名称 */
-  private String postName;
-  /** 岗位排序 */
-  private Integer sort;
-  /** 岗位描述 */
-  private String remark;
+	/**
+	 * 租户ID
+	 */
+	private String tenantId;
+	/**
+	 * 类型
+	 */
+	private Integer category;
+	/**
+	 * 岗位编号
+	 */
+	private String postCode;
+	/**
+	 * 岗位名称
+	 */
+	private String postName;
+	/**
+	 * 岗位排序
+	 */
+	private Integer sort;
+	/**
+	 * 岗位描述
+	 */
+	private String remark;
 }

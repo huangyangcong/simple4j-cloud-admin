@@ -16,27 +16,42 @@ import lombok.Data;
 @TableName("simple4j_role")
 public class Role extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 主键 */
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
-  private String id;
+	/**
+	 * 主键
+	 */
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	private String id;
 
-  /** 租户ID */
-  private String tenantId;
+	/**
+	 * 租户ID
+	 */
+	private String tenantId;
 
-  /** 父主键 */
-  private Long parentId;
+	/**
+	 * 父主键
+	 */
+	private Long parentId;
 
-  /** 角色名 */
-  private String roleName;
+	/**
+	 * 角色名
+	 */
+	private String roleName;
 
-  /** 排序 */
-  private Integer sort;
+	/**
+	 * 排序
+	 */
+	private Integer sort;
 
-  /** 角色别名 */
-  private String roleAlias;
+	/**
+	 * 角色别名
+	 */
+	private String roleAlias;
 
-  /** 是否已删除 */
-  @TableLogic private Integer isDeleted;
+	/**
+	 * 是否已删除
+	 */
+	@TableLogic
+	private Integer isDeleted;
 }

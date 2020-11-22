@@ -16,6 +16,7 @@ import $!{package.Entity}.$!{entity};
 import $!{package.Mapper}.$!{table.mapperName};
 import $!{package.Service}.$!{table.serviceName};
 import org.springframework.stereotype.Service;
+
 import com.simple4j.api.base.Page;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -35,74 +36,74 @@ import $!{requestPackage}.$!{entity}TreeRequest;
 #end
 
 
-        /**
-         * $!{table.comment} 服务实现类
-         *
-         * @author $!{author}
-         * @since $!{date}
-         */
+    /**
+     * $!{table.comment} 服务实现类
+     *
+     * @author $!{author}
+     * @since $!{date}
+     */
 @Service
 @RequiredArgsConstructor
 #if($!{kotlin})
 open class $!{table.serviceImplName} , $!{table.serviceName} {
 
-        }
+    }
 #else
-        public class $!{table.serviceImplName} implements $!{table.serviceName} {
+    public class $!{table.serviceImplName} implements $!{table.serviceName} {
 
-        private final $!{entity}MapStruct $!{table.entityPath}MapStruct;
-        private final $!{entity}Mapper $!{table.entityPath}Mapper;
+    private final $!{entity}MapStruct $!{table.entityPath}MapStruct;
+    private final $!{entity}Mapper $!{table.entityPath}Mapper;
 
-        @Override
-        public $!{entity}DetailResponse detail($!{entity}DetailRequest $!{table.entityPath}DetailRequest){
+    @Override
+    public $!{entity}DetailResponse detail($!{entity}DetailRequest $!{table.entityPath}DetailRequest){
     $!{entity} detail= $!{table.entityPath}Mapper.getOne(
-        Wrappers.<$!{entity}>lambdaQuery().eq($!{entity}::getId, $!{table.entityPath}DetailRequest.getId()));
-        return $!{table.entityPath}MapStruct.toVo(detail);
-        }
-        @Override
-        public Collection<$!{entity}DetailResponse>list($!{entity}ListRequest $!{table.entityPath}ListRequest){
+    Wrappers.<$!{entity}>lambdaQuery().eq($!{entity}::getId, $!{table.entityPath}DetailRequest.getId()));
+    return $!{table.entityPath}MapStruct.toVo(detail);
+    }
+    @Override
+    public Collection<$!{entity}DetailResponse>list($!{entity}ListRequest $!{table.entityPath}ListRequest){
+    LambdaQueryWrapper<$!{entity}>queryWrapper=Wrappers.<$!{entity}>lambdaQuery();
+    List<$!{entity}>list= $!{table.entityPath}Mapper.list(queryWrapper);
+    return $!{table.entityPath}MapStruct.toVo(list);
+    }
+
+    @Override
+    public Page<$!{entity}DetailResponse>page($!{entity}PageRequest $!{table.entityPath}PageRequest){
+    LambdaQueryWrapper<$!{entity}>queryWrapper=Wrappers.<$!{entity}>lambdaQuery();
+    IPage<$!{entity}>page= $!{table.entityPath}Mapper.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>($!{table.entityPath}PageRequest.getPageNo(), $!{table.entityPath}PageRequest.getPageSize()),queryWrapper);
+    Page<$!{entity}>pages=new Page<>(page.getCurrent(),page.getSize(),page.getTotal(),page.getRecords());
+    return $!{table.entityPath}MapStruct.toVo(pages);
+    }
+
+    @Transactional(rollbackFor=Exception.class)
+    @Override
+    public boolean add($!{entity}AddRequest $!{table.entityPath}AddRequest){
+    return $!{table.entityPath}Mapper.save($!{table.entityPath}MapStruct.toPo($!{table.entityPath}AddRequest));
+    }
+
+    @Transactional(rollbackFor=Exception.class)
+    @Override
+    public boolean update($!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
+    return $!{table.entityPath}Mapper.updateByIdBool($!{table.entityPath}MapStruct.toPo($!{table.entityPath}UpdateRequest));
+    }
+
+    @Transactional(rollbackFor=Exception.class)
+    @Override
+    public boolean addOrUpdate($!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
+    return $!{table.entityPath}Mapper.saveOrUpdate($!{table.entityPath}MapStruct.toPo($!{table.entityPath}AddOrUpdateRequest));
+    }
+    #if($!{cfg.tree})
+        Collection<$!{entity}DetailResponse>tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest){
         LambdaQueryWrapper<$!{entity}>queryWrapper=Wrappers.<$!{entity}>lambdaQuery();
         List<$!{entity}>list= $!{table.entityPath}Mapper.list(queryWrapper);
-        return $!{table.entityPath}MapStruct.toVo(list);
+        return TreeUtils.buildTree($!{table.entityPath}MapStruct.toVo(list));
         }
-
-        @Override
-        public Page<$!{entity}DetailResponse>page($!{entity}PageRequest $!{table.entityPath}PageRequest){
-        LambdaQueryWrapper<$!{entity}>queryWrapper=Wrappers.<$!{entity}>lambdaQuery();
-        IPage<$!{entity}>page= $!{table.entityPath}Mapper.page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>($!{table.entityPath}PageRequest.getPageNo(), $!{table.entityPath}PageRequest.getPageSize()),queryWrapper);
-        Page<$!{entity}>pages=new Page<>(page.getCurrent(),page.getSize(),page.getTotal(),page.getRecords());
-        return $!{table.entityPath}MapStruct.toVo(pages);
-        }
-
-        @Transactional(rollbackFor=Exception.class)
-        @Override
-        public boolean add($!{entity}AddRequest $!{table.entityPath}AddRequest){
-        return $!{table.entityPath}Mapper.save($!{table.entityPath}MapStruct.toPo($!{table.entityPath}AddRequest));
-        }
-
-        @Transactional(rollbackFor=Exception.class)
-        @Override
-        public boolean update($!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
-        return $!{table.entityPath}Mapper.updateByIdBool($!{table.entityPath}MapStruct.toPo($!{table.entityPath}UpdateRequest));
-        }
-
-        @Transactional(rollbackFor=Exception.class)
-        @Override
-        public boolean addOrUpdate($!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
-        return $!{table.entityPath}Mapper.saveOrUpdate($!{table.entityPath}MapStruct.toPo($!{table.entityPath}AddOrUpdateRequest));
-        }
-    #if($!{cfg.tree})
-            Collection<$!{entity}DetailResponse>tree($!{entity}TreeRequest $!{table.entityPath}TreeRequest){
-            LambdaQueryWrapper<$!{entity}>queryWrapper=Wrappers.<$!{entity}>lambdaQuery();
-            List<$!{entity}>list= $!{table.entityPath}Mapper.list(queryWrapper);
-            return TreeUtils.buildTree($!{table.entityPath}MapStruct.toVo(list));
-            }
     #end
 
-        @Transactional(rollbackFor=Exception.class)
-        @Override
-        public boolean remove($!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
-        return $!{table.entityPath}Mapper.physicsDeleteBatchByIdsBool($!{table.entityPath}RemoveRequest.getIds());
-        }
-        }
+    @Transactional(rollbackFor=Exception.class)
+    @Override
+    public boolean remove($!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
+    return $!{table.entityPath}Mapper.physicsDeleteBatchByIdsBool($!{table.entityPath}RemoveRequest.getIds());
+    }
+    }
 #end

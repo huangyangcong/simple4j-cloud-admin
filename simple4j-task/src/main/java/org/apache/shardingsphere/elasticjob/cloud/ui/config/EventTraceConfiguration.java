@@ -17,41 +17,43 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.config;
 
+import java.util.Optional;
+
+import javax.sql.DataSource;
+
 import com.google.common.base.Strings;
 import lombok.Setter;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.shardingsphere.elasticjob.tracing.api.TracingConfiguration;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
-import java.util.Optional;
 
 @Component
 @ConfigurationProperties(prefix = "event.trace")
 @Setter
 public final class EventTraceConfiguration {
 
-  private String rdbDriver;
+	private String rdbDriver;
 
-  private String rdbUrl;
+	private String rdbUrl;
 
-  private String rdbUsername;
+	private String rdbUsername;
 
-  private String rdbPassword;
+	private String rdbPassword;
 
-  public Optional<TracingConfiguration> getTracingConfiguration() {
+	public Optional<TracingConfiguration> getTracingConfiguration() {
 
-    if (!Strings.isNullOrEmpty(rdbDriver)
-        && !Strings.isNullOrEmpty(rdbUrl)
-        && !Strings.isNullOrEmpty(rdbUsername)) {
-      BasicDataSource dataSource = new BasicDataSource();
-      dataSource.setDriverClassName(rdbDriver);
-      dataSource.setUrl(rdbUrl);
-      dataSource.setUsername(rdbUsername);
-      dataSource.setPassword(rdbPassword);
-      return Optional.of(new TracingConfiguration<DataSource>("RDB", dataSource));
-    }
-    return Optional.empty();
-  }
+		if (!Strings.isNullOrEmpty(rdbDriver)
+			&& !Strings.isNullOrEmpty(rdbUrl)
+			&& !Strings.isNullOrEmpty(rdbUsername)) {
+			BasicDataSource dataSource = new BasicDataSource();
+			dataSource.setDriverClassName(rdbDriver);
+			dataSource.setUrl(rdbUrl);
+			dataSource.setUsername(rdbUsername);
+			dataSource.setPassword(rdbPassword);
+			return Optional.of(new TracingConfiguration<DataSource>("RDB", dataSource));
+		}
+		return Optional.empty();
+	}
 }

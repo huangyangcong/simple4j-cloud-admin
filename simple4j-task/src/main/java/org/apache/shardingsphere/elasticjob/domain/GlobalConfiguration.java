@@ -17,22 +17,24 @@
 
 package org.apache.shardingsphere.elasticjob.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfigurations;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/** Global configuration. */
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfigurations;
+
+/**
+ * Global configuration.
+ */
 @Getter
 @Setter
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class GlobalConfiguration {
 
-  private RegistryCenterConfigurations registryCenterConfigurations;
+	private RegistryCenterConfigurations registryCenterConfigurations;
 
-  private EventTraceDataSourceConfigurations eventTraceDataSourceConfigurations;
+	private EventTraceDataSourceConfigurations eventTraceDataSourceConfigurations;
 }

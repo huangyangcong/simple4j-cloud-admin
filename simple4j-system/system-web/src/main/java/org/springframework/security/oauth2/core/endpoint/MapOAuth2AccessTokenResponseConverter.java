@@ -28,8 +28,8 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.util.StringUtils;
 
 /**
- * A {@link Converter} that converts the provided OAuth 2.0 Access Token Response
- * parameters to an {@link OAuth2AccessTokenResponse}.
+ * A {@link Converter} that converts the provided OAuth 2.0 Access Token Response parameters to an
+ * {@link OAuth2AccessTokenResponse}.
  *
  * @author Joe Grandja
  * @author Nikita Konev
@@ -40,7 +40,8 @@ public final class MapOAuth2AccessTokenResponseConverter
 
 	private static final Set<String> TOKEN_RESPONSE_PARAMETER_NAMES = new HashSet<>(
 		Arrays.asList(OAuth2ParameterNames.ACCESS_TOKEN, OAuth2ParameterNames.EXPIRES_IN,
-			OAuth2ParameterNames.REFRESH_TOKEN, OAuth2ParameterNames.SCOPE, OAuth2ParameterNames.TOKEN_TYPE));
+			OAuth2ParameterNames.REFRESH_TOKEN, OAuth2ParameterNames.SCOPE,
+			OAuth2ParameterNames.TOKEN_TYPE));
 
 	@Override
 	public OAuth2AccessTokenResponse convert(Map<String, String> tokenResponseParameters) {
@@ -66,7 +67,8 @@ public final class MapOAuth2AccessTokenResponseConverter
 		// @formatter:on
 	}
 
-	private OAuth2AccessToken.TokenType getAccessTokenType(Map<String, String> tokenResponseParameters) {
+	private OAuth2AccessToken.TokenType getAccessTokenType(
+		Map<String, String> tokenResponseParameters) {
 		if (OAuth2AccessToken.TokenType.BEARER.getValue()
 			.equalsIgnoreCase(tokenResponseParameters.get(OAuth2ParameterNames.TOKEN_TYPE))) {
 			return OAuth2AccessToken.TokenType.BEARER;
@@ -79,8 +81,7 @@ public final class MapOAuth2AccessTokenResponseConverter
 		if (tokenResponseParameters.containsKey(OAuth2ParameterNames.EXPIRES_IN)) {
 			try {
 				return Long.parseLong(tokenResponseParameters.get(OAuth2ParameterNames.EXPIRES_IN));
-			}
-			catch (NumberFormatException ex) {
+			} catch (NumberFormatException ex) {
 			}
 		}
 		return 0;

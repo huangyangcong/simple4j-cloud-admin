@@ -19,14 +19,14 @@ package org.apache.shardingsphere.elasticjob.util;
 
 public class BeanUtils extends org.springframework.beans.BeanUtils {
 
-  /**
-   * return a new instance by specified java type.
-   *
-   * @param clazz java type class
-   * @param <T> java type
-   * @return new instance
-   */
-  public static <T> T newInstance(final Class<T> clazz) {
-    return instantiateClass(clazz);
-  }
+	/**
+	 * return a new instance by specified java type.
+	 *
+	 * @param clazz java type class
+	 * @param <T>   java type
+	 * @return new instance
+	 */
+	public static <T> T newInstance(final Class<T> clazz) {
+		return instantiateClass(clazz);
+	}
 }

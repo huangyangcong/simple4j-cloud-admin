@@ -6,15 +6,15 @@
 	<!-- 通用查询结果列 -->
 	<select id="tree" resultType="com.simple4j.system.entity.Role">
 		select
-		<include refid="baseColumnList"/>
-		from simple4j_role
-		where is_deleted = 0
 		<if test="excludeRole!=null">
 			and role_alias &lt;&gt; #{excludeRole}
 		</if>
+		from simple4j_role
+		where is_deleted = 0
 		<if test="param1!=null">
 			and tenant_id = #{param1}
 		</if>
+		<include refid="baseColumnList"/>
 	</select>
 
 	<select id="getRoleNames" resultType="java.lang.String">

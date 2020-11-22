@@ -14,9 +14,11 @@ import lombok.Data;
 @ApiModel(value = "菜单表修改请求实体类", description = "菜单表修改请求实体类")
 public class MenuUpdateRequest extends MenuAddRequest {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 菜单表ID */
-  @ApiModelProperty(value = "菜单表ID")
-  private String id;
+	/**
+	 * 菜单表ID
+	 */
+	@ApiModelProperty(value = "菜单表ID")
+	private String id;
 }

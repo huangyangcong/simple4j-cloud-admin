@@ -8,4 +8,6 @@ import com.simple4j.system.entity.AuthClient;
  *
  * @author hyc
  */
-public interface AuthClientMapper extends ExtendMapper<AuthClient> {}
+public interface AuthClientMapper extends ExtendMapper<AuthClient> {
+
+}

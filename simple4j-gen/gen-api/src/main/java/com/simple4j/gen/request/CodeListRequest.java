@@ -1,9 +1,9 @@
 package com.simple4j.gen.request;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * 代码生成表列表请求实体类
@@ -15,5 +15,5 @@ import java.io.Serializable;
 @ApiModel(value = "代码生成表列表请求实体类", description = "代码生成表列表请求实体类")
 public class CodeListRequest implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 }

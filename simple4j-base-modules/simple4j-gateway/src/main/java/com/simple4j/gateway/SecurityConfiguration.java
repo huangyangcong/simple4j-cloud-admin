@@ -14,19 +14,19 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 public class SecurityConfiguration {
 
-  @Bean
-  public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-    return http.authorizeExchange()
-        .anyExchange()
-        .permitAll()
-        // 禁用 CSRF
-        .and()
-        .csrf()
-        .disable()
-        .headers()
-        .frameOptions()
-        .disable()
-        .and()
-        .build();
-  }
+	@Bean
+	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+		return http.authorizeExchange()
+			.anyExchange()
+			.permitAll()
+			// 禁用 CSRF
+			.and()
+			.csrf()
+			.disable()
+			.headers()
+			.frameOptions()
+			.disable()
+			.and()
+			.build();
+	}
 }

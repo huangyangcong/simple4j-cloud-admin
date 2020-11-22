@@ -9,4 +9,6 @@ import com.simple4j.system.entity.Navbar;
  * @author hyc
  * @since 2020-08-26
  */
-public interface NavbarMapper extends ExtendMapper<Navbar> {}
+public interface NavbarMapper extends ExtendMapper<Navbar> {
+
+}

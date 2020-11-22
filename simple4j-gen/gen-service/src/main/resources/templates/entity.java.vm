@@ -88,25 +88,25 @@ private static final long serialVersionUID=1L;
         #end
 
     public $!{field.propertyType} $!{getprefix}$!{field.capitalName}(){
-            return $!{field.propertyName};
-            }
+        return $!{field.propertyName};
+        }
 
         #if($!{entityBuilderModel})
         public $!{entity} set$!{field.capitalName}($!{field.propertyType} $!{field.propertyName}){
         #else
         public void set$!{field.capitalName}($!{field.propertyType} $!{field.propertyName}) {
         #end
-            this.$!{field.propertyName} = $!{field.propertyName};
+        this.$!{field.propertyName} = $!{field.propertyName};
         #if($!{entityBuilderModel})
-                return this;
+            return this;
         #end
-            }
+        }
     #end
 #end
 
 #if($!{entityColumnConstant})
     #foreach($field in $!{table.fields})
-    public static final String $!{field.name.toUpperCase()} ="$!{field.name}" ;
+    public static final String $!{field.name.toUpperCase()} ="$!{field.name}";
 
     #end
 #end
@@ -114,24 +114,24 @@ private static final long serialVersionUID=1L;
 @Override
 protected Serializable pkVal(){
     #if($!{keyPropertyName})
-            return this.$!{keyPropertyName};
+        return this.$!{keyPropertyName};
     #else
-            return this.id;
+        return this.id;
     #end
-        }
+    }
 
 #end
 #if(!$!{entityLombokModel})
 @Override
 public String toString() {
-        return "$!{entity}{" +
+    return "$!{entity}{" +
     #foreach($field in $!{table.fields})
         #if($!{velocityCount}==1)
-                "$!{field.propertyName}=" + $!{field.propertyName} +
+            "$!{field.propertyName}=" + $!{field.propertyName} +
         #else
-                ", $!{field.propertyName}=" + $!{field.propertyName} +
+            ", $!{field.propertyName}=" + $!{field.propertyName} +
         #end
     #end
-        "}";
-        }
+    "}";
+    }
 #end}

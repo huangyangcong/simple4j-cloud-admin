@@ -17,14 +17,15 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.dto.response;
 
+import java.io.Serializable;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Page;
 
-import java.io.Serializable;
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 @Getter
 @AllArgsConstructor
@@ -32,34 +33,38 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BasePageResponse<T> implements Serializable {
 
-  private static final long serialVersionUID = -6292077141274056093L;
+	private static final long serialVersionUID = -6292077141274056093L;
 
-  /** Total count of rows. */
-  private Long total;
+	/**
+	 * Total count of rows.
+	 */
+	private Long total;
 
-  /** Rows data. */
-  private List<T> rows;
+	/**
+	 * Rows data.
+	 */
+	private List<T> rows;
 
-  /**
-   * Create new BasePageResponse with total and data.
-   *
-   * @param total Total count of match data
-   * @param data Current page of data
-   * @param <T> Data type
-   * @return BasePageResponse
-   */
-  public static <T> BasePageResponse of(final Long total, final List<T> data) {
-    return new BasePageResponse(total, data);
-  }
+	/**
+	 * Create new BasePageResponse with total and data.
+	 *
+	 * @param total Total count of match data
+	 * @param data  Current page of data
+	 * @param <T>   Data type
+	 * @return BasePageResponse
+	 */
+	public static <T> BasePageResponse of(final Long total, final List<T> data) {
+		return new BasePageResponse(total, data);
+	}
 
-  /**
-   * Create new BasePageResponse with Page.
-   *
-   * @param page match data info.
-   * @param <T> Data type
-   * @return BasePageResponse
-   */
-  public static <T> BasePageResponse of(final Page<T> page) {
-    return new BasePageResponse(page.getTotalElements(), page.getContent());
-  }
+	/**
+	 * Create new BasePageResponse with Page.
+	 *
+	 * @param page match data info.
+	 * @param <T>  Data type
+	 * @return BasePageResponse
+	 */
+	public static <T> BasePageResponse of(final Page<T> page) {
+		return new BasePageResponse(page.getTotalElements(), page.getContent());
+	}
 }

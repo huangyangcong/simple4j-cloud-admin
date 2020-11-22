@@ -9,4 +9,6 @@ import com.simple4j.gen.entity.Code;
  * @author hyc
  * @since 2020-09-19
  */
-public interface CodeMapper extends ExtendMapper<Code> {}
+public interface CodeMapper extends ExtendMapper<Code> {
+
+}

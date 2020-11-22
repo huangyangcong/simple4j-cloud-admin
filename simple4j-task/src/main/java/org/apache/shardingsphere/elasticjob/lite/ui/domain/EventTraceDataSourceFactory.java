@@ -17,6 +17,8 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.domain;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.hash.HashCode;
@@ -25,50 +27,50 @@ import com.google.common.hash.Hashing;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.concurrent.ConcurrentHashMap;
-
-/** Event trace data source factory. */
+/**
+ * Event trace data source factory.
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EventTraceDataSourceFactory {
 
-  private static final ConcurrentHashMap<HashCode, EventTraceDataSource> DATA_SOURCE_REGISTRY =
-      new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<HashCode, EventTraceDataSource> DATA_SOURCE_REGISTRY =
+		new ConcurrentHashMap<>();
 
-  /**
-   * Create event trace data source.
-   *
-   * @param driverClassName database driver class name
-   * @param url database URL
-   * @param username database username
-   * @param password database password
-   * @return event trace data source
-   */
-  public static EventTraceDataSource createEventTraceDataSource(
-      final String driverClassName,
-      final String url,
-      final String username,
-      final String password) {
-    Hasher hasher =
-        Hashing.sha256()
-            .newHasher()
-            .putString(driverClassName, Charsets.UTF_8)
-            .putString(url, Charsets.UTF_8);
-    if (!Strings.isNullOrEmpty(username)) {
-      hasher.putString(username, Charsets.UTF_8);
-    }
-    if (null != password) {
-      hasher.putString(password, Charsets.UTF_8);
-    }
-    HashCode hashCode = hasher.hash();
-    EventTraceDataSource result = DATA_SOURCE_REGISTRY.get(hashCode);
-    if (null != result) {
-      return result;
-    }
-    EventTraceDataSourceConfiguration eventTraceDataSourceConfiguration =
-        new EventTraceDataSourceConfiguration(driverClassName, url, username, password);
-    result = new EventTraceDataSource(eventTraceDataSourceConfiguration);
-    result.init();
-    DATA_SOURCE_REGISTRY.put(hashCode, result);
-    return result;
-  }
+	/**
+	 * Create event trace data source.
+	 *
+	 * @param driverClassName database driver class name
+	 * @param url             database URL
+	 * @param username        database username
+	 * @param password        database password
+	 * @return event trace data source
+	 */
+	public static EventTraceDataSource createEventTraceDataSource(
+		final String driverClassName,
+		final String url,
+		final String username,
+		final String password) {
+		Hasher hasher =
+			Hashing.sha256()
+				.newHasher()
+				.putString(driverClassName, Charsets.UTF_8)
+				.putString(url, Charsets.UTF_8);
+		if (!Strings.isNullOrEmpty(username)) {
+			hasher.putString(username, Charsets.UTF_8);
+		}
+		if (null != password) {
+			hasher.putString(password, Charsets.UTF_8);
+		}
+		HashCode hashCode = hasher.hash();
+		EventTraceDataSource result = DATA_SOURCE_REGISTRY.get(hashCode);
+		if (null != result) {
+			return result;
+		}
+		EventTraceDataSourceConfiguration eventTraceDataSourceConfiguration =
+			new EventTraceDataSourceConfiguration(driverClassName, url, username, password);
+		result = new EventTraceDataSource(eventTraceDataSourceConfiguration);
+		result.init();
+		DATA_SOURCE_REGISTRY.put(hashCode, result);
+		return result;
+	}
 }

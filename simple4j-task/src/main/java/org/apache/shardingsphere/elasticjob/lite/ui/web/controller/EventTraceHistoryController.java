@@ -26,6 +26,7 @@ import org.apache.shardingsphere.elasticjob.lite.ui.service.EventTraceHistorySer
 import org.apache.shardingsphere.elasticjob.tracing.event.JobExecutionEvent;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobStatusTraceEvent;
 import org.apache.shardingsphere.elasticjob.util.SessionEventTraceDataSourceConfiguration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,49 +35,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/** Event trace history RESTful API. */
+/**
+ * Event trace history RESTful API.
+ */
 @RestController
 @RequestMapping("/api/event-trace")
 public final class EventTraceHistoryController {
 
-  @Autowired private EventTraceHistoryService eventTraceHistoryService;
+	@Autowired
+	private EventTraceHistoryService eventTraceHistoryService;
 
-  @Autowired
-  private EventTraceDataSourceConfigurationService eventTraceDataSourceConfigurationService;
+	@Autowired
+	private EventTraceDataSourceConfigurationService eventTraceDataSourceConfigurationService;
 
-  /**
-   * Find job execution events.
-   *
-   * @param requestParams query criteria
-   * @return job execution event trace result
-   */
-  @PostMapping(value = "/execution")
-  public ApiResponse<BasePageResponse<JobExecutionEvent>> findJobExecutionEvents(
-      @RequestBody final FindJobExecutionEventsRequest requestParams) {
-    Page<JobExecutionEvent> jobExecutionEvents =
-        eventTraceHistoryService.findJobExecutionEvents(requestParams);
-    return ApiResponse.ok(BasePageResponse.of(jobExecutionEvents));
-  }
+	/**
+	 * Find job execution events.
+	 *
+	 * @param requestParams query criteria
+	 * @return job execution event trace result
+	 */
+	@PostMapping(value = "/execution")
+	public ApiResponse<BasePageResponse<JobExecutionEvent>> findJobExecutionEvents(
+		@RequestBody final FindJobExecutionEventsRequest requestParams) {
+		Page<JobExecutionEvent> jobExecutionEvents =
+			eventTraceHistoryService.findJobExecutionEvents(requestParams);
+		return ApiResponse.ok(BasePageResponse.of(jobExecutionEvents));
+	}
 
-  /**
-   * Find job status trace events.
-   *
-   * @param requestParams query criteria
-   * @return job status trace result
-   */
-  @PostMapping(value = "/status")
-  public ApiResponse<BasePageResponse<JobStatusTraceEvent>> findJobStatusTraceEvents(
-      @RequestBody final FindJobStatusTraceEventsRequest requestParams) {
-    Page<JobStatusTraceEvent> jobStatusTraceEvents =
-        eventTraceHistoryService.findJobStatusTraceEvents(requestParams);
-    return ApiResponse.ok(BasePageResponse.of(jobStatusTraceEvents));
-  }
+	/**
+	 * Find job status trace events.
+	 *
+	 * @param requestParams query criteria
+	 * @return job status trace result
+	 */
+	@PostMapping(value = "/status")
+	public ApiResponse<BasePageResponse<JobStatusTraceEvent>> findJobStatusTraceEvents(
+		@RequestBody final FindJobStatusTraceEventsRequest requestParams) {
+		Page<JobStatusTraceEvent> jobStatusTraceEvents =
+			eventTraceHistoryService.findJobStatusTraceEvents(requestParams);
+		return ApiResponse.ok(BasePageResponse.of(jobStatusTraceEvents));
+	}
 
-  @ModelAttribute
-  private void initDataSource() {
-    eventTraceDataSourceConfigurationService
-        .loadActivated()
-        .ifPresent(
-            config -> SessionEventTraceDataSourceConfiguration.setDataSourceConfiguration(config));
-  }
+	@ModelAttribute
+	private void initDataSource() {
+		eventTraceDataSourceConfigurationService
+			.loadActivated()
+			.ifPresent(
+				config -> SessionEventTraceDataSourceConfiguration
+					.setDataSourceConfiguration(config));
+	}
 }

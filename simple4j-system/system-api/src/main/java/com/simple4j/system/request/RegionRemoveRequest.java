@@ -1,11 +1,11 @@
 package com.simple4j.system.request;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * 行政区划表删除请求实体类
@@ -17,10 +17,12 @@ import java.io.Serializable;
 @ApiModel(value = "行政区划表删除请求实体类", description = "行政区划表删除请求实体类")
 public class RegionRemoveRequest implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 行政区划表删除编号列表 */
-  @ApiModelProperty(value = "行政区划表删除编号列表", name = "id")
-  @JsonProperty("id")
-  private String id;
+	/**
+	 * 行政区划表删除编号列表
+	 */
+	@ApiModelProperty(value = "行政区划表删除编号列表", name = "id")
+	@JsonProperty("id")
+	private String id;
 }

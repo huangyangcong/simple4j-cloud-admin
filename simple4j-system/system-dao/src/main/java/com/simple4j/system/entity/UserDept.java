@@ -7,18 +7,26 @@ import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/** 用户部门关联 */
+/**
+ * 用户部门关联
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("simple4j_user_dept")
 public class UserDept extends BaseEntity {
 
-  /** 主键id */
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
-  private String id;
+	/**
+	 * 主键id
+	 */
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	private String id;
 
-  /** 用户编号 */
-  private String userId;
-  /** 角色编号 */
-  private String deptId;
+	/**
+	 * 用户编号
+	 */
+	private String userId;
+	/**
+	 * 角色编号
+	 */
+	private String deptId;
 }

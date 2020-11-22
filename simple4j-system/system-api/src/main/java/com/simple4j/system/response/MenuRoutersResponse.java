@@ -1,16 +1,18 @@
 package com.simple4j.system.response;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 public class MenuRoutersResponse {
 
-  /** */
-  private String path;
+	/**
+	 *
+	 */
+	private String path;
 
-  private List<String> authorities;
+	private List<String> authorities;
 }

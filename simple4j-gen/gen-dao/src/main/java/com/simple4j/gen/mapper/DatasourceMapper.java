@@ -9,4 +9,6 @@ import com.simple4j.gen.entity.Datasource;
  * @author hyc
  * @since 2020-09-19
  */
-public interface DatasourceMapper extends ExtendMapper<Datasource> {}
+public interface DatasourceMapper extends ExtendMapper<Datasource> {
+
+}

@@ -17,6 +17,8 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.service;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.hash.HashCode;
@@ -28,45 +30,45 @@ import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCenter;
 
-import java.util.concurrent.ConcurrentHashMap;
-
-/** Registry center factory. */
+/**
+ * Registry center factory.
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class RegistryCenterFactory {
 
-  private static final ConcurrentHashMap<HashCode, CoordinatorRegistryCenter> REG_CENTER_REGISTRY =
-      new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<HashCode, CoordinatorRegistryCenter> REG_CENTER_REGISTRY =
+		new ConcurrentHashMap<>();
 
-  /**
-   * Create registry center.
-   *
-   * @param connectString registry center connect string
-   * @param namespace registry center namespace
-   * @param digest registry center digest
-   * @return registry center
-   */
-  public static CoordinatorRegistryCenter createCoordinatorRegistryCenter(
-      final String connectString, final String namespace, final String digest) {
-    Hasher hasher =
-        Hashing.sha256()
-            .newHasher()
-            .putString(connectString, Charsets.UTF_8)
-            .putString(namespace, Charsets.UTF_8);
-    if (!Strings.isNullOrEmpty(digest)) {
-      hasher.putString(digest, Charsets.UTF_8);
-    }
-    HashCode hashCode = hasher.hash();
-    CoordinatorRegistryCenter result = REG_CENTER_REGISTRY.get(hashCode);
-    if (null != result) {
-      return result;
-    }
-    ZookeeperConfiguration zkConfig = new ZookeeperConfiguration(connectString, namespace);
-    if (!Strings.isNullOrEmpty(digest)) {
-      zkConfig.setDigest(digest);
-    }
-    result = new ZookeeperRegistryCenter(zkConfig);
-    result.init();
-    REG_CENTER_REGISTRY.put(hashCode, result);
-    return result;
-  }
+	/**
+	 * Create registry center.
+	 *
+	 * @param connectString registry center connect string
+	 * @param namespace     registry center namespace
+	 * @param digest        registry center digest
+	 * @return registry center
+	 */
+	public static CoordinatorRegistryCenter createCoordinatorRegistryCenter(
+		final String connectString, final String namespace, final String digest) {
+		Hasher hasher =
+			Hashing.sha256()
+				.newHasher()
+				.putString(connectString, Charsets.UTF_8)
+				.putString(namespace, Charsets.UTF_8);
+		if (!Strings.isNullOrEmpty(digest)) {
+			hasher.putString(digest, Charsets.UTF_8);
+		}
+		HashCode hashCode = hasher.hash();
+		CoordinatorRegistryCenter result = REG_CENTER_REGISTRY.get(hashCode);
+		if (null != result) {
+			return result;
+		}
+		ZookeeperConfiguration zkConfig = new ZookeeperConfiguration(connectString, namespace);
+		if (!Strings.isNullOrEmpty(digest)) {
+			zkConfig.setDigest(digest);
+		}
+		result = new ZookeeperRegistryCenter(zkConfig);
+		result.init();
+		REG_CENTER_REGISTRY.put(hashCode, result);
+		return result;
+	}
 }

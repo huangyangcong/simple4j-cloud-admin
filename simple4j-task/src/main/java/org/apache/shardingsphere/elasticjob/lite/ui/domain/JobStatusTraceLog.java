@@ -17,67 +17,69 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.domain;
 
-import lombok.Data;
-import org.apache.shardingsphere.elasticjob.tracing.event.JobStatusTraceEvent;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
+
+import lombok.Data;
+import org.apache.shardingsphere.elasticjob.tracing.event.JobStatusTraceEvent;
 
 @Data
 @Entity(name = "JOB_STATUS_TRACE_LOG")
 public class JobStatusTraceLog {
 
-  @Id private String id;
+	@Id
+	private String id;
 
-  @Column(name = "job_name")
-  private String jobName;
+	@Column(name = "job_name")
+	private String jobName;
 
-  @Column(name = "original_task_id")
-  private String originalTaskId;
+	@Column(name = "original_task_id")
+	private String originalTaskId;
 
-  @Column(name = "task_id")
-  private String taskId;
+	@Column(name = "task_id")
+	private String taskId;
 
-  @Column(name = "slave_id")
-  private String slaveId;
+	@Column(name = "slave_id")
+	private String slaveId;
 
-  @Column(name = "source")
-  private String source;
+	@Column(name = "source")
+	private String source;
 
-  @Column(name = "execution_type")
-  private String executionType;
+	@Column(name = "execution_type")
+	private String executionType;
 
-  @Column(name = "sharding_item")
-  private String shardingItem;
+	@Column(name = "sharding_item")
+	private String shardingItem;
 
-  @Column(name = "state")
-  private String state;
+	@Column(name = "state")
+	private String state;
 
-  @Column(name = "message")
-  private String message;
+	@Column(name = "message")
+	private String message;
 
-  @Column(name = "creation_time")
-  private Date creationTime;
+	@Column(name = "creation_time")
+	private Date creationTime;
 
-  /**
-   * JobStatusTraceLog convert to JobStatusTraceEvent.
-   *
-   * @return JobStatusTraceEvent entity
-   */
-  public JobStatusTraceEvent toJobStatusTraceEvent() {
-    return new JobStatusTraceEvent(
-        id,
-        jobName,
-        originalTaskId,
-        taskId,
-        slaveId,
-        JobStatusTraceEvent.Source.valueOf(source),
-        executionType,
-        shardingItem,
-        JobStatusTraceEvent.State.valueOf(state),
-        message,
-        creationTime);
-  }
+	/**
+	 * JobStatusTraceLog convert to JobStatusTraceEvent.
+	 *
+	 * @return JobStatusTraceEvent entity
+	 */
+	public JobStatusTraceEvent toJobStatusTraceEvent() {
+		return new JobStatusTraceEvent(
+			id,
+			jobName,
+			originalTaskId,
+			taskId,
+			slaveId,
+			JobStatusTraceEvent.Source.valueOf(source),
+			executionType,
+			shardingItem,
+			JobStatusTraceEvent.State.valueOf(state),
+			message,
+			creationTime);
+	}
 }

@@ -22,22 +22,24 @@ import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.lite.ui.config.DynamicDataSourceConfig;
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfiguration;
 
-/** Event trace data source configuration in session. */
+/**
+ * Event trace data source configuration in session.
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SessionEventTraceDataSourceConfiguration {
 
-  private static EventTraceDataSourceConfiguration eventTraceDataSourceConfiguration;
+	private static EventTraceDataSourceConfiguration eventTraceDataSourceConfiguration;
 
-  /**
-   * Set event trace data source configuration.
-   *
-   * @param eventTraceDataSourceConfiguration event trace data source configuration
-   */
-  public static void setDataSourceConfiguration(
-      final EventTraceDataSourceConfiguration eventTraceDataSourceConfiguration) {
-    DynamicDataSourceConfig.DynamicDataSourceContextHolder.setDataSourceName(
-        eventTraceDataSourceConfiguration.getName());
-    SessionEventTraceDataSourceConfiguration.eventTraceDataSourceConfiguration =
-        eventTraceDataSourceConfiguration;
-  }
+	/**
+	 * Set event trace data source configuration.
+	 *
+	 * @param eventTraceDataSourceConfiguration event trace data source configuration
+	 */
+	public static void setDataSourceConfiguration(
+		final EventTraceDataSourceConfiguration eventTraceDataSourceConfiguration) {
+		DynamicDataSourceConfig.DynamicDataSourceContextHolder.setDataSourceName(
+			eventTraceDataSourceConfiguration.getName());
+		SessionEventTraceDataSourceConfiguration.eventTraceDataSourceConfiguration =
+			eventTraceDataSourceConfiguration;
+	}
 }

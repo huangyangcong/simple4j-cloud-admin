@@ -17,19 +17,22 @@
 
 package org.apache.shardingsphere.elasticjob.domain;
 
-import lombok.Getter;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-/** Registry center configurations. */
+import lombok.Getter;
+
+/**
+ * Registry center configurations.
+ */
 @Getter
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public final class RegistryCenterConfigurations {
 
-  private Set<RegistryCenterConfiguration> registryCenterConfiguration = new LinkedHashSet<>();
+	private Set<RegistryCenterConfiguration> registryCenterConfiguration = new LinkedHashSet<>();
 }

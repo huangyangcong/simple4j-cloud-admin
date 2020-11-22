@@ -24,51 +24,51 @@ import com.simple4j.api.base.Page;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface $!{entity}MapStruct {
 
-    /**
-     * VO转PO
-     *
-     * @param vo
-     * @return
-     */
-        $!{entity} toPo($!{entity}AddRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+      $!{entity} toPo($!{entity}AddRequest vo);
 
-    /**
-     * VO转PO
-     *
-     * @param vo
-     * @return
-     */
-        $!{entity} toPo($!{entity}AddOrUpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @param vo
+   * @return
+   */
+      $!{entity} toPo($!{entity}AddOrUpdateRequest vo);
 
-    /**
-     * VO转PO
-     *
-     * @vo vo
-     * @return
-     */
-        $!{entity} toPo($!{entity}UpdateRequest vo);
+  /**
+   * VO转PO
+   *
+   * @vo vo
+   * @return
+   */
+      $!{entity} toPo($!{entity}UpdateRequest vo);
 
-    /**
-    * PO转VO
-    *
-    * @param po
-    * @return
-    */
-        $!{entity}DetailResponse toVo($!{entity} po);
+  /**
+  * PO转VO
+  *
+  * @param po
+  * @return
+  */
+      $!{entity}DetailResponse toVo($!{entity} po);
 
-    /**
-    * PO转VO
-    *
-    * @param po
-    * @return
-    */
-    Collection<$!{entity}DetailResponse> toVo(Collection<$!{entity}> po);
+  /**
+  * PO转VO
+  *
+  * @param po
+  * @return
+  */
+  Collection<$!{entity}DetailResponse> toVo(Collection<$!{entity}> po);
 
 
-    /**
-    * 分页转换PO转VO
-    * @param po
-    * @return
-    */
-    Page<$!{entity}DetailResponse> toVo(Page<$!{entity}> po);
+  /**
+  * 分页转换PO转VO
+  * @param po
+  * @return
+  */
+  Page<$!{entity}DetailResponse> toVo(Page<$!{entity}> po);
 }

@@ -20,14 +20,16 @@ package org.apache.shardingsphere.elasticjob.lite.ui.dao.statistics.type.job;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-/** Job type statistics. */
+/**
+ * Job type statistics.
+ */
 @RequiredArgsConstructor
 @Getter
 public final class JobTypeStatistics {
 
-  private final int scriptJobCount;
+	private final int scriptJobCount;
 
-  private final int simpleJobCount;
+	private final int simpleJobCount;
 
-  private final int dataflowJobCount;
+	private final int dataflowJobCount;
 }

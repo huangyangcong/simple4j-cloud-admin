@@ -5,7 +5,7 @@ spring:
         name: gateway-service
     cloud:
         nacos:
-            server-addr: 122.51.133.124:30000
+            server-addr: localhost:30000
             config:
                 file-extension: yml
         loadbalancer:

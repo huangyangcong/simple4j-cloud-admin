@@ -5,7 +5,10 @@ import lombok.Data;
 
 @Data
 public class UserLoginResponse {
-  /** token */
-  @ApiModelProperty(value = "token")
-  private String token;
+
+	/**
+	 * token
+	 */
+	@ApiModelProperty(value = "token")
+	private String token;
 }

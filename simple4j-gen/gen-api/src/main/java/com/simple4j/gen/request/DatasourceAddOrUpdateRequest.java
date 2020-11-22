@@ -11,4 +11,6 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "数据源配置表新增请求实体类", description = "数据源配置表新增请求实体类")
-public class DatasourceAddOrUpdateRequest extends DatasourceUpdateRequest {}
+public class DatasourceAddOrUpdateRequest extends DatasourceUpdateRequest {
+
+}

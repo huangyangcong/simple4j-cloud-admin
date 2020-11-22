@@ -55,8 +55,8 @@ private $!{table.serviceName} $!{table.entityPath}Service;
 @ApiOperation(value = "详情")
 public ApiResponse<$!{entity}DetailResponse> detail(@Valid @RequestBody $!{entity}DetailRequest $!{table.entityPath}DetailRequest){
     $!{entity}DetailResponse detail= $!{table.entityPath}Service.detail($!{table.entityPath}DetailRequest);
-        return ApiResponse.ok(detail);
-        }
+    return ApiResponse.ok(detail);
+    }
 
 /**
  * 列表 $!{table.comment}
@@ -64,9 +64,9 @@ public ApiResponse<$!{entity}DetailResponse> detail(@Valid @RequestBody $!{entit
 @PostMapping("/list")
 @ApiOperation(value = "列表")
 public ApiResponse<List<$!{entity}DetailResponse>>list(@Valid @RequestBody $!{entity}ListRequest $!{table.entityPath}ListRequest){
-        List<$!{entity}DetailResponse> list= $!{table.entityPath}Service.list($!{table.entityPath}ListRequest);
-        return ApiResponse.ok(list);
-        }
+    List<$!{entity}DetailResponse> list= $!{table.entityPath}Service.list($!{table.entityPath}ListRequest);
+    return ApiResponse.ok(list);
+    }
 
 /**
  * 自定义分页 $!{table.comment}
@@ -74,9 +74,9 @@ public ApiResponse<List<$!{entity}DetailResponse>>list(@Valid @RequestBody $!{en
 @PostMapping("/page")
 @ApiOperation(value = "分页")
 public ApiResponse<Page<$!{entity}DetailResponse>>page(@Valid @RequestBody $!{entity}PageRequest $!{table.entityPath}PageRequest){
-        Page<$!{entity}DetailResponse> pages= $!{table.entityPath}Service.page( $!{table.entityPath}PageRequest);
-        return ApiResponse.ok(pages);
-        }
+    Page<$!{entity}DetailResponse> pages= $!{table.entityPath}Service.page( $!{table.entityPath}PageRequest);
+    return ApiResponse.ok(pages);
+    }
 
 /**
  * 新增 $!{table.comment}
@@ -85,8 +85,8 @@ public ApiResponse<Page<$!{entity}DetailResponse>>page(@Valid @RequestBody $!{en
 @ApiOperation(value = "新增")
 public ApiResponse<Void> add(@Valid @RequestBody $!{entity}AddRequest $!{table.entityPath}AddRequest){
     $!{table.entityPath}Service.add($!{table.entityPath}AddRequest);
-        return ApiResponse.ok();
-        }
+    return ApiResponse.ok();
+    }
 
 /**
  * 修改 $!{table.comment}
@@ -95,8 +95,8 @@ public ApiResponse<Void> add(@Valid @RequestBody $!{entity}AddRequest $!{table.e
 @ApiOperation(value = "修改")
 public ApiResponse<Void> update(@Valid @RequestBody $!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
     $!{table.entityPath}Service.update($!{table.entityPath}UpdateRequest);
-        return ApiResponse.ok();
-        }
+    return ApiResponse.ok();
+    }
 
 /**
  * 新增或修改 $!{table.comment}
@@ -105,8 +105,8 @@ public ApiResponse<Void> update(@Valid @RequestBody $!{entity}UpdateRequest $!{t
 @ApiOperation(value = "新增或修改")
 public ApiResponse<Void> addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
     $!{table.entityPath}Service.addOrUpdate($!{table.entityPath}AddOrUpdateRequest);
-        return ApiResponse.ok();
-        }
+    return ApiResponse.ok();
+    }
 
 #if($!{cfg.tree})
 /**
@@ -115,8 +115,8 @@ public ApiResponse<Void> addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRe
 @PostMapping("/tree")
 @ApiOperation(value = "树形")
 public ApiResponse<List<$!{entity}DetailResponse>>tree(@Valid @RequestBody $!{entity}TreeRequest $!{table.entityPath}TreeRequest){
-        return ApiResponse.ok($!{table.entityPath}Service.tree($!{table.entityPath}TreeRequest));
-        }
+    return ApiResponse.ok($!{table.entityPath}Service.tree($!{table.entityPath}TreeRequest));
+    }
 #end
 
 /**
@@ -126,6 +126,6 @@ public ApiResponse<List<$!{entity}DetailResponse>>tree(@Valid @RequestBody $!{en
 @ApiOperation(value = "删除")
 public ApiResponse<Void> remove(@Valid @RequestBody $!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
     $!{table.entityPath}Service.remove($!{table.entityPath}RemoveRequest);
-        return ApiResponse.ok();
-        }
-        }
+    return ApiResponse.ok();
+    }
+    }

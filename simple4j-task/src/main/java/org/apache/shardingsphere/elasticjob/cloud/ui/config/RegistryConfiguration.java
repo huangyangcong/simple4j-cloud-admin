@@ -20,6 +20,7 @@ package org.apache.shardingsphere.elasticjob.cloud.ui.config;
 import com.google.common.base.Strings;
 import lombok.Setter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -28,17 +29,17 @@ import org.springframework.stereotype.Component;
 @Setter
 public final class RegistryConfiguration {
 
-  private String servers;
+	private String servers;
 
-  private String namespace;
+	private String namespace;
 
-  private String digest;
+	private String digest;
 
-  public ZookeeperConfiguration getZookeeperConfiguration() {
-    ZookeeperConfiguration result = new ZookeeperConfiguration(servers, namespace);
-    if (!Strings.isNullOrEmpty(digest)) {
-      result.setDigest(digest);
-    }
-    return result;
-  }
+	public ZookeeperConfiguration getZookeeperConfiguration() {
+		ZookeeperConfiguration result = new ZookeeperConfiguration(servers, namespace);
+		if (!Strings.isNullOrEmpty(digest)) {
+			result.setDigest(digest);
+		}
+		return result;
+	}
 }

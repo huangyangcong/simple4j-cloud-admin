@@ -14,9 +14,11 @@ import lombok.Data;
 @ApiModel(value = "部门表修改请求实体类", description = "部门表修改请求实体类")
 public class DeptUpdateRequest extends DeptAddRequest {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 部门表ID */
-  @ApiModelProperty(value = "部门表ID")
-  private String id;
+	/**
+	 * 部门表ID
+	 */
+	@ApiModelProperty(value = "部门表ID")
+	private String id;
 }

@@ -8,4 +8,6 @@ import java.io.Serializable;
  * @author hyc
  * @since 2019-12-08
  */
-public class SendSmsMsgResponse implements Serializable {}
+public class SendSmsMsgResponse implements Serializable {
+
+}

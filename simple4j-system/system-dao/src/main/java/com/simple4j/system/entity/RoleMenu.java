@@ -15,15 +15,21 @@ import lombok.Data;
 @TableName("simple4j_role_menu")
 public class RoleMenu extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 主键 */
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
-  private String id;
+	/**
+	 * 主键
+	 */
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	private String id;
 
-  /** 菜单id */
-  private String menuId;
+	/**
+	 * 菜单id
+	 */
+	private String menuId;
 
-  /** 角色id */
-  private String roleId;
+	/**
+	 * 角色id
+	 */
+	private String roleId;
 }

@@ -17,15 +17,19 @@ import lombok.Data;
 @ApiModel(value = "行政区划表分页请求实体类", description = "行政区划表分页请求实体类")
 public class RegionPageRequest extends RegionListRequest {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 页码 */
-  @ApiModelProperty(name = "page_no", value = "页码")
-  @JsonProperty("page_no")
-  private int pageNo;
+	/**
+	 * 页码
+	 */
+	@ApiModelProperty(name = "page_no", value = "页码")
+	@JsonProperty("page_no")
+	private int pageNo;
 
-  /** 分页数 */
-  @ApiModelProperty(name = "pageSize", value = "分页数")
-  @JsonProperty("page_size")
-  private int pageSize;
+	/**
+	 * 分页数
+	 */
+	@ApiModelProperty(name = "pageSize", value = "分页数")
+	@JsonProperty("page_size")
+	private int pageSize;
 }

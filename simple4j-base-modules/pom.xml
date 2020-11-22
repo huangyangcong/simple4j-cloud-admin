@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<parent>
-		<artifactId>simple4j-admin</artifactId>
-		<groupId>com.simple4j.admin</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<artifactId>simple4j-base-modules</artifactId>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>simple4j-base-modules</artifactId>
-	<packaging>pom</packaging>
 	<modules>
 		<module>simple4j-eureka</module>
 		<module>simple4j-springbootadmin</module>
@@ -18,4 +12,10 @@
 		<module>simple4j-gateway</module>
 		<module>simple4j-souladmin</module>
 	</modules>
+	<packaging>pom</packaging>
+	<parent>
+		<artifactId>simple4j-admin</artifactId>
+		<groupId>com.simple4j.admin</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 </project>

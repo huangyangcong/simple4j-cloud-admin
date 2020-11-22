@@ -17,43 +17,45 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.service.statistics.util;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.cloud.statistics.StatisticInterval;
 
-import java.util.Calendar;
-import java.util.Date;
-
-/** Statistic time utility. */
+/**
+ * Statistic time utility.
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StatisticTimeUtils {
 
-  /**
-   * Get the statistical time with the interval unit.
-   *
-   * @param interval interval
-   * @param offset offset
-   * @return Date
-   */
-  public static Date getStatisticTime(final StatisticInterval interval, final int offset) {
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.MILLISECOND, 0);
-    calendar.set(Calendar.SECOND, 0);
-    switch (interval) {
-      case DAY:
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.add(Calendar.DATE, offset);
-        break;
-      case HOUR:
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.add(Calendar.HOUR_OF_DAY, offset);
-        break;
-      case MINUTE:
-      default:
-        calendar.add(Calendar.MINUTE, offset);
-        break;
-    }
-    return calendar.getTime();
-  }
+	/**
+	 * Get the statistical time with the interval unit.
+	 *
+	 * @param interval interval
+	 * @param offset   offset
+	 * @return Date
+	 */
+	public static Date getStatisticTime(final StatisticInterval interval, final int offset) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.MILLISECOND, 0);
+		calendar.set(Calendar.SECOND, 0);
+		switch (interval) {
+			case DAY:
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.add(Calendar.DATE, offset);
+				break;
+			case HOUR:
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.add(Calendar.HOUR_OF_DAY, offset);
+				break;
+			case MINUTE:
+			default:
+				calendar.add(Calendar.MINUTE, offset);
+				break;
+		}
+		return calendar.getTime();
+	}
 }

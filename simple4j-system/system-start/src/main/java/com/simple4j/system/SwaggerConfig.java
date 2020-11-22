@@ -1,11 +1,9 @@
 package com.simple4j.system;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import com.fasterxml.classmate.TypeResolver;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.WildcardType;
@@ -25,8 +23,11 @@ import springfox.documentation.swagger.web.TagsSorter;
 import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger.web.UiConfigurationBuilder;
 
-import java.time.LocalDate;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import static java.util.Collections.singletonList;
 import static springfox.documentation.schema.AlternateTypeRules.newRule;
@@ -37,81 +38,84 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
  */
 @Configuration(proxyBeanMethods = false)
 public class SwaggerConfig {
-  @Autowired private TypeResolver typeResolver;
 
-  @Bean
-  public Docket petApi() {
-    return new Docket(DocumentationType.OAS_30)
-        .select()
-        .apis(RequestHandlerSelectors.any())
-        .paths(PathSelectors.any())
-        .build()
-        .pathMapping("/")
-        .directModelSubstitute(LocalDate.class, String.class)
-        .genericModelSubstitutes(ResponseEntity.class)
-        .alternateTypeRules(
-            newRule(
-                typeResolver.resolve(
-                    DeferredResult.class,
-                    typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
-                typeResolver.resolve(WildcardType.class)))
-        .useDefaultResponseMessages(false)
-        .securitySchemes(singletonList(apiKey()))
-        .securityContexts(singletonList(securityContext()))
-        .enableUrlTemplating(true)
-        .tags(new Tag("Pet Service", "All apis relating to pets"));
-  }
+	@Autowired
+	private TypeResolver typeResolver;
 
-  private ApiKey apiKey() {
-    return new ApiKey("mykey", "Authorization", "header");
-  }
+	@Bean
+	public Docket petApi() {
+		return new Docket(DocumentationType.OAS_30)
+			.select()
+			.apis(RequestHandlerSelectors.any())
+			.paths(PathSelectors.any())
+			.build()
+			.pathMapping("/")
+			.directModelSubstitute(LocalDate.class, String.class)
+			.genericModelSubstitutes(ResponseEntity.class)
+			.alternateTypeRules(
+				newRule(
+					typeResolver.resolve(
+						DeferredResult.class,
+						typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
+					typeResolver.resolve(WildcardType.class)))
+			.useDefaultResponseMessages(false)
+			.securitySchemes(singletonList(apiKey()))
+			.securityContexts(singletonList(securityContext()))
+			.enableUrlTemplating(true)
+			.tags(new Tag("Pet Service", "All apis relating to pets"));
+	}
 
-  private SecurityContext securityContext() {
-    return SecurityContext.builder()
-        .securityReferences(defaultAuth())
-        .operationSelector(operationContext -> true)
-        .build();
-  }
+	private ApiKey apiKey() {
+		return new ApiKey("mykey", "Authorization", "header");
+	}
 
-  List<SecurityReference> defaultAuth() {
-    AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-    AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-    authorizationScopes[0] = authorizationScope;
-    return singletonList(new SecurityReference("mykey", authorizationScopes));
-  }
+	private SecurityContext securityContext() {
+		return SecurityContext.builder()
+			.securityReferences(defaultAuth())
+			.operationSelector(operationContext -> true)
+			.build();
+	}
 
-  @Bean
-  SecurityConfiguration security() {
-    return SecurityConfigurationBuilder.builder()
-        .clientId("test-app-client-id")
-        .clientSecret("test-app-client-secret")
-        .realm("test-app-realm")
-        .appName("test-app")
-        .scopeSeparator(",")
-        .additionalQueryStringParams(null)
-        .useBasicAuthenticationWithAccessCodeGrant(false)
-        .enableCsrfSupport(false)
-        .build();
-  }
+	List<SecurityReference> defaultAuth() {
+		AuthorizationScope authorizationScope = new AuthorizationScope("global",
+			"accessEverything");
+		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+		authorizationScopes[0] = authorizationScope;
+		return singletonList(new SecurityReference("mykey", authorizationScopes));
+	}
 
-  @Bean
-  UiConfiguration uiConfig() {
-    return UiConfigurationBuilder.builder()
-        .deepLinking(true)
-        .displayOperationId(false)
-        .defaultModelsExpandDepth(1)
-        .defaultModelExpandDepth(1)
-        .defaultModelRendering(ModelRendering.EXAMPLE)
-        .displayRequestDuration(false)
-        .docExpansion(DocExpansion.NONE)
-        .filter(false)
-        .maxDisplayedTags(null)
-        .operationsSorter(OperationsSorter.ALPHA)
-        .showExtensions(false)
-        .showCommonExtensions(false)
-        .tagsSorter(TagsSorter.ALPHA)
-        .supportedSubmitMethods(UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS)
-        .validatorUrl(null)
-        .build();
-  }
+	@Bean
+	SecurityConfiguration security() {
+		return SecurityConfigurationBuilder.builder()
+			.clientId("test-app-client-id")
+			.clientSecret("test-app-client-secret")
+			.realm("test-app-realm")
+			.appName("test-app")
+			.scopeSeparator(",")
+			.additionalQueryStringParams(null)
+			.useBasicAuthenticationWithAccessCodeGrant(false)
+			.enableCsrfSupport(false)
+			.build();
+	}
+
+	@Bean
+	UiConfiguration uiConfig() {
+		return UiConfigurationBuilder.builder()
+			.deepLinking(true)
+			.displayOperationId(false)
+			.defaultModelsExpandDepth(1)
+			.defaultModelExpandDepth(1)
+			.defaultModelRendering(ModelRendering.EXAMPLE)
+			.displayRequestDuration(false)
+			.docExpansion(DocExpansion.NONE)
+			.filter(false)
+			.maxDisplayedTags(null)
+			.operationsSorter(OperationsSorter.ALPHA)
+			.showExtensions(false)
+			.showCommonExtensions(false)
+			.tagsSorter(TagsSorter.ALPHA)
+			.supportedSubmitMethods(UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS)
+			.validatorUrl(null)
+			.build();
+	}
 }

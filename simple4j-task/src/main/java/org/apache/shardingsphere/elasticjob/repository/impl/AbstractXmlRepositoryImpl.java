@@ -17,14 +17,15 @@
 
 package org.apache.shardingsphere.elasticjob.repository.impl;
 
-import org.apache.shardingsphere.elasticjob.exception.JobConsoleException;
-import org.apache.shardingsphere.elasticjob.repository.XmlRepository;
-import org.apache.shardingsphere.elasticjob.util.HomeFolderUtils;
+import java.io.File;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import java.io.File;
+
+import org.apache.shardingsphere.elasticjob.exception.JobConsoleException;
+import org.apache.shardingsphere.elasticjob.repository.XmlRepository;
+import org.apache.shardingsphere.elasticjob.util.HomeFolderUtils;
 
 /**
  * Abstract XML repository implementation.
@@ -33,48 +34,48 @@ import java.io.File;
  */
 public abstract class AbstractXmlRepositoryImpl<E> implements XmlRepository<E> {
 
-  private final File file;
+	private final File file;
 
-  private final Class<E> clazz;
+	private final Class<E> clazz;
 
-  private final JAXBContext jaxbContext;
+	private final JAXBContext jaxbContext;
 
-  protected AbstractXmlRepositoryImpl(final String fileName, final Class<E> clazz) {
-    file = new File(HomeFolderUtils.getFilePathInHomeFolder(fileName));
-    this.clazz = clazz;
-    HomeFolderUtils.createHomeFolderIfNotExisted();
-    try {
-      jaxbContext = JAXBContext.newInstance(clazz);
-    } catch (final JAXBException ex) {
-      throw new JobConsoleException(JobConsoleException.SERVER_ERROR, ex.getMessage());
-    }
-  }
+	protected AbstractXmlRepositoryImpl(final String fileName, final Class<E> clazz) {
+		file = new File(HomeFolderUtils.getFilePathInHomeFolder(fileName));
+		this.clazz = clazz;
+		HomeFolderUtils.createHomeFolderIfNotExisted();
+		try {
+			jaxbContext = JAXBContext.newInstance(clazz);
+		} catch (final JAXBException ex) {
+			throw new JobConsoleException(JobConsoleException.SERVER_ERROR, ex.getMessage());
+		}
+	}
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public synchronized E load() {
-    if (!file.exists()) {
-      try {
-        return clazz.newInstance();
-      } catch (final InstantiationException | IllegalAccessException ex) {
-        throw new JobConsoleException(JobConsoleException.SERVER_ERROR, ex.getMessage());
-      }
-    }
-    try {
-      return (E) jaxbContext.createUnmarshaller().unmarshal(file);
-    } catch (final JAXBException ex) {
-      throw new JobConsoleException(JobConsoleException.SERVER_ERROR, ex.getMessage());
-    }
-  }
+	@SuppressWarnings("unchecked")
+	@Override
+	public synchronized E load() {
+		if (!file.exists()) {
+			try {
+				return clazz.newInstance();
+			} catch (final InstantiationException | IllegalAccessException ex) {
+				throw new JobConsoleException(JobConsoleException.SERVER_ERROR, ex.getMessage());
+			}
+		}
+		try {
+			return (E) jaxbContext.createUnmarshaller().unmarshal(file);
+		} catch (final JAXBException ex) {
+			throw new JobConsoleException(JobConsoleException.SERVER_ERROR, ex.getMessage());
+		}
+	}
 
-  @Override
-  public synchronized void save(final E entity) {
-    try {
-      Marshaller marshaller = jaxbContext.createMarshaller();
-      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-      marshaller.marshal(entity, file);
-    } catch (final JAXBException ex) {
-      throw new JobConsoleException(JobConsoleException.SERVER_ERROR, ex.getMessage());
-    }
-  }
+	@Override
+	public synchronized void save(final E entity) {
+		try {
+			Marshaller marshaller = jaxbContext.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			marshaller.marshal(entity, file);
+		} catch (final JAXBException ex) {
+			throw new JobConsoleException(JobConsoleException.SERVER_ERROR, ex.getMessage());
+		}
+	}
 }

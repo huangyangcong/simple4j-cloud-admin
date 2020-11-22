@@ -1,28 +1,19 @@
 package com.simple4j.autoconfigure.jwt.config;
 
-import java.io.IOException;
 import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.interfaces.RSAPrivateKey;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import cn.hutool.json.JSONUtil;
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JWEAlgorithm;
-import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.KeyUse;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.jwk.source.JWKSource;
-import com.nimbusds.jose.jwk.source.RemoteJWKSet;
 import com.nimbusds.jose.proc.JWEDecryptionKeySelector;
 import com.nimbusds.jose.proc.JWEKeySelector;
-import com.nimbusds.jose.proc.JWSKeySelector;
-import com.nimbusds.jose.proc.JWSVerificationKeySelector;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jose.util.Base64URL;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
@@ -44,7 +35,6 @@ import com.simple4j.autoconfigure.jwt.security.server.ReactiveTokenResolve;
 import com.simple4j.autoconfigure.jwt.security.servlet.DefaultServletTokenResolve;
 import com.simple4j.autoconfigure.jwt.security.servlet.JwtAuthenticationProvider;
 import com.simple4j.autoconfigure.jwt.security.servlet.ServletTokenResolve;
-import com.simple4j.web.bean.ApiResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,7 +65,6 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.client.JdbcOAuth2AuthorizedClientService;
@@ -85,7 +74,6 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.util.StringUtils;
@@ -116,7 +104,8 @@ public class JwtAutoConfiguration {
 		TokenStore tokenStore,
 		TokenProvider tokenProvider,
 		AuthenticationManagerBuilder authenticationManagerBuilder) {
-		return new DefaultTokenServiceImpl(tokenStore, tokenProvider, userDetailsService, authenticationManagerBuilder);
+		return new DefaultTokenServiceImpl(tokenStore, tokenProvider, userDetailsService,
+			authenticationManagerBuilder);
 	}
 
 
@@ -146,28 +135,27 @@ public class JwtAutoConfiguration {
 	@AutoConfigureAfter({WebMvcAutoConfiguration.class})
 	public static class ServletJwtAutoConfig extends WebSecurityConfigurerAdapter {
 
+		//private final JWSAlgorithm jwsAlgorithm = JWSAlgorithm.RS256;
+		private final JWEAlgorithm jweAlgorithm = JWEAlgorithm.RSA_OAEP_256;
+		private final EncryptionMethod encryptionMethod = EncryptionMethod.A256GCM;
+		@Value("${sample.jwe-key-value}")
+		RSAPrivateKey key;
 		@Autowired(required = false)
 		private DynamicSecurityService dynamicSecurityService;
-
 		@Lazy
 		@Autowired
 		private ServletTokenResolve servletTokenResolve;
-
 		@Lazy
 		@Autowired
 		private DynamicRequestMatcher dynamicRequestMatcher;
-
 		@Lazy
 		@Autowired(required = false)
 		private DynamicFilterInvocationSecurityMetadataSource
 			dynamicFilterInvocationSecurityMetadataSource;
-
 		@Autowired
 		private TokenService tokenService;
-
 		@Autowired
 		private JdbcTemplate jdbcTemplate;
-
 		@Value("${server.error.path:${error.path:/error}}")
 		private String serverErrorPath;
 
@@ -201,18 +189,13 @@ public class JwtAutoConfiguration {
 		JwtDecoder jwtDecoder() {
 			return new NimbusJwtDecoder(jwtProcessor());
 		}
-		@Value("${sample.jwe-key-value}")
-		RSAPrivateKey key;
-
-		//private final JWSAlgorithm jwsAlgorithm = JWSAlgorithm.RS256;
-		private final JWEAlgorithm jweAlgorithm = JWEAlgorithm.RSA_OAEP_256;
-		private final EncryptionMethod encryptionMethod = EncryptionMethod.A256GCM;
 
 		private JWTProcessor<SecurityContext> jwtProcessor() {
 
 			JWKSource<SecurityContext> jweJwkSource = new ImmutableJWKSet<>(new JWKSet(rsaKey()));
 			JWEKeySelector<SecurityContext> jweKeySelector =
-				new JWEDecryptionKeySelector<>(this.jweAlgorithm, this.encryptionMethod, jweJwkSource);
+				new JWEDecryptionKeySelector<>(this.jweAlgorithm, this.encryptionMethod,
+					jweJwkSource);
 
 			ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<>();
 			jwtProcessor.setJWEKeySelector(jweKeySelector);
@@ -237,14 +220,16 @@ public class JwtAutoConfiguration {
 				.csrf()
 				.disable()
 				.addFilterBefore(
-				   (request, response, chain) -> {
-				     String token = servletTokenResolve.resolveToken((HttpServletRequest) request);
-				     if (!StringUtils.isEmpty(token)) {
-				       SecurityContextHolder.getContext().setAuthentication(new JwtToken(token));
-				     }
-				     chain.doFilter(request, response);
-				   },
-				   UsernamePasswordAuthenticationFilter.class)
+					(request, response, chain) -> {
+						String token = servletTokenResolve
+							.resolveToken((HttpServletRequest) request);
+						if (!StringUtils.isEmpty(token)) {
+							SecurityContextHolder.getContext()
+								.setAuthentication(new JwtToken(token));
+						}
+						chain.doFilter(request, response);
+					},
+					UsernamePasswordAuthenticationFilter.class)
 				.authenticationProvider(new JwtAuthenticationProvider(tokenService))
 				// 授权异常
 				.exceptionHandling()
@@ -267,7 +252,7 @@ public class JwtAutoConfiguration {
 				.and()
 				.sessionManagement()
 				.and()
-				          .oauth2Login()
+				.oauth2Login()
 				// .authenticationDetailsSource((AuthenticationDetailsSource<HttpServletRequest,
 				// Authentication>) context ->
 				//  SecurityContextHolder.getContext().getAuthentication())
@@ -278,7 +263,7 @@ public class JwtAutoConfiguration {
 				//		JSONUtil.toJsonStr(ApiResponse.ok(token), response.getWriter());
 				//	}
 				//})
-				          .and()
+				.and()
 				.oauth2Client()
 				.and()
 				.oauth2ResourceServer().jwt()
@@ -292,7 +277,8 @@ public class JwtAutoConfiguration {
 					.withObjectPostProcessor(
 						new ObjectPostProcessor<FilterSecurityInterceptor>() {
 							public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
-								fsi.setSecurityMetadataSource(dynamicFilterInvocationSecurityMetadataSource);
+								fsi.setSecurityMetadataSource(
+									dynamicFilterInvocationSecurityMetadataSource);
 								return fsi;
 							}
 						});
@@ -308,6 +294,7 @@ public class JwtAutoConfiguration {
 	@ConditionalOnClass({SessionCreationPolicy.class})
 	@AutoConfigureAfter({WebMvcAutoConfiguration.class})
 	public static class ReactorJwtAutoConfig {
+
 		@Lazy
 		@Autowired
 		private ReactiveTokenResolve reactiveTokenResolve;

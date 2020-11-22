@@ -9,5 +9,6 @@ import java.io.Serializable;
  * @since 2019-12-08
  */
 public class SendWechatMsgRequest implements Serializable {
-  private String templateId;
+
+	private String templateId;
 }

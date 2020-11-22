@@ -16,13 +16,19 @@ import lombok.Data;
 @TableName("simple4j_navbar_menu")
 public class NavbarMenu extends BaseEntity {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  /** 按钮编号 */
-  private String menuId;
-  /** 顶部按钮编号 */
-  private String NavbarId;
-  /** 主键 */
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
-  private String id;
+	/**
+	 * 按钮编号
+	 */
+	private String menuId;
+	/**
+	 * 顶部按钮编号
+	 */
+	private String NavbarId;
+	/**
+	 * 主键
+	 */
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	private String id;
 }

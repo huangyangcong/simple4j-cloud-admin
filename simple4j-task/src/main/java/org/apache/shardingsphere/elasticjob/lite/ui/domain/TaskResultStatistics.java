@@ -17,9 +17,7 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +25,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
-/** Task result statistics. */
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/**
+ * Task result statistics.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -37,38 +40,38 @@ import java.util.Date;
 @Table(name = "TASK_RESULT_STATISTICS")
 public class TaskResultStatistics {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id;
 
-  @Column(name = "success_count", length = 11)
-  private Long successCount;
+	@Column(name = "success_count", length = 11)
+	private Long successCount;
 
-  @Column(name = "failed_count", length = 11)
-  private Long failedCount;
+	@Column(name = "failed_count", length = 11)
+	private Long failedCount;
 
-  @Column(name = "statistic_interval", length = 10)
-  private String statisticInterval;
+	@Column(name = "statistic_interval", length = 10)
+	private String statisticInterval;
 
-  @Column(name = "statistics_time", nullable = false)
-  private Date statisticsTime;
+	@Column(name = "statistics_time", nullable = false)
+	private Date statisticsTime;
 
-  @Column(name = "creation_time", nullable = false)
-  private Date creationTime = new Date();
+	@Column(name = "creation_time", nullable = false)
+	private Date creationTime = new Date();
 
-  public TaskResultStatistics(final Long successCount, final Long failedCount) {
-    this.successCount = successCount;
-    this.failedCount = failedCount;
-  }
+	public TaskResultStatistics(final Long successCount, final Long failedCount) {
+		this.successCount = successCount;
+		this.failedCount = failedCount;
+	}
 
-  public TaskResultStatistics(
-      final Long successCount,
-      final Long failedCount,
-      final String statisticInterval,
-      final Date statisticsTime) {
-    this.successCount = successCount;
-    this.failedCount = failedCount;
-    this.statisticInterval = statisticInterval;
-    this.statisticsTime = statisticsTime;
-  }
+	public TaskResultStatistics(
+		final Long successCount,
+		final Long failedCount,
+		final String statisticInterval,
+		final Date statisticsTime) {
+		this.successCount = successCount;
+		this.failedCount = failedCount;
+		this.statisticInterval = statisticInterval;
+		this.statisticsTime = statisticsTime;
+	}
 }

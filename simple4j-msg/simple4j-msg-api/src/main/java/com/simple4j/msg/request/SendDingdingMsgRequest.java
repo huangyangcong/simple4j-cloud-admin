@@ -8,4 +8,6 @@ import java.io.Serializable;
  * @author hyc
  * @since 2019-12-08
  */
-public class SendDingdingMsgRequest implements Serializable {}
+public class SendDingdingMsgRequest implements Serializable {
+
+}

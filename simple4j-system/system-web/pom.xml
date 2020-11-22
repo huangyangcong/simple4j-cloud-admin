@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xmlns="http://maven.apache.org/POM/4.0.0"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<artifactId>system-web</artifactId>
+	<dependencies>
+		<dependency>
+			<artifactId>system-api</artifactId>
+			<groupId>com.simple4j.admin</groupId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-web</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-jwt</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>springfox-boot-starter</artifactId>
+			<groupId>io.springfox</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>hibernate-validator</artifactId>
+			<groupId>org.hibernate.validator</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>lombok</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<artifactId>spring-security-oauth2-client</artifactId>
+			<groupId>org.springframework.security</groupId>
+		</dependency>
+	</dependencies>
+
+	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<artifactId>simple4j-system</artifactId>
 		<groupId>com.simple4j.admin</groupId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
-
-	<artifactId>system-web</artifactId>
-
-	<dependencies>
-		<dependency>
-			<groupId>com.simple4j.admin</groupId>
-			<artifactId>system-api</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.simple4j.boot</groupId>
-			<artifactId>simple4j-springboot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.simple4j.boot</groupId>
-			<artifactId>simple4j-springboot-starter-jwt</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.validator</groupId>
-			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-oauth2-client</artifactId>
-		</dependency>
-	</dependencies>
 </project>
