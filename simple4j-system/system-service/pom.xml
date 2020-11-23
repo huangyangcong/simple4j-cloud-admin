@@ -24,10 +24,6 @@
 			<groupId>com.simple4j.boot</groupId>
 		</dependency>
 		<dependency>
-			<artifactId>simple4j-springboot-starter-jwt</artifactId>
-			<groupId>com.simple4j.boot</groupId>
-		</dependency>
-		<dependency>
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 			<groupId>com.alibaba.cloud</groupId>
 		</dependency>

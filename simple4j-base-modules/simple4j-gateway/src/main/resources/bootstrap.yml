@@ -5,7 +5,7 @@ spring:
         name: gateway-service
     cloud:
         nacos:
-            server-addr: localhost:30000
+            server-addr: 122.51.133.124:30000
             config:
                 file-extension: yml
         loadbalancer:
@@ -22,7 +22,7 @@ spring:
                         # 跨域允许的有效期
                         allow-credentials: true
                         allowed-origins: "*"
-                        #              - "http://localhost:9999"
+                        #              - "http://122.51.133.124:9999"
                         allowed-headers: "*"
                         allowed-methods: "*"
                         # - OPTIONS

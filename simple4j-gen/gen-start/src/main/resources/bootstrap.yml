@@ -3,6 +3,6 @@ spring:
         name: blade
     cloud:
         nacos:
-            server-addr: localhost:30000
+            server-addr: 122.51.133.124:30000
             config:
                 file-extension: yml

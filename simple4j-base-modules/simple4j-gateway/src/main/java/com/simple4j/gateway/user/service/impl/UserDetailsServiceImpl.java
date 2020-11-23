@@ -1,22 +1,24 @@
-package com.simple4j.system.service.impl;
+package com.simple4j.gateway.user.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
-import com.simple4j.system.entity.User;
-import com.simple4j.system.mapper.UserMapper;
-import com.simple4j.system.service.IRoleMenuService;
-import com.simple4j.system.service.IUserRoleService;
+import com.simple4j.gateway.user.entity.User;
+import com.simple4j.gateway.user.mapper.UserMapper;
+import com.simple4j.gateway.user.service.IRoleMenuService;
+import com.simple4j.gateway.user.service.IUserRoleService;
 import lombok.RequiredArgsConstructor;
+import top.dcenter.ums.security.core.oauth.service.UmsUserDetailsService;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UmsUserDetailsService {
 
 	private final UserMapper userMapper;
 	private final IUserRoleService userRoleService;
@@ -62,5 +64,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			.password(user.getPassword())
 			.authorities(grantedAuthorities)
 			.build();
+	}
+
+	@Override
+	public UserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
+		return this.loadUserByUsername(userId);
+	}
+
+	@Override
+	public List<Boolean> existedByUsernames(String... usernames) {
+		List<Boolean> result = new ArrayList<>();
+		if (ArrayUtil.isEmpty(usernames)) {
+			return result;
+		}
+
+		for (String username : usernames) {
+			result.add(userMapper.existedByAccount(username));
+		}
+		return result;
 	}
 }

@@ -38,7 +38,7 @@
 		and is_deleted = 0
 	</select>
 
-	<sql id="baseColumnList">
+    <sql id="baseColumnList">
         select id,
         create_user AS createUser,
         create_time AS createTime,

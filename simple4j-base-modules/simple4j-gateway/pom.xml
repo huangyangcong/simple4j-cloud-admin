@@ -56,6 +56,10 @@
 			<groupId>org.springframework.cloud</groupId>
 		</dependency>
 		<dependency>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<groupId>org.springframework.boot</groupId>
+		</dependency>
+		<dependency>
 			<artifactId>spring-cloud-starter-security</artifactId>
 			<groupId>org.springframework.cloud</groupId>
 		</dependency>
@@ -78,6 +82,31 @@
 		<dependency>
 			<artifactId>springfox-boot-starter</artifactId>
 			<groupId>io.springfox</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-util</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-jwt</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>justAuth-spring-security-starter</artifactId>
+			<groupId>top.dcenter</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>mysql-connector-java</artifactId>
+			<groupId>mysql</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-mybatis</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>lombok</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
