@@ -1,4 +1,4 @@
-package com.simple4j.gateway.user.service;
+package com.simple4j.auth.service;
 
 import java.util.Set;
 

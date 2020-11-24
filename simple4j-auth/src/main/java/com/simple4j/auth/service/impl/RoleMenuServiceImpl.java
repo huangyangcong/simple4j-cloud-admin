@@ -1,11 +1,11 @@
-package com.simple4j.gateway.user.service.impl;
+package com.simple4j.auth.service.impl;
 
 import java.util.Set;
 
 import cn.hutool.core.collection.CollUtil;
 import com.google.common.collect.Sets;
-import com.simple4j.gateway.user.mapper.RoleMenuMapper;
-import com.simple4j.gateway.user.service.IRoleMenuService;
+import com.simple4j.auth.mapper.RoleMenuMapper;
+import com.simple4j.auth.service.IRoleMenuService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;

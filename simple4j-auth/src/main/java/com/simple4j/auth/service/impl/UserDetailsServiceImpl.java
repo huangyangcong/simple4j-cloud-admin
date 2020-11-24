@@ -1,6 +1,5 @@
-package com.simple4j.gateway.user.service.impl;
+package com.simple4j.auth.service.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -10,10 +9,10 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
-import com.simple4j.gateway.user.entity.User;
-import com.simple4j.gateway.user.mapper.UserMapper;
-import com.simple4j.gateway.user.service.IRoleMenuService;
-import com.simple4j.gateway.user.service.IUserRoleService;
+import com.simple4j.auth.entity.User;
+import com.simple4j.auth.mapper.UserMapper;
+import com.simple4j.auth.service.IRoleMenuService;
+import com.simple4j.auth.service.IUserRoleService;
 import lombok.RequiredArgsConstructor;
 import top.dcenter.ums.security.core.oauth.service.UmsUserDetailsService;
 

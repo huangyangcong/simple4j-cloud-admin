@@ -1,4 +1,4 @@
-package com.simple4j.gateway.user.entity;
+package com.simple4j.auth.entity;
 
 import java.util.Date;
 

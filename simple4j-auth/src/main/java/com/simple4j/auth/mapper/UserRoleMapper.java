@@ -1,9 +1,9 @@
-package com.simple4j.gateway.user.mapper;
+package com.simple4j.auth.mapper;
 
 import java.util.Set;
 
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
-import com.simple4j.gateway.user.entity.UserRole;
+import com.simple4j.auth.entity.UserRole;
 import org.apache.ibatis.annotations.Param;
 
 /**

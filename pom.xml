@@ -135,7 +135,8 @@
 		<module>simple4j-gen</module>
 		<module>simple4j-base-modules</module>
 		<module>simple4j-flow</module>
-	</modules>
+        <module>simple4j-auth</module>
+    </modules>
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>11</java.version>

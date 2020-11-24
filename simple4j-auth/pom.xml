@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>simple4j-admin</artifactId>
+		<groupId>com.simple4j.admin</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>simple4j-auth</artifactId>
+
+	<dependencies>
+		<dependency>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<groupId>org.springframework.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>mysql-connector-java</artifactId>
+			<groupId>mysql</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-mybatis</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+			<groupId>com.alibaba.cloud</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+			<groupId>com.alibaba.cloud</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>springfox-boot-starter</artifactId>
+			<groupId>io.springfox</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-util</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>justAuth-spring-security-starter</artifactId>
+			<groupId>top.dcenter</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>mysql-connector-java</artifactId>
+			<groupId>mysql</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>simple4j-springboot-starter-mybatis</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>lombok</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>
