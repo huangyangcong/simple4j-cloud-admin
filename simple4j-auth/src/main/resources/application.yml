@@ -8,7 +8,7 @@ server:
         threads:
             max: 2000
             min-spare: 30
-    port: 8071
+    port: 8091
     servlet:
         context-path: /
 spring:
