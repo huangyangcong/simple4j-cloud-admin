@@ -17,14 +17,14 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.dto.request;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 /**
  * Request object of uri '/event-trace/status'.

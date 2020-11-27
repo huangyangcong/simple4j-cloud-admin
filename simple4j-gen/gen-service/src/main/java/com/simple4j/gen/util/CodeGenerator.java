@@ -5,19 +5,6 @@ package com.simple4j.gen.util;
  * @version 1.0.0
  */
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.zip.ZipOutputStream;
-
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -29,12 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.ConstVal;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.converts.OracleTypeConvert;
 import com.baomidou.mybatisplus.generator.config.converts.PostgreSqlTypeConvert;
@@ -45,10 +27,18 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.zip.ZipOutputStream;
 
 @Data
 @Slf4j
@@ -266,9 +256,9 @@ public class CodeGenerator {
 		mpg.execute();
 
 		try (ZipOutputStream zipOutputStream =
-			outputStream == null
-				? new ZipOutputStream(new FileOutputStream(path + ".zip"))
-				: new ZipOutputStream(outputStream)) {
+				 outputStream == null
+					 ? new ZipOutputStream(new FileOutputStream(path + ".zip"))
+					 : new ZipOutputStream(outputStream)) {
 			ZipUtil.zip(zipOutputStream, false, file -> true, new File(path));
 		} catch (Exception e) {
 			throw new RuntimeException("压缩文件错误");

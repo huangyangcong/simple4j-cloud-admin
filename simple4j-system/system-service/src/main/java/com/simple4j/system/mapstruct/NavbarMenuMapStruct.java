@@ -1,7 +1,5 @@
 package com.simple4j.system.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.NavbarMenu;
 import com.simple4j.system.request.NavbarMenuAddOrUpdateRequest;
@@ -10,6 +8,8 @@ import com.simple4j.system.request.NavbarMenuUpdateRequest;
 import com.simple4j.system.response.NavbarMenuDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 数据转换类

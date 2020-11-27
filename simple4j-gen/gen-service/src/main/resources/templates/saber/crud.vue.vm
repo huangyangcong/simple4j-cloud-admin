@@ -1,33 +1,33 @@
 <template>
-  <div class="app-container">
-    <avue-crud :option='option'
-               :table-loading='loading'
-               :data='data'
-               :page='page'
-               :permission='permissionList'
-               :before-open='beforeOpen'
-               v-model='form'
-               ref='crud'
-               @row-update='rowUpdate'
-               @row-save='rowSave'
-               @row-del='rowDel'
-               @search-change='searchChange'
-               @search-reset='searchReset'
-               @selection-change='selectionChange'
-               @current-change='currentChange'
-               @size-change='sizeChange'
-               @on-load='onLoad'>
-      <template slot='menuLeft'>
-        <el-button type='danger'
-                   size='small'
-                   icon='el-icon-delete'
-                   plain
-                   v-if='permissions.$!{cfg.entityKey}_delete'
-                   @click='handleDelete'>删 除
-        </el-button>
-      </template>
-    </avue-crud>
-  </div>
+    <div class="app-container">
+        <avue-crud :option='option'
+                   :table-loading='loading'
+                   :data='data'
+                   :page='page'
+                   :permission='permissionList'
+                   :before-open='beforeOpen'
+                   v-model='form'
+                   ref='crud'
+                   @row-update='rowUpdate'
+                   @row-save='rowSave'
+                   @row-del='rowDel'
+                   @search-change='searchChange'
+                   @search-reset='searchReset'
+                   @selection-change='selectionChange'
+                   @current-change='currentChange'
+                   @size-change='sizeChange'
+                   @on-load='onLoad'>
+            <template slot='menuLeft'>
+                <el-button type='danger'
+                           size='small'
+                           icon='el-icon-delete'
+                           plain
+                           v-if='permissions.$!{cfg.entityKey}_delete'
+                           @click='handleDelete'>删 除
+                </el-button>
+            </template>
+        </avue-crud>
+    </div>
 </template>
 
 <script>
@@ -59,7 +59,7 @@
           column: [
               #foreach($field in $!{table.fields})
                   #if($!{field.name}!=$!{cfg.tenantColumn} && $!{logicDeleteFieldName}!=$!{field.name} &&
-                      $!{versionFieldName}!=$!{field.name})
+    $!{versionFieldName}!=$!{field.name})
                     {
                       label: '$!{field.comment}',
                       prop: '$!{field.name}',
@@ -204,6 +204,7 @@
       }
     }
   };
+
 
 
 </script>

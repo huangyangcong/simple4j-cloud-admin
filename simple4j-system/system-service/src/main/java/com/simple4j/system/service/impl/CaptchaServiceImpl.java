@@ -1,8 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.core.util.StrUtil;
@@ -11,9 +8,11 @@ import com.simple4j.system.common.constant.CacheNames;
 import com.simple4j.system.response.CaptchaResponse;
 import com.simple4j.system.service.ICaptchaService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author hyc

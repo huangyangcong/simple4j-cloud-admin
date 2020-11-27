@@ -1,11 +1,11 @@
 package com.simple4j.system.mapper;
 
-import java.util.List;
-import java.util.Set;
-
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import com.simple4j.system.entity.Role;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Mapper 接口

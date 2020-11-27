@@ -17,11 +17,10 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.domain;
 
-import javax.sql.DataSource;
-
 import org.apache.commons.dbcp.BasicDataSource;
-
 import org.springframework.boot.jdbc.DataSourceBuilder;
+
+import javax.sql.DataSource;
 
 /**
  * Dynamic data source factory.

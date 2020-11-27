@@ -1,11 +1,5 @@
 package com.baomidou.mybatisplus.generator.engine;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Map;
-import java.util.Properties;
-
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.config.ConstVal;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
@@ -13,6 +7,12 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Velocity 模板引擎实现文件输出
@@ -44,8 +44,8 @@ public class VelocityTemplateEngine extends AbstractTemplateEngine {
 		throws Exception {
 		Template template = velocityEngine.getTemplate(templatePath, ConstVal.UTF8);
 		try (FileOutputStream fos = new FileOutputStream(outputFile);
-			OutputStreamWriter ow = new OutputStreamWriter(fos, ConstVal.UTF8);
-			BufferedWriter writer = new BufferedWriter(ow)) {
+			 OutputStreamWriter ow = new OutputStreamWriter(fos, ConstVal.UTF8);
+			 BufferedWriter writer = new BufferedWriter(ow)) {
 			template.merge(new VelocityContext(objectMap), writer);
 		}
 		logger.debug("模板:" + templatePath + ";  文件:" + outputFile);

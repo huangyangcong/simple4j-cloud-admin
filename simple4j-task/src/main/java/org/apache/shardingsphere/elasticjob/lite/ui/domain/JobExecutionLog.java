@@ -17,14 +17,13 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.domain;
 
-import java.util.Date;
+import lombok.Data;
+import org.apache.shardingsphere.elasticjob.tracing.event.JobExecutionEvent;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
-import lombok.Data;
-import org.apache.shardingsphere.elasticjob.tracing.event.JobExecutionEvent;
+import java.util.Date;
 
 @Data
 @Entity(name = "JOB_EXECUTION_LOG")

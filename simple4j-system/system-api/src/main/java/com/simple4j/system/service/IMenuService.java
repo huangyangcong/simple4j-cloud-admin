@@ -1,16 +1,11 @@
 package com.simple4j.system.service;
 
-import java.util.List;
-
-import com.simple4j.system.request.MenuAddOrUpdateRequest;
-import com.simple4j.system.request.MenuDetailRequest;
-import com.simple4j.system.request.MenuListRequest;
-import com.simple4j.system.request.MenuRemoveRequest;
-import com.simple4j.system.request.MenuRoutersRequest;
-import com.simple4j.system.request.RoleMenuKeyRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.MenuDetailResponse;
 import com.simple4j.system.response.MenuRoutersResponse;
 import com.simple4j.system.response.RoleMenuKeyResponse;
+
+import java.util.List;
 
 /**
  * 服务类

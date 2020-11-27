@@ -1,7 +1,5 @@
 package com.simple4j.gen.entity;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
@@ -9,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.simple4j.autoconfigure.mybatis.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Date;
 
 /**
  * 数据源配置表实体类

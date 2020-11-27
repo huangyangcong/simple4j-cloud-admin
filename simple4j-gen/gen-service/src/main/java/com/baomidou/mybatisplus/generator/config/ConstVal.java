@@ -1,8 +1,8 @@
 package com.baomidou.mybatisplus.generator.config;
 
-import java.nio.charset.StandardCharsets;
-
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 定义常量

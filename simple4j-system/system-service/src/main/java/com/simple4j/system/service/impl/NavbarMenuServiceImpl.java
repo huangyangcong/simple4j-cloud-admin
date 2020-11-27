@@ -1,10 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -13,22 +8,18 @@ import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.NavbarMenu;
 import com.simple4j.system.mapper.NavbarMenuMapper;
 import com.simple4j.system.mapstruct.NavbarMenuMapStruct;
-import com.simple4j.system.request.NavbarGrantRequest;
-import com.simple4j.system.request.NavbarMenuAddOrUpdateRequest;
-import com.simple4j.system.request.NavbarMenuAddRequest;
-import com.simple4j.system.request.NavbarMenuDetailRequest;
-import com.simple4j.system.request.NavbarMenuListRequest;
-import com.simple4j.system.request.NavbarMenuPageRequest;
-import com.simple4j.system.request.NavbarMenuRemoveRequest;
-import com.simple4j.system.request.NavbarMenuUpdateRequest;
-import com.simple4j.system.request.NavbarPermissionRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.NavbarMenuDetailResponse;
 import com.simple4j.system.response.NavbarPermissionResponse;
 import com.simple4j.system.service.INavbarMenuService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 服务实现类

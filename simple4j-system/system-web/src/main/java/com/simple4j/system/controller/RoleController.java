@@ -1,14 +1,6 @@
 package com.simple4j.system.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import com.simple4j.system.request.MenuGrantRequest;
-import com.simple4j.system.request.RoleAddOrUpdateRequest;
-import com.simple4j.system.request.RoleDetailRequest;
-import com.simple4j.system.request.RoleListRequest;
-import com.simple4j.system.request.RoleRemoveRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.RoleDetailResponse;
 import com.simple4j.system.service.IRoleMenuService;
 import com.simple4j.system.service.IRoleService;
@@ -16,11 +8,13 @@ import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 控制器

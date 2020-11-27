@@ -15,11 +15,11 @@
  */
 package com.simple4j.system.model.vo;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 构建前端路由时用到

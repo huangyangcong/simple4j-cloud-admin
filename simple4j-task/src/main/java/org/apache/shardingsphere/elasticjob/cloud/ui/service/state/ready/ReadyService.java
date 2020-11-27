@@ -17,12 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.service.state.ready;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import com.google.common.base.Strings;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.cloud.config.CloudJobExecutionType;
@@ -30,9 +24,10 @@ import org.apache.shardingsphere.elasticjob.cloud.config.pojo.CloudJobConfigurat
 import org.apache.shardingsphere.elasticjob.cloud.ui.config.JobStateConfiguration;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.job.CloudJobConfigurationService;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 /**
  * Ready service.

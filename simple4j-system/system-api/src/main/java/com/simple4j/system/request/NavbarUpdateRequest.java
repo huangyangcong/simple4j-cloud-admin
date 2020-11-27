@@ -1,10 +1,10 @@
 package com.simple4j.system.request;
 
-import javax.validation.constraints.NotEmpty;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.validation.constraints.NotEmpty;
 
 /**
  * 修改请求实体类

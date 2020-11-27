@@ -1,12 +1,11 @@
 package com.simple4j.gen.request;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author hyc

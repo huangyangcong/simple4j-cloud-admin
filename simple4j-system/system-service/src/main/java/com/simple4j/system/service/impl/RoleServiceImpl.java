@@ -1,9 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -17,19 +13,18 @@ import com.simple4j.system.common.constant.CommonConstant;
 import com.simple4j.system.entity.Role;
 import com.simple4j.system.mapper.RoleMapper;
 import com.simple4j.system.mapstruct.RoleMapStruct;
-import com.simple4j.system.request.RoleAddOrUpdateRequest;
-import com.simple4j.system.request.RoleDetailRequest;
-import com.simple4j.system.request.RoleListRequest;
-import com.simple4j.system.request.RolePageRequest;
-import com.simple4j.system.request.RoleRemoveRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.RoleDetailResponse;
 import com.simple4j.system.service.IRoleMenuService;
 import com.simple4j.system.service.IRoleService;
 import lombok.AllArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 服务实现类

@@ -17,10 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.web.controller;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.simple4j.web.bean.ApiResponse;
 import org.apache.shardingsphere.elasticjob.cloud.config.pojo.CloudJobConfigurationPOJO;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.app.CloudAppConfigurationService;
@@ -30,16 +26,13 @@ import org.apache.shardingsphere.elasticjob.cloud.ui.service.producer.ProducerSe
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.disable.app.DisableAppService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.web.dto.CloudAppConfiguration;
 import org.apache.shardingsphere.elasticjob.exception.AppConfigurationException;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Cloud app controller.

@@ -1,9 +1,9 @@
 package com.simple4j.system.response;
 
-import java.util.Set;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Set;
 
 /**
  * @author hyc

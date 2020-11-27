@@ -1,11 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -20,12 +14,7 @@ import com.simple4j.system.entity.RoleMenu;
 import com.simple4j.system.mapper.MenuMapper;
 import com.simple4j.system.mapper.RoleMenuMapper;
 import com.simple4j.system.mapstruct.MenuMapStruct;
-import com.simple4j.system.request.MenuAddOrUpdateRequest;
-import com.simple4j.system.request.MenuDetailRequest;
-import com.simple4j.system.request.MenuListRequest;
-import com.simple4j.system.request.MenuRemoveRequest;
-import com.simple4j.system.request.MenuRoutersRequest;
-import com.simple4j.system.request.RoleMenuKeyRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.MenuDetailResponse;
 import com.simple4j.system.response.MenuRoutersResponse;
 import com.simple4j.system.response.RoleMenuKeyResponse;
@@ -33,9 +22,14 @@ import com.simple4j.system.service.IDictService;
 import com.simple4j.system.service.IMenuService;
 import com.simple4j.system.service.IRoleMenuService;
 import lombok.AllArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 服务实现类

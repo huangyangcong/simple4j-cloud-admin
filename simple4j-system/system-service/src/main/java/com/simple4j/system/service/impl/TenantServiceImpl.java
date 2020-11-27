@@ -1,8 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -20,17 +17,14 @@ import com.simple4j.system.mapper.DeptMapper;
 import com.simple4j.system.mapper.RoleMapper;
 import com.simple4j.system.mapper.TenantMapper;
 import com.simple4j.system.mapstruct.TenantMapStruct;
-import com.simple4j.system.request.TenantAddOrUpdateRequest;
-import com.simple4j.system.request.TenantDetailRequest;
-import com.simple4j.system.request.TenantListRequest;
-import com.simple4j.system.request.TenantPageRequest;
-import com.simple4j.system.request.TenantRemoveRequest;
-import com.simple4j.system.request.TenantUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.TenantDetailResponse;
 import com.simple4j.system.service.ITenantService;
 import lombok.AllArgsConstructor;
-
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 服务实现类

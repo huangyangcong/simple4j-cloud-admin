@@ -1,7 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,18 +8,13 @@ import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.AuthClient;
 import com.simple4j.system.mapper.AuthClientMapper;
 import com.simple4j.system.mapstruct.ClientMapStruct;
-import com.simple4j.system.request.ClientAddOrUpdateRequest;
-import com.simple4j.system.request.ClientAddRequest;
-import com.simple4j.system.request.ClientDetailRequest;
-import com.simple4j.system.request.ClientListRequest;
-import com.simple4j.system.request.ClientPageRequest;
-import com.simple4j.system.request.ClientRemoveRequest;
-import com.simple4j.system.request.ClientUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.ClientDetailResponse;
 import com.simple4j.system.service.IAuthClientService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 服务实现类

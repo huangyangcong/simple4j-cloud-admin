@@ -1,20 +1,14 @@
 package com.simple4j.flow.advice;
 
+import cn.hutool.json.JSONUtil;
+import com.simple4j.web.bean.ApiResponse;
+import org.springframework.http.HttpStatus;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
-
-import cn.hutool.json.JSONUtil;
-import com.simple4j.web.bean.ApiResponse;
-
-import org.springframework.http.HttpStatus;
 
 public class FlowVoidFilter implements Filter {
 

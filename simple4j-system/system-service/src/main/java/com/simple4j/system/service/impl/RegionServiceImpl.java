@@ -1,7 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,17 +9,13 @@ import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.Region;
 import com.simple4j.system.mapper.RegionMapper;
 import com.simple4j.system.mapstruct.RegionMapStruct;
-import com.simple4j.system.request.RegionAddRequest;
-import com.simple4j.system.request.RegionDetailRequest;
-import com.simple4j.system.request.RegionLazyListRequest;
-import com.simple4j.system.request.RegionPageRequest;
-import com.simple4j.system.request.RegionRemoveRequest;
-import com.simple4j.system.request.RegionUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.RegionDetailResponse;
 import com.simple4j.system.service.IRegionService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 行政区划表 服务实现类

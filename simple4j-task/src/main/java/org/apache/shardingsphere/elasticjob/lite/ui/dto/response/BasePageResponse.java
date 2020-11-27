@@ -17,15 +17,14 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.dto.response;
 
-import java.io.Serializable;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import org.springframework.data.domain.Page;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor

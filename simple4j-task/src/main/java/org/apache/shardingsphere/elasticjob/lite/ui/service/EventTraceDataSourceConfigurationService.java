@@ -17,10 +17,10 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.service;
 
-import java.util.Optional;
-
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfiguration;
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfigurations;
+
+import java.util.Optional;
 
 /**
  * Event trace data source configuration service.

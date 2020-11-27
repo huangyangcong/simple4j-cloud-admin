@@ -1,26 +1,20 @@
 package com.simple4j.system.controller;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.TenantAddOrUpdateRequest;
-import com.simple4j.system.request.TenantDetailRequest;
-import com.simple4j.system.request.TenantListRequest;
-import com.simple4j.system.request.TenantPageRequest;
-import com.simple4j.system.request.TenantRemoveRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.TenantDetailResponse;
 import com.simple4j.system.service.ITenantService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 控制器

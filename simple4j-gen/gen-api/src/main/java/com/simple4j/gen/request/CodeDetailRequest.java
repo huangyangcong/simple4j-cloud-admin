@@ -1,13 +1,12 @@
 package com.simple4j.gen.request;
 
-import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 代码生成表详情请求实体类

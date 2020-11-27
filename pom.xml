@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<artifactId>simple4j-admin</artifactId>
 	<build>
 		<pluginManagement>
@@ -135,8 +135,8 @@
 		<module>simple4j-gen</module>
 		<module>simple4j-base-modules</module>
 		<module>simple4j-flow</module>
-        <module>simple4j-auth</module>
-    </modules>
+		<module>simple4j-auth</module>
+	</modules>
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>11</java.version>

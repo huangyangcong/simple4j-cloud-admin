@@ -20,7 +20,6 @@ package org.apache.shardingsphere.elasticjob.cloud.ui.service.state.disable.job;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.cloud.ui.config.JobStateConfiguration;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

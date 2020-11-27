@@ -17,10 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.service.impl;
 
-import java.util.Optional;
-
-import javax.sql.DataSource;
-
 import org.apache.shardingsphere.elasticjob.domain.GlobalConfiguration;
 import org.apache.shardingsphere.elasticjob.lite.ui.config.DynamicDataSourceConfig;
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.DataSourceFactory;
@@ -29,10 +25,12 @@ import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceC
 import org.apache.shardingsphere.elasticjob.lite.ui.service.EventTraceDataSourceConfigurationService;
 import org.apache.shardingsphere.elasticjob.repository.ConfigurationsXmlRepository;
 import org.apache.shardingsphere.elasticjob.repository.impl.ConfigurationsXmlRepositoryImpl;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.sql.DataSource;
+import java.util.Optional;
 
 /**
  * Event trace data source configuration service implementation.

@@ -17,10 +17,10 @@
 
 package org.apache.shardingsphere.elasticjob.util;
 
-import java.io.File;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.io.File;
 
 /**
  * Home folder Utils.

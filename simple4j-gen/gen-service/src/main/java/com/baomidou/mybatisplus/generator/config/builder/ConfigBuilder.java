@@ -1,20 +1,5 @@
 package com.baomidou.mybatisplus.generator.config.builder;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
@@ -22,20 +7,21 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.ConstVal;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.IDbQuery;
-import com.baomidou.mybatisplus.generator.config.IKeyWordsHandler;
-import com.baomidou.mybatisplus.generator.config.INameConvert;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.querys.H2Query;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+
+import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * 配置汇总 传递给文件生成工具
@@ -536,7 +522,7 @@ public class ConfigBuilder {
 			}
 			TableInfo tableInfo;
 			try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-				ResultSet results = preparedStatement.executeQuery()) {
+				 ResultSet results = preparedStatement.executeQuery()) {
 				while (results.next()) {
 					final String tableName = results.getString(dbQuery.tableName());
 					if (StringUtils.isBlank(tableName)) {
@@ -658,8 +644,8 @@ public class ConfigBuilder {
 				tableFieldsSql = String.format(tableFieldsSql, tableName);
 			} else if (DbType.H2 == dbType) {
 				try (PreparedStatement pkQueryStmt =
-					connection.prepareStatement(String.format(H2Query.PK_QUERY_SQL, tableName));
-					ResultSet pkResults = pkQueryStmt.executeQuery()) {
+						 connection.prepareStatement(String.format(H2Query.PK_QUERY_SQL, tableName));
+					 ResultSet pkResults = pkQueryStmt.executeQuery()) {
 					while (pkResults.next()) {
 						String primaryKey = pkResults.getString(dbQuery.fieldKey());
 						if (Boolean.parseBoolean(primaryKey)) {
@@ -672,7 +658,7 @@ public class ConfigBuilder {
 				tableFieldsSql = String.format(tableFieldsSql, tableName);
 			}
 			try (PreparedStatement preparedStatement = connection.prepareStatement(tableFieldsSql);
-				ResultSet results = preparedStatement.executeQuery()) {
+				 ResultSet results = preparedStatement.executeQuery()) {
 				while (results.next()) {
 					TableField field = new TableField();
 					String columnName = results.getString(dbQuery.fieldName());

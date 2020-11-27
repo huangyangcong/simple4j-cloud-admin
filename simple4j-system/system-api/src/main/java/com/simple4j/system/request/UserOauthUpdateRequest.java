@@ -1,10 +1,10 @@
 package com.simple4j.system.request;
 
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 用户第三方认证表修改请求实体类

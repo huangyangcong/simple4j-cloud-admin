@@ -1,13 +1,5 @@
 package com.baomidou.mybatisplus.generator.engine;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -21,6 +13,14 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 模板引擎抽象类
@@ -179,7 +179,7 @@ public abstract class AbstractTemplateEngine {
 	 * @param outputFile   文件生成的目录
 	 */
 	public abstract void writer(Map<String, Object> objectMap, String templatePath,
-		String outputFile)
+								String outputFile)
 		throws Exception;
 
 	/**

@@ -1,7 +1,5 @@
 package com.simple4j.system.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.Param;
 import com.simple4j.system.request.ParamAddOrUpdateRequest;
@@ -10,6 +8,8 @@ import com.simple4j.system.request.ParamUpdateRequest;
 import com.simple4j.system.response.ParamDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 参数表数据转换类

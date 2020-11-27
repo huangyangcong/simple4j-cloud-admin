@@ -1,7 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,18 +8,13 @@ import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.Param;
 import com.simple4j.system.mapper.ParamMapper;
 import com.simple4j.system.mapstruct.ParamMapStruct;
-import com.simple4j.system.request.ParamAddOrUpdateRequest;
-import com.simple4j.system.request.ParamAddRequest;
-import com.simple4j.system.request.ParamDetailRequest;
-import com.simple4j.system.request.ParamListRequest;
-import com.simple4j.system.request.ParamPageRequest;
-import com.simple4j.system.request.ParamRemoveRequest;
-import com.simple4j.system.request.ParamUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.ParamDetailResponse;
 import com.simple4j.system.service.IParamService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 服务实现类

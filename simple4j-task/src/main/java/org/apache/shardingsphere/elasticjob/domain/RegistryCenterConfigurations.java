@@ -17,14 +17,13 @@
 
 package org.apache.shardingsphere.elasticjob.domain;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import lombok.Getter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import lombok.Getter;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Registry center configurations.

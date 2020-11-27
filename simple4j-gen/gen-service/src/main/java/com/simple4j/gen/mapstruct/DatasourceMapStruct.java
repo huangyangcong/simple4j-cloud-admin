@@ -1,7 +1,5 @@
 package com.simple4j.gen.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.gen.entity.Datasource;
 import com.simple4j.gen.request.DatasourceAddOrUpdateRequest;
@@ -10,6 +8,8 @@ import com.simple4j.gen.request.DatasourceUpdateRequest;
 import com.simple4j.gen.response.DatasourceDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 数据源配置表数据转换类

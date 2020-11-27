@@ -17,12 +17,12 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.service.statistics.util;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.cloud.statistics.StatisticInterval;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Statistic time utility.

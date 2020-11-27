@@ -17,13 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.service.statistics;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.cloud.config.CloudJobExecutionType;
 import org.apache.shardingsphere.elasticjob.cloud.config.pojo.CloudJobConfigurationPOJO;
@@ -36,9 +29,15 @@ import org.apache.shardingsphere.elasticjob.cloud.statistics.type.task.TaskRunni
 import org.apache.shardingsphere.elasticjob.cloud.ui.repository.StatisticRdbRepository;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.job.CloudJobConfigurationService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.statistics.util.StatisticTimeUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Statistic manager.

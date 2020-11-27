@@ -37,8 +37,14 @@
 		</foreach>
 		and is_deleted = 0
 	</select>
+	<select id="existedByUsernames" resultType="java.lang.Boolean">
+		select username from simple4j_user where username in
+		<foreach collection="usernames" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
 
-    <sql id="baseColumnList">
+	<sql id="baseColumnList">
         select id,
         create_user AS createUser,
         create_time AS createTime,

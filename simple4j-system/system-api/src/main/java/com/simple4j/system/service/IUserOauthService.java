@@ -1,16 +1,11 @@
 package com.simple4j.system.service;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.UserOauthAddRequest;
-import com.simple4j.system.request.UserOauthDetailRequest;
-import com.simple4j.system.request.UserOauthListRequest;
-import com.simple4j.system.request.UserOauthPageRequest;
-import com.simple4j.system.request.UserOauthRemoveRequest;
-import com.simple4j.system.request.UserOauthUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
 import com.simple4j.system.response.UserOauthDetailResponse;
+
+import java.util.List;
 
 /**
  * 用户第三方认证表 服务类

@@ -1,36 +1,27 @@
 package com.simple4j.gen.controller;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
 import com.simple4j.api.base.Page;
-import com.simple4j.gen.request.CodeAddOrUpdateRequest;
-import com.simple4j.gen.request.CodeAddRequest;
-import com.simple4j.gen.request.CodeDetailRequest;
-import com.simple4j.gen.request.CodeGenRequest;
-import com.simple4j.gen.request.CodeListRequest;
-import com.simple4j.gen.request.CodePageRequest;
-import com.simple4j.gen.request.CodeRemoveRequest;
-import com.simple4j.gen.request.CodeUpdateRequest;
+import com.simple4j.gen.request.*;
 import com.simple4j.gen.response.CodeDetailResponse;
 import com.simple4j.gen.service.ICodeService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * 代码生成表 控制器

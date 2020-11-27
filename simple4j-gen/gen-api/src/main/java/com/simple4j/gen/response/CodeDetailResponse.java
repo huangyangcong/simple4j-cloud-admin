@@ -1,10 +1,10 @@
 package com.simple4j.gen.response;
 
-import java.io.Serializable;
-
 import com.simple4j.gen.request.CodeAddOrUpdateRequest;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 代码生成表详情响应实体类

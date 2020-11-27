@@ -1,9 +1,9 @@
 package com.simple4j.gen.request;
 
-import java.io.Serializable;
-
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 数据源配置表列表请求实体类

@@ -1,7 +1,5 @@
 package com.simple4j.gen.service.impl;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -9,19 +7,14 @@ import com.simple4j.api.base.Page;
 import com.simple4j.gen.entity.Datasource;
 import com.simple4j.gen.mapper.DatasourceMapper;
 import com.simple4j.gen.mapstruct.DatasourceMapStruct;
-import com.simple4j.gen.request.DatasourceAddOrUpdateRequest;
-import com.simple4j.gen.request.DatasourceAddRequest;
-import com.simple4j.gen.request.DatasourceDetailRequest;
-import com.simple4j.gen.request.DatasourceListRequest;
-import com.simple4j.gen.request.DatasourcePageRequest;
-import com.simple4j.gen.request.DatasourceRemoveRequest;
-import com.simple4j.gen.request.DatasourceUpdateRequest;
+import com.simple4j.gen.request.*;
 import com.simple4j.gen.response.DatasourceDetailResponse;
 import com.simple4j.gen.service.IDatasourceService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 数据源配置表 服务实现类

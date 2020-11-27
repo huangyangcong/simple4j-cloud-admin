@@ -1,25 +1,19 @@
 package com.simple4j.system.controller;
 
-import javax.validation.Valid;
-
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.ClientAddOrUpdateRequest;
-import com.simple4j.system.request.ClientAddRequest;
-import com.simple4j.system.request.ClientDetailRequest;
-import com.simple4j.system.request.ClientPageRequest;
-import com.simple4j.system.request.ClientRemoveRequest;
-import com.simple4j.system.request.ClientUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.ClientDetailResponse;
 import com.simple4j.system.service.IAuthClientService;
 import com.simple4j.web.bean.ApiResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * 应用管理控制器

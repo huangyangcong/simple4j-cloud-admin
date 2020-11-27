@@ -17,22 +17,17 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.web.controller;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
-
 import com.simple4j.web.bean.ApiResponse;
 import org.apache.shardingsphere.elasticjob.lite.lifecycle.domain.JobBriefInfo;
 import org.apache.shardingsphere.elasticjob.lite.lifecycle.domain.ShardingInfo;
 import org.apache.shardingsphere.elasticjob.lite.ui.service.JobAPIService;
 import org.apache.shardingsphere.elasticjob.util.SessionRegistryCenterConfiguration;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Objects;
 
 /**
  * Job operation RESTful API.

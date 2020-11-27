@@ -1,7 +1,5 @@
 package com.simple4j.gen.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.gen.entity.Code;
 import com.simple4j.gen.request.CodeAddOrUpdateRequest;
@@ -10,6 +8,8 @@ import com.simple4j.gen.request.CodeUpdateRequest;
 import com.simple4j.gen.response.CodeDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 代码生成表数据转换类

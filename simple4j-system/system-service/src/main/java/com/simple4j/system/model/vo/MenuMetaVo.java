@@ -15,10 +15,10 @@
  */
 package com.simple4j.system.model.vo;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author hyc

@@ -17,8 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.service;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.hash.HashCode;
@@ -29,6 +27,8 @@ import lombok.NoArgsConstructor;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCenter;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Registry center factory.

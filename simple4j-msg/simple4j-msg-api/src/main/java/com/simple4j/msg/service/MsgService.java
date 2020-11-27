@@ -1,16 +1,8 @@
 package com.simple4j.msg.service;
 
 import com.simple4j.api.base.BusinessException;
-import com.simple4j.msg.request.SendDingdingMsgRequest;
-import com.simple4j.msg.request.SendJpushMsgRequest;
-import com.simple4j.msg.request.SendMailMsgRequest;
-import com.simple4j.msg.request.SendSmsMsgRequest;
-import com.simple4j.msg.request.SendWechatMsgRequest;
-import com.simple4j.msg.response.SendDingdingMsgResponse;
-import com.simple4j.msg.response.SendJpushMsgResponse;
-import com.simple4j.msg.response.SendMailMsgResponse;
-import com.simple4j.msg.response.SendSmsMsgResponse;
-import com.simple4j.msg.response.SendWechatMsgResponse;
+import com.simple4j.msg.request.*;
+import com.simple4j.msg.response.*;
 
 /**
  * 消息接口

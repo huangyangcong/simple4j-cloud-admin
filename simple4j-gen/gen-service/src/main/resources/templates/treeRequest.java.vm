@@ -24,6 +24,6 @@ import io.swagger.annotations.ApiModelProperty;
     #end
 public class $!{entity}TreeRequest implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
 }

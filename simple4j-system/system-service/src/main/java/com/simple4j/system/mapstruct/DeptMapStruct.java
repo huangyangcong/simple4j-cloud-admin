@@ -1,7 +1,5 @@
 package com.simple4j.system.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.Dept;
 import com.simple4j.system.request.DeptAddRequest;
@@ -9,6 +7,8 @@ import com.simple4j.system.request.DeptUpdateRequest;
 import com.simple4j.system.response.DeptDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 部门表数据转换类

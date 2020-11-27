@@ -1,11 +1,10 @@
 package com.simple4j.auth;
 
 import org.mybatis.spring.annotation.MapperScan;
-import springfox.documentation.oas.annotations.EnableOpenApi;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
 /**
  * @author hyc

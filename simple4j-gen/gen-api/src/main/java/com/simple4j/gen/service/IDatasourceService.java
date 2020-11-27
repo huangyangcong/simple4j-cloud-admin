@@ -1,16 +1,10 @@
 package com.simple4j.gen.service;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
-import com.simple4j.gen.request.DatasourceAddOrUpdateRequest;
-import com.simple4j.gen.request.DatasourceAddRequest;
-import com.simple4j.gen.request.DatasourceDetailRequest;
-import com.simple4j.gen.request.DatasourceListRequest;
-import com.simple4j.gen.request.DatasourcePageRequest;
-import com.simple4j.gen.request.DatasourceRemoveRequest;
-import com.simple4j.gen.request.DatasourceUpdateRequest;
+import com.simple4j.gen.request.*;
 import com.simple4j.gen.response.DatasourceDetailResponse;
+
+import java.util.List;
 
 /**
  * 数据源配置表 服务类

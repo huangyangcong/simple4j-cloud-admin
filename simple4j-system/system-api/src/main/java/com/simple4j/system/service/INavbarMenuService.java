@@ -1,20 +1,12 @@
 package com.simple4j.system.service;
 
-import java.util.List;
-import java.util.Set;
-
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.NavbarGrantRequest;
-import com.simple4j.system.request.NavbarMenuAddOrUpdateRequest;
-import com.simple4j.system.request.NavbarMenuAddRequest;
-import com.simple4j.system.request.NavbarMenuDetailRequest;
-import com.simple4j.system.request.NavbarMenuListRequest;
-import com.simple4j.system.request.NavbarMenuPageRequest;
-import com.simple4j.system.request.NavbarMenuRemoveRequest;
-import com.simple4j.system.request.NavbarMenuUpdateRequest;
-import com.simple4j.system.request.NavbarPermissionRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.NavbarMenuDetailResponse;
 import com.simple4j.system.response.NavbarPermissionResponse;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * 服务类

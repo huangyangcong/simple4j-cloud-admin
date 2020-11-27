@@ -1,7 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -9,19 +7,15 @@ import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.UserOauth;
 import com.simple4j.system.mapper.UserOauthMapper;
 import com.simple4j.system.mapstruct.UserOauthMapStruct;
-import com.simple4j.system.request.UserOauthAddRequest;
-import com.simple4j.system.request.UserOauthDetailRequest;
-import com.simple4j.system.request.UserOauthListRequest;
-import com.simple4j.system.request.UserOauthPageRequest;
-import com.simple4j.system.request.UserOauthRemoveRequest;
-import com.simple4j.system.request.UserOauthUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
 import com.simple4j.system.response.UserOauthDetailResponse;
 import com.simple4j.system.service.IUserOauthService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 用户第三方认证表 服务实现类

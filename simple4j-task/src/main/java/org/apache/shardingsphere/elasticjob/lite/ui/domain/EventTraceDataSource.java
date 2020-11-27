@@ -17,13 +17,13 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.domain;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Event tracing data source.

@@ -17,11 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.service;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.cloud.config.pojo.CloudJobConfigurationPOJO;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.job.CloudJobConfigurationService;
@@ -32,9 +27,13 @@ import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.failover.Fail
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.ready.ReadyService;
 import org.apache.shardingsphere.elasticjob.cloud.ui.service.state.running.RunningService;
 import org.apache.shardingsphere.elasticjob.infra.context.TaskContext;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Mesos facade service.

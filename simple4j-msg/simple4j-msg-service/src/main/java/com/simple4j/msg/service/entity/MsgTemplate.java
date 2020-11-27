@@ -1,7 +1,6 @@
 package com.simple4j.msg.service.entity;
 
 import lombok.Data;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 

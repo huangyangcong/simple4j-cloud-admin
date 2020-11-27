@@ -17,20 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.web.controller.search;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Strings;
 import lombok.Getter;
@@ -38,6 +24,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobExecutionEvent;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobStatusTraceEvent;
+
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.Date;
+import java.util.*;
 
 /**
  * Job event RDB search.
@@ -110,10 +101,10 @@ public final class JobEventRdbSearch {
 	private List<JobExecutionEvent> getJobExecutionEvents(final Condition condition) {
 		List<JobExecutionEvent> result = new LinkedList<>();
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement =
-				createDataPreparedStatement(
-					conn, TABLE_JOB_EXECUTION_LOG, FIELDS_JOB_EXECUTION_LOG, condition);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement =
+				 createDataPreparedStatement(
+					 conn, TABLE_JOB_EXECUTION_LOG, FIELDS_JOB_EXECUTION_LOG, condition);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				JobExecutionEvent jobExecutionEvent =
 					new JobExecutionEvent(
@@ -142,10 +133,10 @@ public final class JobEventRdbSearch {
 	private List<JobStatusTraceEvent> getJobStatusTraceEvents(final Condition condition) {
 		List<JobStatusTraceEvent> result = new LinkedList<>();
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement =
-				createDataPreparedStatement(
-					conn, TABLE_JOB_STATUS_TRACE_LOG, FIELDS_JOB_STATUS_TRACE_LOG, condition);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement =
+				 createDataPreparedStatement(
+					 conn, TABLE_JOB_STATUS_TRACE_LOG, FIELDS_JOB_STATUS_TRACE_LOG, condition);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				JobStatusTraceEvent jobStatusTraceEvent =
 					new JobStatusTraceEvent(
@@ -173,9 +164,9 @@ public final class JobEventRdbSearch {
 		final String tableName, final Collection<String> tableFields, final Condition condition) {
 		int result = 0;
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement =
-				createCountPreparedStatement(conn, tableName, tableFields, condition);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement =
+				 createCountPreparedStatement(conn, tableName, tableFields, condition);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			resultSet.next();
 			result = resultSet.getInt(1);
 		} catch (final SQLException ex) {

@@ -17,16 +17,15 @@
 
 package org.apache.shardingsphere.elasticjob.service.impl;
 
-import java.util.Optional;
-
 import org.apache.shardingsphere.elasticjob.domain.GlobalConfiguration;
 import org.apache.shardingsphere.elasticjob.domain.RegistryCenterConfiguration;
 import org.apache.shardingsphere.elasticjob.domain.RegistryCenterConfigurations;
 import org.apache.shardingsphere.elasticjob.repository.ConfigurationsXmlRepository;
 import org.apache.shardingsphere.elasticjob.repository.impl.ConfigurationsXmlRepositoryImpl;
 import org.apache.shardingsphere.elasticjob.service.RegistryCenterConfigurationService;
-
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * Registry center configuration service implementation.

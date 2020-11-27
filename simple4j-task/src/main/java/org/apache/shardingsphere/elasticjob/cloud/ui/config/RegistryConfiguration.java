@@ -20,7 +20,6 @@ package org.apache.shardingsphere.elasticjob.cloud.ui.config;
 import com.google.common.base.Strings;
 import lombok.Setter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

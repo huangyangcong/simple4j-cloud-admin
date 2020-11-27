@@ -1,15 +1,10 @@
 package com.simple4j.system.service;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.RegionAddRequest;
-import com.simple4j.system.request.RegionDetailRequest;
-import com.simple4j.system.request.RegionLazyListRequest;
-import com.simple4j.system.request.RegionPageRequest;
-import com.simple4j.system.request.RegionRemoveRequest;
-import com.simple4j.system.request.RegionUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.RegionDetailResponse;
+
+import java.util.List;
 
 /**
  * 行政区划表 服务类

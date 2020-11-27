@@ -17,10 +17,10 @@
 
 package org.apache.shardingsphere.elasticjob.service;
 
-import java.util.Optional;
-
 import org.apache.shardingsphere.elasticjob.domain.RegistryCenterConfiguration;
 import org.apache.shardingsphere.elasticjob.domain.RegistryCenterConfigurations;
+
+import java.util.Optional;
 
 /**
  * Registry center configuration service.

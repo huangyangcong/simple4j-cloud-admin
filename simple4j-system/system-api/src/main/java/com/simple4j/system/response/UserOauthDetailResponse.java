@@ -1,9 +1,9 @@
 package com.simple4j.system.response;
 
-import java.io.Serializable;
-
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 用户第三方认证表详情响应实体类

@@ -17,15 +17,14 @@
 
 package org.apache.shardingsphere.elasticjob.lite.ui.dao.statistics;
 
-import java.util.Date;
-import java.util.List;
-
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.TaskRunningStatistics;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Task running statistics repository.

@@ -1,12 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
@@ -29,39 +22,21 @@ import com.simple4j.system.entity.User;
 import com.simple4j.system.excel.UserExcelImport;
 import com.simple4j.system.mapper.UserMapper;
 import com.simple4j.system.mapstruct.UserMapStruct;
-import com.simple4j.system.request.UserAddRequest;
-import com.simple4j.system.request.UserDetailRequest;
-import com.simple4j.system.request.UserListRequest;
-import com.simple4j.system.request.UserLoginRequest;
-import com.simple4j.system.request.UserOauthDetailRequest;
-import com.simple4j.system.request.UserPageRequest;
-import com.simple4j.system.request.UserRegisterGuestRequest;
-import com.simple4j.system.request.UserRemoveRequest;
-import com.simple4j.system.request.UserResetPasswordRequest;
-import com.simple4j.system.request.UserUpdateRequest;
-import com.simple4j.system.response.TenantDetailResponse;
-import com.simple4j.system.response.UserDetailResponse;
-import com.simple4j.system.response.UserInfo;
-import com.simple4j.system.response.UserLoginResponse;
-import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
-import com.simple4j.system.response.UserOauthDetailResponse;
-import com.simple4j.system.service.ICaptchaService;
-import com.simple4j.system.service.IDeptService;
-import com.simple4j.system.service.IPostService;
-import com.simple4j.system.service.IRoleMenuService;
-import com.simple4j.system.service.IRoleService;
-import com.simple4j.system.service.ITenantService;
-import com.simple4j.system.service.IUserDeptService;
-import com.simple4j.system.service.IUserOauthService;
-import com.simple4j.system.service.IUserPostService;
-import com.simple4j.system.service.IUserRoleService;
-import com.simple4j.system.service.IUserService;
+import com.simple4j.system.request.*;
+import com.simple4j.system.response.*;
+import com.simple4j.system.service.*;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * 服务实现类

@@ -17,13 +17,13 @@
 
 package org.apache.shardingsphere.elasticjob.domain;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.shardingsphere.elasticjob.lite.ui.domain.EventTraceDataSourceConfigurations;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Global configuration.

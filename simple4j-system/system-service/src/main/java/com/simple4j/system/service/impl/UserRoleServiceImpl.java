@@ -1,9 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.system.entity.UserRole;
@@ -11,9 +7,12 @@ import com.simple4j.system.mapper.UserRoleMapper;
 import com.simple4j.system.request.UserRoleGrantRequest;
 import com.simple4j.system.service.IUserRoleService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 服务类

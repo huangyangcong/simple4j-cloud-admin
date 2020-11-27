@@ -17,17 +17,15 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.config;
 
-import java.util.Optional;
-
-import javax.sql.DataSource;
-
 import com.google.common.base.Strings;
 import lombok.Setter;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.shardingsphere.elasticjob.tracing.api.TracingConfiguration;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import javax.sql.DataSource;
+import java.util.Optional;
 
 @Component
 @ConfigurationProperties(prefix = "event.trace")

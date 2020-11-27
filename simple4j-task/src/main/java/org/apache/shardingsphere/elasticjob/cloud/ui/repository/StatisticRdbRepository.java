@@ -17,19 +17,6 @@
 
 package org.apache.shardingsphere.elasticjob.cloud.ui.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.sql.DataSource;
-
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.cloud.statistics.StatisticInterval;
@@ -37,6 +24,14 @@ import org.apache.shardingsphere.elasticjob.cloud.statistics.type.job.JobRegiste
 import org.apache.shardingsphere.elasticjob.cloud.statistics.type.job.JobRunningStatistics;
 import org.apache.shardingsphere.elasticjob.cloud.statistics.type.task.TaskResultStatistics;
 import org.apache.shardingsphere.elasticjob.cloud.statistics.type.task.TaskRunningStatistics;
+
+import javax.sql.DataSource;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Statistic RDB repository.
@@ -77,7 +72,7 @@ public class StatisticRdbRepository {
 				+ taskResultStatistics.getStatisticInterval()
 				+ "` (`success_count`, `failed_count`, `statistics_time`, `creation_time`) VALUES (?, ?, ?, ?);";
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 			preparedStatement.setInt(1, taskResultStatistics.getSuccessCount());
 			preparedStatement.setInt(2, taskResultStatistics.getFailedCount());
 			preparedStatement.setTimestamp(
@@ -106,7 +101,7 @@ public class StatisticRdbRepository {
 				+ TABLE_TASK_RUNNING_STATISTICS
 				+ "` (`running_count`, `statistics_time`, `creation_time`) VALUES (?, ?, ?);";
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 			preparedStatement.setInt(1, taskRunningStatistics.getRunningCount());
 			preparedStatement.setTimestamp(
 				2, new Timestamp(taskRunningStatistics.getStatisticsTime().getTime()));
@@ -134,7 +129,7 @@ public class StatisticRdbRepository {
 				+ TABLE_JOB_RUNNING_STATISTICS
 				+ "` (`running_count`, `statistics_time`, `creation_time`) VALUES (?, ?, ?);";
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 			preparedStatement.setInt(1, jobRunningStatistics.getRunningCount());
 			preparedStatement.setTimestamp(
 				2, new Timestamp(jobRunningStatistics.getStatisticsTime().getTime()));
@@ -162,7 +157,7 @@ public class StatisticRdbRepository {
 				+ TABLE_JOB_REGISTER_STATISTICS
 				+ "` (`registered_count`, `statistics_time`, `creation_time`) VALUES (?, ?, ?);";
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 			preparedStatement.setInt(1, jobRegisterStatistics.getRegisteredCount());
 			preparedStatement.setTimestamp(
 				2, new Timestamp(jobRegisterStatistics.getStatisticsTime().getTime()));
@@ -193,8 +188,8 @@ public class StatisticRdbRepository {
 				"SELECT id, success_count, failed_count, statistics_time, creation_time FROM %s WHERE statistics_time >= '%s' order by id ASC",
 				TABLE_TASK_RESULT_STATISTICS + "_" + statisticInterval, formatter.format(from));
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				TaskResultStatistics taskResultStatistics =
 					new TaskResultStatistics(
@@ -229,8 +224,8 @@ public class StatisticRdbRepository {
 				"SELECT sum(success_count), sum(failed_count) FROM %s WHERE statistics_time >= '%s'",
 				TABLE_TASK_RESULT_STATISTICS + "_" + statisticInterval, formatter.format(from));
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				result =
 					new TaskResultStatistics(
@@ -257,8 +252,8 @@ public class StatisticRdbRepository {
 				"SELECT id, success_count, failed_count, statistics_time, creation_time FROM %s order by id DESC LIMIT 1",
 				TABLE_TASK_RESULT_STATISTICS + "_" + statisticInterval);
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				result =
 					new TaskResultStatistics(
@@ -290,8 +285,8 @@ public class StatisticRdbRepository {
 				"SELECT id, running_count, statistics_time, creation_time FROM %s WHERE statistics_time >= '%s' order by id ASC",
 				TABLE_TASK_RUNNING_STATISTICS, formatter.format(from));
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				TaskRunningStatistics taskRunningStatistics =
 					new TaskRunningStatistics(
@@ -322,8 +317,8 @@ public class StatisticRdbRepository {
 				"SELECT id, running_count, statistics_time, creation_time FROM %s WHERE statistics_time >= '%s' order by id ASC",
 				TABLE_JOB_RUNNING_STATISTICS, formatter.format(from));
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				JobRunningStatistics jobRunningStatistics =
 					new JobRunningStatistics(
@@ -352,8 +347,8 @@ public class StatisticRdbRepository {
 				"SELECT id, running_count, statistics_time, creation_time FROM %s order by id DESC LIMIT 1",
 				TABLE_TASK_RUNNING_STATISTICS);
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				result =
 					new TaskRunningStatistics(
@@ -381,8 +376,8 @@ public class StatisticRdbRepository {
 				"SELECT id, running_count, statistics_time, creation_time FROM %s order by id DESC LIMIT 1",
 				TABLE_JOB_RUNNING_STATISTICS);
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				result =
 					new JobRunningStatistics(
@@ -412,8 +407,8 @@ public class StatisticRdbRepository {
 				"SELECT id, registered_count, statistics_time, creation_time FROM %s WHERE statistics_time >= '%s' order by id ASC",
 				TABLE_JOB_REGISTER_STATISTICS, formatter.format(from));
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				JobRegisterStatistics jobRegisterStatistics =
 					new JobRegisterStatistics(
@@ -442,8 +437,8 @@ public class StatisticRdbRepository {
 				"SELECT id, registered_count, statistics_time, creation_time FROM %s order by id DESC LIMIT 1",
 				TABLE_JOB_REGISTER_STATISTICS);
 		try (Connection conn = dataSource.getConnection();
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+			 PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				result =
 					new JobRegisterStatistics(

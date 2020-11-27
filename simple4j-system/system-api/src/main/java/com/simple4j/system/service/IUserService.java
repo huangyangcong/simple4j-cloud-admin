@@ -1,23 +1,15 @@
 package com.simple4j.system.service;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
-
 import com.simple4j.api.base.Page;
-import com.simple4j.system.request.UserAddRequest;
-import com.simple4j.system.request.UserDetailRequest;
-import com.simple4j.system.request.UserListRequest;
-import com.simple4j.system.request.UserLoginRequest;
-import com.simple4j.system.request.UserPageRequest;
-import com.simple4j.system.request.UserRegisterGuestRequest;
-import com.simple4j.system.request.UserRemoveRequest;
-import com.simple4j.system.request.UserResetPasswordRequest;
-import com.simple4j.system.request.UserUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.UserDetailResponse;
 import com.simple4j.system.response.UserInfo;
 import com.simple4j.system.response.UserLoginResponse;
 import com.simple4j.system.response.UserOauthAddOrUpdateRequest;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  * 服务类

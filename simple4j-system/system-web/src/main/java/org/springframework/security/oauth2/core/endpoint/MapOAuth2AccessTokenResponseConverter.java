@@ -16,16 +16,11 @@
 
 package org.springframework.security.oauth2.core.endpoint;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.util.StringUtils;
+
+import java.util.*;
 
 /**
  * A {@link Converter} that converts the provided OAuth 2.0 Access Token Response parameters to an

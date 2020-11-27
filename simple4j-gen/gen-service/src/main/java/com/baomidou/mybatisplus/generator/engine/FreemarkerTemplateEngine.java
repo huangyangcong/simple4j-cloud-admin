@@ -1,14 +1,14 @@
 package com.baomidou.mybatisplus.generator.engine;
 
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Map;
-
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.config.ConstVal;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.util.Map;
 
 /**
  * Freemarker 模板

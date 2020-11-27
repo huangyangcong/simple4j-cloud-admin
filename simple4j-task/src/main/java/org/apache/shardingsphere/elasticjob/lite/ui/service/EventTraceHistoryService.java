@@ -21,7 +21,6 @@ import org.apache.shardingsphere.elasticjob.lite.ui.dto.request.FindJobExecution
 import org.apache.shardingsphere.elasticjob.lite.ui.dto.request.FindJobStatusTraceEventsRequest;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobExecutionEvent;
 import org.apache.shardingsphere.elasticjob.tracing.event.JobStatusTraceEvent;
-
 import org.springframework.data.domain.Page;
 
 /**

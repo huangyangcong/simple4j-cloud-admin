@@ -1,9 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -13,20 +9,18 @@ import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.Post;
 import com.simple4j.system.mapper.PostMapper;
 import com.simple4j.system.mapstruct.PostMapStruct;
-import com.simple4j.system.request.PostAddRequest;
-import com.simple4j.system.request.PostDetailRequest;
-import com.simple4j.system.request.PostListRequest;
-import com.simple4j.system.request.PostPageRequest;
-import com.simple4j.system.request.PostRemoveRequest;
-import com.simple4j.system.request.PostUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.PostDetailResponse;
 import com.simple4j.system.service.IDictService;
 import com.simple4j.system.service.IPostService;
 import com.simple4j.system.service.IUserPostService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 岗位表 服务实现类

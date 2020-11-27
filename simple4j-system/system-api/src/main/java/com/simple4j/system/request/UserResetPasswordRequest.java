@@ -1,9 +1,9 @@
 package com.simple4j.system.request;
 
-import java.util.List;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class UserResetPasswordRequest {

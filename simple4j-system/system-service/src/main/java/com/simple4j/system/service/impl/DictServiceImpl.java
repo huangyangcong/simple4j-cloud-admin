@@ -1,7 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -14,19 +12,16 @@ import com.simple4j.system.common.constant.CacheNames;
 import com.simple4j.system.entity.Dict;
 import com.simple4j.system.mapper.DictMapper;
 import com.simple4j.system.mapstruct.DictMapStruct;
-import com.simple4j.system.request.DictAddOrUpdateRequest;
-import com.simple4j.system.request.DictDetailRequest;
-import com.simple4j.system.request.DictListRequest;
-import com.simple4j.system.request.DictPageRequest;
-import com.simple4j.system.request.DictRemoveRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.DictDetailResponse;
 import com.simple4j.system.service.IDictService;
 import com.simple4j.system.util.TreeUtil;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 服务实现类

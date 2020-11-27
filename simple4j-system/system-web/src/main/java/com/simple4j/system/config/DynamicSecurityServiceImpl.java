@@ -2,7 +2,6 @@ package com.simple4j.system.config;
 
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicSecurityService;
 import com.simple4j.autoconfigure.jwt.dynamic.IgnoreAbstractRequestMatcherRegistry;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;

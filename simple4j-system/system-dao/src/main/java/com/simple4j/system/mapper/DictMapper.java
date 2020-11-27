@@ -1,9 +1,9 @@
 package com.simple4j.system.mapper;
 
-import java.util.List;
-
 import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import com.simple4j.system.entity.Dict;
+
+import java.util.List;
 
 /**
  * Mapper 接口

@@ -1,7 +1,5 @@
 package com.simple4j.system.mapstruct;
 
-import java.util.List;
-
 import com.simple4j.api.base.Page;
 import com.simple4j.system.entity.AuthClient;
 import com.simple4j.system.request.ClientAddOrUpdateRequest;
@@ -10,6 +8,8 @@ import com.simple4j.system.request.ClientUpdateRequest;
 import com.simple4j.system.response.ClientDetailResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 /**
  * 客户端表数据转换类

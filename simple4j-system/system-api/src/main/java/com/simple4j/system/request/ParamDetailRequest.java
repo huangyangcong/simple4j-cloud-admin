@@ -1,10 +1,10 @@
 package com.simple4j.system.request;
 
-import java.io.Serializable;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 参数表详情请求实体类

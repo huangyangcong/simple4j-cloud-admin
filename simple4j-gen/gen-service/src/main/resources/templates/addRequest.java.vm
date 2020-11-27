@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     #end
 public class $!{entity}AddRequest implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     ## ----------  BEGIN 字段循环遍历  ----------
     #foreach($field in $!{table.fields})
@@ -37,9 +37,9 @@ public class $!{entity}AddRequest implements Serializable {
                 #set($keyPropertyName=$!{field.propertyName})
             #end
             #if("$!field.comment" != "")
-              /**
-               * $!{field.comment}
-               */
+                /**
+                 * $!{field.comment}
+                 */
                 #if($!{swagger2})
                 @ApiModelProperty(name = "$!{field.name}", value = "$!{field.comment}")
                 #end
@@ -62,21 +62,21 @@ public class $!{entity}AddRequest implements Serializable {
                     #set($getprefix="get")
                 #end
 
-              public $!{field.propertyType} $!{getprefix}$!{field.capitalName}()
+                public $!{field.propertyType} $!{getprefix}$!{field.capitalName}()
 
-              {
-                return $!{field.propertyName};
-              }
+                {
+                    return $!{field.propertyName};
+                }
 
                 #if($!{entityBuilderModel})
                 public $!{entity} set$!{field.capitalName}($!{field.propertyType} $!{field.propertyName}) {
                 #else
-                  public void set$!{field.capitalName}
-                  ($!{field.propertyType} $!{field.propertyName}) {
+                    public void set$!{field.capitalName}
+                    ($!{field.propertyType} $!{field.propertyName}) {
                 #end
-              this.$!{field.propertyName} = $!{field.propertyName};
+                this.$!{field.propertyName} = $!{field.propertyName};
                 #if($!{entityBuilderModel})
-                  return this;
+                    return this;
                 #end
             }
             #end
@@ -85,33 +85,33 @@ public class $!{entity}AddRequest implements Serializable {
 
     #if($!{entityColumnConstant})
         #foreach($field in $!{table.fields})
-          public static final String $!{field.name.toUpperCase()} = "$!{field.name}";
+            public static final String $!{field.name.toUpperCase()} = "$!{field.name}";
 
         #end
     #end
     #if($!{activeRecord})
-      @Override
-      protected Serializable pkVal() {
+        @Override
+        protected Serializable pkVal() {
         #if($!{keyPropertyName})
-          return this.$!{keyPropertyName};
+            return this.$!{keyPropertyName};
         #else
-          return this.id;
+            return this.id;
         #end
     }
 
     #end
     #if(!$!{entityLombokModel})
-      @Override
-      public String toString() {
-      return "$!{entity}{" +
-          #foreach($field in $!{table.fields})
-              #if($!{velocityCount}==1)
-                  "$!{field.propertyName}=" + $!{field.propertyName} +
-              #else
-                  ", $!{field.propertyName}=" + $!{field.propertyName} +
-              #end
-          #end
-          "}";
+        @Override
+        public String toString() {
+        return "$!{entity}{" +
+            #foreach($field in $!{table.fields})
+                #if($!{velocityCount}==1)
+                        "$!{field.propertyName}=" + $!{field.propertyName} +
+                #else
+                        ", $!{field.propertyName}=" + $!{field.propertyName} +
+                #end
+            #end
+                "}";
     }
     #end
 }

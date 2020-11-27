@@ -1,10 +1,5 @@
 package com.simple4j.autoconfigure.jwt.config;
 
-import java.security.interfaces.RSAPrivateCrtKey;
-import java.security.interfaces.RSAPrivateKey;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.nimbusds.jose.EncryptionMethod;
 import com.nimbusds.jose.JWEAlgorithm;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -23,19 +18,12 @@ import com.simple4j.autoconfigure.jwt.dynamic.DynamicFilterInvocationSecurityMet
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicRequestMatcher;
 import com.simple4j.autoconfigure.jwt.dynamic.DynamicSecurityService;
 import com.simple4j.autoconfigure.jwt.properties.JwtProperties;
-import com.simple4j.autoconfigure.jwt.security.DefaultTokenProvider;
-import com.simple4j.autoconfigure.jwt.security.DefaultTokenServiceImpl;
-import com.simple4j.autoconfigure.jwt.security.JwtToken;
-import com.simple4j.autoconfigure.jwt.security.RedisTokenStore;
-import com.simple4j.autoconfigure.jwt.security.TokenProvider;
-import com.simple4j.autoconfigure.jwt.security.TokenService;
-import com.simple4j.autoconfigure.jwt.security.TokenStore;
+import com.simple4j.autoconfigure.jwt.security.*;
 import com.simple4j.autoconfigure.jwt.security.server.JwtServerAuthenticationWebFilter;
 import com.simple4j.autoconfigure.jwt.security.server.ReactiveTokenResolve;
 import com.simple4j.autoconfigure.jwt.security.servlet.DefaultServletTokenResolve;
 import com.simple4j.autoconfigure.jwt.security.servlet.JwtAuthenticationProvider;
 import com.simple4j.autoconfigure.jwt.security.servlet.ServletTokenResolve;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -77,6 +65,10 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.util.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.security.interfaces.RSAPrivateCrtKey;
+import java.security.interfaces.RSAPrivateKey;
 
 /**
  * jwt auto configuration.
@@ -154,8 +146,7 @@ public class JwtAutoConfiguration {
 			dynamicFilterInvocationSecurityMetadataSource;
 		@Autowired
 		private TokenService tokenService;
-		@Autowired
-		private JdbcTemplate jdbcTemplate;
+
 		@Value("${server.error.path:${error.path:/error}}")
 		private String serverErrorPath;
 

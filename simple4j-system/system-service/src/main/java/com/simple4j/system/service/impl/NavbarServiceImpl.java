@@ -1,7 +1,5 @@
 package com.simple4j.system.service.impl;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -11,20 +9,15 @@ import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
 import com.simple4j.system.entity.Navbar;
 import com.simple4j.system.mapper.NavbarMapper;
 import com.simple4j.system.mapstruct.NavbarMapStruct;
-import com.simple4j.system.request.NavbarAddOrUpdateRequest;
-import com.simple4j.system.request.NavbarAddRequest;
-import com.simple4j.system.request.NavbarDetailRequest;
-import com.simple4j.system.request.NavbarListRequest;
-import com.simple4j.system.request.NavbarPageRequest;
-import com.simple4j.system.request.NavbarRemoveRequest;
-import com.simple4j.system.request.NavbarUpdateRequest;
+import com.simple4j.system.request.*;
 import com.simple4j.system.response.NavbarDetailResponse;
 import com.simple4j.system.service.INavbarMenuService;
 import com.simple4j.system.service.INavbarService;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 服务实现类
