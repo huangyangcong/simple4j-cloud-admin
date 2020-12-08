@@ -1,262 +1,47 @@
+spring:
+    main:
+        allow-bean-definition-overriding: true
+    security:
+        oauth2:
+            client:
+                registration:
+                    messaging-client-authorization-code:
+                        provider: simple4j-auth
+                        client-id: messaging-client
+                        client-secret: secret
+                        authorization-grant-type: authorization_code
+                        redirect-uri: "{baseUrl}/authorized"
+                        scope: message.read,message.write
+                    messaging-client-client-credentials:
+                        provider: simple4j-auth
+                        client-id: messaging-client
+                        client-secret: secret
+                        authorization-grant-type: client_credentials
+                        scope: message.read,message.write
+                provider:
+                    simple4j-auth:
+                        authorization-uri: http://localhost:8091/oauth2/authorize
+                        token-uri: http://localhost:8091/oauth2/token
+    redis:
+        database: 0
+        host: 122.51.133.124
+        port: 30003
+        password: 123456
+management:
+    health:
+        defaults:
+            enabled: false
+#eureka:
 #  client:
 #    service-url:
-#      defaultZone: http://122.51.133.124:8887/eureka/
+#      defaultZone: http://localhost:8887/eureka/
 #  instance:
 #    prefer-ip-address: true
 #    hostname: ${spring.cloud.client.ip-address}
 #    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 logging:
     level:
-        root: info
+        root: debug
         com.alibaba.nacos.client.naming: error
 debug: true
-
-
-
-server:
-    tomcat:
-        uri-encoding: UTF-8
-        connection-timeout: 10000
-        threads:
-            max: 600
-            min-spare: 30
-spring:
-    main:
-        allow-bean-definition-overriding: true
-    devtools:
-        restart:
-            enabled: true  #设置开启热部署
-    #出现错误时, 直接抛出异常(便于异常统一处理，否则捕获不到404)
-    mvc:
-        throw-exception-if-no-handler-found: true
-    #不要为我们工程中的资源文件建立映射
-    resources:
-        add-mappings: false
-    application:
-        version: 1.0
-        description: 通用框架
-        name: eurekaserver
-    #redis
-    #配置数据源
-    datasource:
-        druid:
-            db-type: com.alibaba.druid.pool.DruidDataSource
-            driverClassName: com.mysql.jdbc.Driver
-            url: jdbc:mysql://122.51.133.124:30002/simple4j-system?useUnicode=true&useSSL=true
-            username: root
-            password: uY;:rs623ic&
-            # 初始连接数
-            initial-size: 5
-            # 最小连接数
-            min-idle: 10
-            # 最大连接数
-            max-active: 20
-            # 获取连接超时时间
-            max-wait: 5000
-            # 连接有效性检测时间
-            time-between-eviction-runs-millis: 60000
-            # 连接在池中最小生存的时间
-            min-evictable-idle-time-millis: 300000
-            # 连接在池中最大生存的时间
-            max-evictable-idle-time-millis: 900000
-            test-while-idle: true
-            test-on-borrow: false
-            test-on-return: false
-            # 检测连接是否有效
-            validation-query: select 1
-            # 配置监控统计
-            webStatFilter:
-                enabled: false
-            stat-view-servlet:
-                enabled: false
-                url-pattern: /druid/*
-                reset-enable: false
-            filter:
-                stat:
-                    enabled: false
-                    # 记录慢SQL
-                    log-slow-sql: true
-                    slow-sql-millis: 1000
-                    merge-sql: true
-                wall:
-                    config:
-                        multi-statement-allow: true
-    redis:
-        database: 0
-        host: 122.51.133.124
-        port: 30003
-        password: 123456
-    security:
-        oauth2:
-            client:
-                registration:
-                    gitee-client-auth-code:
-                        provider: gitee
-                        client-authentication-method: post
-                        client-id: 44616dddc4ff3be8389a54d5c1c50ee0d3ce0314bd16fd720c9f1bf9764fdcbc
-                        client-secret: bb2a38a0fa130895c8577b2a4a44fefd21894c84b06ded0a118676e65582ae1e
-                        authorization-grant-type: authorization_code
-                        redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
-                        scope: user_info
-                    baidu-client-auth-code:
-                        provider: baidu
-                        client-authentication-method: post
-                        client-id: ReZHBLVuCV92fluIpT6pTK32
-                        client-secret: jUyWEpKGaAMKqmo2o5AxfyL8eQ30NCyg
-                        authorization-grant-type: authorization_code
-                        redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-                        scope: basic
-                    github:
-                        client-id: 3ec75ce76e63300c2b6b
-                        client-secret: 038936d7c882ce952923385fec03a5f33a4f4c27
-                        redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-                provider:
-                    gitee:
-                        authorization-uri: https://gitee.com/oauth/authorize
-                        token-uri: https://gitee.com/oauth/token
-                        user-info-uri: https://gitee.com/api/v5/user
-                    baidu:
-                        authorization-uri: https://openapi.baidu.com/oauth/2.0/authorize?display=popup
-                        token-uri: https://openapi.baidu.com/oauth/2.0/token
-                        user-info-uri: https://openapi.baidu.com/rest/2.0/passport/users/getInfo
-                        user-name-attribute: openid
-                        user-info-authentication-method: form
-            resourceserver:
-                jwt:
-                    public-key-location:
-#启用监控
-management:
-    health:
-        defaults:
-            enabled: false
-    endpoints:
-        web:
-            exposure:
-                include:
-                    - "*"  # 开放所有端点health，info，metrics，通过actuator/+端点名就可以获取相应的信息。默认打开health和info
-    endpoint:
-        health:
-            show-details: always  #未开启actuator/health时，我们获取到的信息是{"status":"UP"}，status的值还有可能是 DOWN。开启后打印详细信息
-eureka:
-    server:
-        #    max-threads-for-peer-replication: 0
-        enable-self-preservation: false # 关闭自我保护模式（缺省为打开）
-    #    eviction-interval-timer-in-ms: 3000
-    #    eviction-interval-timer-in-ms: ${eureka.server.eviction-interval-timer-in-ms}       # 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）
-    instance:
-        prefer-ip-address: true
-        hostname: ${spring.cloud.client.ip-address}
-        instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
-    client:
-        serviceUrl:
-            defaultZone: http://127.0.0.1:8887/eureka/,http://127.0.0.1:8888/eureka/,http://127.0.0.1:8889/eureka/
-
-#mybatis
-mybatis-plus:
-    mapper-locations: classpath*:mapper/*.xml
-    #实体扫描，多个package用逗号或者分号分隔
-    typeAliasesPackage: com.simple4j.system.entity
-    global-config:
-        db-config:
-            #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-            id-type: assign_id
-            #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-            field-strategy: 2
-            #驼峰下划线转换
-            db-column-underline: true
-            #刷新mapper 调试神器
-            refresh-mapper: true
-            #数据库大写下划线转换
-            #capital-mode: true
-            # Sequence序列接口实现类配置
-            #key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
-            #逻辑删除配置
-            logic-delete-value: 0
-            logic-not-delete-value: -1
-            #自定义填充策略接口实现
-            #    meta-object-handler: com.baomidou.springboot.xxx
-            #自定义SQL注入器
-        #    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-    configuration:
-        map-underscore-to-camel-case: true
-        cache-enabled: false
-        call-setters-on-nulls: true
-# 登录相关配置
-login:
-    # 登录缓存
-    cache-enable: true
-    #  是否限制单用户登录
-    single: false
-    #  验证码
-    login-code:
-        #  验证码类型配置 查看 LoginProperties 类
-        code-type: arithmetic
-        #  登录图形验证码有效时间/分钟
-        expiration: 2
-        #  验证码高度
-        width: 111
-        #  验证码宽度
-        heigth: 36
-        # 内容长度
-        length: 2
-
-#jwt
-jwt:
-    header: Token
-    # 令牌前缀
-    token-start-with: Bearer
-    # 必须使用最少88位的Base64对该令牌进行编码
-    base64-secret:
-    # 令牌过期时间 此处单位/毫秒
-    token-validity-in-seconds: 14400000
-    # 在线用户key
-    online-key: online-token-
-    # 验证码
-    code-key: code-key-
-    # token 续期检查时间范围（默认30分钟，单位毫秒），在token即将过期的一段时间内用户操作了，则给用户的token续期
-    detect: 1800000
-    # 续期时间范围，默认1小时，单位毫秒
-    renew: 3600000
-
-#是否允许生成代码，生产环境设置为false
-generator:
-    enabled: true
-
-#是否开启 swagger-ui
-swagger:
-    enabled: true
-
-# IP 本地解析
-ip:
-    local-parsing: true
-task:
-    pool:
-        # 核心线程池大小
-        core-pool-size: 10
-        # 最大线程数
-        max-pool-size: 30
-        # 活跃时间
-        keep-alive-seconds: 60
-        # 队列容量
-        queue-capacity: 50
-
-#七牛云
-qiniu:
-    # 文件大小 /M
-    max-size: 15
-
-#邮箱验证码有效时间/秒
-code:
-    expiration: 300
-
-#密码加密传输，前端公钥加密，后端私钥解密
-rsa:
-    private_key:
-
-# sm.ms 图床的 token
-smms:
-    token:
-
-sample:
-    jwe-key-value: classpath:simple.priv
 

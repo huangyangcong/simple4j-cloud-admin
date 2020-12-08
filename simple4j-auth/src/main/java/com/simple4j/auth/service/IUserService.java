@@ -1,6 +1,7 @@
 package com.simple4j.auth.service;
 
 import com.simple4j.auth.entity.User;
+import com.simple4j.auth.request.UserLoginRequest;
 
 /**
  * 服务类
@@ -15,4 +16,11 @@ public interface IUserService {
 	 * @param user
 	 */
 	void registerUser(User user);
+
+	/**
+	 * 用户登录
+	 * @param userLoginRequest
+	 * @return
+	 */
+	void login(UserLoginRequest userLoginRequest);
 }

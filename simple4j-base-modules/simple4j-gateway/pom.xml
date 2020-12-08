@@ -60,10 +60,6 @@
 			<groupId>org.springframework.boot</groupId>
 		</dependency>
 		<dependency>
-			<artifactId>spring-cloud-starter-security</artifactId>
-			<groupId>org.springframework.cloud</groupId>
-		</dependency>
-		<dependency>
 			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 			<groupId>org.springframework.cloud</groupId>
 		</dependency>
@@ -84,24 +80,12 @@
 			<groupId>io.springfox</groupId>
 		</dependency>
 		<dependency>
-			<artifactId>simple4j-springboot-starter-util</artifactId>
-			<groupId>com.simple4j.boot</groupId>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
 		</dependency>
 		<dependency>
-			<artifactId>simple4j-springboot-starter-jwt</artifactId>
-			<groupId>com.simple4j.boot</groupId>
-		</dependency>
-		<dependency>
-			<artifactId>justAuth-spring-security-starter</artifactId>
-			<groupId>top.dcenter</groupId>
-		</dependency>
-		<dependency>
-			<artifactId>mysql-connector-java</artifactId>
-			<groupId>mysql</groupId>
-		</dependency>
-		<dependency>
-			<artifactId>simple4j-springboot-starter-mybatis</artifactId>
-			<groupId>com.simple4j.boot</groupId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<artifactId>lombok</artifactId>

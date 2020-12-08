@@ -16,17 +16,26 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-		return http.authorizeExchange()
+		return http
+			.authorizeExchange()
+			.pathMatchers(
+				"/auth/user/login",
+				"/auth/auth2/authorization/**",
+				"/auth/auth2/login/**",
+				"/auth/index.html",
+				"/auth/login.html").permitAll()
 			.anyExchange()
-			.permitAll()
+			.authenticated()
 			// 禁用 CSRF
 			.and()
-			.csrf()
-			.disable()
+			.formLogin().disable()
+			.logout().disable()
+			.csrf().disable()
+			.httpBasic().disable()
 			.headers()
-			.frameOptions()
-			.disable()
+			.frameOptions().disable()
 			.and()
 			.build();
 	}
+
 }

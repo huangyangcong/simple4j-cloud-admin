@@ -66,7 +66,7 @@ public class UserDetailsServiceImpl implements UmsUserDetailsService {
 			AuthorityUtils.commaSeparatedStringToAuthorityList(defaultAuthority);
 
 		User user = new User();
-		//		user.setAccount(username);
+		user.setAccount(username);
 		user.setPassword(encodedPassword);
 		user.setAvatar(authUser.getAvatar());
 		user.setName(authUser.getNickname());
