@@ -11,6 +11,10 @@ server:
     port: 8091
     servlet:
         context-path: /
+        encoding:
+            force: true
+            force-request: true
+            force-response: true
 spring:
     security:
         oauth2:

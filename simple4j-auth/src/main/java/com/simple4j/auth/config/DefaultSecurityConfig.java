@@ -16,6 +16,7 @@
 package com.simple4j.auth.config;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
 import com.simple4j.autoconfigure.jwt.config.JwtAutoConfigurer;
 import com.simple4j.autoconfigure.jwt.security.TokenWriter;
@@ -61,15 +62,11 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().mvcMatchers("/login.html", "/index.html");
+		web.ignoring().mvcMatchers("/auth/login", "/auth/verify");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.formLogin()
-			.loginPage("/login.html")
-			.defaultSuccessUrl("/index.html")
-		;
 		http
 			.exceptionHandling().disable()
 			.authorizeRequests()
@@ -94,7 +91,10 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public TokenWriter tokenWriter(){
-		return (outputStream, token) -> IoUtil.write(outputStream, false, JSONUtil.toJsonStr(ApiResponse.ok(token)).getBytes());
+		return (response, token) -> {
+			response.setContentType("application/json;charset=UTF-8");
+			IoUtil.write(response.getOutputStream(), false, JSONUtil.toJsonStr(ApiResponse.ok(token)).getBytes());
+		};
 	}
 
 }
