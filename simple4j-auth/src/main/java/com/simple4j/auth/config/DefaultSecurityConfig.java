@@ -16,14 +16,14 @@
 package com.simple4j.auth.config;
 
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
-import com.simple4j.autoconfigure.jwt.config.JwtAutoConfigurer;
+import com.simple4j.auth.filter.UsernamePasswordAuthenticationExtendFilter;
 import com.simple4j.autoconfigure.jwt.security.TokenWriter;
 import com.simple4j.web.bean.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,8 +41,6 @@ import top.dcenter.ums.security.core.oauth.properties.Auth2Properties;
 public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private Auth2AutoConfigurer auth2AutoConfigurer;
-	@Autowired
-	private JwtAutoConfigurer jwtAutoConfigurer;
 	@Autowired
 	private Auth2Properties auth2Properties;
 
@@ -85,8 +83,14 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 		;
 		// ========= start: 使用 justAuth-spring-security-starter 必须步骤 =========
 		// 添加 Auth2AutoConfigurer 使 OAuth2(justAuth) login 生效.
-		http.apply(this.jwtAutoConfigurer);
+//		http.apply(this.jwtAutoConfigurer);
+		http.addFilter(new UsernamePasswordAuthenticationExtendFilter());
 		http.apply(this.auth2AutoConfigurer);
+	}
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 
 	@Bean

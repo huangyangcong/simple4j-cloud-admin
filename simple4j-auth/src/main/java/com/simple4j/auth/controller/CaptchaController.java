@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/captcha")
@@ -23,7 +24,7 @@ public class CaptchaController {
 	@PostMapping("")
 	@ApiOperation(value = "获取验证码")
 	@PermitAll()
-	public ApiResponse<CaptchaResponse> captcha() {
-		return ApiResponse.ok(iCaptchaService.captcha());
+	public ApiResponse<CaptchaResponse> captcha(HttpSession httpSession) {
+		return ApiResponse.ok(iCaptchaService.captcha(httpSession));
 	}
 }

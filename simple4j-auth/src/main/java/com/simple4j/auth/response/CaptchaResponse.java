@@ -3,8 +3,10 @@ package com.simple4j.auth.response;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class CaptchaResponse {
+public class CaptchaResponse implements Serializable {
 
 	/**
 	 * 验证码编号
