@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements IUserService {
 	@Autowired
 	private UserMapper userMapper;
-	@Autowired
-	private TokenService tokenService;
+//	@Autowired
+//	private TokenService tokenService;
 
 	@Override
 	public void registerUser(User user) {
@@ -30,10 +30,10 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public String login(UserLoginRequest userLoginRequest) {
-		String token =
-			tokenService.login(userLoginRequest.getUsername(), userLoginRequest.getPassword());
-		UserLoginResponse userLoginResponse = new UserLoginResponse();
-		userLoginResponse.setToken(token);
-		return token;
+//		String token =
+//			tokenService.login(userLoginRequest.getUsername(), userLoginRequest.getPassword());
+//		UserLoginResponse userLoginResponse = new UserLoginResponse();
+//		userLoginResponse.setToken(token);
+		return null;
 	}
 }

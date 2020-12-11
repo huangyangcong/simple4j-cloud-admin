@@ -18,20 +18,41 @@ package com.simple4j.auth.config;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.json.JSONUtil;
 import com.simple4j.auth.filter.UsernamePasswordAuthenticationExtendFilter;
-import com.simple4j.autoconfigure.jwt.security.TokenWriter;
+import com.simple4j.autoconfigure.jwt.dynamic.DynamicFilterInvocationSecurityMetadataSource;
+import com.simple4j.autoconfigure.jwt.dynamic.DynamicSecurityService;
+import com.simple4j.autoconfigure.jwt.dynamic.IgnoreAbstractRequestMatcherRegistry;
+import com.simple4j.autoconfigure.jwt.security.DefaultTokenProvider;
+import com.simple4j.autoconfigure.jwt.security.TokenProvider;
 import com.simple4j.web.bean.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultSecurityFilterChain;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import top.dcenter.ums.security.core.oauth.config.Auth2AutoConfigurer;
 import top.dcenter.ums.security.core.oauth.properties.Auth2Properties;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author Joe Grandja
@@ -42,8 +63,15 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private Auth2AutoConfigurer auth2AutoConfigurer;
 	@Autowired
-	private Auth2Properties auth2Properties;
+	private DynamicSecurity dynamicSecurity;
 
+	private TokenProvider tokenProvider = new DefaultTokenProvider("065cb6143bb79b0acdf73cbd22d33e44b105ddfefdb889e3645c59a3cd12d47d");
+
+	@Bean
+	public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+		// 去除 ROLE_ 前缀
+		return new GrantedAuthorityDefaults("PERMISSION_");
+	}
 	@Bean
 	public PasswordEncoder passwordEncoder() {
         /*
@@ -59,34 +87,30 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().mvcMatchers("/auth/login", "/auth/verify");
-	}
-
-	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		UsernamePasswordAuthenticationExtendFilter filter = new UsernamePasswordAuthenticationExtendFilter(authenticationManagerBean());
+		filter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
 		http
+			.addFilter(filter)
 			.exceptionHandling().disable()
-			.authorizeRequests()
-			// 放行第三方登录入口地址与第三方登录回调地址
-			// @formatter:off
-			.antMatchers(HttpMethod.GET,
-				auth2Properties.getRedirectUrlPrefix() + "/*",
-				auth2Properties.getAuthLoginUrlPrefix() + "/*").permitAll()
-			// @formatter:on
-			// ========= end: 使用 justAuth-spring-security-starter 必须步骤 =========
-			.mvcMatchers("/.well-known/jwks.json").permitAll()
-			.anyRequest().authenticated()
-			.and()
 			.httpBasic().disable()
-			.csrf().ignoringRequestMatchers((request) -> "/introspect".equals(request.getRequestURI()))
+			.csrf().disable().logout().logoutSuccessHandler(new LogoutSuccessHandler() {
+			@Override
+			public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+				response.setContentType("application/json;charset=UTF-8");
+				IoUtil.write(response.getOutputStream(), false, JSONUtil.toJsonStr(ApiResponse.ok()).getBytes());
+			}
+		})
 		;
 		// ========= start: 使用 justAuth-spring-security-starter 必须步骤 =========
 		// 添加 Auth2AutoConfigurer 使 OAuth2(justAuth) login 生效.
 //		http.apply(this.jwtAutoConfigurer);
-		http.addFilter(new UsernamePasswordAuthenticationExtendFilter());
 		http.apply(this.auth2AutoConfigurer);
+		http.apply(this.dynamicSecurity);
+
+
 	}
+
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -94,11 +118,71 @@ public class DefaultSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public TokenWriter tokenWriter(){
-		return (response, token) -> {
+	public AuthenticationSuccessHandler authenticationSuccessHandler() {
+		return (request, response, authentication) -> {
+			final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			// generator token
+			String token = tokenProvider.createToken(userDetails.getUsername());
 			response.setContentType("application/json;charset=UTF-8");
 			IoUtil.write(response.getOutputStream(), false, JSONUtil.toJsonStr(ApiResponse.ok(token)).getBytes());
 		};
+	}
+
+	@Configuration
+	public static class DynamicSecurity extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity>{
+		@Autowired
+		private Auth2Properties auth2Properties;
+		@Override
+		public void init(HttpSecurity http) throws Exception {
+			// 有动态权限配置时添加动态权限校验过滤器
+			// @formatter:off
+			http
+				.authorizeRequests()
+				.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				.withObjectPostProcessor(
+					new ObjectPostProcessor<FilterSecurityInterceptor>() {
+						public <O extends FilterSecurityInterceptor> O postProcess(O fsi) {
+							fsi.setSecurityMetadataSource(dynamicFilterInvocationSecurityMetadataSource(auth2Properties));
+							return fsi;
+						}
+					});
+			// @formatter:on
+		}
+
+		@Bean
+		public DynamicFilterInvocationSecurityMetadataSource dynamicFilterInvocationSecurityMetadataSource(Auth2Properties auth2Properties){
+			return new DynamicFilterInvocationSecurityMetadataSource(
+				new DynamicSecurityService() {
+					@Override
+					public void loadDataSource(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry, DefaultWebSecurityExpressionHandler expressionHandler) {
+						registry
+							.mvcMatchers("/login").permitAll()
+							// 放行第三方登录入口地址与第三方登录回调地址
+							// @formatter:off
+							.antMatchers(HttpMethod.GET,
+								auth2Properties.getRedirectUrlPrefix() + "/*",
+								auth2Properties.getAuthLoginUrlPrefix() + "/*").permitAll()
+							// @formatter:on
+							// ========= end: 使用 justAuth-spring-security-starter 必须步骤 =========
+
+							.mvcMatchers(HttpMethod.POST, "/user/api/v1/info").permitAll()
+							.mvcMatchers(HttpMethod.GET, "/login/oauth2/code/{registrationId}").permitAll()
+							.mvcMatchers(HttpMethod.GET, "/aaa").hasAuthority("test")
+							.mvcMatchers(HttpMethod.GET, "/client/test").permitAll()
+							.mvcMatchers(HttpMethod.GET, "/user/api/v1/login2").permitAll()
+							.antMatchers(HttpMethod.GET, "/login/oauth2/code/**").permitAll()
+							.antMatchers(HttpMethod.GET, "/authorize/oauth2/code/**").permitAll()
+							.antMatchers(HttpMethod.GET, "/authorize/oauth2/code/**").permitAll()
+							.anyRequest()
+							.authenticated();
+					}
+					@Override
+					public void ignoreUrls(IgnoreAbstractRequestMatcherRegistry ignoreAbstractRequestMatcherRegistry) {
+						ignoreAbstractRequestMatcherRegistry.mvcMatchers("/auth/login", "/auth/verify");
+					}
+				}
+			);
+		}
 	}
 
 }

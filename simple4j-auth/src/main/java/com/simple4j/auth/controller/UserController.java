@@ -25,10 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 	@Autowired
 	private IUserService userService;
-	@Autowired
-	private ServletTokenResolve servletTokenResolve;
-	@Autowired
-	private TokenService tokenService;
 
 	@ApiOperation(value = "登录")
 	@PostMapping("/login")
@@ -37,12 +33,4 @@ public class UserController {
 		return ApiResponse.ok(userService.login(userLoginRequest));
 	}
 
-	@ApiOperation(value = "校验token")
-	@PostMapping("/verify")
-	@PermitAll()
-	public ApiResponse<Void> verify(HttpServletRequest request) {
-		String token = servletTokenResolve.resolveToken(request);
-		tokenService.tokenAuth(token);
-		return ApiResponse.ok();
-	}
 }

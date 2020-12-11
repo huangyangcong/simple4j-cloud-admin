@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.simple4j.api.base.BusinessException;
 import com.simple4j.auth.constant.AuthConstant;
 import com.simple4j.auth.response.CaptchaResponse;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -24,6 +25,10 @@ public class UsernamePasswordAuthenticationExtendFilter extends UsernamePassword
 	private String captchaKey = SPRING_SECURITY_FORM_CAPTCHA_KEY;
 
 	private String captchaCode = SPRING_SECURITY_FORM_CAPTCHA_CODE;
+
+	public UsernamePasswordAuthenticationExtendFilter(AuthenticationManager authenticationManager) {
+		super(authenticationManager);
+	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -53,6 +58,9 @@ public class UsernamePasswordAuthenticationExtendFilter extends UsernamePassword
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
 		HttpSession session = request.getSession();
+		if (session.getAttribute(AuthConstant.LOGIN_ERROR_COUNT) == null) {
+			session.setAttribute(AuthConstant.LOGIN_ERROR_COUNT, 0);
+		}
 		int count = (int)session.getAttribute(AuthConstant.LOGIN_ERROR_COUNT);
 		session.setAttribute(AuthConstant.LOGIN_ERROR_COUNT, count + 1);
 		super.unsuccessfulAuthentication(request, response, failed);
