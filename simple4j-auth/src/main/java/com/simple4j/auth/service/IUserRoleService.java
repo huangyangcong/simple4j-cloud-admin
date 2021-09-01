@@ -1,6 +1,6 @@
 package com.simple4j.auth.service;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * 服务类
@@ -15,5 +15,5 @@ public interface IUserRoleService {
 	 * @param userId
 	 * @return
 	 */
-	Set<String> getRoleIds(String userId);
+	List<String> getRoleIds(String userId);
 }

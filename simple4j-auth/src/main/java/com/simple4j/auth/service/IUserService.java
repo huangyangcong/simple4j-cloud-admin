@@ -24,5 +24,5 @@ public interface IUserService {
 	 * @param userLoginRequest
 	 * @return
 	 */
-	String login(UserLoginRequest userLoginRequest);
+	UserLoginResponse login(UserLoginRequest userLoginRequest);
 }

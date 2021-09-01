@@ -30,10 +30,6 @@
 			<groupId>org.projectlombok</groupId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<artifactId>spring-security-oauth2-client</artifactId>
-			<groupId>org.springframework.security</groupId>
-		</dependency>
 	</dependencies>
 
 	<modelVersion>4.0.0</modelVersion>

@@ -5,6 +5,7 @@ import com.simple4j.auth.service.IUserRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,7 +20,7 @@ public class UserRoleServiceImpl implements IUserRoleService {
 	private final UserRoleMapper userRoleMapper;
 
 	@Override
-	public Set<String> getRoleIds(String userId) {
+	public List<String> getRoleIds(String userId) {
 		return userRoleMapper.getRoleIds(userId);
 	}
 }

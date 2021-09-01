@@ -4,6 +4,7 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.core.util.StrUtil;
 import com.simple4j.api.base.BusinessException;
+import com.simple4j.auth.cache.RedisHandler;
 import com.simple4j.auth.constant.AuthConstant;
 import com.simple4j.auth.response.CaptchaResponse;
 import com.simple4j.auth.service.ICaptchaService;
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class CaptchaServiceImpl implements ICaptchaService {
 
-	private final RedisTemplate redisTemplate;
+	private final RedisHandler redisHandler;
 
 	@Override
 	public CaptchaResponse captcha(String username) {
@@ -36,15 +37,13 @@ public class CaptchaServiceImpl implements ICaptchaService {
 		CaptchaResponse captchaResponse = new CaptchaResponse();
 		captchaResponse.setKey(key);
 		captchaResponse.setImage("data:image/jpg;base64," + imageBase64);
-		HashOperations<String, String, CaptchaResponse> hashOperations = redisTemplate.opsForHash();
-		hashOperations.put(AuthConstant.CAPTCHA_CODE, username, captchaResponse);
+		redisHandler.setCaptchaCode(username, captchaResponse);
 		return captchaResponse;
 	}
 
 	@Override
 	public void verify(String username, String captchaKey, String captchaCode) {
-		HashOperations<String, String, CaptchaResponse> hashOperations = redisTemplate.opsForHash();
-		CaptchaResponse captchaResponse = hashOperations.get(AuthConstant.CAPTCHA_CODE, username);
+		CaptchaResponse captchaResponse = redisHandler.getCaptchaCode(username);
 		if(captchaResponse == null){
 			return;
 		}
@@ -52,11 +51,6 @@ public class CaptchaServiceImpl implements ICaptchaService {
 		if (!captchaKey.equals(captchaResponse.getKey()) || !StrUtil.equalsIgnoreCase(captchaResponse.getImage(), captchaCode)) {
 			throw new BusinessException("验证码错误");
 		}
-	}
-
-	@Override
-	public void deleteCaptcha(String username) {
-		HashOperations<String, String, CaptchaResponse> hashOperations = redisTemplate.opsForHash();
-		hashOperations.delete(AuthConstant.CAPTCHA_CODE, username);
+		redisHandler.delCaptchaCode(username);
 	}
 }
