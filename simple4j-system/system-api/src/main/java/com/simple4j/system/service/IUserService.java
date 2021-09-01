@@ -176,5 +176,5 @@ public interface IUserService {
 	 *
 	 * @param username
 	 */
-	void logout(String username);
+	void logout();
 }

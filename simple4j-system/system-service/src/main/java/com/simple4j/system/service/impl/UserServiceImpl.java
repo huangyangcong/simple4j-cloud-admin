@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
@@ -17,13 +19,11 @@ import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.google.common.collect.Sets;
 import com.simple4j.api.base.BusinessException;
 import com.simple4j.api.base.Page;
 import com.simple4j.autoconfigure.jwt.security.SecurityScope;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
-import com.simple4j.autoconfigure.jwt.security.TokenService;
 import com.simple4j.system.common.constant.CommonConstant;
 import com.simple4j.system.entity.User;
 import com.simple4j.system.excel.UserExcelImport;
@@ -86,7 +86,6 @@ public class UserServiceImpl implements IUserService {
 	private final IRoleMenuService roleMenuService;
 	private final PasswordEncoder passwordEncoder;
 	private final ICaptchaService captchaService;
-	private final TokenService tokenService;
 
 	@Override
 	public Page<UserDetailResponse> page(UserPageRequest userPageRequest) {
@@ -152,7 +151,7 @@ public class UserServiceImpl implements IUserService {
 			userAddRequest.setPassword(passwordEncoder.encode(userAddRequest.getPassword()));
 		}
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		Integer cnt =
+		long cnt =
 			userMapper.selectCount(
 				Wrappers.<User>query()
 					.lambda()
@@ -173,7 +172,7 @@ public class UserServiceImpl implements IUserService {
 			userUpdateRequest.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
 		}
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		Integer cnt =
+		long cnt =
 			userMapper.selectCount(
 				Wrappers.<User>query()
 					.lambda()
@@ -397,13 +396,13 @@ public class UserServiceImpl implements IUserService {
 		String oauthId = userRegisterGuestRequest.getOauthId();
 		TenantDetailResponse tenant = tenantService.getByTenantId(tenantId);
 		if (tenant == null || tenant.getId() == null) {
-			throw new ApiException("租户信息错误!");
+			throw new BusinessException("租户信息错误!");
 		}
 		UserOauthDetailRequest userOauthDetailRequest = new UserOauthDetailRequest();
 		userOauthDetailRequest.setId(oauthId);
 		UserOauthDetailResponse userOauth = userOauthService.detail(userOauthDetailRequest);
 		if (userOauth == null || userOauth.getId() == null) {
-			throw new ApiException("第三方登陆信息错误!");
+			throw new BusinessException("第三方登陆信息错误!");
 		}
 		User user = userMapStruct.toPo(userRegisterGuestRequest);
 		user.setRealName(user.getName());
@@ -427,8 +426,10 @@ public class UserServiceImpl implements IUserService {
 		// 校验验证码
 		//		captchaService.verify(captchaKey, userLoginRequest.getCaptchaCode());
 		// 登录校验
-		String token =
-			tokenService.login(userLoginRequest.getUsername(), userLoginRequest.getPassword());
+		long loginId = 0;
+		User user = userMapper.getUser();
+		StpUtil.login(loginId);
+		String token = StpUtil.getTokenValueByLoginId(loginId);
 		UserLoginResponse userLoginResponse = new UserLoginResponse();
 		userLoginResponse.setToken(token);
 		// 删除验证码
@@ -437,7 +438,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void logout(String username) {
-		tokenService.logout(username);
+	public void logout() {
+		StpUtil.logout();
 	}
 }

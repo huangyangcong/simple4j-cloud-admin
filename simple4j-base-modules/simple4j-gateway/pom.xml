@@ -60,24 +60,12 @@
 			<groupId>org.springframework.boot</groupId>
 		</dependency>
 		<dependency>
-			<artifactId>spring-cloud-starter-security</artifactId>
-			<groupId>org.springframework.cloud</groupId>
-		</dependency>
-		<dependency>
-			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
-			<groupId>org.springframework.cloud</groupId>
-		</dependency>
-		<dependency>
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 			<groupId>com.alibaba.cloud</groupId>
 		</dependency>
 		<dependency>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
 			<groupId>com.alibaba.cloud</groupId>
-		</dependency>
-		<dependency>
-			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-			<groupId>org.springframework.cloud</groupId>
 		</dependency>
 		<dependency>
 			<artifactId>springfox-boot-starter</artifactId>

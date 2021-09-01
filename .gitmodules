@@ -1,0 +1,3 @@
+[submodule "simple4j-task"]
+	path = simple4j-task
+	url = https://github.com/apache/shardingsphere-elasticjob-ui.git

@@ -11,7 +11,7 @@ public class UserLoginRequest {
 	@JsonProperty("username")
 	private String username;
 
-	@ApiModelProperty(name = "password", value = "用户部门列表")
+	@ApiModelProperty(name = "password", value = "密码")
 	@JsonProperty("password")
 	private String password;
 

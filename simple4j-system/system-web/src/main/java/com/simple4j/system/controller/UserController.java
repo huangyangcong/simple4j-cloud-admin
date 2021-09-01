@@ -75,7 +75,7 @@ public class UserController {
 	@PostMapping("/logout")
 	@PreAuthorize("permitAll()")
 	public ApiResponse<Void> logout() {
-		userService.logout("");
+		userService.logout();
 		return ApiResponse.ok();
 	}
 
