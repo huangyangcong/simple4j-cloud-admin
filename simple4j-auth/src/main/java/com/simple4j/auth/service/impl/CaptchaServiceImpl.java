@@ -8,6 +8,7 @@ import com.simple4j.auth.constant.AuthConstant;
 import com.simple4j.auth.response.CaptchaResponse;
 import com.simple4j.auth.service.ICaptchaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -26,11 +27,8 @@ public class CaptchaServiceImpl implements ICaptchaService {
 
 	private final RedisTemplate redisTemplate;
 
-	private static final String KEY = "blade:auth::captcha:";
-
-
 	@Override
-	public CaptchaResponse captcha(HttpSession httpSession) {
+	public CaptchaResponse captcha(String username) {
 		CircleCaptcha circleCaptcha = CaptchaUtil.createCircleCaptcha(130, 48);
 		String imageBase64 = circleCaptcha.getImageBase64();
 		String key = UUID.randomUUID().toString();
@@ -38,21 +36,27 @@ public class CaptchaServiceImpl implements ICaptchaService {
 		CaptchaResponse captchaResponse = new CaptchaResponse();
 		captchaResponse.setKey(key);
 		captchaResponse.setImage("data:image/jpg;base64," + imageBase64);
-		httpSession.setAttribute(AuthConstant.CAPTCHA_CODE, captchaResponse);
+		HashOperations<String, String, CaptchaResponse> hashOperations = redisTemplate.opsForHash();
+		hashOperations.put(AuthConstant.CAPTCHA_CODE, username, captchaResponse);
 		return captchaResponse;
 	}
 
 	@Override
-	public void verify(HttpSession httpSession, String captchaKey, String captchaCode) {
-		CaptchaResponse captchaResponse = (CaptchaResponse)httpSession.getAttribute(AuthConstant.CAPTCHA_CODE);
+	public void verify(String username, String captchaKey, String captchaCode) {
+		HashOperations<String, String, CaptchaResponse> hashOperations = redisTemplate.opsForHash();
+		CaptchaResponse captchaResponse = hashOperations.get(AuthConstant.CAPTCHA_CODE, username);
+		if(captchaResponse == null){
+			return;
+		}
 		// 判断验证码
-		if (captchaResponse == null || !captchaKey.equals(captchaResponse.getKey()) || !StrUtil.equalsIgnoreCase(captchaResponse.getImage(), captchaCode)) {
+		if (!captchaKey.equals(captchaResponse.getKey()) || !StrUtil.equalsIgnoreCase(captchaResponse.getImage(), captchaCode)) {
 			throw new BusinessException("验证码错误");
 		}
 	}
 
 	@Override
-	public void deleteCaptcha(HttpSession httpSession) {
-		httpSession.removeAttribute(AuthConstant.CAPTCHA_CODE);
+	public void deleteCaptcha(String username) {
+		HashOperations<String, String, CaptchaResponse> hashOperations = redisTemplate.opsForHash();
+		hashOperations.delete(AuthConstant.CAPTCHA_CODE, username);
 	}
 }

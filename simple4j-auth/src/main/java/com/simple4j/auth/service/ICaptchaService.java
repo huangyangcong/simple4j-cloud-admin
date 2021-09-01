@@ -16,7 +16,7 @@ public interface ICaptchaService {
 	 *
 	 * @return
 	 */
-	CaptchaResponse captcha(HttpSession httpSession);
+	CaptchaResponse captcha(String username);
 
 	/**
 	 * 校验验证码
@@ -25,12 +25,12 @@ public interface ICaptchaService {
 	 * @param captchaCode
 	 * @return
 	 */
-	void verify(HttpSession httpSession, String captchaKey, String captchaCode);
+	void verify(String username, String captchaKey, String captchaCode);
 
 	/**
 	 * 删除验证码
 	 *
 	 * @param captchaKey
 	 */
-	void deleteCaptcha(HttpSession httpSession);
+	void deleteCaptcha(String username);
 }

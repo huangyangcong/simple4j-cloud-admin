@@ -21,8 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import top.dcenter.ums.security.core.oauth.exception.RegisterUserFailureException;
-import top.dcenter.ums.security.core.oauth.service.UmsUserDetailsService;
 
 import java.util.ArrayList;
 import java.util.List;

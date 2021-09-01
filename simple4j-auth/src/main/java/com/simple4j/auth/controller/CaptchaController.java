@@ -19,12 +19,12 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class CaptchaController {
 
-	private final ICaptchaService iCaptchaService;
+	private final ICaptchaService captchaService;
 
 	@PostMapping("")
 	@ApiOperation(value = "获取验证码")
 	@PermitAll()
-	public ApiResponse<CaptchaResponse> captcha(HttpSession httpSession) {
-		return ApiResponse.ok(iCaptchaService.captcha(httpSession));
+	public ApiResponse<CaptchaResponse> captcha(String username) {
+		return ApiResponse.ok(captchaService.captcha(username));
 	}
 }
