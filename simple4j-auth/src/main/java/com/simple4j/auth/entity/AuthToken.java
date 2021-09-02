@@ -2,10 +2,15 @@ package com.simple4j.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.xkcoding.http.config.HttpConfig;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * @author hyc
@@ -106,5 +111,37 @@ public class AuthToken implements Serializable {
 	 * 过期时间, 基于 1970-01-01T00:00:00Z, 无过期时间默认为 -1
 	 */
 	private Long expireTime;
+
+
+	public static AuthToken convert(me.zhyd.oauth.model.AuthToken token, String providerId) {
+		AuthToken authToken = new AuthToken();
+		BeanUtils.copyProperties(token, authToken);
+		authToken.setProviderId(providerId);
+		// 有效期转时间戳
+		expireIn2Timestamp(timeout, token.getExpireIn(), authToken);
+	}
+
+
+	/**
+	 * 有效期转时间戳
+	 * @param timeout   {@link HttpConfig#getTimeout()}, 单位毫秒
+	 * @param expireIn  有效期
+	 * @param authToken {@link me.zhyd.oauth.model.AuthToken}
+	 */
+	static <T extends AuthToken> void expireIn2Timestamp(@NonNull Long timeout,
+														   @Nullable Integer expireIn, @NonNull T authToken) {
+		if (expireIn == null || expireIn < 1)
+		{
+			// 无过期时间, 默认设置为 -1
+			authToken.setExpireTime(-1L);
+		}
+		else
+		{
+			// 转换为到期日期的 EpochMilli, 考虑到网络延迟, 相对于第三方的过期时间, 减去根据用户设置的 timeout(HttpConfigProperties.timeout) 时间,
+			long dealLine = Instant.now().plusSeconds(expireIn).minusMillis(timeout).toEpochMilli();
+			authToken.setExpireTime(dealLine);
+		}
+	}
+
 
 }

@@ -58,7 +58,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot-starter</artifactId>
+			<artifactId>sa-token-temp-jwt</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.swagger</groupId>

@@ -1,8 +1,11 @@
 package com.simple4j.auth.service.impl;
 
 import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.temp.SaTempUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.auth.entity.User;
@@ -18,7 +21,6 @@ import com.simple4j.auth.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthUser;
-import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -67,7 +69,7 @@ public class UserServiceImpl implements IUserService {
 		return new UserLoginResponse(token);
 	}
 
-	public SaSession authentication(AuthUser authUser, final String providerId, boolean autoSignUp) {
+	public String authentication(AuthUser authUser, final String providerId, boolean autoSignUp) {
 
 		//1 从第三方获取 Userinfo
 		HttpServletRequest request = loginToken.getRequest();
@@ -81,59 +83,52 @@ public class UserServiceImpl implements IUserService {
 
 		//3 获取 securityContext 中的 authenticationToken, 判断是否为本地登录用户(不含匿名用户)
 
-		SaSession saSession = null;
-		if (StpUtil.isLogin()) {
-			saSession = StpUtil.getSession();
+		String loginId = null;
+		boolean isLogin = StpUtil.isLogin();
+		if (isLogin) {
+			loginId = StpUtil.getLoginIdAsString();
 		}
 
 		boolean cacheWasUsed = false;
 		//4.1 没有第三方登录记录, 自动注册 或 绑定 或 临时创建第三方登录用户
 		if (CollectionUtils.isEmpty(connectionDataList)) {
 			// 无本地用户登录, 注册和绑定
-			if (saSession == null) {
+			if (!isLogin) {
 				// 自动注册, https://gitee.com/pcore/just-auth-spring-security-starter/issues/I22KP3.
 				if (autoSignUp) {
 					// 自动注册到本地账户, 注册第三方授权登录信息到 user_connection 与 auth_token
-					saSession = userConnectionService.signUp(authUser, providerId, encodeState);
-				}
-				// 不支持自动注册, https://gitee.com/pcore/just-auth-spring-security-starter/issues/I22KP3.
-				else {
+					loginId = userConnectionService.signUp(authUser, providerId, encodeState);
+					// 不支持自动注册, https://gitee.com/pcore/just-auth-spring-security-starter/issues/I22KP3.
+				} else {
 					// 创建临时用户的 userDetails, 再次获取通过 SecurityContextHolder.getContext().getAuthentication().getPrincipal()
 					// @formatter:off
-					saSession = TemporaryUser.builder()
-						// username = authUser.getUsername() + "_" + providerId + "_" + providerUserId
-						// 重新注册本地账号时按自己的业务逻辑进行命名
-						.username(authUser.getUsername() + "_" + providerId + "_" + providerUserId)
-						// 临时密码, 重新注册本地账号时按自己的业务逻辑进行设置
-						.password("{noop}" + temporaryUserPassword)
-						.authUser(authUser)
-						.encodeState(encodeState)
-						.disabled(false)
-						.accountExpired(false)
-						.accountLocked(false)
-						.credentialsExpired(false)
-						.authorities(AuthorityUtils.commaSeparatedStringToAuthorityList(temporaryUserAuthorities))
-						.build();
+//					loginId = SaTempUtil.createToken()
+//						// username = authUser.getUsername() + "_" + providerId + "_" + providerUserId
+//						// 重新注册本地账号时按自己的业务逻辑进行命名
+//						.username(authUser.getUsername() + "_" + providerId + "_" + providerUserId)
+//						// 临时密码, 重新注册本地账号时按自己的业务逻辑进行设置
+//						.password("{noop}" + temporaryUserPassword)
+//						.authUser(authUser)
+//						.encodeState(encodeState)
+//						.disabled(false)
+//						.accountExpired(false)
+//						.accountLocked(false)
+//						.credentialsExpired(false)
+//						.authorities(AuthorityUtils.commaSeparatedStringToAuthorityList(temporaryUserAuthorities))
+//						.build();
 					// @formatter:on
 				}
+				// 本地用户已登录, 绑定
+			} else {
+				// 当 principal 为 UserDetails 类型是进行绑定操作.
+				userConnectionService.binding(loginId, authUser, providerId);
 			}
-			// 本地用户已登录, 绑定
-			else {
-				if (StpUtil.isLogin()) {
-					// 当 principal 为 UserDetails 类型是进行绑定操作.
-					userConnectionService.binding(saSession, authUser, providerId);
-					return saSession;
-				}
-				throw new InternalAuthenticationServiceException("principal is TemporaryUser or not UserDetails");
-
-			}
-		}
-		//4.2 有第三方登录记录
-		else {
+			//4.2 有第三方登录记录
+		} else {
 			UserConnection connectionData = null;
 			// SecurityContextHolder 中有已认证用户
 			// 本地登录用户 userId
-			if (StpUtil.isLogin()) {
+			if (isLogin) {
 				String userId = StpUtil.getLoginIdAsString();
 				for (UserConnection data : connectionDataList) {
 					if (userId.equals(data.getUserId())) {
@@ -146,21 +141,22 @@ public class UserServiceImpl implements IUserService {
 				// 与本地登录的 userId 不同
 				if (connectionData == null) {
 					// 走第三方授权登录流程
-					saSession = null;
+					loginId = null;
+					isLogin = false;
 				}
 			}
 
-
 			// 第三方授权登录流程
-			if (saSession == null) {
+			if (loginId == null) {
 				// 扩展点, 待实现让用户选择哪一个本地账户登录, 这里直接取第一条记录.
 				connectionData = connectionDataList.get(0);
 				String userId = connectionData.getUserId();
-				saSession = StpUtil.getSessionByLoginId(userId);
+				loginId = StpUtil.getLoginId(null);
 				cacheWasUsed = true;
-				if (saSession == null) {
+				if (loginId == null) {
 					cacheWasUsed = false;
-					saSession = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getId, userId));
+					StpUtil.login(userId);
+					loginId = StpUtil.getLoginIdAsString();
 				}
 			}
 
@@ -168,40 +164,13 @@ public class UserServiceImpl implements IUserService {
 			asyncUpdateUserConnectionAndToken(authUser, connectionData);
 		}
 
-		// 5 删除 session 中的 state 缓存
-		Auth2DefaultRequest.removeStateCacheOfSessionCache(auth2DefaultRequest.getAuthStateCache(),
-			auth2DefaultRequest.getAuthSource());
-		// 6 本地登录用户, 直接返回
-		if (saSession != null) {
-			return saSession;
+		// 5 本地登录用户, 直接返回
+		if (isLogin) {
+			return loginId;
 		}
 
-		// 认证成功后前置与后置检查
-		try {
-			preAuthenticationChecks.check(saSession);
-			additionalAuthenticationChecks(saSession, (Auth2LoginAuthenticationToken) authentication);
-		} catch (AuthenticationException exception) {
-			if (cacheWasUsed) {
-				// There was a problem, so try again after checking
-				// we're using latest data (i.e. not from the cache)
-				cacheWasUsed = false;
-				userDetails = umsUserDetailsService.loadUserByUserId(saSession.getUsername());
-				preAuthenticationChecks.check(saSession);
-				additionalAuthenticationChecks(saSession, (Auth2LoginAuthenticationToken) authentication);
-			} else {
-				throw exception;
-			}
-		}
-
-		postAuthenticationChecks.check(saSession);
-
-		// 放入缓存
-		if (!cacheWasUsed) {
-			this.userCache.putUserInCache(saSession);
-		}
-
-		// 7 创建成功认证 token 并返回
-		return saSession;
+		// 6 创建成功认证 token 并返回
+		return StpUtil.getTokenValue();
 	}
 
 
@@ -209,19 +178,19 @@ public class UserServiceImpl implements IUserService {
 	 * 异步更新第三方授权登录用户信息与 token 信息, 异步更新执行失败再次进行同步更新.
 	 *
 	 * @param authUser       {@link AuthUser}
-	 * @param connectionData {@link ConnectionData}
+	 * @param userConnection {@link UserConnection}
 	 */
-	private void asyncUpdateUserConnectionAndToken(AuthUser authUser, UserConnection connectionData) {
+	private void asyncUpdateUserConnectionAndToken(AuthUser authUser, UserConnection userConnection) {
 		try {
 			// 异步更新第三方授权登录用户信息与 token 信息, 拒绝策略为: CALLER_RUNS
 			updateConnectionTaskExecutor.execute(
 				() -> {
 					try {
-						userConnectionService.updateUserConnection(authUser, connectionData);
+						userConnectionService.updateUserConnection(authUser, userConnection);
 					} catch (Exception e) {
 						String msg = String.format("异步更新第三方授权登录用户信息与 token 信息失败: AuthUser=%s, ConnectionData=%s, error=%s",
-							toJsonString(authUser),
-							toJsonString(connectionData),
+							JSONUtil.toJsonStr(authUser),
+							JSONUtil.toJsonStr(userConnection),
 							e.getMessage());
 						log.error(msg, e);
 					}
@@ -230,11 +199,11 @@ public class UserServiceImpl implements IUserService {
 			log.error(String.format("异步更新第三方授权登录用户信息与 token 信息失败: %s, 再次同步更新", e.getMessage()), e);
 			// 异步执行失败, 直接同步更新授权登录用户信息与 token 信息
 			try {
-				userConnectionService.updateUserConnection(authUser, connectionData);
+				userConnectionService.updateUserConnection(authUser, userConnection);
 			} catch (Exception ex) {
 				String msg = String.format("同步更新第三方授权登录用户信息与 token 信息失败: AuthUser=%s, ConnectionData=%s, error=%s",
-					toJsonString(authUser),
-					toJsonString(connectionData),
+					JSONUtil.toJsonStr(authUser),
+					JSONUtil.toJsonStr(userConnection),
 					e.getMessage());
 				log.error(msg, e);
 			}

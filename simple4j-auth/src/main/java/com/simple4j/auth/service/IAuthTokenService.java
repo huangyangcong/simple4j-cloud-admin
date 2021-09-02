@@ -1,5 +1,6 @@
 package com.simple4j.auth.service;
 
+import com.simple4j.auth.entity.AuthToken;
 import com.simple4j.auth.entity.User;
 import com.simple4j.auth.request.UserLoginRequest;
 import com.simple4j.auth.response.UserLoginResponse;
@@ -11,4 +12,5 @@ import com.simple4j.auth.response.UserLoginResponse;
  */
 public interface IAuthTokenService {
 
+    void saveAuthToken(AuthToken authToken);
 }
