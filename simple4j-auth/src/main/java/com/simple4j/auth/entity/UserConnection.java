@@ -19,15 +19,15 @@ public class UserConnection implements Serializable {
 	 * 本地用户id
 	 */
 	@TableId
-	private String userid;
+	private String userId;
 	/**
 	 * 第三方服务商
 	 */
-	private String providerid;
+	private String providerId;
 	/**
 	 * 第三方用户id
 	 */
-	private String provideruserid;
+	private String providerUserId;
 	/**
 	 * userId 绑定同一个 providerId 的排序
 	 */
@@ -35,30 +35,30 @@ public class UserConnection implements Serializable {
 	/**
 	 * 第三方用户名
 	 */
-	private String displayname;
+	private String displayName;
 	/**
 	 * 主页
 	 */
-	private String profileurl;
+	private String profileUrl;
 	/**
 	 * 头像
 	 */
-	private String imageurl;
+	private String imageUrl;
 	/**
 	 *
 	 */
-	private String accesstoken;
+	private String accessToken;
 	/**
 	 * auth_token.id
 	 */
-	private Long tokenid;
+	private Long tokenId;
 	/**
 	 *
 	 */
-	private String refreshtoken;
+	private String refreshToken;
 	/**
 	 * 过期时间, 基于 1970-01-01T00:00:00Z, 无过期时间默认为 -1
 	 */
-	private Long expiretime;
+	private Long expireTime;
 
 }

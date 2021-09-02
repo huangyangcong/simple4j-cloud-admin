@@ -25,23 +25,23 @@ public class AuthToken implements Serializable {
 	/**
 	 * 是否支持 refreshToken, 默认: 0. 1 表示支持, 0 表示不支持
 	 */
-	private Integer enablerefresh;
+	private Integer enableRefresh;
 	/**
 	 * 第三方服务商,如: qq,github
 	 */
-	private String providerid;
+	private String providerId;
 	/**
 	 * accessToken
 	 */
-	private String accesstoken;
+	private String accessToken;
 	/**
 	 * 过期时间, 无过期时间默认为 -1
 	 */
-	private Long expirein;
+	private Long expireIn;
 	/**
 	 * refreshToken
 	 */
-	private String refreshtoken;
+	private String refreshToken;
 	/**
 	 * alipay userId
 	 */
@@ -53,11 +53,11 @@ public class AuthToken implements Serializable {
 	/**
 	 * dingTalk, taobao 附带属性
 	 */
-	private String accesscode;
+	private String accessCode;
 	/**
 	 * QQ附带属性
 	 */
-	private String unionid;
+	private String unionId;
 	/**
 	 * Google附带属性
 	 */
@@ -65,15 +65,15 @@ public class AuthToken implements Serializable {
 	/**
 	 * Google附带属性
 	 */
-	private String tokentype;
+	private String tokenType;
 	/**
 	 * Google附带属性
 	 */
-	private String idtoken;
+	private String idToken;
 	/**
 	 * 小米附带属性
 	 */
-	private String macalgorithm;
+	private String macAlgorithm;
 	/**
 	 * 小米附带属性
 	 */
@@ -85,26 +85,26 @@ public class AuthToken implements Serializable {
 	/**
 	 * Twitter附带属性
 	 */
-	private String oauthtoken;
+	private String oauthToken;
 	/**
 	 * Twitter附带属性
 	 */
-	private String oauthtokensecret;
+	private String oauthTokenSecret;
 	/**
 	 * Twitter附带属性
 	 */
-	private String userid;
+	private String userId;
 	/**
 	 * Twitter附带属性
 	 */
-	private String screenname;
+	private String screenName;
 	/**
 	 * Twitter附带属性
 	 */
-	private String oauthcallbackconfirmed;
+	private String oauthCallbackConfirmed;
 	/**
 	 * 过期时间, 基于 1970-01-01T00:00:00Z, 无过期时间默认为 -1
 	 */
-	private Long expiretime;
+	private Long expireTime;
 
 }

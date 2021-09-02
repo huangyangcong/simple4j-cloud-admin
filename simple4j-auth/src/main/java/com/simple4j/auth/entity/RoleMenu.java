@@ -32,4 +32,6 @@ public class RoleMenu extends BaseEntity {
 	 * 角色id
 	 */
 	private String roleId;
+
+
 }

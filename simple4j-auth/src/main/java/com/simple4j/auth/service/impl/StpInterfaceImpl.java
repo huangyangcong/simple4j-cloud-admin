@@ -9,6 +9,7 @@ import com.simple4j.auth.service.IUserRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,13 +23,13 @@ public class StpInterfaceImpl implements StpInterface {
 
 		// 1. 获取这个账号所属角色id
 		long roleId = StpUtil.getSessionByLoginId(loginId).get("Role_Id", () -> {
-			return ...;     // 从数据库查询这个账号所属的角色id
+			return new ArrayList<>();     // 从数据库查询这个账号所属的角色id
 		});
 
 		// 2. 获取这个角色id拥有的权限列表
 		SaSession roleSession = SaSessionCustomUtil.getSessionById("role-" + roleId);
 		List<String> list = roleSession.get("Permission_List", () -> {
-			return ...;  // 从数据库查询这个角色id拥有的权限列表
+			return new ArrayList<>();  // 从数据库查询这个角色id拥有的权限列表
 		});
 
 		// 3. 返回

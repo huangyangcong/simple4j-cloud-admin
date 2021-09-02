@@ -56,7 +56,7 @@ public class UserController {
 	public ApiResponse<Object> login(@PathVariable String type, AuthCallback callback) {
 		AuthRequest authRequest = factory.get(type);
 		AuthResponse login = authRequest.login(callback);
-		return ApiResponse.ok(.getData());
+		return ApiResponse.ok(login);
 	}
 
 
