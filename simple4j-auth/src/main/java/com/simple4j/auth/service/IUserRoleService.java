@@ -16,4 +16,11 @@ public interface IUserRoleService {
 	 * @return
 	 */
 	List<String> getRoleIds(String userId);
+
+	/**
+	 * 默认角色
+	 *
+	 * @return
+	 */
+	List<String> getDefaultRole();
 }

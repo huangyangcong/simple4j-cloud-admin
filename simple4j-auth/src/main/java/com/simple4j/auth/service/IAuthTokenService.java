@@ -1,9 +1,6 @@
 package com.simple4j.auth.service;
 
 import com.simple4j.auth.entity.AuthToken;
-import com.simple4j.auth.entity.User;
-import com.simple4j.auth.request.UserLoginRequest;
-import com.simple4j.auth.response.UserLoginResponse;
 
 /**
  * 服务类
@@ -12,5 +9,17 @@ import com.simple4j.auth.response.UserLoginResponse;
  */
 public interface IAuthTokenService {
 
-    void saveAuthToken(AuthToken authToken);
+	/**
+	 * 保存token信息
+	 *
+	 * @param authToken
+	 */
+	void saveAuthToken(AuthToken authToken);
+
+	/**
+	 * 更新token信息
+	 *
+	 * @param authToken
+	 */
+	void updateAuthToken(AuthToken authToken);
 }

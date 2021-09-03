@@ -2,6 +2,7 @@ package com.simple4j.auth.service;
 
 import com.simple4j.auth.entity.UserConnection;
 import me.zhyd.oauth.model.AuthUser;
+import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -37,6 +38,15 @@ public interface IUserConnectionService {
 	 * @param providerId
 	 */
 	void binding(String loginId, AuthUser authUser, String providerId);
+
+	/**
+	 * 解绑用户
+	 *
+	 * @param userId
+	 * @param providerId
+	 * @param providerUserId
+	 */
+	void unbinding(String userId, String providerId, String providerUserId);
 
 	/**
 	 * 更新用户绑定信息

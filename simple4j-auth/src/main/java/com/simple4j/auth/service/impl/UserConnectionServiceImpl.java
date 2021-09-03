@@ -1,12 +1,16 @@
 package com.simple4j.auth.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.simple4j.api.base.BusinessException;
 import com.simple4j.auth.entity.AuthToken;
 import com.simple4j.auth.entity.UserConnection;
 import com.simple4j.auth.enums.ErrorCodeEnum;
 import com.simple4j.auth.exceptions.RegisterUserFailureException;
+import com.simple4j.auth.exceptions.UnBindingException;
 import com.simple4j.auth.mapper.UserConnectionMapper;
+import com.simple4j.auth.service.IAuth2StateCoder;
 import com.simple4j.auth.service.IAuthTokenService;
 import com.simple4j.auth.service.IUserConnectionService;
 import com.simple4j.auth.service.IUserService;
@@ -32,6 +36,7 @@ public class UserConnectionServiceImpl implements IUserConnectionService {
 	private final UserConnectionMapper userConnectionMapper;
 	private final IUserService userService;
 	private final IAuthTokenService tokenService;
+	private final IAuth2StateCoder auth2StateCoder;
 
 	@Override
 	public List<UserConnection> queryConnectionByProviderIdAndProviderUserId(String providerId, String providerUserId) {
@@ -70,7 +75,7 @@ public class UserConnectionServiceImpl implements IUserConnectionService {
 				decodeState = encodeState;
 			}
 			// 注册到本地账户
-			String userId = userService.registerUser(authUser, username, defaultAuthorities, decodeState);
+			String userId = userService.registerUser(authUser, username, decodeState);
 			// 第三方授权登录信息绑定到本地账号, 且添加第三方授权登录信息到 user_connection 与 auth_token
 			registerConnection(providerId, authUser, userId);
 
@@ -90,18 +95,13 @@ public class UserConnectionServiceImpl implements IUserConnectionService {
 	@Override
 	@Transactional(rollbackFor = {Exception.class}, propagation = Propagation.REQUIRED)
 	public void unbinding(@NonNull String userId, @NonNull String providerId, @NonNull String providerUserId) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		boolean isCurrentUserAndValid = authentication.isAuthenticated()
-			&& !(authentication instanceof AnonymousAuthenticationToken)
-			&& authentication.getName().equals(userId);
 		// 用户未登录或不是当前用户
-		if (!isCurrentUserAndValid) {
-			log.warn("用户 {} 进行解绑操作时, 用户未登录或不是当前用户; userId: {}, providerId: {}, providerUserId: {}",
-				authentication.getName(), userId, providerId, providerUserId);
+		if (!StpUtil.isLogin() || !StpUtil.getLoginId().equals(userId)) {
+			log.warn("用户进行解绑操作时, 用户未登录或不是当前用户; userId: {}, providerId: {}, providerUserId: {}", userId, providerId, providerUserId);
 			throw new UnBindingException(ErrorCodeEnum.UN_BINDING_ERROR, userId);
 		}
 		// 解除绑定(第三方)
-		usersConnectionRepository.removeConnection(userId, new ConnectionKey(providerId, providerUserId));
+		userConnectionMapper.delete(new LambdaQueryWrapper<UserConnection>().eq(UserConnection::getUserId, userId).eq(UserConnection::getProviderId, providerId));
 	}
 
 	/**
@@ -205,14 +205,18 @@ public class UserConnectionServiceImpl implements IUserConnectionService {
 			connectionData.setTokenId(data.getTokenId());
 
 			// 更新 connectionData
-			updateConnection(connectionData);
+			userConnectionMapper.update(connectionData, new LambdaQueryWrapper<UserConnection>()
+				.eq(UserConnection::getUserId, connectionData.getUserId())
+				.eq(UserConnection::getProviderId, connectionData.getProviderId())
+				.eq(UserConnection::getProviderUserId, connectionData.getProviderUserId())
+			);
 			// 更新 AuthTokenPo
 			tokenService.updateAuthToken(authToken);
 		}
 		catch (Exception e)
 		{
 			log.error("更新第三方用户信息异常: " + e.getMessage());
-			throw new UpdateConnectionException(ErrorCodeEnum.UPDATE_CONNECTION_DATA_FAILURE, connectionData, e);
+			throw new BusinessException(ErrorCodeEnum.UPDATE_CONNECTION_DATA_FAILURE, connectionData, e);
 		}
 	}
 }

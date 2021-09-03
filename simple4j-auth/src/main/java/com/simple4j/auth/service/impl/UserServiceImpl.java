@@ -7,14 +7,13 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.auth.entity.User;
 import com.simple4j.auth.entity.UserConnection;
+import com.simple4j.auth.exceptions.RegisterUserFailureException;
 import com.simple4j.auth.exceptions.UserNotFoundException;
 import com.simple4j.auth.mapper.UserMapper;
 import com.simple4j.auth.request.UserLoginRequest;
 import com.simple4j.auth.response.UserLoginResponse;
-import com.simple4j.auth.service.IAuthTokenService;
-import com.simple4j.auth.service.ICaptchaService;
-import com.simple4j.auth.service.IUserConnectionService;
-import com.simple4j.auth.service.IUserService;
+import com.simple4j.auth.service.*;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthUser;
@@ -38,14 +37,39 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 	private final UserMapper userMapper;
+	private final IUserRoleService userRoleService;
 	private final ICaptchaService captchaService;
 	private final IAuthTokenService authTokenService;
 	private final IUserConnectionService userConnectionService;
 	private final ExecutorService updateConnectionTaskExecutor;
 
 	@Override
-	public void registerUser(User user) {
+	public String authentication(AuthUser authUser, String encodeState, String providerId, boolean autoSignUp) {
+		return null;
+	}
+
+	@Override
+	public String registerUser(AuthUser authUser, String username, String decodeState) {
+
+		// 第三方授权登录不需要密码, 这里随便设置的, 生成环境按自己的逻辑
+		String encodedPassword = passwordEncoder.encode(authUser.getUuid());
+
+		// 这里的 decodeState 可以根据自己实现的 top.dcenter.ums.security.core.oauth.service.Auth2StateCoder 接口的逻辑来传递必要的参数.
+		// 比如: 第三方登录成功后的跳转地址
+		final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+		// 假设 decodeState 就是 redirectUrl, 我们直接把 redirectUrl 设置到 request 上
+		// 后续经过成功处理器时直接从 requestAttributes.getAttribute("redirectUrl", RequestAttributes.SCOPE_REQUEST) 获取并跳转
+		if (requestAttributes != null) {
+			requestAttributes.setAttribute("redirectUrl", decodeState, RequestAttributes.SCOPE_REQUEST);
+		}
+		// 当然 decodeState 也可以传递从前端传到后端的用户信息, 注册到本地用户
+
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(defaultAuthority);
+
+		//用户注册逻辑
+		User user = new User();
 		userMapper.insert(user);
+		return user.getId();
 	}
 
 	@Override
@@ -85,11 +109,7 @@ public class UserServiceImpl implements IUserService {
 		return Arrays.stream(usernames).map(names::contains).collect(Collectors.toList());
 	}
 
-	public String authentication(AuthUser authUser, final String providerId, boolean autoSignUp) {
-		//1 从第三方获取 Userinfo
-		HttpServletRequest request = loginToken.getRequest();
-		// 获取 encodeState, https://gitee.com/pcore/just-auth-spring-security-starter/issues/I22JC7
-		final String encodeState = request.getParameter("state");
+	public String authentication(String encodeState, AuthUser authUser, final String providerId, boolean autoSignUp) {
 
 		//2 查询是否已经有第三方的授权记录, List 按 rank 排序, 直接取第一条记录
 		String providerUserId = authUser.getUuid();
@@ -116,10 +136,8 @@ public class UserServiceImpl implements IUserService {
 					// 不支持自动注册, https://gitee.com/pcore/just-auth-spring-security-starter/issues/I22KP3.
 				} else {
 					// 创建临时用户的 userDetails, 再次获取通过 SecurityContextHolder.getContext().getAuthentication().getPrincipal()
-					// @formatter:off
 					loginId = SaTempUtil.createToken(authUser.getUuid(), authUser.getToken().getExpireIn());
 					StpUtil.login(loginId);
-					// @formatter:on
 				}
 				// 本地用户已登录, 绑定
 			} else {
