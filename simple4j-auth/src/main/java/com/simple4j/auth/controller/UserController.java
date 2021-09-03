@@ -55,7 +55,7 @@ public class UserController {
 	@RequestMapping("/{type}/callback")
 	public ApiResponse<Object> login(@PathVariable String type, AuthCallback callback) {
 		AuthRequest authRequest = factory.get(type);
-		AuthResponse login = authRequest.login(callback);
+		AuthResponse<AuthUser> login = authRequest.login(callback);
 		return ApiResponse.ok(login);
 	}
 

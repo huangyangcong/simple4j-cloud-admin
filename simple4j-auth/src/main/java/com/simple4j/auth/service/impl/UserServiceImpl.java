@@ -1,12 +1,9 @@
 package com.simple4j.auth.service.impl;
 
-import cn.dev33.satoken.session.SaSession;
-import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.temp.SaTempUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.simple4j.auth.entity.User;
 import com.simple4j.auth.entity.UserConnection;
@@ -25,9 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.stream.Collectors;
 
 /**
  * 服务实现类
@@ -69,8 +68,24 @@ public class UserServiceImpl implements IUserService {
 		return new UserLoginResponse(token);
 	}
 
-	public String authentication(AuthUser authUser, final String providerId, boolean autoSignUp) {
+	@Override
+	public String[] generateUsernames(AuthUser authUser) {
+		return new String[]{
+			authUser.getUsername(),
+			// providerId = authUser.getSource()
+			authUser.getUsername() + "_" + authUser.getSource(),
+			// providerUserId = authUser.getUuid()
+			authUser.getUsername() + "_" + authUser.getSource() + "_" + authUser.getUuid()
+		};
+	}
 
+	@Override
+	public List<Boolean> existedByUsernames(String[] usernames) {
+		List<String> names = userMapper.existedByUsernames(usernames);
+		return Arrays.stream(usernames).map(names::contains).collect(Collectors.toList());
+	}
+
+	public String authentication(AuthUser authUser, final String providerId, boolean autoSignUp) {
 		//1 从第三方获取 Userinfo
 		HttpServletRequest request = loginToken.getRequest();
 		// 获取 encodeState, https://gitee.com/pcore/just-auth-spring-security-starter/issues/I22JC7
@@ -102,20 +117,8 @@ public class UserServiceImpl implements IUserService {
 				} else {
 					// 创建临时用户的 userDetails, 再次获取通过 SecurityContextHolder.getContext().getAuthentication().getPrincipal()
 					// @formatter:off
-//					loginId = SaTempUtil.createToken()
-//						// username = authUser.getUsername() + "_" + providerId + "_" + providerUserId
-//						// 重新注册本地账号时按自己的业务逻辑进行命名
-//						.username(authUser.getUsername() + "_" + providerId + "_" + providerUserId)
-//						// 临时密码, 重新注册本地账号时按自己的业务逻辑进行设置
-//						.password("{noop}" + temporaryUserPassword)
-//						.authUser(authUser)
-//						.encodeState(encodeState)
-//						.disabled(false)
-//						.accountExpired(false)
-//						.accountLocked(false)
-//						.credentialsExpired(false)
-//						.authorities(AuthorityUtils.commaSeparatedStringToAuthorityList(temporaryUserAuthorities))
-//						.build();
+					loginId = SaTempUtil.createToken(authUser.getUuid(), authUser.getToken().getExpireIn());
+					StpUtil.login(loginId);
 					// @formatter:on
 				}
 				// 本地用户已登录, 绑定
@@ -152,9 +155,7 @@ public class UserServiceImpl implements IUserService {
 				connectionData = connectionDataList.get(0);
 				String userId = connectionData.getUserId();
 				loginId = StpUtil.getLoginId(null);
-				cacheWasUsed = true;
 				if (loginId == null) {
-					cacheWasUsed = false;
 					StpUtil.login(userId);
 					loginId = StpUtil.getLoginIdAsString();
 				}

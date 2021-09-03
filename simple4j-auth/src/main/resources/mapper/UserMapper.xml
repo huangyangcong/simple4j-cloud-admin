@@ -3,7 +3,17 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.simple4j.auth.mapper.UserMapper">
 	<select id="existedByAccount" resultType="java.lang.Boolean">
-		select count(1) from simple4j_user where account = #{account}
+		select count(1)
+		from simple4j_user
+		where account = #{account}
+	</select>
+	<select id="existedByUsernames" resultType="java.lang.String">
+		select account
+		from simple4j_user
+		where account in
+		<foreach collection="usernames" item="item" close=")" open="(" separator=",">
+			#{item}
+		</foreach>
 	</select>
 
 </mapper>

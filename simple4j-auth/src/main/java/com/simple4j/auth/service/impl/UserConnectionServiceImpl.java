@@ -13,7 +13,10 @@ import com.simple4j.auth.service.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthUser;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -84,7 +87,22 @@ public class UserConnectionServiceImpl implements IUserConnectionService {
 		// 第三方授权登录信息绑定到本地账号, 且添加第三方授权登录信息到 user_connection 与 auth_token
 		registerConnection(providerId, authUser, loginId);
 	}
-
+	@Override
+	@Transactional(rollbackFor = {Exception.class}, propagation = Propagation.REQUIRED)
+	public void unbinding(@NonNull String userId, @NonNull String providerId, @NonNull String providerUserId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		boolean isCurrentUserAndValid = authentication.isAuthenticated()
+			&& !(authentication instanceof AnonymousAuthenticationToken)
+			&& authentication.getName().equals(userId);
+		// 用户未登录或不是当前用户
+		if (!isCurrentUserAndValid) {
+			log.warn("用户 {} 进行解绑操作时, 用户未登录或不是当前用户; userId: {}, providerId: {}, providerUserId: {}",
+				authentication.getName(), userId, providerId, providerUserId);
+			throw new UnBindingException(ErrorCodeEnum.UN_BINDING_ERROR, userId);
+		}
+		// 解除绑定(第三方)
+		usersConnectionRepository.removeConnection(userId, new ConnectionKey(providerId, providerUserId));
+	}
 
 	/**
 	 * 第三方授权登录信息绑定到本地账号, 且添加第三方授权登录信息到 user_connection 与 auth_token
@@ -172,26 +190,24 @@ public class UserConnectionServiceImpl implements IUserConnectionService {
 	}
 
 	@Override
-	public void updateUserConnection(AuthUser authUser, UserConnection userConnection) {
+	public void updateUserConnection(AuthUser authUser, UserConnection data) {
 		UserConnection connectionData = null;
 		try
 		{
 			// 获取 AuthTokenPo
 			me.zhyd.oauth.model.AuthToken token = authUser.getToken();
-			AuthTokenPo authToken = JustAuthUtil.getAuthTokenPo(token, data.getProviderId(), this.timeout);
+			AuthToken authToken = AuthToken.convert(token, data.getProviderId());
 			authToken.setId(data.getTokenId());
-			// 有效期转时间戳
-			Auth2DefaultRequest.expireIn2Timestamp(this.timeout, token.getExpireIn(), authToken);
 
 			// 获取最新的 ConnectionData
-			connectionData = JustAuthUtil.getConnectionData(data.getProviderId(), authUser, data.getUserId(), authToken);
+			connectionData = buildUserConnection(data.getProviderId(), data.getUserId(), authUser, authToken);
 			connectionData.setUserId(data.getUserId());
 			connectionData.setTokenId(data.getTokenId());
 
 			// 更新 connectionData
 			updateConnection(connectionData);
 			// 更新 AuthTokenPo
-			usersConnectionTokenRepository.updateAuthToken(authToken);
+			tokenService.updateAuthToken(authToken);
 		}
 		catch (Exception e)
 		{
