@@ -1,8 +1,27 @@
 spring:
-    application:
-        name: auth-service
-    cloud:
-        nacos:
-            server-addr: 122.51.133.124:30000
-            config:
-                file-extension: yml
+#    security:
+#        user:
+#            name: "bsnl"
+#            password: "123456"
+#端点信息监控http://localhost:6000/actuator
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+    endpoint:
+        health:
+            show-details: always
+    info:
+        git:
+            mode: full
+    health:
+        db:
+            enabled: false
+        redis:
+            enabled: false
+        mail:
+            enabled: false
+        ldap:
+            enabled: false
+

@@ -113,12 +113,13 @@ public class AuthToken implements Serializable {
 	private Long expireTime;
 
 
-	public static AuthToken convert(me.zhyd.oauth.model.AuthToken token, String providerId) {
+	public static AuthToken convert(long timeout, me.zhyd.oauth.model.AuthToken token, String providerId) {
 		AuthToken authToken = new AuthToken();
 		BeanUtils.copyProperties(token, authToken);
 		authToken.setProviderId(providerId);
 		// 有效期转时间戳
 		expireIn2Timestamp(timeout, token.getExpireIn(), authToken);
+		return authToken;
 	}
 
 
@@ -128,8 +129,8 @@ public class AuthToken implements Serializable {
 	 * @param expireIn  有效期
 	 * @param authToken {@link me.zhyd.oauth.model.AuthToken}
 	 */
-	static <T extends AuthToken> void expireIn2Timestamp(@NonNull Long timeout,
-														   @Nullable Integer expireIn, @NonNull T authToken) {
+	static void expireIn2Timestamp(@NonNull Long timeout,
+														   @Nullable Integer expireIn, @NonNull AuthToken authToken) {
 		if (expireIn == null || expireIn < 1)
 		{
 			// 无过期时间, 默认设置为 -1

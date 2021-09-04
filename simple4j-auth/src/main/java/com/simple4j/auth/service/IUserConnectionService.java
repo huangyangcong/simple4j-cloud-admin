@@ -1,6 +1,7 @@
 package com.simple4j.auth.service;
 
 import com.simple4j.auth.entity.UserConnection;
+import com.simple4j.auth.exceptions.RegisterUserFailureException;
 import me.zhyd.oauth.model.AuthUser;
 import org.springframework.lang.NonNull;
 
@@ -23,14 +24,6 @@ public interface IUserConnectionService {
 	List<UserConnection> queryConnectionByProviderIdAndProviderUserId(String providerId, String providerUserId);
 
 	/**
-	 * @param authUser
-	 * @param providerId
-	 * @param encodeState
-	 * @return
-	 */
-	String signUp(AuthUser authUser, String providerId, String encodeState);
-
-	/**
 	 * 绑定用户
 	 *
 	 * @param loginId
@@ -47,6 +40,16 @@ public interface IUserConnectionService {
 	 * @param providerUserId
 	 */
 	void unbinding(String userId, String providerId, String providerUserId);
+
+	/**
+	 * 注册链接
+	 *
+	 * @param providerId
+	 * @param authUser
+	 * @param loginId
+	 * @throws RegisterUserFailureException
+	 */
+	void registerConnection(String providerId, AuthUser authUser, String loginId) throws RegisterUserFailureException;
 
 	/**
 	 * 更新用户绑定信息

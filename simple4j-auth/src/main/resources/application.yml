@@ -16,6 +16,18 @@ server:
             force-request: true
             force-response: true
 spring:
+    cloud:
+        #        nacos:
+        #            server-addr: 122.51.133.124:30000
+        #            config:
+        #                file-extension: yml
+        consul:
+            host: 122.51.133.124
+            port: 32679
+            discovery:
+                service-name: ${spring.application.name}
+                instance-id: ${spring.application.name}:${server.port}
+                prefer-ip-address: true
     devtools:
         restart:
             enabled: true  #设置开启热部署
@@ -29,6 +41,7 @@ spring:
     application:
         version: 1.0
         description: 通用框架
+        name: simple4j-auth
     #redis
     #配置数据源
     datasource:
@@ -123,38 +136,6 @@ mybatis-plus:
         map-underscore-to-camel-case: true
         cache-enabled: false
         call-setters-on-nulls: true
-# ums core
-ums:
-    # ================ 第三方授权登录相关配置 ================
-    oauth:
-        # 是否支持第三方授权登录功能, 默认: true
-        enabled: true
-        # 抑制反射警告, 支持 JDK11, 默认: false , 在确认 WARNING: An illegal reflective access operation has occurred 安全后, 可以打开此设置, 可以抑制反射警告.
-        suppress-reflect-warning: true
-        # 第三方服务商: providerId, 支持所有 JustAuth 支持的第三方授权登录, 目前有 32 家第三方授权登录
-        github:
-            # 根据是否有设置 clientId 来动态加载相应 JustAuth 的 AuthXxxRequest
-            client-id: 4d4ee00e82f669f2ea8d
-            client-secret: 953ddbe871a08d6924053531e89ecc01d87195a8
-        gitee:
-            client-id: dcc38c801ee88f43cfc1d5c52ec579751c12610c37b87428331bd6694056648e
-            client-secret: e60a110a2f6e7c930c2d416f802bec6061e19bfa0ceb0df9f6b182b05d8f5a58
-        # 第三方登录授权登录 url 前缀, 不包含 ServletContextPath，默认为 /auth2/authorization.
-        auth-login-url-prefix: /auth2/authorization
-        # 第三方登录回调处理 url 前缀 ，也就是 RedirectUrl 的前缀, 不包含 ServletContextPath，默认为 /auth2/login.
-        redirect-url-prefix: /auth2/login
-        # 第三方登录回调的域名, 例如：http://localhost:9090 默认为 "http://127.0.0.1"，
-        # redirectUrl 直接由 {domain}/{servletContextPath}/{redirectUrlPrefix}/{providerId}(ums.oauth.[qq/gitee/weibo])组成
-        domain: http://localhost:9090
-        # 第三方授权登录成功后的默认权限, 多个权限用逗号分开, 默认为: "ROLE_USER"
-        default-authorities: ROLE_USER
-
-        # 用于 JustAuth 的代理(HttpClient)设置
-        proxy:
-            # 用于国内代理(HttpClient)超时, 默认 PT3S
-            timeout: PT3S
-            # 用于国外网站代理(HttpClient)超时, 默认 PT15S
-            foreign-timeout: PT150S
 # 登录相关配置
 login:
     # 登录缓存
@@ -173,25 +154,6 @@ login:
         heigth: 36
         # 内容长度
         length: 2
-
-#jwt
-jwt:
-    header: Token
-    # 令牌前缀
-    token-start-with: Bearer
-    # 必须使用最少88位的Base64对该令牌进行编码
-    base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
-    # 令牌过期时间 此处单位/毫秒 ，默认4小时，可在此网站生成 https://www.convertworld.com/zh-hans/time/milliseconds.html
-    token-validity-in-seconds: 14400000
-    # 在线用户key
-    online-key: online-token-
-    # 验证码
-    code-key: code-key-
-    # token 续期检查时间范围（默认30分钟，单位毫秒），在token即将过期的一段时间内用户操作了，则给用户的token续期
-    detect: 1800000
-    # 续期时间范围，默认1小时，单位毫秒
-    renew: 3600000
-
 #是否允许生成代码，生产环境设置为false
 generator:
     enabled: true

@@ -39,6 +39,13 @@ public interface IUserService {
 	List<Boolean> existedByUsernames(String[] usernames);
 
 	/**
+	 * @param authUser
+	 * @param providerId
+	 * @param encodeState
+	 * @return
+	 */
+	String signUp(AuthUser authUser, String providerId, String encodeState);
+	/**
 	 * 授权
 	 *
 	 * @param encodeState
@@ -57,5 +64,16 @@ public interface IUserService {
 	 * @param decodeState
 	 * @return
 	 */
-	String registerUser(AuthUser authUser, String username, String decodeState);
+	String registerUser(AuthUser authUser, String decodeState);
+
+	/**
+	 * 授权并绑定用户信息
+	 *
+	 * @param encodeState
+	 * @param providerId
+	 * @param autoSignUp
+	 * @param authUser
+	 * @return
+	 */
+	String authentication(String encodeState, String providerId, boolean autoSignUp, AuthUser authUser);
 }

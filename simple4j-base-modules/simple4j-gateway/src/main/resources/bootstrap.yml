@@ -1,13 +1,5 @@
-server:
-    port: 9999
 spring:
-    application:
-        name: gateway-service
     cloud:
-        nacos:
-            server-addr: 122.51.133.124:30000
-            config:
-                file-extension: yml
         loadbalancer:
             ribbon:
                 enabled: false

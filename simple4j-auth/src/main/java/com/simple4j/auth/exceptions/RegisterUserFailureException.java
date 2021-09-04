@@ -4,12 +4,10 @@ import com.simple4j.api.base.BusinessException;
 import com.simple4j.auth.enums.ErrorCodeEnum;
 
 public class RegisterUserFailureException extends BusinessException {
-
-	public RegisterUserFailureException(ErrorCodeEnum errorCodeEnum, Throwable t, String userId) {
-		super(errorCodeEnum.getCode(), , t, null, userId);
+	public RegisterUserFailureException(ErrorCodeEnum errorCode, Object data) {
+		super((errorCode.getCode()), errorCode.getMsg(), data);
 	}
-
-	public RegisterUserFailureException(ErrorCodeEnum errorCodeEnum, String userId) {
-		super(errorCodeEnum, null, userId);
+	public RegisterUserFailureException(ErrorCodeEnum errorCode, Object data, Throwable e) {
+		super((errorCode.getCode()), errorCode.getMsg(), data, e);
 	}
 }

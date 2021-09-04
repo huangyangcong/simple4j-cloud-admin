@@ -44,6 +44,10 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<dependency>
 			<artifactId>simple4j-springboot-starter-util</artifactId>
 			<groupId>com.simple4j.boot</groupId>
 		</dependency>
@@ -64,12 +68,8 @@
 			<groupId>org.springframework.cloud</groupId>
 		</dependency>
 		<dependency>
-			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-			<groupId>com.alibaba.cloud</groupId>
-		</dependency>
-		<dependency>
-			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-			<groupId>com.alibaba.cloud</groupId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency>
 		<dependency>
 			<artifactId>springfox-boot-starter</artifactId>

@@ -1,4 +1,20 @@
+server:
+    port: 9999
 spring:
+    application:
+        name: gateway-service
+    cloud:
+        consul:
+            host: 122.51.133.124
+            port: 32679
+            discovery:
+                service-name: ${spring.application.name}
+                instance-id: ${spring.application.name}:${server.port}
+                prefer-ip-address: true
+#        nacos:
+#            server-addr: 122.51.133.124:30000
+#            config:
+#                file-extension: yml
     main:
         allow-bean-definition-overriding: true
     security:
