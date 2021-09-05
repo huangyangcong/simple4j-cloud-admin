@@ -5,8 +5,8 @@ import com.simple4j.system.request.*;
 import com.simple4j.system.response.PostDetailResponse;
 import com.simple4j.system.service.IPostService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/post")
-@Api(value = "岗位表", tags = "岗位表接口")
+@Tag(name = "岗位表", description = "岗位表接口")
 public class PostController {
 
 	private IPostService postService;
@@ -33,7 +33,7 @@ public class PostController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入post")
+	@Operation(summary = "详情", description = "传入post")
 	public ApiResponse<PostDetailResponse> detail(
 		@Valid @RequestBody PostDetailRequest postDetailRequest) {
 		PostDetailResponse detail = postService.detail(postDetailRequest);
@@ -41,7 +41,7 @@ public class PostController {
 	}
 
 	@PostMapping("/list")
-	@ApiOperation(value = "列表")
+	@Operation(summary = "列表")
 	public ApiResponse<List<PostDetailResponse>> list(
 		@Valid @RequestBody PostListRequest postListRequest) {
 		return ApiResponse.ok(postService.list(postListRequest));
@@ -51,7 +51,7 @@ public class PostController {
 	 * 分页 岗位表
 	 */
 	@PostMapping("/page")
-	@ApiOperation(value = "分页", notes = "传入post")
+	@Operation(summary = "分页", description = "传入post")
 	public ApiResponse<Page<PostDetailResponse>> page(
 		@Valid @RequestBody PostPageRequest postPageRequest) {
 		return ApiResponse.ok(postService.page(postPageRequest));
@@ -61,7 +61,7 @@ public class PostController {
 	 * 新增 岗位表
 	 */
 	@PostMapping("/save")
-	@ApiOperation(value = "新增", notes = "传入post")
+	@Operation(summary = "新增", description = "传入post")
 	public ApiResponse<Void> add(@Valid @RequestBody PostAddRequest postAddRequest) {
 		postService.add(postAddRequest);
 		return ApiResponse.ok();
@@ -71,7 +71,7 @@ public class PostController {
 	 * 修改 岗位表
 	 */
 	@PostMapping("/update")
-	@ApiOperation(value = "修改", notes = "传入post")
+	@Operation(summary = "修改", description = "传入post")
 	public ApiResponse<Void> update(@Valid @RequestBody PostUpdateRequest postUpdateRequest) {
 		postService.update(postUpdateRequest);
 		return ApiResponse.ok();
@@ -81,7 +81,7 @@ public class PostController {
 	 * 删除 岗位表
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
+	@Operation(summary = "逻辑删除", description = "传入ids")
 	public ApiResponse<Void> remove(@RequestBody PostRemoveRequest postRemoveRequest) {
 		postService.remove(postRemoveRequest);
 		return ApiResponse.ok();

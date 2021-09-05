@@ -1,8 +1,8 @@
 package com.simple4j.system.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @since 2020-08-26
  */
 @Data
-@ApiModel(value = "租户表分页请求实体类", description = "租户表分页请求实体类")
+@Schema(name = "租户表分页请求实体类", description = "租户表分页请求实体类")
 public class TenantPageRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,26 +22,26 @@ public class TenantPageRequest implements Serializable {
 	/**
 	 * 页码
 	 */
-	@ApiModelProperty(name = "page_no", value = "页码")
+	@Parameter(name = "page_no", description = "页码")
 	@JsonProperty("page_no")
 	private int pageNo;
 
 	/**
 	 * 分页数
 	 */
-	@ApiModelProperty(name = "pageSize", value = "分页数")
+	@Parameter(name = "pageSize", description = "分页数")
 	@JsonProperty("page_size")
 	private int pageSize;
 
-	@ApiModelProperty(name = "tenant_id", value = "租户编号")
+	@Parameter(name = "tenant_id", description = "租户编号")
 	@JsonProperty("tenant_id")
 	private String tenantId;
 
-	@ApiModelProperty(name = "tenant_name", value = "租户名称")
+	@Parameter(name = "tenant_name", description = "租户名称")
 	@JsonProperty("tenant_name")
 	private String tenantName;
 
-	@ApiModelProperty(name = "contact_number", value = "租户联系电话")
+	@Parameter(name = "contact_number", description = "租户联系电话")
 	@JsonProperty("contact_number")
 	private String contactNumber;
 }

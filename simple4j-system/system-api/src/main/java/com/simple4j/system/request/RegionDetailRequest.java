@@ -1,6 +1,6 @@
 package com.simple4j.system.request;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -9,6 +9,6 @@ import javax.validation.constraints.NotNull;
 public class RegionDetailRequest {
 
 	@NotNull
-	@ApiModelProperty(value = "区划编号", required = true)
+	@Parameter(description = "区划编号", required = true)
 	private String code;
 }

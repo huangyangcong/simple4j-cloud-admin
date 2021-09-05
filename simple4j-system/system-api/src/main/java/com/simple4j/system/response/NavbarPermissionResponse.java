@@ -1,7 +1,7 @@
 package com.simple4j.system.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import java.util.Set;
@@ -12,7 +12,7 @@ public class NavbarPermissionResponse {
 	/**
 	 * 顶部菜单编号列表
 	 */
-	@ApiModelProperty(name = "menu_ids", value = "顶部菜单编号列表")
+	@Parameter(name = "menu_ids", description = "顶部菜单编号列表")
 	@JsonProperty("menu_ids")
 	private Set<String> menuIds;
 }

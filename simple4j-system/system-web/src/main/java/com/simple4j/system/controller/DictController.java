@@ -7,8 +7,8 @@ import com.simple4j.system.request.DictRemoveRequest;
 import com.simple4j.system.response.DictDetailResponse;
 import com.simple4j.system.service.IDictService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +26,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/dict")
-@Api(value = "字典", tags = "字典")
+@Tag(name = "字典", description = "字典")
 public class DictController {
 
 	private IDictService dictService;
@@ -35,7 +35,7 @@ public class DictController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入dict")
+	@Operation(summary = "详情", description = "传入dict")
 	public ApiResponse<DictDetailResponse> detail(
 		@Valid @RequestBody DictDetailRequest dictDetailRequest) {
 		return ApiResponse.ok(dictService.detail(dictDetailRequest));
@@ -45,7 +45,7 @@ public class DictController {
 	 * 列表
 	 */
 	@PostMapping("/list")
-	@ApiOperation(value = "列表", notes = "传入dict")
+	@Operation(summary = "列表", description = "传入dict")
 	public ApiResponse<List<DictDetailResponse>> list(
 		@Valid @RequestBody DictListRequest dictListRequest) {
 		return ApiResponse.ok(dictService.list(dictListRequest));
@@ -57,7 +57,7 @@ public class DictController {
 	 * @return
 	 */
 	@PostMapping("/tree")
-	@ApiOperation(value = "树形结构", notes = "树形结构")
+	@Operation(summary = "树形结构", description = "树形结构")
 	public ApiResponse<List<DictDetailResponse>> tree() {
 		List<DictDetailResponse> tree = dictService.tree();
 		return ApiResponse.ok(tree);
@@ -67,7 +67,7 @@ public class DictController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入dict")
+	@Operation(summary = "新增或修改", description = "传入dict")
 	public ApiResponse<Void> submit(
 		@Valid @RequestBody DictAddOrUpdateRequest dictAddOrUpdateRequest) {
 		dictService.submit(dictAddOrUpdateRequest);
@@ -78,7 +78,7 @@ public class DictController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除", notes = "传入ids")
+	@Operation(summary = "删除", description = "传入ids")
 	public ApiResponse<Void> remove(@Valid @RequestBody DictRemoveRequest dictRemoveRequest) {
 		dictService.remove(dictRemoveRequest);
 		return ApiResponse.ok();
@@ -90,7 +90,7 @@ public class DictController {
 	 * @return
 	 */
 	@PostMapping("/dictionary")
-	@ApiOperation(value = "获取字典", notes = "获取字典")
+	@Operation(summary = "获取字典", description = "获取字典")
 	public ApiResponse<List<DictDetailResponse>> dictionary(String code) {
 		return ApiResponse.ok(dictService.getList(code));
 	}

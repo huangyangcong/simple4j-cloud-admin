@@ -72,8 +72,12 @@
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency>
 		<dependency>
-			<artifactId>springfox-boot-starter</artifactId>
-			<groupId>io.springfox</groupId>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>

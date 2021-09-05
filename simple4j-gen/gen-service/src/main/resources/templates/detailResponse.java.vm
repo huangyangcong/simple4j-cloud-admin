@@ -6,8 +6,8 @@ package $!{responsePackage};
     import lombok.Data;
     #end
     #if($!{swagger2})
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
+    import io.swagger.v3.oas.annotations.media.Schema;
+    import io.swagger.v3.oas.annotations.Parameter;
     #end
     #if($!{cfg.tree})
     import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,7 +30,7 @@ import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
     @Data
     #end
     #if($!{swagger2})
-    @ApiModel(value = "$!{table.comment}详情响应实体类", description = "$!{table.comment}详情响应实体类")
+    @Schema(name = "$!{table.comment}详情响应实体类", description = "$!{table.comment}详情响应实体类")
     #end
     #if($!{cfg.tree})
     public class $!{entity}DetailResponse extends $!{entity}AddOrUpdateRequest implements
@@ -55,7 +55,7 @@ import $!{requestPackage}.$!{entity}AddOrUpdateRequest;
                  * $!{field.comment}
                  */
                 #if($!{swagger2})
-                @ApiModelProperty(name = "$!{field.name}", value = "$!{field.comment}")
+                @Parameter(name = "$!{field.name}", description = "$!{field.comment}")
                 #end
                 #if($!{cfg.jackson})
                 @JsonProperty("$!{field.name}")

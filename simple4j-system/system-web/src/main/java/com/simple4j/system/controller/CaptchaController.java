@@ -3,8 +3,8 @@ package com.simple4j.system.controller;
 import com.simple4j.system.response.CaptchaResponse;
 import com.simple4j.system.service.ICaptchaService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,7 @@ public class CaptchaController {
 	private final ICaptchaService iCaptchaService;
 
 	@PostMapping("")
-	@ApiOperation(value = "获取验证码")
+	@Operation(summary = "获取验证码")
 	@PermitAll()
 	public ApiResponse<CaptchaResponse> captcha() {
 		return ApiResponse.ok(iCaptchaService.captcha());

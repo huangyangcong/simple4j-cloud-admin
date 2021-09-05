@@ -1,6 +1,6 @@
 package com.simple4j.system.response;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 @Data
@@ -9,6 +9,6 @@ public class UserLoginResponse {
 	/**
 	 * token
 	 */
-	@ApiModelProperty(value = "token")
+	@Parameter(description = "token")
 	private String token;
 }

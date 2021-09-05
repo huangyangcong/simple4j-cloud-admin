@@ -5,8 +5,8 @@ import com.simple4j.system.request.*;
 import com.simple4j.system.response.RegionDetailResponse;
 import com.simple4j.system.service.IRegionService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/region")
-@Api(value = "行政区划表", tags = "行政区划表接口")
+@Tag(name = "行政区划表", description = "行政区划表接口")
 public class RegionController {
 
 	private final IRegionService regionService;
@@ -33,7 +33,7 @@ public class RegionController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入region")
+	@Operation(summary = "详情", description = "传入region")
 	public ApiResponse<RegionDetailResponse> detail(
 		@Valid @RequestBody RegionDetailRequest regionDetailRequest) {
 		RegionDetailResponse detail = regionService.detail(regionDetailRequest);
@@ -44,7 +44,7 @@ public class RegionController {
 	 * 分页 行政区划表
 	 */
 	@PostMapping("/list")
-	@ApiOperation(value = "分页", notes = "传入region")
+	@Operation(summary = "分页", description = "传入region")
 	public ApiResponse<Page<RegionDetailResponse>> list(
 		@Valid @RequestBody RegionPageRequest regionPageRequest) {
 		return ApiResponse.ok(regionService.page(regionPageRequest));
@@ -54,7 +54,7 @@ public class RegionController {
 	 * 懒加载列表
 	 */
 	@PostMapping("/lazy-list")
-	@ApiOperation(value = "懒加载列表")
+	@Operation(summary = "懒加载列表")
 	public ApiResponse<List<RegionDetailResponse>> lazyList(
 		@Valid @RequestBody RegionLazyListRequest regionLazyListRequest) {
 		List<RegionDetailResponse> list = regionService.lazyList(regionLazyListRequest);
@@ -65,7 +65,7 @@ public class RegionController {
 	 * 新增 行政区划表
 	 */
 	@PostMapping("/save")
-	@ApiOperation(value = "新增")
+	@Operation(summary = "新增")
 	public ApiResponse<Void> save(@Valid @RequestBody RegionAddRequest regionAddRequest) {
 		regionService.add(regionAddRequest);
 		return ApiResponse.ok();
@@ -75,7 +75,7 @@ public class RegionController {
 	 * 修改 行政区划表
 	 */
 	@PostMapping("/update")
-	@ApiOperation(value = "修改", notes = "传入region")
+	@Operation(summary = "修改", description = "传入region")
 	public ApiResponse<Void> update(@Valid @RequestBody RegionUpdateRequest regionUpdateRequest) {
 		regionService.update(regionUpdateRequest);
 		return ApiResponse.ok();
@@ -85,7 +85,7 @@ public class RegionController {
 	 * 新增或修改 行政区划表
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入region")
+	@Operation(summary = "新增或修改", description = "传入region")
 	public ApiResponse<Void> submit(@Valid @RequestBody RegionAddRequest regionAddRequest) {
 		regionService.submit(regionAddRequest);
 		return ApiResponse.ok();
@@ -95,7 +95,7 @@ public class RegionController {
 	 * 删除 行政区划表
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除", notes = "传入主键")
+	@Operation(summary = "删除", description = "传入主键")
 	public ApiResponse<Void> remove(@Valid @RequestBody RegionRemoveRequest regionRemoveRequest) {
 		regionService.removeRegion(regionRemoveRequest);
 		return ApiResponse.ok();

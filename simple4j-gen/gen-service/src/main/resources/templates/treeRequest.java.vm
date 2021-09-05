@@ -6,8 +6,8 @@ import lombok.Data;
 #end
 import java.io.Serializable;
 #if($!{swagger2})
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 #end
 
 /**
@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
     @Data
     #end
     #if($!{swagger2})
-    @ApiModel(value = "$!{table.comment}树形请求实体类", description = "$!{table.comment}树形请求实体类")
+    @Schema(name = "$!{table.comment}树形请求实体类", description = "$!{table.comment}树形请求实体类")
     #end
 public class $!{entity}TreeRequest implements Serializable {
 

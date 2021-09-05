@@ -6,8 +6,8 @@ package $!{requestPackage};
     import lombok.Data;
     #end
     #if($!{swagger2})
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
+    import io.swagger.v3.oas.annotations.media.Schema;
+    import io.swagger.v3.oas.annotations.Parameter;
     #end
 import java.io.Serializable;
 
@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     @Data
     #end
     #if($!{swagger2})
-    @ApiModel(value = "$!{table.comment}新增请求实体类", description = "$!{table.comment}新增请求实体类")
+    @Schema(name = "$!{table.comment}新增请求实体类", description = "$!{table.comment}新增请求实体类")
     #end
 public class $!{entity}AddRequest implements Serializable {
 
@@ -41,7 +41,7 @@ public class $!{entity}AddRequest implements Serializable {
                  * $!{field.comment}
                  */
                 #if($!{swagger2})
-                @ApiModelProperty(name = "$!{field.name}", value = "$!{field.comment}")
+                @Parameter(name = "$!{field.name}", description = "$!{field.comment}")
                 #end
                 #if($!{cfg.jackson})
                 @JsonProperty("$!{field.name}")

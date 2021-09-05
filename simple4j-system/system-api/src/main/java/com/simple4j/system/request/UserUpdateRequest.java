@@ -1,6 +1,6 @@
 package com.simple4j.system.request;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 /**
@@ -13,6 +13,6 @@ public class UserUpdateRequest extends UserAddRequest {
 	/**
 	 * 用户ID
 	 */
-	@ApiModelProperty(value = "用户ID")
+	@Parameter(description = "用户ID")
 	private String id;
 }

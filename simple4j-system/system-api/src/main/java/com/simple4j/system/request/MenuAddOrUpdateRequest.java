@@ -1,6 +1,6 @@
 package com.simple4j.system.request;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 2020-09-16
  */
 @Data
-@ApiModel(value = "菜单表新增请求实体类", description = "菜单表新增请求实体类")
+@Schema(name = "菜单表新增请求实体类", description = "菜单表新增请求实体类")
 public class MenuAddOrUpdateRequest extends MenuUpdateRequest {
 
 }

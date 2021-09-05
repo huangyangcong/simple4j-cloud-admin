@@ -1,7 +1,7 @@
 package com.simple4j.system.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import java.util.Set;
@@ -9,11 +9,11 @@ import java.util.Set;
 @Data
 public class UserDeptGrantRequest {
 
-	@ApiModelProperty(name = "user_ids", value = "用户编号列表")
+	@Parameter(name = "user_ids", description = "用户编号列表")
 	@JsonProperty("user_ids")
 	Set<String> userIds;
 
-	@ApiModelProperty(name = "dept_ids", value = "用户部门列表")
+	@Parameter(name = "dept_ids", description = "用户部门列表")
 	@JsonProperty("dept_ids")
 	Set<String> deptIds;
 }

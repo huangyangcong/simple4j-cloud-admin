@@ -1,7 +1,7 @@
 package com.simple4j.system.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 /**
@@ -14,7 +14,7 @@ public class MenuRoutersRequest {
 	/**
 	 * 顶部菜单编号
 	 */
-	@ApiModelProperty(name = "navbar_id", value = "顶部菜单编号")
+	@Parameter(name = "navbar_id", description = "顶部菜单编号")
 	@JsonProperty("navbar_id")
 	private Long navbarId;
 }

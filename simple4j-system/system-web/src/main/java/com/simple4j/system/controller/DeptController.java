@@ -5,8 +5,8 @@ import com.simple4j.system.request.*;
 import com.simple4j.system.response.DeptDetailResponse;
 import com.simple4j.system.service.IDeptService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/dept")
-@Api(value = "部门", tags = "部门")
+@Tag(name = "部门", description = "部门")
 public class DeptController {
 
 	private IDeptService deptService;
@@ -33,7 +33,7 @@ public class DeptController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入dept")
+	@Operation(summary = "详情", description = "传入dept")
 	public ApiResponse<DeptDetailResponse> detail(
 		@Valid @RequestBody DeptDetailRequest deptDetailRequest) {
 		return ApiResponse.ok(deptService.detail(deptDetailRequest));
@@ -43,7 +43,7 @@ public class DeptController {
 	 * 列表
 	 */
 	@PostMapping("/page")
-	@ApiOperation(value = "列表")
+	@Operation(summary = "列表")
 	public ApiResponse<Page<DeptDetailResponse>> list(
 		@Valid @RequestBody DeptPageRequest deptPageRequest) {
 		return ApiResponse.ok(deptService.page(deptPageRequest));
@@ -55,7 +55,7 @@ public class DeptController {
 	 * @return
 	 */
 	@PostMapping("/tree")
-	@ApiOperation(value = "树形结构", notes = "树形结构")
+	@Operation(summary = "树形结构", description = "树形结构")
 	public ApiResponse<List<DeptDetailResponse>> tree(String tenantId) {
 		List<DeptDetailResponse> tree = deptService.tree(tenantId);
 		return ApiResponse.ok(tree);
@@ -65,7 +65,7 @@ public class DeptController {
 	 * 新增 部门表
 	 */
 	@PostMapping("/add")
-	@ApiOperation(value = "新增")
+	@Operation(summary = "新增")
 	public ApiResponse<Void> add(@Valid @RequestBody DeptAddRequest deptAddRequest) {
 		deptService.add(deptAddRequest);
 		return ApiResponse.ok();
@@ -75,7 +75,7 @@ public class DeptController {
 	 * 修改 部门表
 	 */
 	@PostMapping("/update")
-	@ApiOperation(value = "修改")
+	@Operation(summary = "修改")
 	public ApiResponse<Void> update(@Valid @RequestBody DeptUpdateRequest deptUpdateRequest) {
 		deptService.update(deptUpdateRequest);
 		return ApiResponse.ok();
@@ -85,7 +85,7 @@ public class DeptController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除", notes = "传入ids")
+	@Operation(summary = "删除", description = "传入ids")
 	public ApiResponse<Void> remove(@Valid @RequestBody DeptRemoveRequest deptRemoveRequest) {
 		deptService.remove(deptRemoveRequest);
 		return ApiResponse.ok();

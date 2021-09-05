@@ -1,6 +1,6 @@
 package com.simple4j.system.response;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import java.util.Set;
@@ -15,6 +15,6 @@ public class RoleMenuKeyResponse {
 	/**
 	 * 菜单编号列表
 	 */
-	@ApiModelProperty(value = "菜单编号列表", name = "menus")
+	@Parameter(description = "菜单编号列表", name = "menus")
 	Set<String> menus;
 }

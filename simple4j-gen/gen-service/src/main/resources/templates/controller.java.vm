@@ -2,8 +2,8 @@ package $!{package.Controller};
 
 import java.util.List;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 
 import javax.validation.Valid;
@@ -39,7 +39,7 @@ import $!{superControllerClassPackage};
 @RestController
 @AllArgsConstructor
 @RequestMapping("#if($!{package.ModuleName})/$!{package.ModuleName}#end/$!{cfg.entityKey}")
-@Api(value = "$!{table.comment}", tags = "$!{table.comment}接口")
+@Tag(name = "$!{table.comment}", description = "$!{table.comment}接口")
 #if($!{superControllerClass})
 public class $!{table.controllerName} extends $!{superControllerClass} {
 #else
@@ -52,7 +52,7 @@ private $!{table.serviceName} $!{table.entityPath}Service;
  * 详情
  */
 @PostMapping("/detail")
-@ApiOperation(value = "详情")
+@Operation(summary = "详情")
 public ApiResponse<$!{entity}DetailResponse> detail(@Valid @RequestBody $!{entity}DetailRequest $!{table.entityPath}DetailRequest){
     $!{entity}DetailResponse detail= $!{table.entityPath}Service.detail($!{table.entityPath}DetailRequest);
         return ApiResponse.ok(detail);
@@ -62,7 +62,7 @@ public ApiResponse<$!{entity}DetailResponse> detail(@Valid @RequestBody $!{entit
  * 列表 $!{table.comment}
  */
 @PostMapping("/list")
-@ApiOperation(value = "列表")
+@Operation(summary = "列表")
 public ApiResponse<List<$!{entity}DetailResponse>>list(@Valid @RequestBody $!{entity}ListRequest $!{table.entityPath}ListRequest){
         List<$!{entity}DetailResponse> list= $!{table.entityPath}Service.list($!{table.entityPath}ListRequest);
         return ApiResponse.ok(list);
@@ -72,7 +72,7 @@ public ApiResponse<List<$!{entity}DetailResponse>>list(@Valid @RequestBody $!{en
  * 自定义分页 $!{table.comment}
  */
 @PostMapping("/page")
-@ApiOperation(value = "分页")
+@Operation(summary = "分页")
 public ApiResponse<Page<$!{entity}DetailResponse>>page(@Valid @RequestBody $!{entity}PageRequest $!{table.entityPath}PageRequest){
         Page<$!{entity}DetailResponse> pages= $!{table.entityPath}Service.page( $!{table.entityPath}PageRequest);
         return ApiResponse.ok(pages);
@@ -82,7 +82,7 @@ public ApiResponse<Page<$!{entity}DetailResponse>>page(@Valid @RequestBody $!{en
  * 新增 $!{table.comment}
  */
 @PostMapping("/add")
-@ApiOperation(value = "新增")
+@Operation(summary = "新增")
 public ApiResponse<Void> add(@Valid @RequestBody $!{entity}AddRequest $!{table.entityPath}AddRequest){
     $!{table.entityPath}Service.add($!{table.entityPath}AddRequest);
         return ApiResponse.ok();
@@ -92,7 +92,7 @@ public ApiResponse<Void> add(@Valid @RequestBody $!{entity}AddRequest $!{table.e
  * 修改 $!{table.comment}
  */
 @PostMapping("/update")
-@ApiOperation(value = "修改")
+@Operation(summary = "修改")
 public ApiResponse<Void> update(@Valid @RequestBody $!{entity}UpdateRequest $!{table.entityPath}UpdateRequest){
     $!{table.entityPath}Service.update($!{table.entityPath}UpdateRequest);
         return ApiResponse.ok();
@@ -102,7 +102,7 @@ public ApiResponse<Void> update(@Valid @RequestBody $!{entity}UpdateRequest $!{t
  * 新增或修改 $!{table.comment}
  */
 @PostMapping("/submit")
-@ApiOperation(value = "新增或修改")
+@Operation(summary = "新增或修改")
 public ApiResponse<Void> addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest){
     $!{table.entityPath}Service.addOrUpdate($!{table.entityPath}AddOrUpdateRequest);
         return ApiResponse.ok();
@@ -113,7 +113,7 @@ public ApiResponse<Void> addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRe
  * 树形 $!{table.comment}
  */
 @PostMapping("/tree")
-@ApiOperation(value = "树形")
+@Operation(summary = "树形")
 public ApiResponse<List<$!{entity}DetailResponse>>tree(@Valid @RequestBody $!{entity}TreeRequest $!{table.entityPath}TreeRequest){
         return ApiResponse.ok($!{table.entityPath}Service.tree($!{table.entityPath}TreeRequest));
         }
@@ -123,7 +123,7 @@ public ApiResponse<List<$!{entity}DetailResponse>>tree(@Valid @RequestBody $!{en
  * 删除 $!{table.comment}
  */
 @PostMapping("/remove")
-@ApiOperation(value = "删除")
+@Operation(summary = "删除")
 public ApiResponse<Void> remove(@Valid @RequestBody $!{entity}RemoveRequest $!{table.entityPath}RemoveRequest){
     $!{table.entityPath}Service.remove($!{table.entityPath}RemoveRequest);
         return ApiResponse.ok();

@@ -5,8 +5,8 @@ import com.simple4j.gen.request.*;
 import com.simple4j.gen.response.DatasourceDetailResponse;
 import com.simple4j.gen.service.IDatasourceService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +25,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/gen/datasource")
-@Api(value = "数据源配置表", tags = "数据源配置表接口")
+@Tag(name = "数据源配置表", description = "数据源配置表接口")
 public class DatasourceController {
 
 	private IDatasourceService datasourceService;
@@ -34,7 +34,7 @@ public class DatasourceController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情")
+	@Operation(summary = "详情")
 	public ApiResponse<DatasourceDetailResponse> detail(
 		@Valid @RequestBody DatasourceDetailRequest datasourceDetailRequest) {
 		DatasourceDetailResponse detail = datasourceService.detail(datasourceDetailRequest);
@@ -45,7 +45,7 @@ public class DatasourceController {
 	 * 列表 数据源配置表
 	 */
 	@PostMapping("/list")
-	@ApiOperation(value = "列表")
+	@Operation(summary = "列表")
 	public ApiResponse<List<DatasourceDetailResponse>> list(
 		@Valid @RequestBody DatasourceListRequest datasourceListRequest) {
 		List<DatasourceDetailResponse> pages = datasourceService.list(datasourceListRequest);
@@ -56,7 +56,7 @@ public class DatasourceController {
 	 * 自定义分页 数据源配置表
 	 */
 	@PostMapping("/page")
-	@ApiOperation(value = "分页")
+	@Operation(summary = "分页")
 	public ApiResponse<Page<DatasourceDetailResponse>> page(
 		@Valid @RequestBody DatasourcePageRequest datasourcePageRequest) {
 		Page<DatasourceDetailResponse> pages = datasourceService.page(datasourcePageRequest);
@@ -67,7 +67,7 @@ public class DatasourceController {
 	 * 新增 数据源配置表
 	 */
 	@PostMapping("/add")
-	@ApiOperation(value = "新增")
+	@Operation(summary = "新增")
 	public ApiResponse<Void> add(@Valid @RequestBody DatasourceAddRequest datasourceAddRequest) {
 		datasourceService.add(datasourceAddRequest);
 		return ApiResponse.ok();
@@ -77,7 +77,7 @@ public class DatasourceController {
 	 * 修改 数据源配置表
 	 */
 	@PostMapping("/update")
-	@ApiOperation(value = "修改")
+	@Operation(summary = "修改")
 	public ApiResponse<Void> update(
 		@Valid @RequestBody DatasourceUpdateRequest datasourceUpdateRequest) {
 		datasourceService.update(datasourceUpdateRequest);
@@ -88,7 +88,7 @@ public class DatasourceController {
 	 * 新增或修改 数据源配置表
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改")
+	@Operation(summary = "新增或修改")
 	public ApiResponse<Void> addOrUpdate(
 		@Valid @RequestBody DatasourceAddOrUpdateRequest datasourceAddOrUpdateRequest) {
 		datasourceService.addOrUpdate(datasourceAddOrUpdateRequest);
@@ -99,7 +99,7 @@ public class DatasourceController {
 	 * 删除 数据源配置表
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除")
+	@Operation(summary = "删除")
 	public ApiResponse<Void> remove(
 		@Valid @RequestBody DatasourceRemoveRequest datasourceRemoveRequest) {
 		datasourceService.remove(datasourceRemoveRequest);

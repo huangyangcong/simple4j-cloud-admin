@@ -5,8 +5,8 @@ import com.simple4j.system.request.*;
 import com.simple4j.system.response.ClientDetailResponse;
 import com.simple4j.system.service.IAuthClientService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/client")
-@Api(value = "应用管理", tags = "接口")
+@Tag(name = "应用管理", description = "接口")
 public class AuthClientController {
 
 	private final IAuthClientService clientService;
@@ -32,7 +32,7 @@ public class AuthClientController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入client")
+	@Operation(summary = "详情", description = "传入client")
 	public ApiResponse<ClientDetailResponse> detail(
 		@Valid @RequestBody ClientDetailRequest clientDetailRequest) {
 		return ApiResponse.ok(clientService.detail(clientDetailRequest));
@@ -42,7 +42,7 @@ public class AuthClientController {
 	 * 分页
 	 */
 	@PostMapping("/list")
-	@ApiOperation(value = "分页", notes = "传入client")
+	@Operation(summary = "分页", description = "传入client")
 	public ApiResponse<Page<ClientDetailResponse>> list(
 		@Valid @RequestBody ClientPageRequest clientPageRequest) {
 		return ApiResponse.ok(clientService.page(clientPageRequest));
@@ -52,7 +52,7 @@ public class AuthClientController {
 	 * 新增
 	 */
 	@PostMapping("/save")
-	@ApiOperation(value = "新增", notes = "传入client")
+	@Operation(summary = "新增", description = "传入client")
 	public ApiResponse<Void> save(@Valid @RequestBody ClientAddRequest clientAddRequest) {
 		clientService.add(clientAddRequest);
 		return ApiResponse.ok();
@@ -62,7 +62,7 @@ public class AuthClientController {
 	 * 修改
 	 */
 	@PostMapping("/update")
-	@ApiOperation(value = "修改", notes = "传入client")
+	@Operation(summary = "修改", description = "传入client")
 	public ApiResponse<Void> update(@Valid @RequestBody ClientUpdateRequest clientUpdateRequest) {
 		clientService.update(clientUpdateRequest);
 		return ApiResponse.ok();
@@ -72,7 +72,7 @@ public class AuthClientController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入client")
+	@Operation(summary = "新增或修改", description = "传入client")
 	public ApiResponse<Void> submit(
 		@Valid @RequestBody ClientAddOrUpdateRequest clientAddOrUpdateRequest) {
 		clientService.addOrUpdate(clientAddOrUpdateRequest);
@@ -83,7 +83,7 @@ public class AuthClientController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
+	@Operation(summary = "逻辑删除", description = "传入ids")
 	public ApiResponse<Void> remove(@Valid @RequestBody ClientRemoveRequest clientRemoveRequest) {
 		clientService.remove(clientRemoveRequest);
 		return ApiResponse.ok();

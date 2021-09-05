@@ -1,6 +1,6 @@
 package com.simple4j.system.request;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -10,7 +10,7 @@ import lombok.Data;
  * @since 2020-08-26
  */
 @Data
-@ApiModel(value = "新增请求实体类", description = "新增请求实体类")
+@Schema(name = "新增请求实体类", description = "新增请求实体类")
 public class NavbarMenuAddOrUpdateRequest extends NavbarMenuUpdateRequest {
 
 	private static final long serialVersionUID = 1L;

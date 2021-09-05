@@ -1,8 +1,8 @@
 package $!{package.Controller};
 
 import java.util.List;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import lombok.AllArgsConstructor;
 import javax.validation.Valid;
@@ -41,7 +41,7 @@ import $!{superControllerClassPackage};
 @RestController
 @AllArgsConstructor
 @RequestMapping("#if($!{package.ModuleName})/$!{package.ModuleName}#end/$!{cfg.entityKey}")
-@Api(value = "$!{table.comment}", tags = "$!{table.comment}接口")
+@Tag(name = $!{table.comment}", description = "$!{table.comment}接口")
 #if($!{superControllerClass})
 public class $!{table.controllerName} extends $!{superControllerClass} {
 #else
@@ -55,7 +55,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/detail")
 	@ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情")
+	@Operation(summary = "详情")
 	public R<$!{entity}DetailResponse> detail(@Valid @RequestBody $!{entity}DetailRequest $!{table.entityPath}DetailRequest) {
 		$!{entity}DetailResponse detail = $!{table.entityPath}Service.detail($!{table.entityPath}DetailRequest);
 		return R.data(detail);
@@ -66,7 +66,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/list")
 	@ApiOperationSupport(order = 2)
-	@ApiOperation(value = "列表")
+	@Operation(summary = "列表")
 	public R<List<$!{entity}DetailResponse>> list(@Valid @RequestBody $!{entity}ListRequest $!{table.entityPath}ListRequest) {
 		List<$!{entity}DetailResponse> pages = $!{table.entityPath}Service.list($!{table.entityPath}ListRequest);
 		return R.data(pages);
@@ -79,7 +79,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/page")
 	@ApiOperationSupport(order = 3)
-	@ApiOperation(value = "分页")
+	@Operation(summary = "分页")
 	public R<IPage<$!{entity}DetailResponse>> page(@Valid @RequestBody $!{entity}PageRequest $!{table.entityPath}PageRequest) {
 		IPage<$!{entity}DetailResponse> pages = $!{table.entityPath}Service.page( $!{table.entityPath}PageRequest);
 		return R.data(pages);
@@ -90,7 +90,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/add")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "新增")
+	@Operation(summary = "新增")
 	public R add(@Valid @RequestBody $!{entity}AddRequest $!{table.entityPath}AddRequest) {
 		$!{table.entityPath}Service.add($!{table.entityPath}AddRequest);
 		return R.ok();
@@ -101,7 +101,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/update")
 	@ApiOperationSupport(order = 5)
-	@ApiOperation(value = "修改")
+	@Operation(summary = "修改")
 	public R update(@Valid @RequestBody $!{entity}UpdateRequest $!{table.entityPath}UpdateRequest) {
 		$!{table.entityPath}Service.update($!{table.entityPath}UpdateRequest);
 		return R.ok();
@@ -112,7 +112,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/submit")
 	@ApiOperationSupport(order = 6)
-	@ApiOperation(value = "新增或修改")
+	@Operation(summary = "新增或修改")
 	public R addOrUpdate(@Valid @RequestBody $!{entity}AddOrUpdateRequest $!{table.entityPath}AddOrUpdateRequest) {
 		$!{table.entityPath}Service.addOrUpdate($!{table.entityPath}AddOrUpdateRequest);
 		return R.ok();
@@ -124,7 +124,7 @@ public class $!{table.controllerName} {
 	*/
 	@PostMapping("/tree")
 	@ApiOperationSupport(order = 7)
-	@ApiOperation(value = "树形")
+	@Operation(summary = "树形")
 	public R<List<$!{entity}DetailResponse>> tree(@Valid @RequestBody $!{entity}TreeRequest $!{table.entityPath}TreeRequest){
 		return R.data($!{table.entityPath}Service.tree($!{table.entityPath}TreeRequest));
 	}
@@ -135,7 +135,7 @@ public class $!{table.controllerName} {
 	 */
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 8)
-	@ApiOperation(value = "删除")
+	@Operation(summary = "删除")
 	public R remove(@Valid @RequestBody $!{entity}RemoveRequest $!{table.entityPath}RemoveRequest) {
 		$!{table.entityPath}Service.remove($!{table.entityPath}RemoveRequest);
 		return R.ok();

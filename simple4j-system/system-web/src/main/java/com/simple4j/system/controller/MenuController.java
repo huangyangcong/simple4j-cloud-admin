@@ -6,8 +6,9 @@ import com.simple4j.system.response.MenuRoutersResponse;
 import com.simple4j.system.response.RoleMenuKeyResponse;
 import com.simple4j.system.service.IMenuService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/menu")
-@Api(value = "菜单", tags = "菜单")
+@Tag(name = "菜单", description = "菜单")
 public class MenuController {
 
 	private IMenuService menuService;
@@ -34,7 +35,7 @@ public class MenuController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入menu")
+	@Operation(summary = "详情", description = "传入menu")
 	public ApiResponse<MenuDetailResponse> detail(
 		@Valid @RequestBody MenuDetailRequest menuDetailRequest) {
 		return ApiResponse.ok(menuService.detail(menuDetailRequest));
@@ -44,7 +45,7 @@ public class MenuController {
 	 * 列表
 	 */
 	@PostMapping("/list")
-	@ApiOperation(value = "列表", notes = "传入menu")
+	@Operation(summary = "列表", description = "传入menu")
 	public ApiResponse<List<MenuDetailResponse>> list(
 		@Valid @RequestBody MenuListRequest menuListRequest) {
 		return ApiResponse.ok(menuService.list(menuListRequest));
@@ -54,7 +55,7 @@ public class MenuController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入menu")
+	@Operation(summary = "新增或修改", description = "传入menu")
 	public ApiResponse<Void> addOrUpdate(
 		@Valid @RequestBody MenuAddOrUpdateRequest menuAddOrUpdateRequest) {
 		menuService.addOrUpdate(menuAddOrUpdateRequest);
@@ -65,7 +66,7 @@ public class MenuController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除", notes = "传入ids")
+	@Operation(summary = "删除", description = "传入ids")
 	public ApiResponse<Void> remove(@RequestBody MenuRemoveRequest menuRemoveRequest) {
 		menuService.remove(menuRemoveRequest);
 		return ApiResponse.ok();
@@ -75,7 +76,7 @@ public class MenuController {
 	 * 前端菜单数据
 	 */
 	@PostMapping("/routes")
-	@ApiOperation(value = "前端菜单数据", notes = "前端菜单数据")
+	@Operation(summary = "前端菜单数据", description = "前端菜单数据")
 	public ApiResponse<List<MenuDetailResponse>> routes(
 		@Valid @RequestBody MenuRoutersRequest menuRoutersRequest) {
 		List<MenuDetailResponse> list = menuService.routes(menuRoutersRequest);
@@ -86,7 +87,7 @@ public class MenuController {
 	 * 前端按钮数据
 	 */
 	@PostMapping("/buttons")
-	@ApiOperation(value = "前端按钮数据", notes = "前端按钮数据")
+	@Operation(summary = "前端按钮数据", description = "前端按钮数据")
 	public ApiResponse<List<MenuDetailResponse>> buttons() {
 		return ApiResponse.ok(menuService.buttons());
 	}
@@ -95,7 +96,7 @@ public class MenuController {
 	 * 获取菜单树形结构
 	 */
 	@PostMapping("/tree")
-	@ApiOperation(value = "树形结构", notes = "树形结构")
+	@Operation(summary = "树形结构", description = "树形结构")
 	public ApiResponse<List<MenuDetailResponse>> tree() {
 		return ApiResponse.ok(menuService.tree());
 	}
@@ -104,7 +105,7 @@ public class MenuController {
 	 * 获取权限分配树形结构
 	 */
 	@PostMapping("/grant-tree")
-	@ApiOperation(value = "权限分配树形结构", notes = "权限分配树形结构")
+	@Operation(summary = "权限分配树形结构", description = "权限分配树形结构")
 	public ApiResponse<List<MenuDetailResponse>> grantTree() {
 		return ApiResponse.ok(menuService.grantTree());
 	}
@@ -113,7 +114,7 @@ public class MenuController {
 	 * 获取权限分配树形结构
 	 */
 	@PostMapping("/role-tree-keys")
-	@ApiOperation(value = "角色所分配的树", notes = "角色所分配的树")
+	@Operation(summary = "角色所分配的树", description = "角色所分配的树")
 	public ApiResponse<RoleMenuKeyResponse> roleTreeKeys(
 		@Valid @RequestBody RoleMenuKeyRequest roleMenuKeyRequest) {
 		return ApiResponse.ok(menuService.roleTreeKeys(roleMenuKeyRequest));
@@ -123,13 +124,13 @@ public class MenuController {
 	 * 获取配置的角色权限
 	 */
 	@PostMapping("auth-routes")
-	@ApiOperation(value = "菜单的角色权限")
+	@Operation(summary = "菜单的角色权限")
 	public ApiResponse<List<MenuRoutersResponse>> authRoutes() {
 		return ApiResponse.ok(menuService.authRoutes());
 	}
 
 	@PostMapping("/top-menu")
-	@ApiOperation(value = "顶部菜单")
+	@Operation(summary = "顶部菜单")
 	public ApiResponse<List<MenuRoutersResponse>> topMenu() {
 		return ApiResponse.ok(menuService.authRoutes());
 	}

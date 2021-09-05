@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.simple4j.api.base.INode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 import lombok.Getter;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * @since 2020-08-25
  */
 @Data
-@ApiModel(value = "角色表详情响应实体类", description = "角色表详情响应实体类")
+@Schema(name = "角色表详情响应实体类", description = "角色表详情响应实体类")
 public class RoleDetailResponse implements INode<RoleDetailResponse, String> {
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class RoleDetailResponse implements INode<RoleDetailResponse, String> {
 	/**
 	 * 主键
 	 */
-	@ApiModelProperty(name = "id", value = "主键")
+	@Parameter(name = "id", description = "主键")
 	@JsonProperty("id")
 	@Getter(onMethod = @__({@JsonIgnore}))
 	private String id;
@@ -35,39 +35,39 @@ public class RoleDetailResponse implements INode<RoleDetailResponse, String> {
 	/**
 	 * 租户编号
 	 */
-	@ApiModelProperty(name = "tenant_id", value = "租户编号")
+	@Parameter(name = "tenant_id", description = "租户编号")
 	@JsonProperty("tenant_id")
 	private String tenantId;
 
 	/**
 	 * 父主键
 	 */
-	@ApiModelProperty(name = "parent_id", value = "父主键")
+	@Parameter(name = "parent_id", description = "父主键")
 	@JsonProperty("parent_id")
 	@Getter(onMethod = @__({@JsonIgnore}))
 	private String parentId;
 	/**
 	 * 角色名
 	 */
-	@ApiModelProperty(name = "role_name", value = "角色名")
+	@Parameter(name = "role_name", description = "角色名")
 	@JsonProperty("role_name")
 	private String roleName;
 	/**
 	 * 排序
 	 */
-	@ApiModelProperty(name = "sort", value = "排序")
+	@Parameter(name = "sort", description = "排序")
 	@JsonProperty("sort")
 	private Integer sort;
 	/**
 	 * 角色别名
 	 */
-	@ApiModelProperty(name = "role_alias", value = "角色别名")
+	@Parameter(name = "role_alias", description = "角色别名")
 	@JsonProperty("role_alias")
 	private String roleAlias;
 	/**
 	 * 是否已删除
 	 */
-	@ApiModelProperty(name = "is_deleted", value = "是否已删除")
+	@Parameter(name = "is_deleted", description = "是否已删除")
 	@JsonProperty("is_deleted")
 	private Integer isDeleted;
 

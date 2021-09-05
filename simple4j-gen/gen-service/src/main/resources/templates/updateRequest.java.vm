@@ -5,8 +5,8 @@ package $!{requestPackage};
     import lombok.Data;
     #end
     #if($!{swagger2})
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
+    import io.swagger.v3.oas.annotations.media.Schema;
+    import io.swagger.v3.oas.annotations.Parameter;
     #end
 import javax.validation.constraints.NotNull;
     #set($requestPackage=$package.Entity.replace("entity","request"))
@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     @Data
     #end
     #if($!{swagger2})
-    @ApiModel(value = "$!{table.comment}修改请求实体类", description = "$!{table.comment}修改请求实体类")
+    @Schema(name = "$!{table.comment}修改请求实体类", description = "$!{table.comment}修改请求实体类")
     #end
 public class $!{entity}UpdateRequest extends $!{entity}AddRequest {
 
@@ -34,7 +34,7 @@ public class $!{entity}UpdateRequest extends $!{entity}AddRequest {
      * $!{table.comment}ID
      */
         #if($!{swagger2})
-        @ApiModelProperty(value = "$!{table.comment}ID")
+        @Parameter(description = "$!{table.comment}ID")
         #end
     @NotNull(message = "$!{table.comment}编号不能为空")
     private String id;

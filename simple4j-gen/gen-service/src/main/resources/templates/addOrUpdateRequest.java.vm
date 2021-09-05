@@ -6,8 +6,8 @@ package $!{requestPackage};
     import lombok.Data;
     #end
     #if($!{swagger2})
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
+    import io.swagger.v3.oas.annotations.media.Schema;
+    import io.swagger.v3.oas.annotations.Parameter;
     #end
 import java.io.Serializable;
 
@@ -25,7 +25,7 @@ import $!{requestPackage}.$!{entity}UpdateRequest;
     @Data
     #end
     #if($!{swagger2})
-    @ApiModel(value = "$!{table.comment}新增或修改请求实体类", description = "$!{table.comment}新增或修改请求实体类")
+    @Schema(name = "$!{table.comment}新增或修改请求实体类", description = "$!{table.comment}新增或修改请求实体类")
     #end
 public class $!{entity}AddOrUpdateRequest extends $!{entity}UpdateRequest {
 

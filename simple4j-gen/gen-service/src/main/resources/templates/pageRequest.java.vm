@@ -6,8 +6,8 @@ package $!{requestPackage};
     #end
 import java.io.Serializable;
     #if($!{swagger2})
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
+    import io.swagger.v3.oas.annotations.media.Schema;
+    import io.swagger.v3.oas.annotations.Parameter;
     #end
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     @Data
     #end
     #if($!{swagger2})
-    @ApiModel(value = "$!{table.comment}分页请求实体类", description = "$!{table.comment}分页请求实体类")
+    @Schema(name = "$!{table.comment}分页请求实体类", description = "$!{table.comment}分页请求实体类")
     #end
 public class $!{entity}PageRequest implements Serializable {
 
@@ -31,14 +31,14 @@ public class $!{entity}PageRequest implements Serializable {
     /**
      * 页码
      */
-    @ApiModelProperty(name = "page_no", value = "页码")
+    @Parameter(name = "page_no", description = "页码")
     @JsonProperty("page_no")
     private int pageNo;
 
     /**
      * 分页数
      */
-    @ApiModelProperty(name = "pageSize", value = "分页数")
+    @Parameter(name = "pageSize", description = "分页数")
     @JsonProperty("page_size")
     private int pageSize;
 }

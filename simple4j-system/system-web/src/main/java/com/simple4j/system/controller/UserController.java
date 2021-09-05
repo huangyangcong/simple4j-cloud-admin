@@ -9,19 +9,18 @@ import com.simple4j.system.response.UserLoginResponse;
 import com.simple4j.system.service.IUserRoleService;
 import com.simple4j.system.service.IUserService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletResponse;
@@ -40,14 +39,14 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequestMapping("/user/api/v1")
 @AllArgsConstructor
-@Api(tags = "用户管理")
+@Tag(name = "用户管理", description = "用户管理")
 public class UserController {
 
 	private final IUserService userService;
 	private final IUserRoleService userRoleService;
 	private final TokenService tokenService;
 
-	@ApiOperation(value = "登录")
+	@Operation(summary = "登录")
 	@PostMapping("/login")
 	@PermitAll()
 	public ApiResponse<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
@@ -55,7 +54,7 @@ public class UserController {
 		return ApiResponse.ok(userLoginResponse);
 	}
 
-	@ApiOperation(value = "登出")
+	@Operation(summary = "登出")
 	@PostMapping("/logout")
 	@PreAuthorize("permitAll()")
 	public ApiResponse<Void> logout() {
@@ -63,7 +62,7 @@ public class UserController {
 		return ApiResponse.ok();
 	}
 
-	@ApiOperation(value = "查看详情", notes = "传入id")
+	@Operation(summary = "查看详情", description = "传入id")
 	@PostMapping("/detail")
 	public ApiResponse<UserDetailResponse> detail(
 		@Valid @RequestBody UserDetailRequest userDetailRequest) {
@@ -71,60 +70,60 @@ public class UserController {
 		return ApiResponse.ok(userDetailResponse);
 	}
 
-	@ApiOperation(value = "查看详情", notes = "传入id")
+	@Operation(summary = "查看详情", description = "传入id")
 	@PostMapping("/info")
 	public ApiResponse<UserInfo> info() {
 		return ApiResponse.ok(userService.currentUserInfo());
 	}
 
 	@PostMapping("/page")
-	@ApiOperation(value = "列表", notes = "传入account和realName")
+	@Operation(summary = "列表", description = "传入account和realName")
 	public ApiResponse<Page<UserDetailResponse>> page(
 		@Valid @RequestBody UserPageRequest userPageRequest) {
 		return ApiResponse.ok(userService.page(userPageRequest));
 	}
 
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入User")
+	@Operation(summary = "新增或修改", description = "传入User")
 	public ApiResponse<Void> submit(@Valid @RequestBody UserAddRequest userAddRequest) {
 		userService.submit(userAddRequest);
 		return ApiResponse.ok();
 	}
 
 	@PostMapping("/update")
-	@ApiOperation(value = "修改", notes = "传入User")
+	@Operation(summary = "修改", description = "传入User")
 	public ApiResponse<Void> update(@Valid @RequestBody UserUpdateRequest userUpdateRequest) {
 		userService.update(userUpdateRequest);
 		return ApiResponse.ok();
 	}
 
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除", notes = "传入地基和")
+	@Operation(summary = "删除", description = "传入地基和")
 	public ApiResponse<Void> remove(@Valid @RequestBody UserRemoveRequest userRemoveRequest) {
 		userService.remove(userRemoveRequest);
 		return ApiResponse.ok();
 	}
 
 	@PostMapping("/grant")
-	@ApiOperation(value = "权限设置", notes = "传入roleId集合以及menuId集合")
+	@Operation(summary = "权限设置", description = "传入roleId集合以及menuId集合")
 	public ApiResponse<Void> grant(@Valid @RequestBody UserRoleGrantRequest userRoleGrantRequest) {
 		userRoleService.grant(userRoleGrantRequest);
 		return ApiResponse.ok();
 	}
 
 	@PostMapping("/reset-password")
-	@ApiOperation(value = "初始化密码", notes = "传入userId集合")
+	@Operation(summary = "初始化密码", description = "传入userId集合")
 	public ApiResponse<Void> resetPassword(UserResetPasswordRequest userResetPasswordRequest) {
 		userService.resetPassword(userResetPasswordRequest);
 		return ApiResponse.ok();
 	}
 
 	@PostMapping("/update-password")
-	@ApiOperation(value = "修改密码", notes = "传入密码")
+	@Operation(summary = "修改密码", description = "传入密码")
 	public ApiResponse<Void> updatePassword(
-		@ApiParam(value = "旧密码", required = true) @RequestParam String oldPassword,
-		@ApiParam(value = "新密码", required = true) @RequestParam String newPassword,
-		@ApiParam(value = "新密码", required = true) @RequestParam String newPassword1) {
+		@Parameter(description = "旧密码", required = true) @RequestParam String oldPassword,
+		@Parameter(description = "新密码", required = true) @RequestParam String newPassword,
+		@Parameter(description = "新密码", required = true) @RequestParam String newPassword1) {
 		userService.updatePassword(oldPassword, newPassword, newPassword1);
 		return ApiResponse.ok();
 	}
@@ -133,7 +132,7 @@ public class UserController {
 	 * 导入用户
 	 */
 	@PostMapping("import-user")
-	@ApiOperation(value = "导入用户", notes = "传入excel")
+	@Operation(summary = "导入用户", description = "传入excel")
 	public ApiResponse<Void> importUser(MultipartFile file, Integer isCovered) {
 		String filename = file.getOriginalFilename();
 		InputStream inputStream = null;
@@ -151,8 +150,8 @@ public class UserController {
 	 */
 	@SneakyThrows
 	@PostMapping("export-user")
-	@ApiOperation(value = "导出用户", notes = "传入user")
-	public void exportUser(@ApiIgnore UserListRequest userListRequest,
+	@Operation(summary = "导出用户", description = "传入user")
+	public void exportUser(@Schema(hidden = true) UserListRequest userListRequest,
 						   HttpServletResponse response) {
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -166,7 +165,7 @@ public class UserController {
 	 */
 	@SneakyThrows
 	@PostMapping("export-template")
-	@ApiOperation(value = "导出模板")
+	@Operation(summary = "导出模板")
 	public void exportUser(HttpServletResponse response) {
 		response.setContentType("application/vnd.ms-excel");
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
@@ -179,7 +178,7 @@ public class UserController {
 	 * 第三方注册用户
 	 */
 	@PostMapping("/register-guest")
-	@ApiOperation(value = "第三方注册用户", notes = "传入user")
+	@Operation(summary = "第三方注册用户", description = "传入user")
 	public ApiResponse<Void> registerGuest(
 		@Valid @RequestBody UserRegisterGuestRequest userRegisterGuestRequest) {
 		userService.registerGuest(userRegisterGuestRequest);
@@ -190,7 +189,7 @@ public class UserController {
 	 * 删除
 	 */
 	@GetMapping("/login2")
-	@ApiOperation(value = "登录")
+	@Operation(summary = "登录")
 	public ApiResponse<String> auth(
 		@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient authorizedClient,
 		@AuthenticationPrincipal OAuth2User oauth2User) {

@@ -18,8 +18,8 @@
 			<groupId>com.simple4j.boot</groupId>
 		</dependency>
 		<dependency>
-			<artifactId>springfox-boot-starter</artifactId>
-			<groupId>io.springfox</groupId>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webmvc-core</artifactId>
 		</dependency>
 		<dependency>
 			<artifactId>hibernate-validator</artifactId>

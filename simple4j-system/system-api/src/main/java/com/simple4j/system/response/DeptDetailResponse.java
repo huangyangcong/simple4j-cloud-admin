@@ -3,8 +3,8 @@ package com.simple4j.system.response;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.simple4j.api.base.INode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 import lombok.Getter;
 
@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2020-08-25
  */
 @Data
-@ApiModel(value = "部门表详情响应实体类", description = "部门表详情响应实体类")
+@Schema(name = "部门表详情响应实体类", description = "部门表详情响应实体类")
 public class DeptDetailResponse implements INode<DeptDetailResponse, String> {
 
 	private static final long serialVersionUID = 1L;
@@ -26,58 +26,58 @@ public class DeptDetailResponse implements INode<DeptDetailResponse, String> {
 	/**
 	 * 主键
 	 */
-	@ApiModelProperty(name = "id", value = "主键")
+	@Parameter(name = "id", description = "主键")
 	@JsonProperty("id")
 	@Getter(onMethod = @__({@JsonIgnore}))
 	private String id;
 	/**
 	 * 父主键
 	 */
-	@ApiModelProperty(name = "parent_id", value = "父主键")
+	@Parameter(name = "parent_id", description = "父主键")
 	@JsonProperty("parent_id")
 	@Getter(onMethod = @__({@JsonIgnore}))
 	private String parentId;
 	/**
 	 * 部门名
 	 */
-	@ApiModelProperty(name = "dept_name", value = "部门名")
+	@Parameter(name = "dept_name", description = "部门名")
 	@JsonProperty("dept_name")
 	private String deptName;
 	/**
 	 * 租户编号
 	 */
-	@ApiModelProperty(name = "tenant_id", value = "租户编号")
+	@Parameter(name = "tenant_id", description = "租户编号")
 	@JsonProperty("tenant_id")
 	private String tenantId;
 	/**
 	 * 部门全称
 	 */
-	@ApiModelProperty(name = "full_name", value = "部门全称")
+	@Parameter(name = "full_name", description = "部门全称")
 	@JsonProperty("full_name")
 	private String fullName;
 	/**
 	 * 排序
 	 */
-	@ApiModelProperty(name = "sort", value = "排序")
+	@Parameter(name = "sort", description = "排序")
 	@JsonProperty("sort")
 	private Integer sort;
 	/**
 	 * 备注
 	 */
-	@ApiModelProperty(name = "remark", value = "备注")
+	@Parameter(name = "remark", description = "备注")
 	@JsonProperty("remark")
 	private String remark;
 	/**
 	 * 是否已删除
 	 */
-	@ApiModelProperty(name = "is_deleted", value = "是否已删除")
+	@Parameter(name = "is_deleted", description = "是否已删除")
 	@JsonProperty("is_deleted")
 	private Integer isDeleted;
 
 	/**
 	 * 上级部门名称
 	 */
-	@ApiModelProperty(name = "parent_name", value = "上级部门名称")
+	@Parameter(name = "parent_name", description = "上级部门名称")
 	@JsonProperty("parent_name")
 	private String parentName;
 

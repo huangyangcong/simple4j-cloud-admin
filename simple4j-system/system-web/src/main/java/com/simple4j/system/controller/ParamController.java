@@ -8,8 +8,8 @@ import com.simple4j.system.request.ParamRemoveRequest;
 import com.simple4j.system.response.ParamDetailResponse;
 import com.simple4j.system.service.IParamService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +26,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/param")
-@Api(value = "参数管理", tags = "接口")
+@Tag(name = "参数管理", description = "接口")
 public class ParamController {
 
 	private IParamService paramService;
@@ -35,7 +35,7 @@ public class ParamController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入param")
+	@Operation(summary = "详情", description = "传入param")
 	public ApiResponse<ParamDetailResponse> detail(
 		@Valid @RequestBody ParamDetailRequest paramDetailRequest) {
 		return ApiResponse.ok(paramService.detail(paramDetailRequest));
@@ -45,7 +45,7 @@ public class ParamController {
 	 * 分页
 	 */
 	@PostMapping("/list")
-	@ApiOperation(value = "分页", notes = "传入param")
+	@Operation(summary = "分页", description = "传入param")
 	public ApiResponse<Page<ParamDetailResponse>> list(
 		@Valid @RequestBody ParamPageRequest paramPageRequest) {
 		return ApiResponse.ok(paramService.page(paramPageRequest));
@@ -55,7 +55,7 @@ public class ParamController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入param")
+	@Operation(summary = "新增或修改", description = "传入param")
 	public ApiResponse<Void> submit(
 		@Valid @RequestBody ParamAddOrUpdateRequest addOrUpdateRequest) {
 		paramService.addOrUpdate(addOrUpdateRequest);
@@ -66,7 +66,7 @@ public class ParamController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
+	@Operation(summary = "逻辑删除", description = "传入ids")
 	public ApiResponse<Void> remove(@RequestBody ParamRemoveRequest paramRemoveRequest) {
 		paramService.remove(paramRemoveRequest);
 		return ApiResponse.ok();

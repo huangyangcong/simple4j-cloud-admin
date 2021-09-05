@@ -5,8 +5,8 @@ package $!{requestPackage};
     import lombok.Data;
     #end
     #if($!{swagger2})
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
+    import io.swagger.v3.oas.annotations.media.Schema;
+    import io.swagger.v3.oas.annotations.Parameter;
     #end
 import java.io.Serializable;
 
@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
     @Data
     #end
     #if($!{swagger2})
-    @ApiModel(value = "$!{table.comment}详情请求实体类", description = "$!{table.comment}详情请求实体类")
+    @Schema(name = "$!{table.comment}详情请求实体类", description = "$!{table.comment}详情请求实体类")
     #end
 public class $!{entity}DetailRequest implements Serializable {
 
@@ -33,7 +33,7 @@ public class $!{entity}DetailRequest implements Serializable {
      * $!{table.comment}详情编号
      */
         #if($!{swagger2})
-        @ApiModelProperty(value = "$!{table.comment}详情编号", name = "id", required = true)
+        @Parameter(description = "$!{table.comment}详情编号", name = "id", required = true)
         #end
     @NotNull(message = "编号不能为空")
     @JsonProperty("id")

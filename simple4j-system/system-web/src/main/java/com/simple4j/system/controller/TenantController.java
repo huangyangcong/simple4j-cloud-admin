@@ -5,8 +5,8 @@ import com.simple4j.system.request.*;
 import com.simple4j.system.response.TenantDetailResponse;
 import com.simple4j.system.service.ITenantService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/tenant")
-@Api(value = "租户管理", tags = "接口")
+@Tag(name = "租户管理", description = "接口")
 public class TenantController {
 
 	private ITenantService tenantService;
@@ -33,7 +33,7 @@ public class TenantController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情", notes = "传入tenant")
+	@Operation(summary = "详情", description = "传入tenant")
 	public ApiResponse<TenantDetailResponse> detail(
 		@Valid @RequestBody TenantDetailRequest tenantDetailRequest) {
 		return ApiResponse.ok(tenantService.detail(tenantDetailRequest));
@@ -43,7 +43,7 @@ public class TenantController {
 	 * 分页
 	 */
 	@PostMapping("/list")
-	@ApiOperation(value = "分页", notes = "传入tenant")
+	@Operation(summary = "分页", description = "传入tenant")
 	public ApiResponse<Page<TenantDetailResponse>> list(
 		@Valid @RequestBody TenantPageRequest tenantPageRequest) {
 		return ApiResponse.ok(tenantService.page(tenantPageRequest));
@@ -53,7 +53,7 @@ public class TenantController {
 	 * 下拉数据源
 	 */
 	@PostMapping("/select")
-	@ApiOperation(value = "下拉数据源", notes = "传入tenant")
+	@Operation(summary = "下拉数据源", description = "传入tenant")
 	public ApiResponse<List<TenantDetailResponse>> select(
 		@Valid @RequestBody TenantListRequest tenantListRequest) {
 		return ApiResponse.ok(tenantService.list(tenantListRequest));
@@ -63,7 +63,7 @@ public class TenantController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改", notes = "传入tenant")
+	@Operation(summary = "新增或修改", description = "传入tenant")
 	public ApiResponse<Void> submit(
 		@Valid @RequestBody TenantAddOrUpdateRequest tenantAddOrUpdateRequest) {
 		tenantService.addOrUpdate(tenantAddOrUpdateRequest);
@@ -74,7 +74,7 @@ public class TenantController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "逻辑删除", notes = "传入ids")
+	@Operation(summary = "逻辑删除", description = "传入ids")
 	public ApiResponse<Void> remove(@RequestBody TenantRemoveRequest tenantRemoveRequest) {
 		tenantService.remove(tenantRemoveRequest);
 		return ApiResponse.ok();

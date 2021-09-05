@@ -1,7 +1,7 @@
 package com.simple4j.gen.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -15,21 +15,21 @@ import java.util.List;
 public class CodeGenRequest {
 
 	@NotNull
-	@ApiModelProperty("编码详情编号")
+	@Parameter(description = "编码详情编号")
 	private List<String> ids;
 
-	@ApiModelProperty("所属系统")
+	@Parameter(description = "所属系统")
 	private String system = "simple4j";
 
-	@ApiModelProperty("maven中groupId")
+	@Parameter(description = "maven中groupId")
 	@JsonProperty("group_id")
 	private String groupId;
 
-	@ApiModelProperty("项目名称")
+	@Parameter(description = "项目名称")
 	@JsonProperty("project_name")
 	private String projectName;
 
-	@ApiModelProperty("模块名称")
+	@Parameter(description = "模块名称")
 	@JsonProperty("module_name")
 	private String moduleName;
 }

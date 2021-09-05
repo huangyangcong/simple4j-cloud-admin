@@ -7,8 +7,8 @@ import com.simple4j.system.response.NavbarPermissionResponse;
 import com.simple4j.system.service.INavbarMenuService;
 import com.simple4j.system.service.INavbarService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +27,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/navbar")
-@Api(value = "", tags = "接口")
+@Tag(name = "顶部菜单管理", description = "接口")
 public class NavbarController {
 
 	private INavbarService navbarService;
@@ -37,7 +37,7 @@ public class NavbarController {
 	 * 详情
 	 */
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情")
+	@Operation(summary = "详情")
 	public ApiResponse<NavbarDetailResponse> detail(
 		@Valid @RequestBody NavbarDetailRequest navbarDetailRequest) {
 		NavbarDetailResponse detail = navbarService.detail(navbarDetailRequest);
@@ -48,7 +48,7 @@ public class NavbarController {
 	 * 列表
 	 */
 	@PostMapping("/list")
-	@ApiOperation(value = "列表")
+	@Operation(summary = "列表")
 	public ApiResponse<List<NavbarDetailResponse>> list(
 		@Valid @RequestBody NavbarListRequest navbarListRequest) {
 		List<NavbarDetailResponse> pages = navbarService.list(navbarListRequest);
@@ -59,7 +59,7 @@ public class NavbarController {
 	 * 自定义分页
 	 */
 	@PostMapping("/page")
-	@ApiOperation(value = "分页")
+	@Operation(summary = "分页")
 	public ApiResponse<Page<NavbarDetailResponse>> page(
 		@Valid @RequestBody NavbarPageRequest navbarPageRequest) {
 		return ApiResponse.ok(navbarService.page(navbarPageRequest));
@@ -69,7 +69,7 @@ public class NavbarController {
 	 * 新增
 	 */
 	@PostMapping("/add")
-	@ApiOperation(value = "新增")
+	@Operation(summary = "新增")
 	public ApiResponse<Void> add(@Valid @RequestBody NavbarAddRequest navbarAddRequest) {
 		navbarService.add(navbarAddRequest);
 		return ApiResponse.ok();
@@ -79,7 +79,7 @@ public class NavbarController {
 	 * 修改
 	 */
 	@PostMapping("/update")
-	@ApiOperation(value = "修改")
+	@Operation(summary = "修改")
 	public ApiResponse<Void> update(@Valid @RequestBody NavbarUpdateRequest navbarUpdateRequest) {
 		navbarService.update(navbarUpdateRequest);
 		return ApiResponse.ok();
@@ -89,7 +89,7 @@ public class NavbarController {
 	 * 新增或修改
 	 */
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改")
+	@Operation(summary = "新增或修改")
 	public ApiResponse<Void> addOrUpdate(
 		@Valid @RequestBody NavbarAddOrUpdateRequest navbarAddOrUpdateRequest) {
 		navbarService.addOrUpdate(navbarAddOrUpdateRequest);
@@ -100,14 +100,14 @@ public class NavbarController {
 	 * 删除
 	 */
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除")
+	@Operation(summary = "删除")
 	public ApiResponse<Void> remove(@Valid @RequestBody NavbarRemoveRequest navbarRemoveRequest) {
 		navbarService.remove(navbarRemoveRequest);
 		return ApiResponse.ok();
 	}
 
 	@PostMapping("/permission")
-	@ApiOperation(value = "顶部菜单权限")
+	@Operation(summary = "顶部菜单权限")
 	public ApiResponse<NavbarPermissionResponse> permission(
 		@Valid @RequestBody NavbarPermissionRequest navbarPermissionRequest) {
 		NavbarPermissionResponse detail = navbarMenuService.permission(navbarPermissionRequest);
@@ -115,7 +115,7 @@ public class NavbarController {
 	}
 
 	@PostMapping("/grant")
-	@ApiOperation(value = "顶部菜单分配")
+	@Operation(summary = "顶部菜单分配")
 	public ApiResponse<Void> grant(@Valid @RequestBody NavbarGrantRequest navbarGrantRequest) {
 		navbarMenuService.grant(navbarGrantRequest);
 		return ApiResponse.ok();

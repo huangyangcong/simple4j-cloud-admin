@@ -45,8 +45,8 @@
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency>
 		<dependency>
-			<artifactId>springfox-boot-starter</artifactId>
-			<groupId>io.springfox</groupId>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webmvc-core</artifactId>
 		</dependency>
 		<dependency>
 			<artifactId>simple4j-springboot-starter-util</artifactId>
@@ -65,7 +65,7 @@
 			<artifactId>sa-token-temp-jwt</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.swagger</groupId>
+			<groupId>io.swagger.core.v3</groupId>
 			<artifactId>swagger-annotations</artifactId>
 		</dependency>
 		<dependency>
@@ -88,6 +88,10 @@
 			<artifactId>lombok</artifactId>
 			<groupId>org.projectlombok</groupId>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 		</dependency>
 	</dependencies>
 </project>

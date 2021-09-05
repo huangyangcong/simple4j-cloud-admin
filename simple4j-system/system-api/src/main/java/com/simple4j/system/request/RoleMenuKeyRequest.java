@@ -1,7 +1,7 @@
 package com.simple4j.system.request;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2020-08-26
  */
 @Data
-@ApiModel(value = "角色菜单权限请求实体类", description = "角色菜单权限请求实体类")
+@Schema(name = "角色菜单权限请求实体类", description = "角色菜单权限请求实体类")
 public class RoleMenuKeyRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,6 +22,6 @@ public class RoleMenuKeyRequest implements Serializable {
 	/**
 	 * 角色
 	 */
-	@ApiModelProperty(name = "roles", value = "角色")
+	@Parameter(name = "roles", description = "角色")
 	private List<Long> roles;
 }

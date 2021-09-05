@@ -1,8 +1,8 @@
 package com.simple4j.system.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -23,81 +23,81 @@ public class UserInfo implements Serializable {
 	/**
 	 * 主键id
 	 */
-	@ApiModelProperty(value = "用户id")
+	@Parameter(description = "用户id")
 	private String id;
 
 	/**
 	 * 租户ID
 	 */
-	@ApiModelProperty(value = "租户ID")
+	@Parameter(description = "租户ID")
 	private String tenantId;
 	/**
 	 * 编号
 	 */
-	@ApiModelProperty(value = "code")
+	@Parameter(description = "code")
 	private String code;
 	/**
 	 * 账号
 	 */
-	@ApiModelProperty(value = "账号")
+	@Parameter(description = "账号")
 	private String account;
 	/**
 	 * 密码
 	 */
-	@ApiModelProperty(value = "密码")
+	@Parameter(description = "密码")
 	private String password;
 	/**
 	 * 昵称
 	 */
-	@ApiModelProperty(value = "昵称")
+	@Parameter(description = "昵称")
 	private String name;
 	/**
 	 * 真名
 	 */
-	@ApiModelProperty(value = "avatar")
+	@Parameter(description = "avatar")
 	@JsonProperty("real_name")
 	private String realName;
 	/**
 	 * 头像
 	 */
-	@ApiModelProperty(value = "avatar")
+	@Parameter(description = "avatar")
 	private String avatar;
 	/**
 	 * 邮箱
 	 */
-	@ApiModelProperty(value = "email")
+	@Parameter(description = "email")
 	private String email;
 	/**
 	 * 手机
 	 */
-	@ApiModelProperty(value = "phone")
+	@Parameter(description = "phone")
 	private String phone;
 	/**
 	 * 生日
 	 */
-	@ApiModelProperty(value = "生日")
+	@Parameter(description = "生日")
 	private Date birthday;
 	/**
 	 * 性别
 	 */
-	@ApiModelProperty(value = "性别")
+	@Parameter(description = "性别")
 	private Integer sex;
 
 	/**
 	 * 第三方授权id
 	 */
-	@ApiModelProperty(value = "第三方授权id")
+	@Parameter(description = "第三方授权id")
 	private String oauthId;
 
 	/**
 	 * 权限标识集合
 	 */
-	@ApiModelProperty(value = "权限集合")
+	@Parameter(description = "权限集合")
 	private Set<String> permissions;
 
 	/**
 	 * 角色标识集合
 	 */
-	@ApiModelProperty(value = "角色集合")
+	@Parameter(description = "角色集合")
 	private Set<String> roles;
 }

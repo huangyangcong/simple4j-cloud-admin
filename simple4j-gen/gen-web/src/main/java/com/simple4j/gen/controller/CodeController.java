@@ -5,8 +5,8 @@ import com.simple4j.gen.request.*;
 import com.simple4j.gen.response.CodeDetailResponse;
 import com.simple4j.gen.service.ICodeService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -32,7 +32,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/gen/code")
-@Api(value = "代码生成表", tags = "代码生成表接口")
+@Tag(name = "代码生成表", description = "代码生成表接口")
 public class CodeController {
 
 	private ICodeService codeService;
@@ -42,7 +42,7 @@ public class CodeController {
 	 */
 	@ResponseBody
 	@PostMapping("/detail")
-	@ApiOperation(value = "详情")
+	@Operation(summary = "详情")
 	public ApiResponse<CodeDetailResponse> detail(
 		@Valid @RequestBody CodeDetailRequest codeDetailRequest) {
 		CodeDetailResponse detail = codeService.detail(codeDetailRequest);
@@ -54,7 +54,7 @@ public class CodeController {
 	 */
 	@ResponseBody
 	@PostMapping("/list")
-	@ApiOperation(value = "列表")
+	@Operation(summary = "列表")
 	public ApiResponse<List<CodeDetailResponse>> list(
 		@Valid @RequestBody CodeListRequest codeListRequest) {
 		List<CodeDetailResponse> pages = codeService.list(codeListRequest);
@@ -66,7 +66,7 @@ public class CodeController {
 	 */
 	@ResponseBody
 	@PostMapping("/page")
-	@ApiOperation(value = "分页")
+	@Operation(summary = "分页")
 	public ApiResponse<Page<CodeDetailResponse>> page(
 		@Valid @RequestBody CodePageRequest codePageRequest) {
 		Page<CodeDetailResponse> pages = codeService.page(codePageRequest);
@@ -78,7 +78,7 @@ public class CodeController {
 	 */
 	@ResponseBody
 	@PostMapping("/add")
-	@ApiOperation(value = "新增")
+	@Operation(summary = "新增")
 	public ApiResponse<Void> add(@Valid @RequestBody CodeAddRequest codeAddRequest) {
 		codeService.add(codeAddRequest);
 		return ApiResponse.ok();
@@ -89,7 +89,7 @@ public class CodeController {
 	 */
 	@ResponseBody
 	@PostMapping("/update")
-	@ApiOperation(value = "修改")
+	@Operation(summary = "修改")
 	public ApiResponse<Void> update(@Valid @RequestBody CodeUpdateRequest codeUpdateRequest) {
 		codeService.update(codeUpdateRequest);
 		return ApiResponse.ok();
@@ -100,7 +100,7 @@ public class CodeController {
 	 */
 	@ResponseBody
 	@PostMapping("/submit")
-	@ApiOperation(value = "新增或修改")
+	@Operation(summary = "新增或修改")
 	public ApiResponse<Void> addOrUpdate(
 		@Valid @RequestBody CodeAddOrUpdateRequest codeAddOrUpdateRequest) {
 		codeService.addOrUpdate(codeAddOrUpdateRequest);
@@ -112,7 +112,7 @@ public class CodeController {
 	 */
 	@ResponseBody
 	@PostMapping("/remove")
-	@ApiOperation(value = "删除")
+	@Operation(summary = "删除")
 	public ApiResponse<Void> remove(@Valid @RequestBody CodeRemoveRequest codeRemoveRequest) {
 		codeService.remove(codeRemoveRequest);
 		return ApiResponse.ok();
@@ -122,7 +122,7 @@ public class CodeController {
 	 * 代码生成
 	 */
 	@PostMapping("/gen-code")
-	@ApiOperation(value = "代码生成", notes = "传入ids")
+	@Operation(summary = "代码生成", description = "传入ids")
 	public void genCode(
 		@Valid @RequestBody CodeGenRequest codeGenRequest, HttpServletResponse response)
 		throws IOException {

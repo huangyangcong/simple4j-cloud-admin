@@ -1,7 +1,7 @@
 package com.simple4j.system.request;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,13 +13,13 @@ import java.io.Serializable;
  * @since 2020-08-25
  */
 @Data
-@ApiModel(value = "字典表详情请求实体类", description = "字典表详情请求实体类")
+@Schema(name = "字典表详情请求实体类", description = "字典表详情请求实体类")
 public class DictDetailRequest implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 字典表详情编号
 	 */
-	@ApiModelProperty(value = "字典表详情编号", name = "id")
+	@Parameter(description = "字典表详情编号", name = "id")
 	private String id;
 }

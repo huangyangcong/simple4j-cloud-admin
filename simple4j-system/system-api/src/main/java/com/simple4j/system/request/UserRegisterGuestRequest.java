@@ -1,7 +1,7 @@
 package com.simple4j.system.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
 
 /**
@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class UserRegisterGuestRequest extends UserAddRequest {
 
-	@ApiModelProperty(name = "oauth_id", value = "第三方id")
+	@Parameter(name = "oauth_id", description = "第三方id")
 	@JsonProperty("oauth_id")
 	private String oauthId;
 }
