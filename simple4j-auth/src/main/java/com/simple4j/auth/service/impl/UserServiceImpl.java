@@ -52,10 +52,6 @@ public class UserServiceImpl extends AuthServiceAdapter<AuthToken, AuthConnectio
 		return user.getId();
 	}
 
-	@Override
-	public AuthToken instanceToken() {
-		return new AuthToken();
-	}
 
 	@Override
 	public UserLoginResponse login(UserLoginRequest userLoginRequest) {
@@ -75,6 +71,11 @@ public class UserServiceImpl extends AuthServiceAdapter<AuthToken, AuthConnectio
 		StpUtil.login(id);
 		String token = StpUtil.getTokenValueByLoginId(id);
 		return new UserLoginResponse(token);
+	}
+
+	@Override
+	public AuthToken instanceToken() {
+		return new AuthToken();
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class UserServiceImpl extends AuthServiceAdapter<AuthToken, AuthConnectio
 
 	@Override
 	public void saveAuthToken(AuthToken authToken) {
-		authTokenService.saveAuthToken();
+		authTokenService.saveAuthToken(authToken);
 	}
 
 

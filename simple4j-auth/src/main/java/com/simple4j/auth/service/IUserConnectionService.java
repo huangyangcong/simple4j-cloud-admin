@@ -1,7 +1,7 @@
 package com.simple4j.auth.service;
 
 import com.simple4j.auth.entity.AuthConnection;
-import com.simple4j.auth.exceptions.RegisterUserFailureException;
+import com.simple4j.auth.entity.AuthToken;
 import me.zhyd.oauth.model.AuthUser;
 
 import java.util.List;
@@ -23,15 +23,6 @@ public interface IUserConnectionService {
 	List<AuthConnection> queryConnectionByProviderIdAndProviderUserId(String providerId, String providerUserId);
 
 	/**
-	 * 绑定用户
-	 *
-	 * @param loginId
-	 * @param authUser
-	 * @param providerId
-	 */
-	void binding(String loginId, AuthUser authUser, String providerId);
-
-	/**
 	 * 解绑用户
 	 *
 	 * @param userId
@@ -41,20 +32,20 @@ public interface IUserConnectionService {
 	void unbinding(String userId, String providerId, String providerUserId);
 
 	/**
-	 * 注册链接
-	 *
-	 * @param providerId
-	 * @param authUser
-	 * @param loginId
-	 * @throws RegisterUserFailureException
-	 */
-	void registerConnection(String providerId, AuthUser authUser, String loginId) throws RegisterUserFailureException;
-
-	/**
 	 * 更新用户绑定信息
 	 *
 	 * @param authUser
 	 * @param authConnection
 	 */
 	void updateUserConnection(AuthUser authUser, AuthConnection authConnection);
+
+	/**
+	 * 保存用户信息
+	 *
+	 * @param providerId
+	 * @param loginId
+	 * @param authUser
+	 * @param authToken
+	 */
+	void saveAuthConnection(String providerId, String loginId, AuthUser authUser, AuthToken authToken);
 }

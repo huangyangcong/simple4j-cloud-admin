@@ -113,4 +113,9 @@ public class UserConnectionServiceImpl implements IUserConnectionService {
 			throw new BusinessException(ErrorCodeEnum.UPDATE_CONNECTION_DATA_FAILURE.getCode(), connectionData, e);
 		}
 	}
+
+	@Override
+	public void saveAuthConnection(String providerId, String loginId, AuthUser authUser, AuthToken authToken) {
+
+	}
 }

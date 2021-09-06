@@ -6,13 +6,14 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * @author hyc
  * @date 2021-09-01 18:22:57
  */
 @Data
-@Builder
+@SuperBuilder
 @TableName("user_connection")
 @NoArgsConstructor
 public class AuthConnection extends com.simple4j.auth.models.AuthConnection {
