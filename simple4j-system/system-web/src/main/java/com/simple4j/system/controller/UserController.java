@@ -9,16 +9,13 @@ import com.simple4j.system.response.UserLoginResponse;
 import com.simple4j.system.service.IUserRoleService;
 import com.simple4j.system.service.IUserService;
 import com.simple4j.web.bean.ApiResponse;
-import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -183,18 +180,5 @@ public class UserController {
 		@Valid @RequestBody UserRegisterGuestRequest userRegisterGuestRequest) {
 		userService.registerGuest(userRegisterGuestRequest);
 		return ApiResponse.ok();
-	}
-
-	/**
-	 * 删除
-	 */
-	@GetMapping("/login2")
-	@Operation(summary = "登录")
-	public ApiResponse<String> auth(
-		@RegisteredOAuth2AuthorizedClient("github") OAuth2AuthorizedClient authorizedClient,
-		@AuthenticationPrincipal OAuth2User oauth2User) {
-		String token = tokenService.thirdLoginSuccess("admin");
-		//		JSONUtil.toJsonStr(ApiResponse.ok(token), response.getWriter());
-		return ApiResponse.ok(token);
 	}
 }

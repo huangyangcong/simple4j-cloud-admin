@@ -27,5 +27,5 @@ public interface UserMapper extends ExtendMapper<User> {
 	 * @param usernames
 	 * @return
 	 */
-	List<String> existedByUsernames(String[] usernames);
+	List<String> existedByUsernames(@Param("usernames") String[] usernames);
 }

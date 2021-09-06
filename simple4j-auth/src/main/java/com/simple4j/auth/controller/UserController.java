@@ -56,8 +56,11 @@ public class UserController {
 	public ApiResponse<Object> login(@PathVariable String type, AuthCallback callback) {
 		AuthRequest authRequest = factory.get(type);
 		AuthResponse<AuthUser> login = authRequest.login(callback);
-		userService.authentication(login.getData(), "", authRequest.)
-		return ApiResponse.ok(login);
+		if(login.getCode() != 2000){
+			return ApiResponse.businessEx(login.getMsg());
+		}
+		String token = userService.authentication("", type, true, login.getData());
+		return ApiResponse.ok(token);
 	}
 
 

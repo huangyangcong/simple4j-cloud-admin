@@ -14,7 +14,7 @@ import javax.annotation.security.PermitAll;
 
 @RestController
 @RequestMapping("/captcha")
-@Api(tags = "验证码")
+@Tag(name = "验证码", description = "验证码")
 @RequiredArgsConstructor
 public class CaptchaController {
 

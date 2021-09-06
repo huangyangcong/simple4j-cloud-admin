@@ -18,11 +18,11 @@ import com.simple4j.auth.service.IAuth2StateCoder;
 import com.simple4j.auth.service.ICaptchaService;
 import com.simple4j.auth.service.IUserConnectionService;
 import com.simple4j.auth.service.IUserService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthUser;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
@@ -51,13 +51,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public String authentication(AuthUser authUser, String encodeState, String providerId, boolean autoSignUp) {
-		return null;
-	}
-
-	@Override
-	public String registerUser(AuthUser authUser, String decodeState) {
-		String username = authUser.getUsername();
+	public String registerUser(AuthUser authUser, String username, String decodeState) {
 		//用户注册逻辑
 		User user = new User();
 		user.setPassword(SaSecureUtil.md5BySalt("123456", username));
@@ -110,6 +104,7 @@ public class UserServiceImpl implements IUserService {
 		return Arrays.stream(usernames).map(names::contains).collect(Collectors.toList());
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public String authentication(String encodeState, final String providerId, boolean autoSignUp, AuthUser authUser) {
 		//1 查询是否已经有第三方的授权记录, List 按 rank 排序, 直接取第一条记录
@@ -182,8 +177,8 @@ public class UserServiceImpl implements IUserService {
 		}
 
 		// 4 本地登录用户, 直接返回
-		if (isLogin) {
-			return loginId;
+		if(isLogin) {
+			return StpUtil.getTokenValue();
 		}
 
 		// 5 创建成功认证 token 并返回
@@ -219,7 +214,7 @@ public class UserServiceImpl implements IUserService {
 				decodeState = encodeState;
 			}
 			// 注册到本地账户
-			String userId = registerUser(authUser, decodeState);
+			String userId = registerUser(authUser, username, decodeState);
 			// 第三方授权登录信息绑定到本地账号, 且添加第三方授权登录信息到 user_connection 与 auth_token
 			userConnectionService.registerConnection(providerId, authUser, userId);
 

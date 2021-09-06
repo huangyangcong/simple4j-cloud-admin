@@ -45,16 +45,7 @@ public interface IUserService {
 	 * @return
 	 */
 	String signUp(AuthUser authUser, String providerId, String encodeState);
-	/**
-	 * 授权
-	 *
-	 * @param encodeState
-	 * @param authUser
-	 * @param providerId
-	 * @param autoSignUp
-	 * @return
-	 */
-	String authentication(AuthUser authUser, String encodeState, String providerId, boolean autoSignUp);
+
 
 	/**
 	 * 第三方登陆注册用户
@@ -64,7 +55,7 @@ public interface IUserService {
 	 * @param decodeState
 	 * @return
 	 */
-	String registerUser(AuthUser authUser, String decodeState);
+	String registerUser(AuthUser authUser, String username, String decodeState);
 
 	/**
 	 * 授权并绑定用户信息

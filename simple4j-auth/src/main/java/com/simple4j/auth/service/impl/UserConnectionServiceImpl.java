@@ -38,8 +38,8 @@ public class UserConnectionServiceImpl implements IUserConnectionService {
 	@Override
 	public List<UserConnection> queryConnectionByProviderIdAndProviderUserId(String providerId, String providerUserId) {
 		return userConnectionMapper.selectList(new LambdaQueryWrapper<UserConnection>()
-			.eq(UserConnection::getProviderUserId, providerId)
-			.eq(UserConnection::getUserId, providerUserId)
+			.eq(UserConnection::getProviderUserId, providerUserId)
+			.eq(UserConnection::getProviderId, providerId)
 		);
 	}
 
