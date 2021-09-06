@@ -1,9 +1,8 @@
 package com.simple4j.auth.service;
 
-import com.simple4j.auth.entity.UserConnection;
+import com.simple4j.auth.entity.AuthConnection;
 import com.simple4j.auth.exceptions.RegisterUserFailureException;
 import me.zhyd.oauth.model.AuthUser;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public interface IUserConnectionService {
 	 * @param providerUserId 用户
 	 * @return
 	 */
-	List<UserConnection> queryConnectionByProviderIdAndProviderUserId(String providerId, String providerUserId);
+	List<AuthConnection> queryConnectionByProviderIdAndProviderUserId(String providerId, String providerUserId);
 
 	/**
 	 * 绑定用户
@@ -55,7 +54,7 @@ public interface IUserConnectionService {
 	 * 更新用户绑定信息
 	 *
 	 * @param authUser
-	 * @param userConnection
+	 * @param authConnection
 	 */
-	void updateUserConnection(AuthUser authUser, UserConnection userConnection);
+	void updateUserConnection(AuthUser authUser, AuthConnection authConnection);
 }

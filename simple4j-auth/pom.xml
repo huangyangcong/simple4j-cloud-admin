@@ -25,6 +25,10 @@
 			<groupId>com.simple4j.boot</groupId>
 		</dependency>
 		<dependency>
+			<artifactId>simple4j-springboot-starter-auth</artifactId>
+			<groupId>com.simple4j.boot</groupId>
+		</dependency>
+		<dependency>
 			<artifactId>mysql-connector-java</artifactId>
 			<groupId>mysql</groupId>
 		</dependency>
@@ -51,18 +55,6 @@
 		<dependency>
 			<artifactId>simple4j-springboot-starter-util</artifactId>
 			<groupId>com.simple4j.boot</groupId>
-		</dependency>
-		<dependency>
-			<groupId>com.xkcoding.justauth</groupId>
-			<artifactId>justauth-spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.dev33</groupId>
-			<artifactId>sa-token-temp-jwt</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.swagger.core.v3</groupId>
