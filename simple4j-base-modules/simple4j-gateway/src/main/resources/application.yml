@@ -118,7 +118,7 @@ logging:
     level:
         root: info
         com.alibaba.nacos.client.naming: error
-debug: true
+debug: false
 
 springdoc:
     version: 1.0.0

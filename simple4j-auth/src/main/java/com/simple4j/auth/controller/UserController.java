@@ -1,5 +1,8 @@
 package com.simple4j.auth.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.simple4j.auth.models.AuthSuccess;
 import com.simple4j.auth.request.UserLoginRequest;
 import com.simple4j.auth.response.UserLoginResponse;
 import com.simple4j.auth.service.IUserService;
@@ -36,9 +39,11 @@ public class UserController {
 	}
 
 	@Operation(summary = "登录")
+	@SaCheckLogin
+	@SaCheckPermission({"auth"})
 	@GetMapping
-	public List<String> list() {
-		return factory.oauthList();
+	public ApiResponse<List<String>> list() {
+		return ApiResponse.ok(factory.oauthList());
 	}
 
 	@Operation(summary = "第三方登陆（重定向）")
@@ -50,9 +55,8 @@ public class UserController {
 
 	@Operation(summary = "第三方登陆（回调）")
 	@GetMapping("/{type}/callback")
-	public ApiResponse<Object> login(HttpServletRequest request, @PathVariable String type, AuthCallback callback) {
+	public ApiResponse<AuthSuccess> login(HttpServletRequest request, @PathVariable String type, AuthCallback callback) {
 		final String encodeState = request.getParameter("state");
-		String token = userService.login(encodeState, type, callback);
-		return ApiResponse.ok(token);
+		return ApiResponse.ok(userService.login(type, encodeState, callback));
 	}
 }
