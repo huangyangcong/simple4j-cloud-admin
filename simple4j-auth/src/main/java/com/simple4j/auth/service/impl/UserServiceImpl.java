@@ -12,7 +12,7 @@ import com.simple4j.auth.mapper.UserMapper;
 import com.simple4j.auth.request.UserLoginRequest;
 import com.simple4j.auth.response.UserLoginResponse;
 import com.simple4j.auth.service.*;
-import lombok.AllArgsConstructor;
+import com.xkcoding.justauth.AuthRequestFactory;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthUser;
 import org.springframework.stereotype.Service;
@@ -28,12 +28,19 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-@AllArgsConstructor
 public class UserServiceImpl extends AuthServiceAdapterImpl<AuthToken, AuthConnection> implements IUserService {
 	private final UserMapper userMapper;
 	private final ICaptchaService captchaService;
 	private final IAuthConnectionService userConnectionService;
 	private final IAuthTokenService authTokenService;
+
+	public UserServiceImpl(AuthRequestFactory factory, UserMapper userMapper, ICaptchaService captchaService, IAuthConnectionService userConnectionService, IAuthTokenService authTokenService) {
+		super(factory);
+		this.userMapper = userMapper;
+		this.captchaService = captchaService;
+		this.userConnectionService = userConnectionService;
+		this.authTokenService = authTokenService;
+	}
 
 	@Override
 	public String registerUser(AuthUser authUser, String username, String decodeState) {
