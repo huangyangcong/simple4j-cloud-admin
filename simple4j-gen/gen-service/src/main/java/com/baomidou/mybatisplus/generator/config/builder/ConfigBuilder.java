@@ -6,10 +6,8 @@ import com.baomidou.mybatisplus.core.toolkit.ArrayUtils;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableField;
-import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.querys.H2Query;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -20,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -109,7 +108,12 @@ public class ConfigBuilder {
 		TemplateConfig template,
 		GlobalConfig globalConfig) {
 		// 全局配置
-		this.globalConfig = Optional.ofNullable(globalConfig).orElseGet(GlobalConfig::new);
+		this.globalConfig = Optional.ofNullable(globalConfig).orElseGet(new Supplier<GlobalConfig>() {
+			@Override
+			public GlobalConfig get() {
+				return GlobalConfig.Builder;
+			}
+		});
 		// 模板配置
 		this.template = Optional.ofNullable(template).orElseGet(TemplateConfig::new);
 		// 包配置

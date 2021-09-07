@@ -35,7 +35,7 @@ public class UserOauthAddRequest implements Serializable {
 	/**
 	 * 租户ID
 	 */
-	@Parameter(description = hidden = true, description = "租户ID")
+	@Parameter(hidden = true, description = "租户ID")
 	@JsonProperty("tenant_id")
 	private String tenantId;
 
