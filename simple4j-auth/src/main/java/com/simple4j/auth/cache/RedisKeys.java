@@ -1,7 +1,5 @@
 package com.simple4j.auth.cache;
 
-import cn.hutool.core.util.StrUtil;
-
 /**
  * Redis所有Keys
  */

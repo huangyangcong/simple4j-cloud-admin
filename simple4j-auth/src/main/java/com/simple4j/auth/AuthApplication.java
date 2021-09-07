@@ -18,6 +18,7 @@ public class AuthApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AuthApplication.class, args);
 	}
+
 	@Bean
 	public OpenAPI customOpenAPI(@Value("${springdoc.version:1.0.0}") String appVersion) {
 		return new OpenAPI()

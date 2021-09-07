@@ -11,33 +11,92 @@ spring:
                 service-name: ${spring.application.name}
                 instance-id: ${spring.application.name}:${server.port}
                 prefer-ip-address: true
+                heartbeat:
+                    enabled: true
 #        nacos:
 #            server-addr: 122.51.133.124:30000
 #            config:
 #                file-extension: yml
+        loadbalancer:
+            ribbon:
+                enabled: false
+        gateway:
+            globalcors:
+                cors-configurations:
+                    '[/**]':
+                        # 允许携带认证信息
+                        # 允许跨域的源(网站域名/ip)，设置*为全部
+                        # 允许跨域请求里的head字段，设置*为全部
+                        # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
+                        # 跨域允许的有效期
+                        allow-credentials: true
+                        allowed-origin_patterns: "*"
+                        #              - "http://122.51.133.124:9999"
+                        allowed-headers: "*"
+                        allowed-methods: "*"
+                        # - OPTIONS
+                        # - GET
+                        # - POST
+                        # - DELETE
+                        max-age: 3600
+                        # 允许response的head信息
+                        # 默认仅允许如下6个：
+                        #     Cache-Control
+                        #     Content-Language
+                        #     Content-Type
+                        #     Expires
+                        #     Last-Modified
+                        #     Pragma
+                        #exposed-headers:
+            routes:
+                -   id: system-service
+                    uri: lb://system-service
+                    predicates:
+                        - Path=/system/**
+                    filters:
+                        - StripPrefix=1
+                -   id: auth-service
+                    uri: lb://auth-service
+                    predicates:
+                        - Path=/auth/**
+                    filters:
+                        - StripPrefix=1
+                -   id: task-service
+                    uri: lb://task-service
+                    predicates:
+                        - Path=/task/**
+                    filters:
+                        - StripPrefix=1
+                -   id: flow-service
+                    uri: lb://flow-service
+                    predicates:
+                        - Path=/flow/**
+                    filters:
+                        - StripPrefix=1
+                        - AddRequestHeader=Forwarded,Authorization
+                -   id: flow-service-static
+                    uri: lb://flow-service
+                    predicates:
+                        - Path=/libs/**,/scripts/**,/i18n/**,/views/**,/styles/**,/fonts/**
+                    filters:
+                        - AddRequestHeader=Forwarded,Authorization
+                # route to catch swagger definitions requests and rewrite it to the corresponding url versioned service
+                -   id: openapi-versioned
+                    uri: http://localhost:${server.port}
+                    predicates:
+                        - Path=/v3/api-docs/*/v*
+                    filters:
+                        - RewritePath=/v3/api-docs/(.*)/(.*), /$1/v3/api-docs/$2
+
+                # route to catch swagger definitions requests and rewrite it to the corresponding url unversioned service
+                -   id: openapi
+                    uri: http://localhost:${server.port}
+                    predicates:
+                        - Path=/v3/api-docs/**
+                    filters:
+                        - RewritePath=/v3/api-docs/(.*), /$1/v3/api-docs
     main:
         allow-bean-definition-overriding: true
-    security:
-        oauth2:
-            client:
-                registration:
-                    messaging-client-authorization-code:
-                        provider: simple4j-auth
-                        client-id: messaging-client
-                        client-secret: secret
-                        authorization-grant-type: authorization_code
-                        redirect-uri: "{baseUrl}/authorized"
-                        scope: message.read,message.write
-                    messaging-client-client-credentials:
-                        provider: simple4j-auth
-                        client-id: messaging-client
-                        client-secret: secret
-                        authorization-grant-type: client_credentials
-                        scope: message.read,message.write
-                provider:
-                    simple4j-auth:
-                        authorization-uri: http://localhost:8091/oauth2/authorize
-                        token-uri: http://localhost:8091/oauth2/token
     redis:
         database: 0
         host: 122.51.133.124
@@ -57,7 +116,9 @@ management:
 #    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 logging:
     level:
-        root: debug
+        root: info
         com.alibaba.nacos.client.naming: error
 debug: true
 
+springdoc:
+    version: 1.0.0

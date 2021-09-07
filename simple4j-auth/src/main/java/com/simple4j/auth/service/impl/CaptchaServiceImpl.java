@@ -5,18 +5,12 @@ import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.core.util.StrUtil;
 import com.simple4j.api.base.BusinessException;
 import com.simple4j.auth.cache.RedisHandler;
-import com.simple4j.auth.constant.AuthConstant;
 import com.simple4j.auth.response.CaptchaResponse;
 import com.simple4j.auth.service.ICaptchaService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.servlet.http.HttpSession;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author hyc
@@ -44,7 +38,7 @@ public class CaptchaServiceImpl implements ICaptchaService {
 	@Override
 	public void verify(String username, String captchaKey, String captchaCode) {
 		CaptchaResponse captchaResponse = redisHandler.getCaptchaCode(username);
-		if(captchaResponse == null){
+		if (captchaResponse == null) {
 			return;
 		}
 		// 判断验证码

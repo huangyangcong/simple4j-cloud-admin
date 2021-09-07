@@ -28,6 +28,9 @@ spring:
                 service-name: ${spring.application.name}
                 instance-id: ${spring.application.name}:${server.port}
                 prefer-ip-address: true
+                # All service checks failing
+                heartbeat:
+                    enabled: true
     devtools:
         restart:
             enabled: true  #设置开启热部署
@@ -41,7 +44,7 @@ spring:
     application:
         version: 1.0
         description: 通用框架
-        name: simple4j-auth
+        name: auth-service
     #redis
     #配置数据源
     datasource:
@@ -133,6 +136,7 @@ mybatis-plus:
             #自定义SQL注入器
         #    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
     configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
         map-underscore-to-camel-case: true
         cache-enabled: false
         call-setters-on-nulls: true
@@ -208,13 +212,13 @@ justauth:
             client-secret: 1f7d08**********5b7**********29e
             redirect-uri: http://oauth.xkcoding.com/demo/oauth/weibo/callback
         GITEE:
-            client-id: 10**********6
-            client-secret: 1f7d08**********5b7**********29e
-            redirect-uri: http://oauth.xkcoding.com/demo/oauth/gitee/callback
+            client-id: badb5de4e255b518454cb53e4bba1a9ee6fc645e4a5928b363478b4616b5b74a
+            client-secret: 065cb6143bb79b0acdf73cbd22d33e44b105ddfefdb889e3645c59a3cd12d47d
+            redirect-uri: http://localhost:9999/auth/user/gitee/callback
         DINGTALK:
             client-id: 10**********6
             client-secret: 1f7d08**********5b7**********29e
-            redirect-uri: http://oauth.xkcoding.com/demo/oauth/dingtalk/callback
+            redirect-uri: http://localhost:9999/auth/user/gitee/callback
         BAIDU:
             client-id: 10**********6
             client-secret: 1f7d08**********5b7**********29e

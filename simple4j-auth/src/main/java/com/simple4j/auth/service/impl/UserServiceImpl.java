@@ -29,10 +29,10 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class UserServiceImpl extends AuthServiceAdapter<AuthToken, AuthConnection> implements IUserService {
+public class UserServiceImpl extends AuthServiceAdapterImpl<AuthToken, AuthConnection> implements IUserService {
 	private final UserMapper userMapper;
 	private final ICaptchaService captchaService;
-	private final IUserConnectionService userConnectionService;
+	private final IAuthConnectionService userConnectionService;
 	private final IAuthTokenService authTokenService;
 
 	@Override
@@ -51,7 +51,6 @@ public class UserServiceImpl extends AuthServiceAdapter<AuthToken, AuthConnectio
 		userMapper.insert(user);
 		return user.getId();
 	}
-
 
 	@Override
 	public UserLoginResponse login(UserLoginRequest userLoginRequest) {
@@ -74,11 +73,6 @@ public class UserServiceImpl extends AuthServiceAdapter<AuthToken, AuthConnectio
 	}
 
 	@Override
-	public AuthToken instanceToken() {
-		return new AuthToken();
-	}
-
-	@Override
 	public List<Boolean> existedByUsernames(String[] usernames) {
 		List<String> names = userMapper.existedByUsernames(usernames);
 		return Arrays.stream(usernames).map(names::contains).collect(Collectors.toList());
@@ -90,13 +84,13 @@ public class UserServiceImpl extends AuthServiceAdapter<AuthToken, AuthConnectio
 	}
 
 	@Override
-	public void updateAuthConnection(AuthUser authUser, AuthConnection authConnection) {
-		userConnectionService.updateUserConnection(authUser, authConnection);
+	public void saveAuthConnection(AuthConnection authConnection) {
+		userConnectionService.saveAuthConnection(authConnection);
 	}
 
 	@Override
-	public void saveAuthConnection(String providerId, AuthUser authUser, String loginId, AuthToken authToken) {
-		userConnectionService.saveAuthConnection(providerId, loginId, authUser, authToken);
+	public void updateAuthConnection(AuthConnection authConnection) {
+		userConnectionService.updateUserConnection(authConnection);
 	}
 
 	@Override
@@ -104,5 +98,18 @@ public class UserServiceImpl extends AuthServiceAdapter<AuthToken, AuthConnectio
 		authTokenService.saveAuthToken(authToken);
 	}
 
+	@Override
+	public void updateAuthToken(AuthToken authToken) {
+		authTokenService.updateAuthToken(authToken);
+	}
 
+	@Override
+	public AuthToken instanceAuthToken() {
+		return new AuthToken();
+	}
+
+	@Override
+	public AuthConnection instanceAuthConnection() {
+		return new AuthConnection();
+	}
 }

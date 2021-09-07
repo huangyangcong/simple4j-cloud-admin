@@ -1,5 +1,6 @@
 package com.simple4j.auth.controller;
 
+import cn.dev33.satoken.context.model.SaRequest;
 import com.simple4j.auth.request.UserLoginRequest;
 import com.simple4j.auth.response.UserLoginResponse;
 import com.simple4j.auth.service.IUserService;
@@ -17,6 +18,7 @@ import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -48,18 +50,20 @@ public class UserController {
 	@GetMapping("/login/{type}")
 	public void login(@PathVariable String type, HttpServletResponse response) throws IOException {
 		AuthRequest authRequest = factory.get(type);
+		SaRequest
 		response.sendRedirect(authRequest.authorize(AuthStateUtils.createState()));
 	}
 
 	@Operation(summary = "第三方登陆（回调）")
 	@GetMapping("/{type}/callback")
-	public ApiResponse<Object> login(@PathVariable String type, AuthCallback callback) {
+	public ApiResponse<Object> login(HttpServletRequest request, @PathVariable String type, AuthCallback callback) {
 		AuthRequest authRequest = factory.get(type);
 		AuthResponse<AuthUser> login = authRequest.login(callback);
-		if(login.getCode() != 2000){
+		if (!login.ok()) {
 			return ApiResponse.businessEx(login.getMsg());
 		}
-		String token = userService.authentication("", type, true, login.getData());
+		final String encodeState = request.getParameter("state");
+		String token = userService.authentication(encodeState, type, true, login.getData());
 		return ApiResponse.ok(token);
 	}
 

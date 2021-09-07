@@ -1,8 +1,6 @@
 package com.simple4j.auth.service;
 
 import com.simple4j.auth.entity.AuthConnection;
-import com.simple4j.auth.entity.AuthToken;
-import me.zhyd.oauth.model.AuthUser;
 
 import java.util.List;
 
@@ -11,7 +9,7 @@ import java.util.List;
  *
  * @author hyc
  */
-public interface IUserConnectionService {
+public interface IAuthConnectionService {
 
 	/**
 	 * 获取用户连接列表
@@ -37,7 +35,7 @@ public interface IUserConnectionService {
 	 * @param authUser
 	 * @param authConnection
 	 */
-	void updateUserConnection(AuthUser authUser, AuthConnection authConnection);
+	void updateUserConnection(AuthConnection authConnection);
 
 	/**
 	 * 保存用户信息
@@ -47,5 +45,5 @@ public interface IUserConnectionService {
 	 * @param authUser
 	 * @param authToken
 	 */
-	void saveAuthConnection(String providerId, String loginId, AuthUser authUser, AuthToken authToken);
+	void saveAuthConnection(AuthConnection authConnection);
 }

@@ -8,7 +8,7 @@ import com.simple4j.auth.response.UserLoginResponse;
  *
  * @author hyc
  */
-public interface IUserService {
+public interface IUserService extends IAuthServiceAdapter{
 
 
 	/**

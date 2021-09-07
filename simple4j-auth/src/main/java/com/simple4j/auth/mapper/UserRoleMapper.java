@@ -5,7 +5,6 @@ import com.simple4j.autoconfigure.mybatis.base.ExtendMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Mapper 接口

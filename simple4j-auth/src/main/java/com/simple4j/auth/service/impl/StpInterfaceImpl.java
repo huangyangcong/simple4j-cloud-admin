@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class StpInterfaceImpl implements StpInterface {
 	private final IUserRoleService userRoleService;
 	private final IRoleMenuService roleMenuService;
+
 	@Override
 	public List<String> getPermissionList(Object loginId, String loginType) {
 		List<String> permissions = new ArrayList<>();
@@ -42,9 +42,9 @@ public class StpInterfaceImpl implements StpInterface {
 	public List<String> getRoleList(Object loginId, String loginType) {
 		//临时账号
 		String tempId = null;
-		if(loginId instanceof String){
+		if (loginId instanceof String) {
 			try {
-				tempId = SaTempUtil.parseToken((String)loginId, String.class);
+				tempId = SaTempUtil.parseToken((String) loginId, String.class);
 			} catch (SignatureException e) {
 
 			}
@@ -52,6 +52,6 @@ public class StpInterfaceImpl implements StpInterface {
 		if (StrUtil.isNotEmpty(tempId)) {
 			return Lists.newArrayList("temp");
 		}
-		return StpUtil.getSessionByLoginId(loginId).get("Role_Id", () -> userRoleService.getRoleIds((String)loginId));
+		return StpUtil.getSessionByLoginId(loginId).get("Role_Id", () -> userRoleService.getRoleIds((String) loginId));
 	}
 }
