@@ -1,6 +1,8 @@
 package com.simple4j.auth.controller;
 
-import cn.dev33.satoken.context.model.SaRequest;
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.simple4j.auth.models.AuthSuccess;
 import com.simple4j.auth.request.UserLoginRequest;
 import com.simple4j.auth.response.UserLoginResponse;
 import com.simple4j.auth.service.IUserService;
@@ -11,10 +13,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthCallback;
-import me.zhyd.oauth.model.AuthResponse;
-import me.zhyd.oauth.model.AuthUser;
-import me.zhyd.oauth.request.AuthRequest;
-import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -41,30 +39,24 @@ public class UserController {
 	}
 
 	@Operation(summary = "登录")
+	@SaCheckLogin
+	@SaCheckPermission({"auth"})
 	@GetMapping
-	public List<String> list() {
-		return factory.oauthList();
+	public ApiResponse<List<String>> list() {
+		return ApiResponse.ok(factory.oauthList());
 	}
 
 	@Operation(summary = "第三方登陆（重定向）")
 	@GetMapping("/login/{type}")
-	public void login(@PathVariable String type,  HttpServletResponse request, HttpServletResponse response) throws IOException {
-		AuthRequest authRequest = factory.get(type);
-		response.sendRedirect(authRequest.authorize(AuthStateUtils.createState()));
+	public void authorize(@PathVariable String type, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String redirectUrl = userService.getRedirectUrl(request, type);
+		response.sendRedirect(redirectUrl);
 	}
 
 	@Operation(summary = "第三方登陆（回调）")
 	@GetMapping("/{type}/callback")
-	public ApiResponse<Object> login(HttpServletRequest request, @PathVariable String type, AuthCallback callback) {
-		AuthRequest authRequest = factory.get(type);
-		AuthResponse<AuthUser> login = authRequest.login(callback);
-		if (!login.ok()) {
-			return ApiResponse.businessEx(login.getMsg());
-		}
+	public ApiResponse<AuthSuccess> login(HttpServletRequest request, @PathVariable String type, AuthCallback callback) {
 		final String encodeState = request.getParameter("state");
-		String token = userService.authentication(encodeState, type, true, login.getData());
-		return ApiResponse.ok(token);
+		return ApiResponse.ok(userService.login(type, encodeState, callback));
 	}
-
-
 }
