@@ -48,9 +48,8 @@ public class UserController {
 
 	@Operation(summary = "第三方登陆（重定向）")
 	@GetMapping("/login/{type}")
-	public void login(@PathVariable String type, HttpServletResponse response) throws IOException {
+	public void login(@PathVariable String type,  HttpServletResponse request, HttpServletResponse response) throws IOException {
 		AuthRequest authRequest = factory.get(type);
-		SaRequest
 		response.sendRedirect(authRequest.authorize(AuthStateUtils.createState()));
 	}
 

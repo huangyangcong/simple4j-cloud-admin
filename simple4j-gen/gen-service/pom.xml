@@ -7,6 +7,7 @@
 		<dependency>
 			<artifactId>mybatis-plus-generator</artifactId>
 			<groupId>com.baomidou</groupId>
+			<version>3.4.0</version>
 		</dependency>
 		<dependency>
 			<artifactId>velocity-engine-core</artifactId>
