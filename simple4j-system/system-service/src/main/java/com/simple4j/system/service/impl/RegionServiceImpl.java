@@ -56,7 +56,7 @@ public class RegionServiceImpl implements IRegionService {
 	@Override
 	public boolean submit(RegionAddRequest regionAddRequest) {
 		Region region = regionMapStruct.toPo(regionAddRequest);
-		Integer cnt =
+		long cnt =
 			regionMapper.selectCount(
 				Wrappers.<Region>query().lambda().eq(Region::getCode, region.getCode()));
 		if (cnt > 0) {
@@ -94,7 +94,7 @@ public class RegionServiceImpl implements IRegionService {
 	@Override
 	public boolean removeRegion(RegionRemoveRequest regionRemoveRequest) {
 		String id = regionRemoveRequest.getId();
-		Integer cnt =
+		long cnt =
 			regionMapper
 				.selectCount(Wrappers.<Region>query().lambda().eq(Region::getParentCode, id));
 		if (cnt > 0) {

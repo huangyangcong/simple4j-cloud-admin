@@ -56,5 +56,7 @@ public abstract class UserMapStruct {
 
 	public abstract User toPo(UserAddRequest userAddRequest);
 
-	public abstract List<UserExcelImport> toExcel(List<UserDetailResponse> users);
+	public abstract UserExcelImport toExcel(UserDetailResponse userDetailResponse);
+
+	public abstract List<UserExcelImport> toExcels(List<UserDetailResponse> users);
 }

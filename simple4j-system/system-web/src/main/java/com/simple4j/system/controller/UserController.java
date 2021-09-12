@@ -41,23 +41,6 @@ public class UserController {
 
 	private final IUserService userService;
 	private final IUserRoleService userRoleService;
-	private final TokenService tokenService;
-
-	@Operation(summary = "登录")
-	@PostMapping("/login")
-	@PermitAll()
-	public ApiResponse<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
-		UserLoginResponse userLoginResponse = userService.login(userLoginRequest);
-		return ApiResponse.ok(userLoginResponse);
-	}
-
-	@Operation(summary = "登出")
-	@PostMapping("/logout")
-	@PreAuthorize("permitAll()")
-	public ApiResponse<Void> logout() {
-		userService.logout("");
-		return ApiResponse.ok();
-	}
 
 	@Operation(summary = "查看详情", description = "传入id")
 	@PostMapping("/detail")

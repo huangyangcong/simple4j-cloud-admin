@@ -154,19 +154,4 @@ public interface IUserService {
 	 * @param outputStream
 	 */
 	void exportUser(OutputStream outputStream);
-
-	/**
-	 * 用户登录
-	 *
-	 * @param userLoginRequest
-	 * @return
-	 */
-	UserLoginResponse login(UserLoginRequest userLoginRequest);
-
-	/**
-	 * 登出
-	 *
-	 * @param username
-	 */
-	void logout(String username);
 }

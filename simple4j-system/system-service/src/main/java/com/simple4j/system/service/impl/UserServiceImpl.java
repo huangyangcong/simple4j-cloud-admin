@@ -15,7 +15,6 @@ import com.simple4j.api.base.BusinessException;
 import com.simple4j.api.base.Page;
 import com.simple4j.autoconfigure.jwt.security.SecurityScope;
 import com.simple4j.autoconfigure.jwt.security.SecurityUtils;
-import com.simple4j.autoconfigure.jwt.security.TokenService;
 import com.simple4j.system.common.constant.CommonConstant;
 import com.simple4j.system.entity.User;
 import com.simple4j.system.excel.UserExcelImport;
@@ -60,7 +59,6 @@ public class UserServiceImpl implements IUserService {
 	private final IRoleMenuService roleMenuService;
 	private final PasswordEncoder passwordEncoder;
 	private final ICaptchaService captchaService;
-	private final TokenService tokenService;
 
 	@Override
 	public Page<UserDetailResponse> page(UserPageRequest userPageRequest) {
@@ -270,15 +268,15 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void importUser(InputStream inputStream, String filename) {
-		if (StringUtils.isEmpty(filename)) {
-			throw new RuntimeException("请上传文件!");
+		if (StrUtil.isEmpty(filename)) {
+			throw new BusinessException("请上传文件!");
 		}
 		if ((!StringUtils.endsWithIgnoreCase(filename, ".xls")
 			&& !StringUtils.endsWithIgnoreCase(filename, ".xlsx"))) {
-			throw new RuntimeException("请上传正确的excel文件!");
+			throw new BusinessException("请上传正确的excel文件!");
 		}
 		if (inputStream == null) {
-			throw new RuntimeException("请上传正确的excel文件!");
+			throw new BusinessException("请上传正确的excel文件!");
 		}
 		// 默认每隔3000条存储数据库
 		int batchCount = 3000;
@@ -345,7 +343,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void exportUser(OutputStream outputStream, UserListRequest userListRequest) {
 		List<UserDetailResponse> users = this.list(userListRequest);
-		List<UserExcelImport> userExcelImportList = userMapStruct.toExcel(users);
+		List<UserExcelImport> userExcelImportList = userMapStruct.toExcels(users);
 		userExcelImportList.forEach(
 			user -> {
 				user.setRoleName(roleService.getRoleNames(user.getId()));
@@ -393,25 +391,5 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public boolean remove(UserRemoveRequest userRemoveRequest) {
 		return userMapper.removeByIds(userRemoveRequest.getIds());
-	}
-
-	@Override
-	public UserLoginResponse login(UserLoginRequest userLoginRequest) {
-		String captchaKey = userLoginRequest.getCaptchaKey();
-		// 校验验证码
-		//		captchaService.verify(captchaKey, userLoginRequest.getCaptchaCode());
-		// 登录校验
-		String token =
-			tokenService.login(userLoginRequest.getUsername(), userLoginRequest.getPassword());
-		UserLoginResponse userLoginResponse = new UserLoginResponse();
-		userLoginResponse.setToken(token);
-		// 删除验证码
-		captchaService.deleteCaptcha(captchaKey);
-		return userLoginResponse;
-	}
-
-	@Override
-	public void logout(String username) {
-		tokenService.logout(username);
 	}
 }
