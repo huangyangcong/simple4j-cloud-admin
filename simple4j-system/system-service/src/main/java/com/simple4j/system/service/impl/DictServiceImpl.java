@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.exceptions.ApiException;
+import com.simple4j.api.base.BusinessException;
 import com.simple4j.api.base.Page;
 import com.simple4j.system.common.constant.CacheNames;
 import com.simple4j.system.entity.Dict;
@@ -63,13 +63,13 @@ public class DictServiceImpl implements IDictService {
 				.lambda()
 				.eq(Dict::getCode, dictAddOrUpdateRequest.getCode())
 				.eq(Dict::getDictKey, dictAddOrUpdateRequest.getDictKey());
-		Integer cnt =
+		long cnt =
 			dictMapper.selectCount(
 				(ObjectUtil.isEmpty(dictAddOrUpdateRequest.getId()))
 					? lqw
 					: lqw.notIn(Dict::getId, dictAddOrUpdateRequest.getId()));
 		if (cnt > 0) {
-			throw new ApiException("当前字典键值已存在!");
+			throw new BusinessException("当前字典键值已存在!");
 		}
 		return dictMapper.saveOrUpdate(dictMapStruct.toPo(dictAddOrUpdateRequest));
 	}

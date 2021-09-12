@@ -15,7 +15,7 @@ import java.util.Set;
  * @author hyc
  */
 @Data
-@ApiModel(description = "用户信息")
+@Schema(name = "用户信息", description = "用户信息")
 public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;

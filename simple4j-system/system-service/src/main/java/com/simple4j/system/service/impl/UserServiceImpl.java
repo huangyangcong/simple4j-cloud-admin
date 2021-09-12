@@ -10,7 +10,6 @@ import com.alibaba.excel.read.builder.ExcelReaderBuilder;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.google.common.collect.Sets;
 import com.simple4j.api.base.BusinessException;
 import com.simple4j.api.base.Page;
@@ -127,7 +126,7 @@ public class UserServiceImpl implements IUserService {
 			userAddRequest.setPassword(passwordEncoder.encode(userAddRequest.getPassword()));
 		}
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		Integer cnt =
+		long cnt =
 			userMapper.selectCount(
 				Wrappers.<User>query()
 					.lambda()
@@ -148,7 +147,7 @@ public class UserServiceImpl implements IUserService {
 			userUpdateRequest.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
 		}
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
-		Integer cnt =
+		long cnt =
 			userMapper.selectCount(
 				Wrappers.<User>query()
 					.lambda()
@@ -372,13 +371,13 @@ public class UserServiceImpl implements IUserService {
 		String oauthId = userRegisterGuestRequest.getOauthId();
 		TenantDetailResponse tenant = tenantService.getByTenantId(tenantId);
 		if (tenant == null || tenant.getId() == null) {
-			throw new ApiException("租户信息错误!");
+			throw new BusinessException("租户信息错误!");
 		}
 		UserOauthDetailRequest userOauthDetailRequest = new UserOauthDetailRequest();
 		userOauthDetailRequest.setId(oauthId);
 		UserOauthDetailResponse userOauth = userOauthService.detail(userOauthDetailRequest);
 		if (userOauth == null || userOauth.getId() == null) {
-			throw new ApiException("第三方登陆信息错误!");
+			throw new BusinessException("第三方登陆信息错误!");
 		}
 		User user = userMapStruct.toPo(userRegisterGuestRequest);
 		user.setRealName(user.getName());
