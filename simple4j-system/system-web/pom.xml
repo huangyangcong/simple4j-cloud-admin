@@ -13,13 +13,13 @@
 			<artifactId>simple4j-springboot-starter-web</artifactId>
 			<groupId>com.simple4j.boot</groupId>
 		</dependency>
-		<dependency>
-			<artifactId>simple4j-springboot-starter-jwt</artifactId>
-			<groupId>com.simple4j.boot</groupId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<artifactId>simple4j-springboot-starter-jwt</artifactId>-->
+<!--			<groupId>com.simple4j.boot</groupId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webmvc-core</artifactId>
+			<artifactId>springdoc-openapi-ui</artifactId>
 		</dependency>
 		<dependency>
 			<artifactId>hibernate-validator</artifactId>

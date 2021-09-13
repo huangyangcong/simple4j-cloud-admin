@@ -24,7 +24,6 @@ import com.simple4j.system.request.*;
 import com.simple4j.system.response.*;
 import com.simple4j.system.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -57,8 +56,6 @@ public class UserServiceImpl implements IUserService {
 	private final IUserDeptService userDeptService;
 	private final IUserPostService userPostService;
 	private final IRoleMenuService roleMenuService;
-	private final PasswordEncoder passwordEncoder;
-	private final ICaptchaService captchaService;
 
 	@Override
 	public Page<UserDetailResponse> page(UserPageRequest userPageRequest) {
@@ -121,7 +118,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void submit(UserAddRequest userAddRequest) {
 		if (StrUtil.isNotEmpty(userAddRequest.getPassword())) {
-			userAddRequest.setPassword(passwordEncoder.encode(userAddRequest.getPassword()));
+			userAddRequest.setPassword("123456");
 		}
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		long cnt =
@@ -142,7 +139,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public boolean update(UserUpdateRequest userUpdateRequest) {
 		if (StrUtil.isNotEmpty(userUpdateRequest.getPassword())) {
-			userUpdateRequest.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
+			userUpdateRequest.setPassword("123456");
 		}
 		SecurityScope securityScope = SecurityUtils.getAuthenticatedSecurityScope();
 		long cnt =
@@ -236,7 +233,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public boolean resetPassword(UserResetPasswordRequest userResetPasswordRequest) {
 		User user = new User();
-		user.setPassword(passwordEncoder.encode(CommonConstant.DEFAULT_PASSWORD));
+		user.setPassword("123456");
 		return userMapper.updateBool(
 			user,
 			Wrappers.<User>update().lambda()

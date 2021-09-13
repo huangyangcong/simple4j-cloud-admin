@@ -23,7 +23,7 @@ spring:
         #                file-extension: yml
         consul:
             host: 122.51.133.124
-            port: 32679
+            port: 31061
             discovery:
                 service-name: ${spring.application.name}
                 instance-id: ${spring.application.name}:${server.port}
