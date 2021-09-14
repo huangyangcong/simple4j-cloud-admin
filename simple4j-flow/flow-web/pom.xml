@@ -14,8 +14,8 @@
 			<groupId>com.simple4j.boot</groupId>
 		</dependency>
 		<dependency>
-			<artifactId>simple4j-springboot-starter-jwt</artifactId>
-			<groupId>com.simple4j.boot</groupId>
+			<groupId>org.flowable</groupId>
+			<artifactId>flowable-spring-boot-starter-ui-idm</artifactId>
 		</dependency>
 		<dependency>
 			<artifactId>springfox-boot-starter</artifactId>
