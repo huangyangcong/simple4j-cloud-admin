@@ -171,6 +171,16 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>activiti-releases</id>
+			<url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 	<reporting>
 		<plugins>

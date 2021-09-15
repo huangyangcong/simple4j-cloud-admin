@@ -46,7 +46,6 @@
 			<artifactId>simple4j-springboot-starter-dubbo</artifactId>
 			<groupId>com.simple4j.boot</groupId>
 		</dependency>
-
 		<dependency>
 			<artifactId>spring-boot-devtools</artifactId>
 			<groupId>org.springframework.boot</groupId>
