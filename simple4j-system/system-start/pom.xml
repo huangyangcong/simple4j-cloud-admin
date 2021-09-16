@@ -29,13 +29,13 @@
 
 	<dependencies>
 		<dependency>
-			<artifactId>system-web</artifactId>
 			<groupId>com.simple4j.admin</groupId>
+			<artifactId>system-web</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<artifactId>system-service</artifactId>
 			<groupId>com.simple4j.admin</groupId>
+			<artifactId>system-service</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

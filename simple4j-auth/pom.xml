@@ -21,8 +21,8 @@
 			<groupId>org.springframework.boot</groupId>
 		</dependency>
 		<dependency>
-			<artifactId>simple4j-springboot-starter-web</artifactId>
 			<groupId>com.simple4j.boot</groupId>
+			<artifactId>simple4j-springboot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<artifactId>simple4j-springboot-starter-auth</artifactId>

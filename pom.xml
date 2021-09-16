@@ -110,8 +110,8 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<artifactId>simple4j-dependencies</artifactId>
 				<groupId>com.simple4j.boot</groupId>
+				<artifactId>simple4j-dependencies</artifactId>
 				<scope>import</scope>
 				<type>pom</type>
 				<version>0.0.1.BUILD-SNAPSHOT</version>
@@ -147,12 +147,12 @@
 	</properties>
 	<repositories>
 		<repository>
-			<id>alimaven</id>
+			<id>aliyun</id>
 			<name>aliyun maven</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
 		</repository>
 		<repository>
-			<id>sonatype-nexus-snapshots</id>
+			<id>sonatype</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/org/springdoc/</url>
 			<releases>
 				<enabled>false</enabled>
@@ -162,7 +162,7 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>sonatype-nexus-public</id>
+			<id>springdoc</id>
 			<url>https://oss.sonatype.org/content/groups/public/org/springdoc/</url>
 			<releases>
 				<enabled>true</enabled>
@@ -172,7 +172,7 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>activiti-releases</id>
+			<id>activiti</id>
 			<url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases</url>
 			<releases>
 				<enabled>true</enabled>

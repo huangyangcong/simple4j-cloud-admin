@@ -3,25 +3,18 @@
 		 xmlns="http://maven.apache.org/POM/4.0.0"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<artifactId>simple4j-pay</artifactId>
-	<dependencies>
-		<dependency>
-			<artifactId>alipay-sdk-java</artifactId>
-			<groupId>com.alipay.sdk</groupId>
-			<version>4.8.62.ALL</version>
-		</dependency>
-	</dependencies>
-
 	<modelVersion>4.0.0</modelVersion>
-	<modules>
-		<module>simple4j-pay-api</module>
-		<module>simple4j-pay-service</module>
-	</modules>
 	<packaging>pom</packaging>
-
 	<parent>
-		<artifactId>simple4j-admin</artifactId>
 		<groupId>com.simple4j.admin</groupId>
-		<relativePath>../</relativePath>
+		<artifactId>simple4j-admin</artifactId>
+		<relativePath>../pom.xml</relativePath>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
+	<modules>
+		<module>pay-api</module>
+		<module>pay-service</module>
+		<module>pay-web</module>
+		<module>pay-start</module>
+	</modules>
 </project>
