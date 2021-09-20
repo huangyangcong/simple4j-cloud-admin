@@ -25,6 +25,10 @@
 			<artifactId>simple4j-springboot-starter-web</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.simple4j.boot</groupId>
+			<artifactId>simple4j-springboot-starter-pay</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.github.javen205</groupId>
 			<artifactId>IJPay-WxPay</artifactId>
 		</dependency>
